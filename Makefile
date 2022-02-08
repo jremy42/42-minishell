@@ -2,7 +2,11 @@ SRC = srcs/minishell.c \
 srcs/bin/pwd/pwd.c\
 srcs/bin/echo/echo.c\
 srcs/bin/cd/cd.c\
+<<<<<<< HEAD
 srcs/bin/env/env.c
+=======
+srcs/bin/env/env.c\
+>>>>>>> d765a4c3eaad21d60ca21c93bf0ed696f5b5cadd
 
 IFLAGS =  -I includes/ -I libft/includes
 CFLAGS = -Wall -Wextra -Werror

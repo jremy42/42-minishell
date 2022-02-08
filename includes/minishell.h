@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 11:08:29 by jremy             #+#    #+#             */
-/*   Updated: 2022/02/08 18:58:34 by jremy            ###   ########.fr       */
+/*   Updated: 2022/02/08 19:05:47 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ typedef struct s_msh
 	int		rv;
 	t_cmd	*cmd;
 	char	*prompt;
-	char	**envp;
+	char	***envp;
 }	t_msh;
 
 /*
