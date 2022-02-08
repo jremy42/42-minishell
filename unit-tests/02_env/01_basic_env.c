@@ -1,37 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   01_basic_env.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/08 10:01:04 by ngiroux           #+#    #+#             */
-/*   Updated: 2022/02/08 15:09:08 by jremy            ###   ########.fr       */
+/*   Created: 2022/01/08 10:15:37 by ngiroux           #+#    #+#             */
+/*   Updated: 2022/02/08 15:04:21 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tests.h"
-#include "libunit.h"
-#include "minishell.h"
 
-
-int	main(int ac, char **av, char **envp)
+int	__basic_env(void)
 {
-	t_score	score;
-	
-	(void)ac;
-	(void)av;
-	(void)envp;
-	
-	score.ok = 0;
-	score.total = 0;
-	__start();
-	ft00_launcher(&score);
-	ft01_launcher(&score);
-	//ft02_launcher(&score);
-	__print_global_summary(score.ok, score.total);
-	if (score.ok == score.total)
-		return (0);
-	else
+	char	renv[BUFFER_SIZE]; 
+	char	true_env[BUFFER_SIZE];
+	t_pipe	std;
+	int fd;
+		
+	system("env > env.txt");
+	std.stdin_cpy = -1;
+	std.stdout_cpy = -1;
+	__init_get(&std);
+	__env((char **)g_env);
+	__read_std(renv, &std);
+	__close_std(&std);
+	fd = open("env.txt", O_RDONLY, 00644);
+	bzero((void *)true_env, BUFFER_SIZE);
+	read(fd, true_env, BUFFER_SIZE);
+	if ((strcmp(renv, true_env) != 0))
 		return (-1);
+	else
+		return (0);
 }

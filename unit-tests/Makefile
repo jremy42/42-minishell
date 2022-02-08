@@ -6,7 +6,7 @@
 #    By: jremy <jremy@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/08 10:12:53 by ngiroux           #+#    #+#              #
-#    Updated: 2022/02/08 11:48:17 by jremy            ###   ########.fr        #
+#    Updated: 2022/02/08 15:07:35 by jremy            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,7 @@ NAME		= tester
 LIB_NAME	= libunit.a
 FILES		= ../srcs/bin/pwd/pwd.c\
 			../srcs/bin/echo/echo.c\
+			../srcs/bin/env/env.c\
 			00_pwd/00_launcher.c\
 			00_pwd/01_basic_pwd.c\
 			01_echo/05_NULL_echo.c\
@@ -29,7 +30,9 @@ FILES		= ../srcs/bin/pwd/pwd.c\
 			01_echo/01_basic_echo.c\
 			01_echo/00_launcher2.c\
 			01_echo/03_multi-flag_echo.c\
-			main.c
+			main.c\
+			#02_env/01_basic_env.c\
+			#02_env/00_launcher3.c\
 
 # Paths
 LIB_PATH		=framework/
