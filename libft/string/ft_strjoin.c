@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /**/
 /*:::  ::::::::   */
-/*   __strjoin.c   :+:  :+::+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*+:+ +:+ +:+ */
 /*   By: jremy <jremy@student.42.fr>+#+  +:+   +#+*/
 /*+#+#+#+#+#+   +#+   */
 /*   Created: 2021/11/23 18:06:59 by jremy #+##+# */
-/*   Updated: 2022/01/10 15:04:51 by jremy###   ########.fr   */
+/*   Updated: 2022/02/08 15:33:40 by fle-blay         ###   ########.fr       */
 /**/
 /* ************************************************************************** */
 
@@ -42,7 +42,10 @@ char	*__strjoin(char const *s1, char const *s2)
 	size = __strlen(s1) + __strlen(s2);
 	result = __calloc(size + 1, sizeof(char));
 	if (!result)
+	{
+		free((char *)s1);
 		return (NULL);
+	}
 	result = __strcpy(result, s1);
 	result = __strcat(result, s2);
 	free((char *)s1);
