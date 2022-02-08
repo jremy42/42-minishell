@@ -6,11 +6,12 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:25:57 by jremy             #+#    #+#             */
-/*   Updated: 2022/02/08 13:11:57 by jremy            ###   ########.fr       */
+/*   Updated: 2022/02/08 15:14:20 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <stdio.h>
 
 char	*__get_prompt(t_msh *msh)
 {
@@ -38,8 +39,11 @@ char	*__get_prompt(t_msh *msh)
 	return (msh->prompt);
 }
 
-int	main ()
+int	main (int ac, char *av[], char *envp[])
 {
+	(void) ac;
+	(void) av;
+
 	char	*arg[10];
 	int		i;
 	t_msh	msh;
@@ -58,4 +62,8 @@ int	main ()
 	}
 	__pwd(1);
 	__echo(arg, 1);
+	__cd("srcs", envp);
+	__pwd(1);
+	__cd("/", envp);
+	__pwd(1);
 }

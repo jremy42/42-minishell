@@ -1,6 +1,8 @@
 SRC = srcs/minishell.c \
 srcs/bin/pwd/pwd.c\
-srcs/bin/echo/echo.c
+srcs/bin/echo/echo.c\
+srcs/bin/cd/cd.c
+
 
 
 IFLAGS =  -I includes/ -I libft/includes
