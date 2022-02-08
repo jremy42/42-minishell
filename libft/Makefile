@@ -43,18 +43,6 @@ list/ft_lstdelone.c \
 list/ft_lstclear.c \
 list/ft_lstiter.c \
 list/ft_lstmap.c\
-printf/srcs/ft_print.c\
-printf/srcs/printf_utils.c\
-printf/srcs/ft_parsing_flags.c\
-printf/srcs/ft_treat_dot.c\
-printf/srcs/ft_treat_zero.c\
-printf/srcs/ft_parsing_type_ui.c\
-printf/srcs/ft_printf.c\
-printf/srcs/ft_parsing_type.c\
-printf/srcs/printf_utils2.c\
-printf/srcs/ft_treat_mfw.c\
-printf/srcs/ft_str_convert.c\
-printf/srcs/ft_parsing_type_hex.c
 
 _GREY=	$'\033[30m
 _RED=	$'\033[31m
