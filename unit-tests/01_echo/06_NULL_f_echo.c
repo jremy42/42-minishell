@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 10:15:37 by ngiroux           #+#    #+#             */
-/*   Updated: 2022/02/08 12:59:20 by jremy            ###   ########.fr       */
+/*   Updated: 2022/02/08 14:16:29 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int	__NULL_f_echo(void)
 {
-	char 	**send;
-	char	recho[BUFFER_SIZE]; 
+	char	**send;
+	char	recho[BUFFER_SIZE];
 	t_pipe	std;
 
 	send = __split("echo -n", ' ');

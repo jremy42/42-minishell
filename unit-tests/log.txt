@@ -184,3 +184,87 @@ ECHO > [flag] :
 ECHO > [multi f] : 
 ECHO > [NULL] : 
 ECHO > [NULL_f] : 
+[0mPWD > [basic] : 
+[0mECHO > [basic] : 
+ECHO > [flag] : 
+ECHO > [multi f] : 
+ECHO > [NULL] : 
+ECHO > [NULL_f] : 
+[0mPWD > [basic] : 
+[0mECHO > [basic] : 
+ECHO > [flag] : 
+ECHO > [multi f] : 
+ECHO > [NULL] : 
+ECHO > [NULL_f] : 
+[0mPWD > [basic] : 
+[0mECHO > [basic] : 
+ECHO > [flag] : 
+ECHO > [multi f] : 
+ECHO > [NULL] : 
+ECHO > [NULL_f] : 
+[0mPWD > [basic] : 
+[0mECHO > [basic] : 
+ECHO > [flag] : 
+ECHO > [multi f] : 
+ECHO > [NULL] : 
+ECHO > [NULL_f] : 
+[0mPWD > [basic] : 
+[0mECHO > [basic] : 
+ECHO > [flag] : 
+ECHO > [multi f] : 
+ECHO > [NULL] : 
+ECHO > [NULL_f] : 
+[0mPWD > [basic] : 
+[0mECHO > [basic] : 
+ECHO > [flag] : 
+ECHO > [multi f] : 
+ECHO > [NULL] : 
+ECHO > [NULL_f] : 
+[0mPWD > [basic] : 
+[0mECHO > [basic] : 
+ECHO > [flag] : 
+ECHO > [multi f] : 
+ECHO > [NULL] : 
+ECHO > [NULL_f] : 
+[0mPWD > [basic] : 
+[0mECHO > [basic] : 
+ECHO > [flag] : 
+ECHO > [multi f] : 
+ECHO > [NULL] : 
+ECHO > [invalid flag] : 
+
+ test : echo -ntoto ceci est un test  
+    attendu : [-ntoto ceci est un test
+]
+    retour : [ceci est un test
+]  
+[0mPWD > [basic] : 
+[0mECHO > [basic] : 
+ECHO > [flag] : 
+ECHO > [multi f] : 
+ECHO > [NULL] : 
+ECHO > [invalid flag] : 
+[0mPWD > [basic] : 
+[0mECHO > [basic] : 
+ECHO > [flag] : 
+ECHO > [multi f] : 
+ECHO > [NULL] : 
+ECHO > [invalid flag] : 
+[0mPWD > [basic] : 
+[0mECHO > [basic] : 
+ECHO > [flag] : 
+ECHO > [multi f] : 
+ECHO > [NULL] : 
+ECHO > [invalid flag] : 
+[0mPWD > [basic] : 
+[0mECHO > [basic] : 
+ECHO > [flag] : 
+ECHO > [multi f] : 
+ECHO > [NULL] : 
+ECHO > [invalid flag] : 
+[0mPWD > [basic] : 
+[0mECHO > [basic] : 
+ECHO > [flag] : 
+ECHO > [multi f] : 
+ECHO > [NULL] : 
+ECHO > [invalid flag] : 
