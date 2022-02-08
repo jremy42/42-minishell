@@ -32,8 +32,8 @@ print/ft_putchar_fd.c \
 print/ft_putstr_fd.c \
 print/ft_putendl_fd.c \
 print/ft_putnbr_fd.c \
-gnl/get_next_line.c \
-gnl/get_next_line_utils.c
+#gnl/get_next_line.c \
+#gnl/get_next_line_utils.c
 
 BONUS = list/ft_lstnew.c \
 list/ft_lstadd_front.c \

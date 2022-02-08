@@ -6,7 +6,7 @@
 #    By: jremy <jremy@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/08 10:12:53 by ngiroux           #+#    #+#              #
-#    Updated: 2022/02/08 15:07:35 by jremy            ###   ########.fr        #
+#    Updated: 2022/02/08 16:34:06 by fle-blay         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,8 +61,11 @@ $(OBJS_PATH)%.o: %.c
 # Compiling command
 all:		${NAME}
 
-${NAME}:	${OBJS}
+${NAME}:	${OBJS} ./framework/libunit.a
 			$(CC) $(CFLAGS) $(OBJS) $(LIB_CC) -o $(NAME)
+
+./framework/libunit.a :
+			make -C ./framework
 
 test:		${NAME}
 			./${NAME} || true

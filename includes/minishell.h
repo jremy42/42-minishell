@@ -6,11 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 11:08:29 by jremy             #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/02/08 14:32:41 by fle-blay         ###   ########.fr       */
-=======
-/*   Updated: 2022/02/08 15:07:49 by jremy            ###   ########.fr       */
->>>>>>> 493cac77eaac3346f2e9e20c41cdbabea0a5d532
+/*   Updated: 2022/02/08 16:25:13 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,10 +71,7 @@ fonction de gestion des fd
 
 int	__pwd(int fd);
 int	__echo(char **str, int fd);
-<<<<<<< HEAD
 int	__cd(char *new_path, char *envp[]);
-=======
 int	__env(char **env);
 
->>>>>>> 493cac77eaac3346f2e9e20c41cdbabea0a5d532
 #endif

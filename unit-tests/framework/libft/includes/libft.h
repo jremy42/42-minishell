@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/15 15:17:36 by jremy             #+#    #+#             */
-/*   Updated: 2022/02/08 15:56:07 by jremy            ###   ########.fr       */
+/*   Updated: 2022/02/08 16:27:49 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int		__isdigit(int c);
 int		__isalnum(int c);
 int		__isascii(int c);
 int		__isprint(int c);
-//size_t	__strlen(const char *str);
+size_t	__strlen(const char *str);
 void	*__memset(void *pt, int value, size_t count);
 void	__bzero(void *pt, int count);
 void	*__memcpy(void *dst, const void *src, size_t n);
@@ -57,7 +57,6 @@ void	__putstr_fd(char const *s, int fd);
 void	__putendl_fd(char const *s, int fd);
 void	__putnbr_fd(int n, int fd);
 char	*get_next_line(int fd);
-int		__strlen(char *str);
 char	*__strjoingnl(char *dest, char *src);
 char	*__get_line(char *str);
 int		__size_line(char *str);
