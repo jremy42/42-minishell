@@ -1,5 +1,6 @@
 SRC = srcs/minishell.c \
 srcs/bin/pwd/pwd.c\
+srcs/bin/env/env.c\
 srcs/bin/echo/echo.c
 
 

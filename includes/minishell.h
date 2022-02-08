@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 11:08:29 by jremy             #+#    #+#             */
-/*   Updated: 2022/02/08 10:04:28 by jremy            ###   ########.fr       */
+/*   Updated: 2022/02/08 15:07:49 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ typedef struct s_msh
 	int		rv;
 	t_cmd	*cmd;
 	char	*prompt;
+	char	**envp;
 }	t_msh;
 
 /*
@@ -67,7 +68,9 @@ exe
 fonction de gestion des fd
 */
 //built-in
+
 int	__pwd(int fd);
 int	__echo(char **str, int fd);
+int	__env(char **env);
 
 #endif

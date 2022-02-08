@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:41:54 by jremy             #+#    #+#             */
-/*   Updated: 2022/02/08 14:12:59 by jremy            ###   ########.fr       */
+/*   Updated: 2022/02/08 15:26:18 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ int	__echo(char **str, int fd)
 	int	i;
 	int	flags;
 
+	if(!str || !str[0])
+		return (__FAIL);
 	flags = 0;
 	i = 0;
 	i++;
