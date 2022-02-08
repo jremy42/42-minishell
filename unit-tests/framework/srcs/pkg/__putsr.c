@@ -3,24 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   __putsr.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ngiroux <ngiroux@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 19:28:06 by ngiroux           #+#    #+#             */
-/*   Updated: 2022/01/09 17:51:16 by ngiroux          ###   ########.fr       */
+/*   Updated: 2022/02/08 15:56:30 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libunit.h"
-
-static int	__strlen(char *str)
-{
-	char	*ptr;
-
-	ptr = str;
-	while (*++str)
-		;
-	return (str - ptr);
-}
 
 void	__putstr(char *str)
 {

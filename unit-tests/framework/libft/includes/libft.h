@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/15 15:17:36 by jremy             #+#    #+#             */
-/*   Updated: 2022/01/19 09:19:44 by jremy            ###   ########.fr       */
+/*   Updated: 2022/02/08 15:56:07 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,11 @@ void	__putstr_fd(char const *s, int fd);
 void	__putendl_fd(char const *s, int fd);
 void	__putnbr_fd(int n, int fd);
 char	*get_next_line(int fd);
-int		ft_strchr(char *str, char tofind);
-int		ft_strlen(char *str);
-char	*ft_strjoingnl(char *dest, char *src);
-char	*ft_get_line(char *str);
-int		ft_size_line(char *str);
-char	*ft_save_memory(char *str);
-char	*ft_strdup(char *src);
-void	*ft_memcpy(void *dst, const void *src, size_t n);
-char	*ft_read_file(int fd, char *memory);
+int		__strlen(char *str);
+char	*__strjoingnl(char *dest, char *src);
+char	*__get_line(char *str);
+int		__size_line(char *str);
+char	*__save_memory(char *str);
+void	*__memcpy(void *dst, const void *src, size_t n);
+char	*__read_file(int fd, char *memory);
 #endif
