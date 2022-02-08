@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:25:57 by jremy             #+#    #+#             */
-/*   Updated: 2022/02/08 19:06:04 by jremy            ###   ########.fr       */
+/*   Updated: 2022/02/08 19:10:02 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,43 @@ char	*__get_prompt(t_msh *msh)
 	return (msh->prompt);
 }
 
+static void	get_env(t_msh *msh, char *envp[])
+{
+	int	i;
+
+	i = 0;
+	while (envp[i])
+		i++;	
+	msh->envp = (char ***)malloc((i + 1) * sizeof(char **));
+	msh->envp[i] = NULL;
+	while (i--)
+	{
+		msh->envp[i] = (char **)malloc((3) * sizeof(char *));
+		msh->envp[i][0] = __strdup(envp[i]);
+		msh->envp[i][1] = __strdup("1");
+		msh->envp[i][2] = NULL;
+	}
+}
+
+static void	print_env(t_msh *msh)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (msh->envp[i])
+	{
+		j = 0;
+		while (msh->envp[i][j])
+		{
+			printf("msh->envp[%d][%d] : %s", i, j, msh->envp[i][j]);
+			j++;
+		}
+		printf("\n");
+		i++;
+	}
+}
+
 void __mini_parsing(char *arg, t_msh *msh)
 {
 	char **argv;
@@ -49,6 +86,8 @@ void __mini_parsing(char *arg, t_msh *msh)
 		__echo(argv, 1);
 }
 
+
+
 int	main (int ac, char *av[], char *envp[])
 {
 	(void) ac;
@@ -58,6 +97,8 @@ int	main (int ac, char *av[], char *envp[])
 	t_msh	msh;
 	
 	msh = (t_msh){.rv = 1};
+	get_env(&msh, envp);
+	print_env(&msh);
 	while (42)
 	{
 		arg = readline(__get_prompt(&msh));
