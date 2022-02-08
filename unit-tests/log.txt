@@ -1,263 +1,3 @@
-[0mPARSING > [int_min] : 
-PARSING > [int_max] : 
-PARSING > [doublons] : 
-PARSING > [sort1] : 
-PARSING > [sort2] : 
-PARSING > [sort3] : 
-PARSING > [char] : 
-PARSING > [empty] : 
-PARSING > [empty2] : 
-PARSING > [empty3] : 
-[0mCHECKER > [int_min] : 
-CHECKER > [int_max] : 
-CHECKER > [doublons] : 
-CHECKER > [input1] : 
-CHECKER > [input2] : 
-CHECKER > [input3] : 
-CHECKER > [input4] : 
-CHECKER > [char] : 
-CHECKER > [empty] : 
-CHECKER > [empty2] : 
-CHECKER > [empty3] : 
-[0mPARSING > [int_min] : 
-PARSING > [int_max] : 
-PARSING > [doublons] : 
-PARSING > [sort1] : 
-PARSING > [sort2] : 
-PARSING > [sort3] : 
-PARSING > [char] : 
-PARSING > [empty] : 
-PARSING > [empty2] : 
-PARSING > [empty3] : 
-[0mCHECKER > [int_min] : 
-CHECKER > [int_max] : 
-CHECKER > [doublons] : 
-CHECKER > [input1] : 
-CHECKER > [input2] : 
-CHECKER > [input3] : 
-CHECKER > [input4] : 
-CHECKER > [char] : 
-CHECKER > [empty] : 
-CHECKER > [empty2] : 
-CHECKER > [empty3] : 
-[0mPARSING > [int_min] : 
-PARSING > [int_max] : 
-PARSING > [doublons] : 
-PARSING > [sort1] : 
-PARSING > [sort2] : 
-PARSING > [sort3] : 
-PARSING > [char] : 
-PARSING > [empty] : 
-PARSING > [empty2] : 
-PARSING > [empty3] : 
-[0mCHECKER > [int_min] : 
-CHECKER > [int_max] : 
-CHECKER > [doublons] : 
-CHECKER > [input1] : 
-CHECKER > [input2] : 
-CHECKER > [input3] : 
-CHECKER > [input4] : 
-CHECKER > [char] : 
-CHECKER > [empty] : 
-CHECKER > [empty2] : 
-CHECKER > [empty3] : 
-[0mPARSING > [int_min] : 
-PARSING > [int_max] : 
-PARSING > [doublons] : 
-PARSING > [sort1] : 
-PARSING > [sort2] : 
-PARSING > [sort3] : 
-PARSING > [char] : 
-PARSING > [empty] : 
-PARSING > [empty2] : 
-PARSING > [empty3] : 
-[0mCHECKER > [int_min] : 
-CHECKER > [int_max] : 
-CHECKER > [doublons] : 
-CHECKER > [input1] : 
-CHECKER > [input2] : 
-CHECKER > [input3] : 
-CHECKER > [input4] : 
-CHECKER > [char] : 
-CHECKER > [empty] : 
-CHECKER > [empty2] : 
-CHECKER > [empty3] : 
-[0mPARSING > [int_min] : 
-PARSING > [int_max] : 
-PARSING > [doublons] : 
-PARSING > [sort1] : 
-PARSING > [sort2] : 
-PARSING > [sort3] : 
-PARSING > [char] : 
-PARSING > [empty] : 
-PARSING > [empty2] : 
-PARSING > [empty3] : 
-[0mCHECKER > [int_min] : 
-CHECKER > [int_max] : 
-CHECKER > [doublons] : 
-CHECKER > [input1] : 
-CHECKER > [input2] : 
-CHECKER > [input3] : 
-CHECKER > [input4] : 
-CHECKER > [char] : 
-CHECKER > [empty] : 
-CHECKER > [empty2] : 
-CHECKER > [empty3] : 
-[0mPARSING > [int_min] : 
-PARSING > [int_max] : 
-PARSING > [doublons] : 
-PARSING > [sort1] : 
-PARSING > [sort2] : 
-PARSING > [sort3] : 
-PARSING > [char] : 
-PARSING > [empty] : 
-PARSING > [empty2] : 
-PARSING > [empty3] : 
-[0mCHECKER > [int_min] : 
-CHECKER > [int_max] : 
-CHECKER > [doublons] : 
-CHECKER > [input1] : 
-CHECKER > [input2] : 
-CHECKER > [input3] : 
-CHECKER > [input4] : 
-CHECKER > [char] : 
-CHECKER > [empty] : 
-CHECKER > [empty2] : 
-CHECKER > [empty3] : 
-[0mPARSING > [int_min] : 
-PARSING > [int_max] : 
-PARSING > [doublons] : 
-PARSING > [sort1] : 
-PARSING > [sort2] : 
-PARSING > [sort3] : 
-PARSING > [char] : 
-PARSING > [empty] : 
-PARSING > [empty2] : 
-PARSING > [empty3] : 
-[0mCHECKER > [int_min] : 
-CHECKER > [int_max] : 
-CHECKER > [doublons] : 
-CHECKER > [input1] : 
-CHECKER > [input2] : 
-CHECKER > [input3] : 
-[0mPARSING > [int_min] : 
-PARSING > [int_max] : 
-PARSING > [doublons] : 
-PARSING > [sort1] : 
-PARSING > [sort2] : 
-PARSING > [sort3] : 
-PARSING > [char] : 
-PARSING > [empty] : 
-PARSING > [empty2] : 
-PARSING > [empty3] : 
-[0mCHECKER > [int_min] : 
-CHECKER > [int_max] : 
-CHECKER > [doublons] : 
-CHECKER > [input1] : 
-CHECKER > [input2] : 
-CHECKER > [input3] : 
-CHECKER > [input4] : 
-CHECKER > [char] : 
-CHECKER > [empty] : 
-CHECKER > [empty2] : 
-CHECKER > [empty3] : 
-[0mPARSING > [int_min] : 
-PARSING > [int_max] : 
-PARSING > [doublons] : 
-PARSING > [sort1] : 
-PARSING > [sort2] : 
-PARSING > [sort3] : 
-PARSING > [char] : 
-PARSING > [empty] : 
-PARSING > [empty2] : 
-PARSING > [empty3] : 
-[0mCHECKER > [int_min] : 
-CHECKER > [int_max] : 
-CHECKER > [doublons] : 
-CHECKER > [input1] : 
-CHECKER > [input2] : 
-CHECKER > [input3] : 
-CHECKER > [input4] : 
-CHECKER > [char] : 
-CHECKER > [empty] : 
-CHECKER > [empty2] : 
-CHECKER > [empty3] : 
-[0mPARSING > [int_min] : 
-PARSING > [int_max] : 
-PARSING > [doublons] : 
-PARSING > [sort1] : 
-PARSING > [sort2] : 
-PARSING > [sort3] : 
-PARSING > [char] : 
-PARSING > [empty] : 
-PARSING > [empty2] : 
-PARSING > [empty3] : 
-[0mCHECKER > [int_min] : 
-CHECKER > [int_max] : 
-CHECKER > [doublons] : 
-CHECKER > [input1] : 
-CHECKER > [input2] : 
-CHECKER > [input3] : 
-CHECKER > [input4] : 
-CHECKER > [char] : 
-CHECKER > [empty] : 
-CHECKER > [empty2] : 
-CHECKER > [empty3] : 
-[0mPARSING > [int_min] : 
-PARSING > [int_max] : 
-PARSING > [doublons] : 
-PARSING > [sort1] : 
-PARSING > [sort2] : 
-PARSING > [sort3] : 
-PARSING > [char] : 
-PARSING > [empty] : 
-PARSING > [empty2] : 
-PARSING > [empty3] : 
-[0mCHECKER > [int_min] : 
-CHECKER > [int_max] : 
-CHECKER > [doublons] : 
-CHECKER > [input1] : 
-CHECKER > [input2] : 
-CHECKER > [input3] : 
-CHECKER > [input4] : 
-CHECKER > [char] : 
-CHECKER > [empty] : 
-CHECKER > [empty2] : 
-CHECKER > [empty3] : 
-[0mPWD > [classique] : 
-[0mECHO > [basic] : 
-[0mPWD > [classique] : 
-[0mECHO > [basic] : 
-[0mPWD > [classique] : 
-[0mECHO > [basic] : 
-[0mPWD > [classique] : 
-[0mECHO > [basic] : 
-[0mPWD > [classique] : 
-[0mECHO > [basic] : 
-[0mPWD > [basic] : 
-[0mECHO > [basic] : 
-[0mPWD > [basic] : 
-[0mECHO > [basic] : 
-[0mPWD > [basic] : 
-[0mECHO > [basic] : 
-[0mPWD > [basic] : 
-[0mECHO > [basic] : 
-[0mPWD > [basic] : 
-[0mECHO > [basic] : 
-ECHO > [flag] : 
-ECHO > [multi flag] : 
-[0mPWD > [basic] : 
-[0mECHO > [basic] : 
-ECHO > [flag] : 
-ECHO > [multi flag] : 
-[0mPWD > [basic] : 
-[0mECHO > [basic] : 
-ECHO > [flag] : 
-ECHO > [multi f] : 
-[0mPWD > [basic] : 
-[0mECHO > [basic] : 
-ECHO > [flag] : 
-ECHO > [multi f] : 
 [0mPWD > [basic] : 
 [0mECHO > [basic] : 
 ECHO > [flag] : 
@@ -265,3 +5,182 @@ ECHO > [multi f] :
 ECHO > [NULL] : 
 ECHO > [NULL_f] : 
 ECHO > [invalid flag] : 
+
+ test : echo -ntoto ceci est un test  
+    attendu : [-ntoto ceci est un test
+]
+    retour : [ceci est un test
+]  
+[0mPWD > [basic] : 
+[0mECHO > [basic] : 
+ECHO > [flag] : 
+ECHO > [multi f] : 
+ECHO > [NULL] : 
+ECHO > [NULL_f] : 
+ECHO > [invalid flag] : 
+
+ test : echo -ntoto ceci est un test  
+    attendu : [-ntoto ceci est un test
+]
+    retour : [ceci est un test
+]  
+[0mPWD > [basic] : 
+[0mECHO > [basic] : 
+ECHO > [flag] : 
+ECHO > [multi f] : 
+ECHO > [NULL] : 
+ECHO > [NULL_f] : 
+ECHO > [invalid flag] : 
+
+ test : echo -ntoto ceci est un test  
+    attendu : [-ntoto ceci est un test
+]
+    retour : [ceci est un test
+]  
+[0mPWD > [basic] : 
+[0mECHO > [basic] : 
+ECHO > [flag] : 
+ECHO > [multi f] : 
+ECHO > [NULL] : 
+ECHO > [NULL_f] : 
+ECHO > [invalid flag] : 
+
+ test : echo -ntoto ceci est un test  
+    attendu : [-ntoto ceci est un test
+]
+    retour : [ceci est un test
+]  
+[0mPWD > [basic] : 
+[0mECHO > [basic] : 
+ECHO > [flag] : 
+ECHO > [multi f] : 
+ECHO > [NULL] : 
+ECHO > [NULL_f] : 
+ECHO > [invalid flag] : 
+
+ test : echo -ntoto ceci est un test  
+    attendu : [-ntoto ceci est un test
+]
+    retour : [ceci est un test
+]  
+[0mPWD > [basic] : 
+[0mECHO > [basic] : 
+ECHO > [flag] : 
+ECHO > [multi f] : 
+ECHO > [NULL] : 
+ECHO > [NULL_f] : 
+ECHO > [invalid flag] : 
+
+ test : echo -ntoto ceci est un test  
+    attendu : [-ntoto ceci est un test
+]
+    retour : [ceci est un test
+]  
+[0mPWD > [basic] : 
+[0mECHO > [basic] : 
+ECHO > [flag] : 
+ECHO > [multi f] : 
+ECHO > [NULL] : 
+ECHO > [NULL_f] : 
+ECHO > [invalid flag] : 
+
+ test : echo -ntoto ceci est un test  
+    attendu : [-ntoto ceci est un test
+]
+    retour : [ceci est un test
+]  
+[0mPWD > [basic] : 
+[0mECHO > [basic] : 
+ECHO > [flag] : 
+ECHO > [multi f] : 
+ECHO > [NULL] : 
+ECHO > [NULL_f] : 
+ECHO > [invalid flag] : 
+
+ test : echo -ntoto ceci est un test  
+    attendu : [-ntoto ceci est un test
+]
+    retour : [ceci est un test
+]  
+[0mPWD > [basic] : 
+[0mECHO > [basic] : 
+ECHO > [flag] : 
+ECHO > [multi f] : 
+ECHO > [NULL] : 
+ECHO > [NULL_f] : 
+ECHO > [invalid flag] : 
+
+ test : echo -ntoto ceci est un test  
+    attendu : [-ntoto ceci est un test
+]
+    retour : [ceci est un test
+]  
+[0mPWD > [basic] : 
+[0mECHO > [basic] : 
+ECHO > [flag] : 
+ECHO > [multi f] : 
+ECHO > [NULL] : 
+ECHO > [NULL_f] : 
+ECHO > [invalid flag] : 
+
+ test : echo -ntoto ceci est un test  
+    attendu : [-ntoto ceci est un test
+]
+    retour : [ceci est un test
+]  
+[0mPWD > [basic] : 
+[0mECHO > [basic] : 
+ECHO > [flag] : 
+ECHO > [multi f] : 
+ECHO > [NULL] : 
+ECHO > [NULL_f] : 
+ECHO > [invalid flag] : 
+
+ test : echo -ntoto ceci est un test  
+    attendu : [-ntoto ceci est un test
+]
+    retour : [ceci est un test
+]  
+[0mPWD > [basic] : 
+[0mECHO > [basic] : 
+ECHO > [flag] : 
+ECHO > [multi f] : 
+ECHO > [NULL] : 
+ECHO > [NULL_f] : 
+ECHO > [invalid flag] : 
+
+ test : echo -ntoto ceci est un test  
+    attendu : [-ntoto ceci est un test
+]
+    retour : [ceci est un test
+]  
+[0mPWD > [basic] : 
+[0mECHO > [basic] : 
+ECHO > [flag] : 
+ECHO > [multi f] : 
+ECHO > [NULL] : 
+ECHO > [NULL_f] : 
+[0mPWD > [basic] : 
+[0mECHO > [basic] : 
+ECHO > [flag] : 
+ECHO > [multi f] : 
+ECHO > [NULL] : 
+ECHO > [NULL_f] : 
+[0mPWD > [basic] : 
+[0mECHO > [basic] : 
+ECHO > [flag] : 
+ECHO > [multi f] : 
+ECHO > [NULL] : 
+ECHO > [NULL_f] : 
+[0mPWD > [basic] : 
+[0mECHO > [basic] : 
+ECHO > [flag] : 
+ECHO > [multi f] : 
+ECHO > [NULL] : 
+ECHO > [NULL_f] : 
+[0mPWD > [basic] : 
+[0mECHO > [basic] : 
+ECHO > [flag] : 
+ECHO > [multi f] : 
+ECHO > [NULL] : 
+ECHO > [NULL_f] : 

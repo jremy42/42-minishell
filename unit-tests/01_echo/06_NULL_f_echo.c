@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 10:15:37 by ngiroux           #+#    #+#             */
-/*   Updated: 2022/02/08 11:43:32 by jremy            ###   ########.fr       */
+/*   Updated: 2022/02/08 12:59:20 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,10 @@ int	__NULL_f_echo(void)
 	__read_std(recho, &std);
 	__close_std(&std);
 	if ((strcmp(recho, "") != 0))
+	{
+		__log_test("echo -n", "", __strdup(recho));
 		return (-1);
+	}
 	else
 		return (0);
 }

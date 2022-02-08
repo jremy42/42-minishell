@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 10:15:37 by ngiroux           #+#    #+#             */
-/*   Updated: 2022/02/08 11:43:07 by jremy            ###   ########.fr       */
+/*   Updated: 2022/02/08 12:32:34 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,10 @@ int	__invalid_flag_echo(void)
 	__read_std(recho, &std);
 	__close_std(&std);
 	if ((strcmp(recho, "-ntoto ceci est un test\n") != 0))
+	{
+		__log_test("echo -ntoto ceci est un test", "-ntoto ceci est un test\n", __strdup(recho));
 		return (-1);
+	}
 	else
 		return (0);
 }
