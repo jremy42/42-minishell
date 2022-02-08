@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:25:57 by jremy             #+#    #+#             */
-/*   Updated: 2022/02/08 10:22:30 by jremy            ###   ########.fr       */
+/*   Updated: 2022/02/08 13:05:38 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,22 +42,21 @@ int	main ()
 {
 	char	*arg[10];
 	int		i;
-	char	*prompt;
 	t_msh	msh;
 
-	msh.rv = 1;
-	msh.prompt = NULL;
+	msh = (t_msh){.rv = 1};
 	i = 0;
-	prompt = NULL;
 	while (42)
 	{
-		prompt = readline(__get_prompt(&msh));
-		arg[i] = prompt;
-		if (prompt[i] == '*')
+		arg[i] = readline(__get_prompt(&msh));
+		if (arg[i][0] == '*')
+		{
+			free(arg[i]);
 			break ;
+		}
 		i++;
 	}
-	arg[i++] = NULL;
+	arg[i] = NULL;
 	__pwd(1);
 	__echo(arg, 1);
 }
