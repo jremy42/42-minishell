@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:25:57 by jremy             #+#    #+#             */
-/*   Updated: 2022/02/08 15:40:52 by fle-blay         ###   ########.fr       */
+/*   Updated: 2022/02/08 17:03:26 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,9 @@ int	main (int ac, char *av[], char *envp[])
 	}
 	__pwd(1);
 	__echo(arg, 1);
-	__cd("srcs", envp);
+	__cd("srcs");
 	__pwd(1);
-	__cd("/", envp);
+	__cd("/dev");
 	__pwd(1);
 	__env(NULL);
 	free(msh.prompt);
