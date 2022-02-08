@@ -6,13 +6,13 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:41:54 by jremy             #+#    #+#             */
-/*   Updated: 2022/02/07 19:09:22 by jremy            ###   ########.fr       */
+/*   Updated: 2022/02/08 11:52:52 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static	int __get_flags(char **str)
+static	int	__get_flags(char **str)
 {
 	int	i;
 
@@ -32,7 +32,8 @@ int	__echo(char **str, int fd)
 	i++;
 	if (__get_flags(str) > 0)
 	{
-		if (__strncmp(str[i], "-n", 2) == 0)
+		if (__strncmp(str[i], "-n", 2) == 0
+			&& __strlen(str[i]) == __strlen("-n"))
 			flags = 1;
 	}
 	while (__strncmp(str[i], "-n", 2) == 0)
@@ -41,7 +42,7 @@ int	__echo(char **str, int fd)
 	{
 		__putstr_fd(str[i], fd);
 		if (str[i + 1])
-			__putstr_fd(" ",fd);
+			__putstr_fd(" ", fd);
 		i++;
 	}
 	if (flags == 0)
