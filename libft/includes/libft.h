@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 16:01:03 by jremy             #+#    #+#             */
-/*   Updated: 2022/01/31 16:01:05 by jremy            ###   ########.fr       */
+/*   Updated: 2022/02/08 17:03:20 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,14 @@ typedef struct s_list
 	struct s_list	*next;
 }	t_list;
 
+typedef struct s_gbc
+{
+	void				*addr;
+	struct s_gbc		*next;
+}	t_gbc;
+
+void	*__malloc(size_t size, t_gbc *gbc);
+void	__free(void *addr, t_gbc *gbc);
 int		__isalpha(int c);
 int		__isdigit(int c);
 int		__isalnum(int c);

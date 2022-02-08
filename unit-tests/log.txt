@@ -281,3 +281,9 @@ ECHO > [flag] :
 ECHO > [multi f] : 
 ECHO > [NULL] : 
 ECHO > [invalid flag] : 
+[0mPWD > [basic] : 
+[0mECHO > [basic] : 
+ECHO > [flag] : 
+ECHO > [multi f] : 
+ECHO > [NULL] : 
+ECHO > [invalid flag] : 

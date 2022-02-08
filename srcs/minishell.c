@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:25:57 by jremy             #+#    #+#             */
-/*   Updated: 2022/02/08 15:40:52 by fle-blay         ###   ########.fr       */
+/*   Updated: 2022/02/08 19:02:55 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,31 +39,41 @@ char	*__get_prompt(t_msh *msh)
 	return (msh->prompt);
 }
 
+void __mini_parsing(char *arg, t_msh *msh)
+{
+	char **argv;
+
+	(void)msh;
+	argv = __split(arg, ' ');
+	if (__strncmp(argv[0], "echo", 4) == 0)
+		__echo(argv, 1);
+}
+
 int	main (int ac, char *av[], char *envp[])
 {
 	(void) ac;
 	(void) av;
-
-	char	*arg[10];
-	int		i;
-	t_msh	msh;
-
-	(void)ac;
-	(void)av;
 	(void)envp;
+	char	*arg;
+	t_msh	msh;
+	
 	msh = (t_msh){.rv = 1};
-	i = 0;
 	while (42)
 	{
-		arg[i] = readline(__get_prompt(&msh));
-		if (arg[i][0] == '*')
+		arg = readline(__get_prompt(&msh));
+		__mini_parsing(arg, &msh);
+		if (__strncmp(arg, "exit", __strlen("exit")) == 0 || arg == NULL)
 		{
-			free(arg[i]);
-			arg[i] = NULL;
+			if (arg)
+				free(arg);
+			arg = NULL;
 			break ;
 		}
-		i++;
 	}
+	free(msh.prompt);
+}
+
+/*
 	__pwd(1);
 	__echo(arg, 1);
 	__cd("srcs", envp);
@@ -71,5 +81,4 @@ int	main (int ac, char *av[], char *envp[])
 	__cd("/", envp);
 	__pwd(1);
 	__env(NULL);
-	free(msh.prompt);
-}
+	*/
