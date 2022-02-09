@@ -6,12 +6,14 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:25:57 by jremy             #+#    #+#             */
-/*   Updated: 2022/02/09 14:19:06 by jremy            ###   ########.fr       */
+/*   Updated: 2022/02/09 14:55:31 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <stdio.h>
+
+int g_rv;
 
 char	*__get_prompt(t_msh *msh)
 {
@@ -22,7 +24,7 @@ char	*__get_prompt(t_msh *msh)
 	__bzero(path, PATH_MAX);
 	if (msh->prompt)
 		free(msh->prompt);
-	if (msh->rv == 0)
+	if (g_rv == 0)
 		msh->prompt = __strdup(BOLDGREEN"➜  "RESET BOLDCYAN);
 	else
 		msh->prompt = __strdup(BOLDRED"➜  "RESET BOLDCYAN);
@@ -116,10 +118,9 @@ int	main (int ac, char *av[], char *envp[])
 
 	msh = (t_msh){.rv = 0};
 	get_env(&msh, envp);
-	//print_env(&msh);
 	while (42)
 	{
-		signal(SIGINT, __history);
+		signal(SIGINT, __signal);
 		arg = readline(__get_prompt(&msh));
 		add_history(arg);
 		if (__strncmp(arg, "exit", __strlen("exit")) == 0 || arg == NULL)
