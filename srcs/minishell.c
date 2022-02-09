@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:25:57 by jremy             #+#    #+#             */
-/*   Updated: 2022/02/09 11:57:52 by jremy            ###   ########.fr       */
+/*   Updated: 2022/02/09 13:06:32 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ void __mini_parsing(char *arg, t_msh *msh)
 	if (__strncmp(argv[0], "env", 3) == 0)
 		__env(msh);
 	if (__strncmp(argv[0], "export", 6) == 0)
-		__export(msh, argv[1]);
+		__export(argv + 1, msh);
 	if (__strncmp(argv[0], "unset", 5) == 0)
 		__unset(argv + 1, msh);
 	i = -1;

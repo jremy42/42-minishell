@@ -6,7 +6,7 @@
 /*   By: fle-blay <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 10:21:11 by fle-blay          #+#    #+#             */
-/*   Updated: 2022/02/09 12:51:27 by fle-blay         ###   ########.fr       */
+/*   Updated: 2022/02/09 13:07:26 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,27 +97,34 @@ static int	modify_status_key_val(t_msh *msh, char *key_val)
 	return (__SUCCESS);
 }
 
-int	__export(t_msh *msh, char *key_val)
+int	__export(char **key_val, t_msh *msh)
 {
-	if (__strchr(key_val, '=') && !key_exist(msh, key_val))
+	int	i;
+
+	i = -1;
+	while (key_val[++i])
 	{
-		if (add_key_val(msh, key_val, get_envp_size(msh)) == __SUCCESS)
-			return (__SUCCESS);
+		if (__strchr(key_val[i], '=') && !key_exist(msh, key_val[i]))
+		{
+			if (add_key_val(msh, key_val[i], get_envp_size(msh)) == __SUCCESS)
+				continue ;
+			else
+				return (__FAIL);
+		}
+		else if (__strchr(key_val[i], '=') && key_exist(msh, key_val[i]))
+		{
+			if (update_key_val(msh, key_val[i]) == __SUCCESS)
+				continue ;
+			else
+				return (__FAIL);
+		}
 		else
-			return (__FAIL);
+		{
+			if (modify_status_key_val(msh, key_val[i]) == __SUCCESS)
+				continue ;
+			else
+				return (__FAIL);
+		}
 	}
-	else if (__strchr(key_val, '=') && key_exist(msh, key_val))
-	{
-		if (update_key_val(msh, key_val) == __SUCCESS)
-			return (__SUCCESS);
-		else
-			return (__FAIL);
-	}
-	else
-	{
-		if (modify_status_key_val(msh, key_val) == __SUCCESS)
-			return (__SUCCESS);
-		else
-			return (__FAIL);
-	}
+	return (__SUCCESS);
 }
