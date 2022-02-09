@@ -4,6 +4,7 @@ srcs/bin/echo/echo.c\
 srcs/bin/cd/cd.c\
 srcs/bin/env/env.c\
 srcs/bin/export/export.c\
+srcs/bin/export/export_utils.c\
 srcs/bin/unset/unset.c
 
 

@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 11:08:29 by jremy             #+#    #+#             */
-/*   Updated: 2022/02/09 13:05:38 by fle-blay         ###   ########.fr       */
+/*   Updated: 2022/02/09 14:18:15 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,15 @@ int	__pwd(int fd);
 int	__echo(char **str, int fd);
 int	__cd(char *new_path);
 int	__env(t_msh *msh);
-int	__export(char **key_val, t_msh *msh);
 int	__unset(char **arg, t_msh *msh);
+int	__export(char **key_val, t_msh *msh);
+
+//Export utils
+
+int	modify_status_key_val(t_msh *msh, char *key_val);
+int	add_key_val(t_msh *msh, char *key_val, int i);
+int	update_key_val(t_msh *msh, char *key_val);
+int	key_exist(t_msh *msh, char *key);
+int	get_envp_size(t_msh *msh);
+
 #endif
