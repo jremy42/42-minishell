@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:25:57 by jremy             #+#    #+#             */
-/*   Updated: 2022/02/09 15:53:47 by jremy            ###   ########.fr       */
+/*   Updated: 2022/02/09 15:55:00 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ int	main (int ac, char *av[], char *envp[])
 	t_msh	msh;
 	(void)	ac;
 	(void)	av;
-	
+
 	msh = (t_msh){.rv = 0};
 	get_env(&msh, envp);
 	while (42)
