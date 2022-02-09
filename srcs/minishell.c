@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:25:57 by jremy             #+#    #+#             */
-/*   Updated: 2022/02/09 13:06:32 by fle-blay         ###   ########.fr       */
+/*   Updated: 2022/02/09 13:09:56 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,9 @@ int	main (int ac, char *av[], char *envp[])
 	while (42)
 	{
 		arg = readline(__get_prompt(&msh));
-		__mini_parsing(arg, &msh);
+		add_history(arg);
+		signal(SIGINT, history);
+		printf("%s\n", arg);
 		if (__strncmp(arg, "exit", __strlen("exit")) == 0 || arg == NULL)
 		{
 			if (arg)
@@ -128,6 +130,8 @@ int	main (int ac, char *av[], char *envp[])
 			arg = NULL;
 			break ;
 		}
+		__mini_parsing(arg, &msh);
+
 	}
 	free(msh.prompt);
 }
