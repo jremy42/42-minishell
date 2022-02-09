@@ -10,8 +10,8 @@ srcs/bin/export/export_utils.c
 
 
 IFLAGS =  -I includes/ -I libft/includes
-#CFLAGS = -Wall -Wextra -Werror
-CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g3
+CFLAGS = -Wall -Wextra -Werror
+#CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g3
 CC = gcc
 OBJ = $(addprefix $(OBJS_PATH), $(SRC:.c=.o))
 HEADER = includes/minishell.h
@@ -57,4 +57,7 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean bonus re
+run : $(NAME) ./.ignore_readline
+	valgrind --leak-check=full --track-fds=yes --show-leak-kinds=all --suppressions=.ignore_readline -q ./minishell
+
+.PHONY: all clean fclean bonus re run
