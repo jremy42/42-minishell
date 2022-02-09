@@ -6,7 +6,11 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:25:57 by jremy             #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/02/09 10:47:04 by jremy            ###   ########.fr       */
+=======
+/*   Updated: 2022/02/09 10:46:50 by fle-blay         ###   ########.fr       */
+>>>>>>> 80df3b247ef5a804d9ba856981a49df41cb338e4
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +61,10 @@ static void	get_env(t_msh *msh, char *envp[])
 	}
 }
 /*
+
+// destroy_env(t_msh *msh)
+//TODO
+
 static void	print_env(t_msh *msh)
 {
 	int	i;
@@ -79,7 +87,8 @@ static void	print_env(t_msh *msh)
 
 void __mini_parsing(char *arg, t_msh *msh)
 {
-	char **argv;
+	char	**argv;
+	int		i;
 
 	(void)msh;
 	argv = __split(arg, ' ');
@@ -91,6 +100,13 @@ void __mini_parsing(char *arg, t_msh *msh)
 		__pwd(1);
 	if (__strncmp(argv[0], "env", 3) == 0)
 		__env(msh);
+	if (__strncmp(argv[0], "export", 6) == 0)
+		__export(msh, argv[1]);
+	i = -1;
+	while (argv[++i])
+		free(argv[i]);
+	free(argv[i]);
+	free(argv);
 }
 
 int	main (int ac, char *av[], char *envp[])
