@@ -6,14 +6,32 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:25:57 by jremy             #+#    #+#             */
-/*   Updated: 2022/02/09 15:54:26 by jremy            ###   ########.fr       */
+/*   Updated: 2022/02/09 16:19:02 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+void destroy_env(t_msh *msh)
+{
+	int	i;
+
+	i = 0; 
+	if (!msh->envp)
+		return ;
+	while (msh->envp[i])
+	{
+		free(msh->envp[i][0]);
+		free(msh->envp[i][1]);
+		free(msh->envp[i]);
+		i++;
+	}
+	free(msh->envp);
+}
+
 int __exit(t_msh *msh)
 {
-    destroy_env(msh->envp);
-    return (0);
+	destroy_env(msh);
+	free(msh->prompt);
+	return (0);
 }

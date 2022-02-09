@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 11:08:29 by jremy             #+#    #+#             */
-/*   Updated: 2022/02/09 14:54:12 by jremy            ###   ########.fr       */
+/*   Updated: 2022/02/09 16:03:37 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,5 +90,6 @@ int	update_key_val(t_msh *msh, char *key_val);
 int	key_exist(t_msh *msh, char *key);
 int	get_envp_size(t_msh *msh);
 void    __signal(int signal);
+int __exit(t_msh *msh);
 
 #endif

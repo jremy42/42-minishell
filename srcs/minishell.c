@@ -6,14 +6,14 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:25:57 by jremy             #+#    #+#             */
-/*   Updated: 2022/02/09 16:00:14 by fle-blay         ###   ########.fr       */
+/*   Updated: 2022/02/09 16:17:08 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <stdio.h>
 
-int g_rv;
+int	g_rv;
 
 char	*__get_prompt(t_msh *msh)
 {
@@ -46,6 +46,8 @@ static void	get_env(t_msh *msh, char *envp[])
 	int	i;
 
 	i = 0;
+	if (!envp)
+		return ;
 	while (envp[i])
 		i++;
 	msh->envp = (char ***)malloc((i + 1) * sizeof(char **));
@@ -59,23 +61,7 @@ static void	get_env(t_msh *msh, char *envp[])
 	}
 }
 
-void destroy_env(t_msh *msh)
-{
-	int	i;
-
-	i = 0;
-	while (msh->envp[i])
-	{
-		free(msh->envp[i][0]);
-		free(msh->envp[i][1]);
-		free(msh->envp[i]);
-		i++;
-	}
-	free(msh->envp);
-}
-
-
-void __mini_parsing(char *arg, t_msh *msh)
+void	__mini_parsing(char *arg, t_msh *msh)
 {
 	char	**argv;
 	int		i;
@@ -106,7 +92,8 @@ int	main (int ac, char *av[], char *envp[])
 	t_msh	msh;
 	(void)	ac;
 	(void)	av;
-	
+	(void)	envp;
+
 	msh = (t_msh){.rv = 0};
 	get_env(&msh, envp);
 	while (42)
@@ -124,7 +111,7 @@ int	main (int ac, char *av[], char *envp[])
 		}
 		__mini_parsing(arg, &msh);
 	}
-	free(msh.prompt);
+	__exit(&msh);
 }
 
 /*

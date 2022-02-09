@@ -6,13 +6,14 @@ srcs/bin/env/env.c\
 srcs/bin/export/export.c\
 srcs/bin/unset/unset.c\
 srcs/signal.c\
+srcs/exit.c\
 srcs/bin/export/export_utils.c
 
 
 IFLAGS =  -I includes/ -I libft/includes
-CFLAGS = -Wall -Wextra -Werror
 #CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g3
-CC = gcc
+CFLAGS = -Wall -Wextra -Werror
+CC = cc
 OBJ = $(addprefix $(OBJS_PATH), $(SRC:.c=.o))
 HEADER = includes/minishell.h
 LIBFT = ./libft
