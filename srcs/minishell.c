@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:25:57 by jremy             #+#    #+#             */
-/*   Updated: 2022/02/09 09:34:37 by fle-blay         ###   ########.fr       */
+/*   Updated: 2022/02/09 10:46:50 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,9 @@ static void	get_env(t_msh *msh, char *envp[])
 	}
 }
 
+// destroy_env(t_msh *msh)
+//TODO
+
 static void	print_env(t_msh *msh)
 {
 	int	i;
@@ -78,7 +81,8 @@ static void	print_env(t_msh *msh)
 
 void __mini_parsing(char *arg, t_msh *msh)
 {
-	char **argv;
+	char	**argv;
+	int		i;
 
 	(void)msh;
 	argv = __split(arg, ' ');
@@ -88,9 +92,14 @@ void __mini_parsing(char *arg, t_msh *msh)
 		__cd(argv[1]);
 	if (__strncmp(argv[0], "pwd", 3) == 0)
 		__pwd(1);
+	if (__strncmp(argv[0], "export", 6) == 0)
+		__export(msh, argv[1]);
+	i = -1;
+	while (argv[++i])
+		free(argv[i]);
+	free(argv[i]);
+	free(argv);
 }
-
-
 
 int	main (int ac, char *av[], char *envp[])
 {
@@ -102,7 +111,7 @@ int	main (int ac, char *av[], char *envp[])
 	
 	msh = (t_msh){.rv = 1};
 	get_env(&msh, envp);
-	print_env(&msh);
+	(void)print_env(&msh);
 	while (42)
 	{
 		arg = readline(__get_prompt(&msh));
