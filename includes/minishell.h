@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 11:08:29 by jremy             #+#    #+#             */
-/*   Updated: 2022/02/09 10:51:46 by jremy            ###   ########.fr       */
+/*   Updated: 2022/02/09 11:23:24 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # define PROMPT_MAX 5000
 # define __SUCCESS 0
 # define __FAIL 1
+# define __MALLOC 240
 # define RESET   "\033[0m"
 # define BLACK   "\033[30m"      /* Black */
 # define RED     "\033[31m"      /* Red */
@@ -74,4 +75,5 @@ int	__echo(char **str, int fd);
 int	__cd(char *new_path);
 int	__env(t_msh *msh);
 int	__export(t_msh *msh, char *key_val);
+int	__unset(char **arg, t_msh *msh);
 #endif

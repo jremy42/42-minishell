@@ -6,11 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:25:57 by jremy             #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/02/09 10:47:04 by jremy            ###   ########.fr       */
-=======
-/*   Updated: 2022/02/09 10:46:50 by fle-blay         ###   ########.fr       */
->>>>>>> 80df3b247ef5a804d9ba856981a49df41cb338e4
+/*   Updated: 2022/02/09 11:27:06 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +15,7 @@
 
 char	*__get_prompt(t_msh *msh)
 {
-    char	path[PATH_MAX];
+	char	path[PATH_MAX];
 	int		i;
 
 	i = 0;
@@ -28,7 +24,7 @@ char	*__get_prompt(t_msh *msh)
 		free(msh->prompt);
 	if (msh->rv == 0)
 		msh->prompt = __strdup(BOLDGREEN"➜  "RESET BOLDCYAN);
-	else 
+	else
 		msh->prompt = __strdup(BOLDRED"➜  "RESET BOLDCYAN);
 	if (getcwd(path, PATH_MAX))
 	{
@@ -49,7 +45,7 @@ static void	get_env(t_msh *msh, char *envp[])
 
 	i = 0;
 	while (envp[i])
-		i++;	
+		i++;
 	msh->envp = (char ***)malloc((i + 1) * sizeof(char **));
 	msh->envp[i] = NULL;
 	while (i--)
@@ -102,6 +98,8 @@ void __mini_parsing(char *arg, t_msh *msh)
 		__env(msh);
 	if (__strncmp(argv[0], "export", 6) == 0)
 		__export(msh, argv[1]);
+	if (__strncmp(argv[0], "unset", 5) == 0)
+		__unset(argv + 1, msh);
 	i = -1;
 	while (argv[++i])
 		free(argv[i]);
@@ -111,11 +109,12 @@ void __mini_parsing(char *arg, t_msh *msh)
 
 int	main (int ac, char *av[], char *envp[])
 {
-	(void) ac;
-	(void) av;
 	char	*arg;
 	t_msh	msh;
-	msh = (t_msh){.rv = 1};
+	(void) ac;
+	(void) av;
+
+	msh = (t_msh){.rv = 0};
 	get_env(&msh, envp);
 	//print_env(&msh);
 	while (42)
