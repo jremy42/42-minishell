@@ -4,7 +4,8 @@ srcs/bin/echo/echo.c\
 srcs/bin/cd/cd.c\
 srcs/bin/env/env.c\
 srcs/bin/export/export.c\
-srcs/bin/unset/unset.c
+srcs/bin/unset/unset.c\
+srcs/history.c
 
 
 IFLAGS =  -I includes/ -I libft/includes

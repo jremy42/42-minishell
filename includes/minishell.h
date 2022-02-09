@@ -6,11 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 11:08:29 by jremy             #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/02/09 13:08:20 by jremy            ###   ########.fr       */
-=======
-/*   Updated: 2022/02/09 13:05:38 by fle-blay         ###   ########.fr       */
->>>>>>> 5bba8b941c42aea11175b2d55f35bcd89f0028fc
+/*   Updated: 2022/02/09 14:10:35 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,4 +80,5 @@ int	__cd(char *new_path);
 int	__env(t_msh *msh);
 int	__export(char **key_val, t_msh *msh);
 int	__unset(char **arg, t_msh *msh);
+void    __history(int signal);
 #endif
