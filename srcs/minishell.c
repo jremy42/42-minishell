@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:25:57 by jremy             #+#    #+#             */
-/*   Updated: 2022/02/09 15:53:47 by jremy            ###   ########.fr       */
+/*   Updated: 2022/02/09 16:00:14 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,30 +58,22 @@ static void	get_env(t_msh *msh, char *envp[])
 		msh->envp[i][2] = NULL;
 	}
 }
-/*
 
-// destroy_env(t_msh *msh)
-//TODO
-
-static void	print_env(t_msh *msh)
+void destroy_env(t_msh *msh)
 {
 	int	i;
-	int	j;
 
 	i = 0;
 	while (msh->envp[i])
 	{
-		j = 0;
-		while (msh->envp[i][j])
-		{
-			printf("msh->envp[%d][%d] : %s", i, j, msh->envp[i][j]);
-			j++;
-		}
-		printf("\n");
+		free(msh->envp[i][0]);
+		free(msh->envp[i][1]);
+		free(msh->envp[i]);
 		i++;
 	}
+	free(msh->envp);
 }
-*/
+
 
 void __mini_parsing(char *arg, t_msh *msh)
 {
@@ -105,7 +97,6 @@ void __mini_parsing(char *arg, t_msh *msh)
 	i = -1;
 	while (argv[++i])
 		free(argv[i]);
-	free(argv[i]);
 	free(argv);
 }
 
