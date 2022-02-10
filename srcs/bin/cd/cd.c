@@ -6,7 +6,7 @@
 /*   By: fle-blay <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 14:13:35 by fle-blay          #+#    #+#             */
-/*   Updated: 2022/02/09 14:37:28 by fle-blay         ###   ########.fr       */
+/*   Updated: 2022/02/10 09:28:36 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ int	__cd(char *new_path)
 
 	if (!new_path)
 		chdir(getenv("HOME"));
+	else if (new_path[0] == '-' && __strlen(new_path) == 1)
+		chdir(getenv("OLDPWD"));
 	else if (new_path[0] == '/')
 		chdir(new_path);
 	else
