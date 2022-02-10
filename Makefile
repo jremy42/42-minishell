@@ -7,7 +7,9 @@ srcs/bin/export/export.c\
 srcs/bin/unset/unset.c\
 srcs/signal.c\
 srcs/exit.c\
-srcs/bin/export/export_utils.c
+srcs/bin/export/export_utils.c\
+srcs/tokenizer/tokenizer_utils.c\
+srcs/tokenizer/tokenizer.c
 
 
 IFLAGS =  -I includes/ -I libft/includes

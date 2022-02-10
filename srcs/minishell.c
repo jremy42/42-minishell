@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:25:57 by jremy             #+#    #+#             */
-/*   Updated: 2022/02/09 16:17:08 by jremy            ###   ########.fr       */
+/*   Updated: 2022/02/10 18:07:30 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,18 @@ void	__mini_parsing(char *arg, t_msh *msh)
 {
 	char	**argv;
 	int		i;
+	t_list	*start;
+	t_list	*index;
+	
+	start = NULL;
+	__tokenize(arg, &start);
+	index = start;
+	while (index)
+	{
+		printf("Le token vaut : >%s<\n", (char *)index->content); 
+		index = index->next;
+	}
+	__lstclear(&start, &free);
 
 	(void)msh;
 	argv = __split(arg, ' ');

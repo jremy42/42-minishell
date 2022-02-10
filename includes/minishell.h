@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 11:08:29 by jremy             #+#    #+#             */
-/*   Updated: 2022/02/09 16:03:37 by jremy            ###   ########.fr       */
+/*   Updated: 2022/02/10 18:03:42 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,11 @@
 # define BOLDCYAN    "\033[1m\033[36m"      /* Bold Cyan */
 # define BOLDWHITE   "\033[1m\033[37m"      /* Bold White */
 
+typedef enum	e_operator
+{AND_IF, OR_IF, DLESS, DGREAT} t_operator;
+
+typedef enum	e_state
+{UNQUOTE, S_QUOTE, D_QUOTE, BACKSLASH} t_state;
 
 typedef struct s_cmd
 {
@@ -91,5 +96,17 @@ int	key_exist(t_msh *msh, char *key);
 int	get_envp_size(t_msh *msh);
 void    __signal(int signal);
 int __exit(t_msh *msh);
+
+//tokenizer
+
+int		__return_state(char c, int state, int slash_state);
+char	*__add_char_nt(char *tmp, char c, char **new_token);
+int		__need_to_escape(int i, t_state state, char *str);
+int		__is_operator_char(char c);
+
+int	__tokenize(char *s, t_list **start);
+int	__get_operator(char **new_token, char *str, int i);
+int		__get_word(char **new_token, char *str, int i);
+int		__adjust_i(char *str, int i, int state);
 
 #endif
