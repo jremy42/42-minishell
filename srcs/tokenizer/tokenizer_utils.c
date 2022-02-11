@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:25:57 by jremy             #+#    #+#             */
-/*   Updated: 2022/02/11 11:31:35 by jremy            ###   ########.fr       */
+/*   Updated: 2022/02/11 14:27:26 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,16 @@ int	__need_to_escape(int i, t_state state, char *str)
 
 char	*__add_char_nt(char *tmp, char c, char **new_token)
 {
+	char	*tmp2;
+
+	tmp2 = NULL;
 	tmp = __strdup(" ");
 	if (!tmp)
 		return (NULL);
 	tmp[0] = c;
-	return (__strjoin(*new_token, tmp));
+	tmp2 = __strjoin(*new_token, tmp);
+	free(tmp);
+	return (tmp2);
 }
 
 int	__return_state(char c, int state, int slash_state)

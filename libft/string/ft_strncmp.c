@@ -18,7 +18,7 @@ int	__strncmp(const char *s1, const char *s2, size_t size)
 
 	i = 0;
 	if (!s1)
-		return (0);
+		return (-1);
 	while ((s1[i] != '\0' || s2[i] != '\0') && i < size)
 	{
 		if (s1[i] != s2[i])

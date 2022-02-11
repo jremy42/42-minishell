@@ -42,6 +42,9 @@ typedef enum	e_operator
 typedef enum	e_state
 {UNQUOTE, S_QUOTE, D_QUOTE, BACKSLASH} t_state;
 
+typedef enum	e_ltype
+{OPERATOR, WORD, NEW_LINE} t_ltype;
+
 typedef struct s_cmd
 {
 	char			*cmd;
@@ -73,6 +76,13 @@ typedef struct s_token
 	int		i;
 	char	*new_token;
 } t_token;
+
+typedef struct s_lexing
+{
+	char *token;
+	t_ltype type;
+	struct s_lexing *next;
+}
 
 /*
 decouper en token / mots / operateur

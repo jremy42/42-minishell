@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:25:57 by jremy             #+#    #+#             */
-/*   Updated: 2022/02/11 14:07:00 by jremy            ###   ########.fr       */
+/*   Updated: 2022/02/11 14:48:02 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,9 @@ int	__get_word(char **new_token, char *str, int i)
 			if (__is_operator_char(str[i]) || __strchr("\f\t\n\r\v ", str[i]))
 				break ;
 		*new_token = __add_char_nt(gw.tmp, str[i], new_token);
+		free(gw.tmp);
 		if (!new_token)
 			return (-1);
-		free(gw.tmp);
 		i++;
 		gw.sl_st = 0;
 	}
@@ -78,7 +78,7 @@ int	__tokenize2(char *str, char *new_token, int i, t_list **start)
 	else
 		i = __get_word(&new_token, str, i);
 	if (i < 0)
-		return (-1);
+		return (free(new_token), -1);
 	if (__add_token(new_token, start) < 0)
 		return (-1);
 	return (i);
@@ -106,8 +106,6 @@ int	__tokenize(char *str, t_list **start)
 		token.status = 0;
 		token.i = __adjust_space(str, token.i);
 	}
-	//if (!__strlen(token.new_token))
-	//	return (__add_token(__strdup("EOI"), start));
 	return (0);
 }
 
