@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:25:57 by jremy             #+#    #+#             */
-/*   Updated: 2022/02/09 16:17:08 by jremy            ###   ########.fr       */
+/*   Updated: 2022/02/10 17:46:11 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	__mini_parsing(char *arg, t_msh *msh)
 	if (__strncmp(argv[0], "echo", 4) == 0)
 		__echo(argv, 1);
 	if (__strncmp(argv[0], "cd", 2) == 0)
-		__cd(argv[1]);
+		__cd(argv[1], msh);
 	if (__strncmp(argv[0], "pwd", 3) == 0)
 		__pwd(1);
 	if (__strncmp(argv[0], "env", 3) == 0)
