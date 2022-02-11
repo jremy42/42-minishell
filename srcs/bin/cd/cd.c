@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 14:13:35 by fle-blay          #+#    #+#             */
-/*   Updated: 2022/02/11 14:09:34 by jremy            ###   ########.fr       */
+/*   Updated: 2022/02/11 15:18:15 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ static char	*create_absolut_pwd(char *pwd, char *new_path)
 
 static int update_oldpwd(t_msh *msh)
 {
+	char	*values[2];
 	char	*old_pwd;
 	char	cwd[PATH_MAX];
 
@@ -44,13 +45,16 @@ static int update_oldpwd(t_msh *msh)
 	old_pwd = __strjoin(old_pwd, cwd);
 	if (!old_pwd)
 		return (__FAIL);
-	update_key_val(msh, old_pwd);
+	values[0] = old_pwd;
+	values[1] = NULL;
+	__export(values, msh);
 	free(old_pwd);
 	return (__SUCCESS);
 }
 
 static int	update_pwd(t_msh *msh)
 {
+	char	*values[2];
 	char	*pwd;
 	char	cwd[PATH_MAX];
 
@@ -62,7 +66,9 @@ static int	update_pwd(t_msh *msh)
 	pwd = __strjoin(pwd, cwd);
 	if (!pwd)
 		return (__FAIL);
-	update_key_val(msh, pwd);
+	values[0] = pwd;
+	values[1] = NULL;
+	__export(values, msh);
 	free(pwd);
 	return (__SUCCESS);
 }
