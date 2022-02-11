@@ -6,7 +6,7 @@
 /*   By: fle-blay <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 14:13:35 by fle-blay          #+#    #+#             */
-/*   Updated: 2022/02/11 10:51:59 by fle-blay         ###   ########.fr       */
+/*   Updated: 2022/02/11 11:46:27 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,25 +85,32 @@ static int	chdir_absolute_path(char *new_path)
 	return (__SUCCESS);
 }
 
-int	__cd(char *new_path, t_msh *msh)
+static int	chdir_previous(t_msh *msh)
 {
 	char	*save;
 
-	if (new_path[0] == '-' && __strlen(new_path) == 1)
+	save = NULL;
+	save = __strdup(get_key(msh, "OLDPWD"));
+	if (!save)
+		return(__FAIL);
+	update_oldpwd(msh);
+	chdir(save);
+	free(save);
+	return (__SUCCESS);
+}
+
+int	__cd(char *new_path, t_msh *msh)
+{
+	if (!new_path)
 	{
-		save = __strdup(get_key(msh, "OLDPWD"));
-		if (save)
-			exit(__FAIL);
 		update_oldpwd(msh);
-		chdir(save);
-		free(save);
-		update_pwd(msh);
+		chdir(get_key(msh, "HOME"));
 	}
+	else if (new_path[0] == '-' && __strlen(new_path) == 1)
+		chdir_previous(msh);
 	else
 	{
 		update_oldpwd(msh);
-		if (!new_path)
-			chdir(get_key(msh, "HOME"));
 		if (new_path[0] == '/')
 			chdir(new_path);
 		else
