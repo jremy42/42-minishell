@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:25:57 by jremy             #+#    #+#             */
-/*   Updated: 2022/02/09 15:44:06 by jremy            ###   ########.fr       */
+/*   Updated: 2022/02/10 12:10:58 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,18 @@ void	__signal(int signal)
 	if (signal == 2)
 	{	
 		g_rv = 130;
-		write(1,"\b\b",2);
-		write(1,"  ",2);
-		__putstr_fd("\n",1);
-		rl_replace_line("",0);
+		write(1, "\b\b", 2);
+		write(1, "  ", 2);
+		__putstr_fd("\n", 1);
+		rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();
 	}
 	if (signal == 3)
 	{
-		write(1,"\b\b",2);
-		write(1,"  ",2);
-		write(1,"\b\b",2);
+		write(1, "\b\b", 2);
+		write(1, "  ", 2);
+		write(1, "\b\b", 2);
 		return ;
 	}
 }

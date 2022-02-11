@@ -14,9 +14,9 @@
 
 char	*__strchr(const char *src, int find)
 {
-	size_t			i;
 	unsigned char	*s1;
 	size_t			size;
+	size_t			i;
 
 	i = 0;
 	size = __strlen(src);
