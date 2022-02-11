@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:25:57 by jremy             #+#    #+#             */
-/*   Updated: 2022/02/10 18:03:00 by jremy            ###   ########.fr       */
+/*   Updated: 2022/02/11 11:31:35 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,17 +33,32 @@ int	__need_to_escape(int i, t_state state, char *str)
 char	*__add_char_nt(char *tmp, char c, char **new_token)
 {
 	tmp = __strdup(" ");
+	if (!tmp)
+		return (NULL);
 	tmp[0] = c;
 	return (__strjoin(*new_token, tmp));
 }
 
 int	__return_state(char c, int state, int slash_state)
 {
-	if (c == 34 && state == D_QUOTE && slash_state)
-		state = UNQUOTE;
-	else if (c == 39 && state == S_QUOTE && slash_state)
-		state = UNQUOTE;
+	if (c == 34 && state == D_QUOTE && slash_state == 0)
+		return (UNQUOTE);
+	else if (c == 39 && state == S_QUOTE && slash_state == 0)
+		return (UNQUOTE);
 	else if (state == UNQUOTE)
 		state = (c == 39) * S_QUOTE + (c == 34) * D_QUOTE;
 	return (state);
+}
+
+int	__add_token(char *str, t_list **start)
+{
+	t_list	*t_token;
+
+	if (!str)
+		return (-1);
+	t_token = __lstnew(str);
+	if (!t_token)
+		return (-1);
+	__lstadd_back(start, t_token);
+	return (0);
 }

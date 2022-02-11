@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:25:57 by jremy             #+#    #+#             */
-/*   Updated: 2022/02/11 10:55:51 by fle-blay         ###   ########.fr       */
+/*   Updated: 2022/02/11 12:05:46 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,12 @@ void	__mini_parsing(char *arg, t_msh *msh)
 	int		i;
 	t_list	*start;
 	t_list	*index;
+	char *to_tokenize;
 	
 	start = NULL;
-	__tokenize(arg, &start);
+	to_tokenize = __strtrim(arg, " \f\t\r\v");
+	__tokenize(to_tokenize, &start);
+	free(to_tokenize);
 	index = start;
 	while (index)
 	{
@@ -77,7 +80,7 @@ void	__mini_parsing(char *arg, t_msh *msh)
 		index = index->next;
 	}
 	__lstclear(&start, &free);
-
+		
 	(void)msh;
 	argv = __split(arg, ' ');
 	if (__strncmp(argv[0], "echo", 4) == 0)
