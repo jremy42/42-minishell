@@ -43,7 +43,7 @@ typedef enum	e_state
 {UNQUOTE, S_QUOTE, D_QUOTE, BACKSLASH} t_state;
 
 typedef enum	e_ltype
-{OPERATOR, WORD, NEW_LINE, INVALID} t_ltype;
+{OPERATOR, WORD, NEW_LINE, P_LEFT, P_RIGHT, INVALID} t_ltype;
 
 typedef struct s_cmd
 {

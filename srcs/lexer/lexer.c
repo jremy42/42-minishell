@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:25:57 by jremy             #+#    #+#             */
-/*   Updated: 2022/02/11 16:11:51 by jremy            ###   ########.fr       */
+/*   Updated: 2022/02/11 17:12:56 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,10 @@ t_ltype	__get_type(char *content)
 	int	i;
 
 	i = 0;
+	if (content[0] == '(')
+		return (P_LEFT);
+	if (content[0] == ')')
+		return (P_RIGHT);
 	if (__strncmp("<newline>", content, __strlen("<newline>")) == 0)
 		return (NEW_LINE);
 	if (!__is_operator_char(content[i]))

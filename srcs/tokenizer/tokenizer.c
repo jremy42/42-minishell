@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:25:57 by jremy             #+#    #+#             */
-/*   Updated: 2022/02/11 14:48:02 by jremy            ###   ########.fr       */
+/*   Updated: 2022/02/11 17:06:14 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	__get_word(char **new_token, char *str, int i)
 		}
 		gw.st = __return_state(str[i], gw.st, gw.sl_st);
 		if (gw.st == UNQUOTE && gw.sl_st == 0)
-			if (__is_operator_char(str[i]) || __strchr("\f\t\n\r\v ", str[i]))
+			if (__is_operator_char(str[i]) || __strchr("\f\t\n\r\v() ", str[i]))
 				break ;
 		*new_token = __add_char_nt(gw.tmp, str[i], new_token);
 		free(gw.tmp);
@@ -56,10 +56,15 @@ int	__get_operator(char **new_token, char *str, int i)
 
 	while (str[i] && str[i] != ' ' && __is_operator_char(str[i]))
 	{
+		if (*new_token && __strlen(*new_token) == 1
+			&& (str[i] == ')' || str[i] == '('))
+			break ;
 		tmp = __strdup(" ");
 		tmp[0] = str[i];
 		*new_token = __strjoin(*new_token, tmp);
 		free(tmp);
+		if (str[i] == '(' || str[i] == ')')
+			break ;
 		if (__strlen(*new_token) == 2)
 			break ;
 		i++;
