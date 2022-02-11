@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 14:13:35 by fle-blay          #+#    #+#             */
-/*   Updated: 2022/02/11 13:04:40 by jremy            ###   ########.fr       */
+/*   Updated: 2022/02/11 14:09:34 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,8 @@ static int	chdir_previous(t_msh *msh)
 	char	*save;
 
 	save = NULL;
-	printf(" get_key >%s<\n",get_key(msh, "OLDPWD"));
+	if (!get_key(msh, "OLDPWD"))
+		return (__FAIL);
 	save = __strdup(get_key(msh, "OLDPWD"));
 	if (!save)
 		return(__FAIL);
