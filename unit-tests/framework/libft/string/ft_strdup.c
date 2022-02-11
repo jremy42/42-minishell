@@ -17,6 +17,8 @@ char	*__strdup(const char *src)
 	int		i;
 	char	*result;
 
+	if (!src)
+		return (NULL);
 	i = 0;
 	result = malloc(sizeof(char) * (__strlen(src) + 1));
 	if (!result)

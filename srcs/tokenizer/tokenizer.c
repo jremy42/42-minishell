@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:25:57 by jremy             #+#    #+#             */
-/*   Updated: 2022/02/11 12:02:26 by jremy            ###   ########.fr       */
+/*   Updated: 2022/02/11 14:07:00 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,8 +106,8 @@ int	__tokenize(char *str, t_list **start)
 		token.status = 0;
 		token.i = __adjust_space(str, token.i);
 	}
-	if (!__strlen(token.new_token))
-		return (__add_token(__strdup("EOI"), start));
+	//if (!__strlen(token.new_token))
+	//	return (__add_token(__strdup("EOI"), start));
 	return (0);
 }
 

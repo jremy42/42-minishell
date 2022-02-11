@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fle-blay <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 14:13:35 by fle-blay          #+#    #+#             */
-/*   Updated: 2022/02/11 11:46:27 by fle-blay         ###   ########.fr       */
+/*   Updated: 2022/02/11 13:04:40 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ static int	chdir_previous(t_msh *msh)
 	char	*save;
 
 	save = NULL;
+	printf(" get_key >%s<\n",get_key(msh, "OLDPWD"));
 	save = __strdup(get_key(msh, "OLDPWD"));
 	if (!save)
 		return(__FAIL);
