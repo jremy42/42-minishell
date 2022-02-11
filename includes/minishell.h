@@ -1,14 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/07 11:08:29 by jremy             #+#    #+#             */
-/*   Updated: 2022/02/10 18:03:42 by jremy            ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -72,6 +61,20 @@ typedef struct s_msh
 	char	***envp;
 }	t_msh;
 
+typedef struct s_gw
+{
+	t_state sl_st;
+	t_state st;
+	char	*tmp;
+} t_gw;
+
+typedef struct s_token
+{
+	int		status;
+	int		i;
+	char	*new_token;
+} t_token;
+
 /*
 decouper en token / mots / operateur
 cmd simple 
@@ -104,9 +107,13 @@ char	*__add_char_nt(char *tmp, char c, char **new_token);
 int		__need_to_escape(int i, t_state state, char *str);
 int		__is_operator_char(char c);
 
-int	__tokenize(char *s, t_list **start);
-int	__get_operator(char **new_token, char *str, int i);
+int		__tokenize(char *s, t_list **start);
+int		__get_operator(char **new_token, char *str, int i);
 int		__get_word(char **new_token, char *str, int i);
 int		__adjust_i(char *str, int i, int state);
+int		__add_token(char *str, t_list **start);
+int		__adjust_space(char *str, int i);
+int		__create_new_token(char **str);
+
 
 #endif

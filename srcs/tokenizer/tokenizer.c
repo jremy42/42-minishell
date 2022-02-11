@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:25:57 by jremy             #+#    #+#             */
-/*   Updated: 2022/02/10 18:14:12 by jremy            ###   ########.fr       */
+/*   Updated: 2022/02/11 12:02:26 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,8 @@
 
 int	__adjust_i(char *str, int i, int state)
 {
-	(void)state;
-	/*
 	if (state != UNQUOTE)
 		return (24 - write(2, "Error : Quote not closed\n", 25));
-		*/
 	if (__is_operator_char(str[i]))
 		i--;
 	if (!str[i])
@@ -26,37 +23,34 @@ int	__adjust_i(char *str, int i, int state)
 	return (i);
 }
 
-int		__get_word(char **new_token, char *str, int i)
+int	__get_word(char **new_token, char *str, int i)
 {
-	t_state	slash_state;
-	t_state	state;
-	char	*tmp;
+	t_gw	gw;
 
-	state = UNQUOTE;
-	slash_state = 0;
-	tmp = NULL;
+	gw = (t_gw){.st = UNQUOTE, .sl_st = 0, .tmp = NULL};
 	while (str[i])
 	{
-		if (str[i] == '\\' && str[i + 1] && __need_to_escape(i, state, str))
+		if (str[i] == '\\' && str[i + 1] && __need_to_escape(i, gw.st, str))
 		{
-			slash_state = BACKSLASH;
+			gw.sl_st = BACKSLASH;
 			i++;
 			continue ;
 		}
-		state = __return_state(str[i], state, slash_state);
-		printf(">state =%d slash_state = %d\n", state, slash_state);
-		if (state == UNQUOTE && slash_state == 0)
-			if (__is_operator_char(str[i]) || __strchr("\f\t\n\r\v", str[i]))
+		gw.st = __return_state(str[i], gw.st, gw.sl_st);
+		if (gw.st == UNQUOTE && gw.sl_st == 0)
+			if (__is_operator_char(str[i]) || __strchr("\f\t\n\r\v ", str[i]))
 				break ;
-		*new_token = __add_char_nt(tmp, str[i], new_token);
-		free(tmp);
+		*new_token = __add_char_nt(gw.tmp, str[i], new_token);
+		if (!new_token)
+			return (-1);
+		free(gw.tmp);
 		i++;
-		slash_state = 0;
+		gw.sl_st = 0;
 	}
-	return (__adjust_i(str, i, state));
+	return (__adjust_i(str, i, gw.st));
 }
 
-int		__get_operator(char **new_token, char *str, int i)
+int	__get_operator(char **new_token, char *str, int i)
 {
 	char	*tmp;
 
@@ -77,58 +71,43 @@ int		__get_operator(char **new_token, char *str, int i)
 	return (i);
 }
 
-int	__tokenize(char *s, t_list **start)
+int	__tokenize2(char *str, char *new_token, int i, t_list **start)
 {
-	int		status_token;
-	char	*new_token;
-	int		i;
-	t_list	*t_token;
-	char	*str;
+	if (__is_operator_char(str[i]))
+		i = __get_operator(&new_token, str, i);
+	else
+		i = __get_word(&new_token, str, i);
+	if (i < 0)
+		return (-1);
+	if (__add_token(new_token, start) < 0)
+		return (-1);
+	return (i);
+}
 
-	status_token = 0;
-	i = 0;
-	new_token = NULL;
-	str = __strtrim(s, " \f\t\r\v");
-	while (str && str[i])
+int	__tokenize(char *str, t_list **start)
+{
+	t_token	token;
+
+	token = (t_token){.new_token = NULL};
+	while (str && str[token.i])
 	{
-		if (str[i] == '\n')
+		if (str[token.i] == '\n')
 		{
-			t_token = __lstnew(__strdup("<newline>"));
-			if (!t_token)
-				return (0);
-			__lstadd_back(start, t_token);
-			i++;
+			if (__add_token(__strdup("<newline>"), start) < 0)
+				return (-1);
+			token.i++;
 			continue ;
 		}
-		if (!status_token)
-		{
-			new_token = __strdup("");
-			status_token = 1;
-		}
-		if (__is_operator_char(str[i]))
-			i = __get_operator(&new_token, str, i);
-		else
-			i = __get_word(&new_token, str, i);
-		if (i < 0)
+		if (!token.status)
+			token.status = __create_new_token(&token.new_token);
+		token.i = __tokenize2(str, token.new_token, token.i, start);
+		if (token.i < 0)
 			return (-1);
-		t_token = __lstnew(new_token);
-		if (!t_token)
-			return (-2);
-		__lstadd_back(start, t_token);
-		status_token = 0;
-		i++;
-		while (str[i] == ' ')
-			i++;
+		token.status = 0;
+		token.i = __adjust_space(str, token.i);
 	}
-	if (!__strlen(new_token))
-	{
-			new_token = __strdup("EOI");
-		t_token = __lstnew(new_token);
-		if (!t_token)
-			return (-2);
-		__lstadd_back(start, t_token);
-	}
-	free(str);
+	if (!__strlen(token.new_token))
+		return (__add_token(__strdup("EOI"), start));
 	return (0);
 }
 
