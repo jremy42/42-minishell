@@ -10,6 +10,7 @@ srcs/exit.c\
 srcs/bin/export/export_utils.c\
 srcs/tokenizer/tokenizer_utils.c\
 srcs/tokenizer/tokenizer_utils2.c\
+srcs/lexer/lexer.c\
 srcs/tokenizer/tokenizer.c
 
 

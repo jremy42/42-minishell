@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:25:57 by jremy             #+#    #+#             */
-/*   Updated: 2022/02/11 15:16:10 by jremy            ###   ########.fr       */
+/*   Updated: 2022/02/11 16:03:52 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,20 +63,24 @@ static void	get_env(t_msh *msh, char *envp[])
 
 void	__mini_parsing(char *arg, t_msh *msh)
 {
-	char	**argv;
-	int		i;
-	t_list	*start;
-	t_list	*index;
-	char *to_tokenize;
-	
+	char		**argv;
+	int			i;
+	t_list		*start;
+	t_lexing	*lexing;
+	t_lexing	*index;
+	char		*to_tokenize;
+
 	start = NULL;
+	lexing = NULL;
 	to_tokenize = __strtrim(arg, " \f\t\r\v");
 	__tokenize(to_tokenize, &start);
 	free(to_tokenize);
-	index = start;
+	if (__lexing(start, &lexing) < 0)
+		return ;
+	index = lexing;
 	while (index)
 	{
-		printf("Le token vaut : >%s<\n", (char *)index->content); 
+		printf("Le token vaut : >%s< et de type = %d\n", index->token, index->type); 
 		index = index->next;
 	}
 	argv = __split(arg, ' ');

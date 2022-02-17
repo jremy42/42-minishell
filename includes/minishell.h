@@ -43,7 +43,7 @@ typedef enum	e_state
 {UNQUOTE, S_QUOTE, D_QUOTE, BACKSLASH} t_state;
 
 typedef enum	e_ltype
-{OPERATOR, WORD, NEW_LINE} t_ltype;
+{OPERATOR, WORD, NEW_LINE, P_LEFT, P_RIGHT, INVALID} t_ltype;
 
 typedef struct s_cmd
 {
@@ -127,5 +127,7 @@ int		__add_token(char *str, t_list **start);
 int		__adjust_space(char *str, int i);
 int		__create_new_token(char **str);
 
+// lexing
+int	__lexing(t_list *token, t_lexing **lexing);
 
 #endif
