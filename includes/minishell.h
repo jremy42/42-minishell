@@ -82,7 +82,7 @@ typedef struct s_lexing
 	char *token;
 	t_ltype type;
 	struct s_lexing *next;
-}
+} t_lexing;
 
 /*
 decouper en token / mots / operateur
