@@ -6,15 +6,14 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:25:57 by jremy             #+#    #+#             */
-/*   Updated: 2022/02/11 12:04:53 by jremy            ###   ########.fr       */
+/*   Updated: 2022/02/18 12:48:22 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	__adjust_space(char *str, int i)
+int	__skip_spaces(char *str, int i)
 {
-	i++;
 	while (str[i] == ' ')
 		i++;
 	return (i);

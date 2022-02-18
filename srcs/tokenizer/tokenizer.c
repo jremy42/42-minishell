@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:25:57 by jremy             #+#    #+#             */
-/*   Updated: 2022/02/11 17:06:14 by jremy            ###   ########.fr       */
+/*   Updated: 2022/02/18 12:48:03 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,44 +25,37 @@ int	__adjust_i(char *str, int i, int state)
 
 int	__get_word(char **new_token, char *str, int i)
 {
-	t_gw	gw;
+	t_state sl_st;
+	t_state st;
 
-	gw = (t_gw){.st = UNQUOTE, .sl_st = 0, .tmp = NULL};
-	while (str[i])
+	st = UNQUOTE;
+	sl_st = 0;
+	while (str[++i])
 	{
-		if (str[i] == '\\' && str[i + 1] && __need_to_escape(i, gw.st, str))
+		if (str[i] == '\\' && str[i + 1] && __need_to_escape(i, st, str))
 		{
-			gw.sl_st = BACKSLASH;
-			i++;
+			sl_st = BACKSLASH;
 			continue ;
 		}
-		gw.st = __return_state(str[i], gw.st, gw.sl_st);
-		if (gw.st == UNQUOTE && gw.sl_st == 0)
+		st = __return_state(str[i], st, sl_st);
+		if (st == UNQUOTE && sl_st == 0)
 			if (__is_operator_char(str[i]) || __strchr("\f\t\n\r\v() ", str[i]))
 				break ;
-		*new_token = __add_char_nt(gw.tmp, str[i], new_token);
-		free(gw.tmp);
-		if (!new_token)
+		if (!__add_char_to_token(str[i], new_token))
 			return (-1);
-		i++;
-		gw.sl_st = 0;
+		sl_st = 0;
 	}
-	return (__adjust_i(str, i, gw.st));
+	return (__adjust_i(str, i, st));
 }
 
 int	__get_operator(char **new_token, char *str, int i)
 {
-	char	*tmp;
-
 	while (str[i] && str[i] != ' ' && __is_operator_char(str[i]))
 	{
 		if (*new_token && __strlen(*new_token) == 1
 			&& (str[i] == ')' || str[i] == '('))
 			break ;
-		tmp = __strdup(" ");
-		tmp[0] = str[i];
-		*new_token = __strjoin(*new_token, tmp);
-		free(tmp);
+		__add_char_to_token(str[i], new_token);
 		if (str[i] == '(' || str[i] == ')')
 			break ;
 		if (__strlen(*new_token) == 2)
@@ -81,7 +74,7 @@ int	__tokenize2(char *str, char *new_token, int i, t_list **start)
 	if (__is_operator_char(str[i]))
 		i = __get_operator(&new_token, str, i);
 	else
-		i = __get_word(&new_token, str, i);
+		i = __get_word(&new_token, str, i - 1);
 	if (i < 0)
 		return (free(new_token), -1);
 	if (__add_token(new_token, start) < 0)
@@ -92,24 +85,25 @@ int	__tokenize2(char *str, char *new_token, int i, t_list **start)
 int	__tokenize(char *str, t_list **start)
 {
 	t_token	token;
+	int	i;
 
+	i = -1;
 	token = (t_token){.new_token = NULL};
-	while (str && str[token.i])
+	while (str && str[++i])
 	{
-		if (str[token.i] == '\n')
+		i = __skip_spaces(str, i);
+		if (str[i] == '\n')
 		{
 			if (__add_token(__strdup("<newline>"), start) < 0)
 				return (-1);
-			token.i++;
 			continue ;
 		}
 		if (!token.status)
 			token.status = __create_new_token(&token.new_token);
-		token.i = __tokenize2(str, token.new_token, token.i, start);
-		if (token.i < 0)
+		i = __tokenize2(str, token.new_token, i, start);
+		if (i < 0)
 			return (-1);
 		token.status = 0;
-		token.i = __adjust_space(str, token.i);
 	}
 	return (0);
 }

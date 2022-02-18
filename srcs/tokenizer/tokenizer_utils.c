@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:25:57 by jremy             #+#    #+#             */
-/*   Updated: 2022/02/11 17:01:58 by jremy            ###   ########.fr       */
+/*   Updated: 2022/02/18 12:24:22 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,18 +30,30 @@ int	__need_to_escape(int i, t_state state, char *str)
 	return (1);
 }
 
-char	*__add_char_nt(char *tmp, char c, char **new_token)
+int	__add_char_to_token(char c, char **token)
 {
-	char	*tmp2;
+	char	*appended_token;
+	int		i;
+	int		token_len;
 
-	tmp2 = NULL;
-	tmp = __strdup(" ");
-	if (!tmp)
-		return (NULL);
-	tmp[0] = c;
-	tmp2 = __strjoin(*new_token, tmp);
-	free(tmp);
-	return (tmp2);
+	i = 0;
+	token_len = __strlen(*token);
+	appended_token = (char *)malloc((token_len + 2) * sizeof(char));
+	if (!appended_token)
+	{
+		free (token);
+		return (0);
+	}
+	while (i < token_len)
+	{
+		appended_token[i] = (*token)[i];
+		i++;
+	}
+	appended_token[token_len] = c;
+	appended_token[token_len + 1] = '\0';
+	free(*token);
+	*token = appended_token;
+	return (1);
 }
 
 int	__return_state(char c, int state, int slash_state)

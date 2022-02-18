@@ -67,7 +67,6 @@ typedef struct s_gw
 {
 	t_state sl_st;
 	t_state st;
-	char	*tmp;
 } t_gw;
 
 typedef struct s_token
@@ -115,7 +114,7 @@ int __exit(t_msh *msh);
 //tokenizer
 
 int		__return_state(char c, int state, int slash_state);
-char	*__add_char_nt(char *tmp, char c, char **new_token);
+int		__add_char_to_token(char c, char **token);
 int		__need_to_escape(int i, t_state state, char *str);
 int		__is_operator_char(char c);
 
@@ -124,7 +123,7 @@ int		__get_operator(char **new_token, char *str, int i);
 int		__get_word(char **new_token, char *str, int i);
 int		__adjust_i(char *str, int i, int state);
 int		__add_token(char *str, t_list **start);
-int		__adjust_space(char *str, int i);
+int		__skip_spaces(char *str, int i);
 int		__create_new_token(char **str);
 
 // lexing
