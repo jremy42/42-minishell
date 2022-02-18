@@ -34,20 +34,35 @@ _CYAN=	$'\033[36m
 _WHITE=	$'\033[37m
 _END= $'\033[37m
 
-$(OBJS_PATH)%.o: %.c $(HEADER)
-		mkdir -p $(dir $@)
-		@$(CC) $(CFLAGS) $(IFLAGS) -c $< -o $@
-		@printf "%-15s ${_YELLOW}${_BOLD}$<${_END}...\n" "Compiling"
-
-
 all: $(NAME)
 
+ifeq ($(shell uname -s), Darwin)
+
+$(OBJS_PATH)%.o: %.c $(HEADER)
+		mkdir -p $(dir $@)
+		@$(CC) $(CFLAGS) $(IFLAGS) -c $< -I /opt/homebrew/opt/readline/include -o $@
+		@printf "%-15s ${_YELLOW}${_BOLD}$<${_END}...\n" "Compiling"
+
+$(NAME): $(OBJ) ${HEADER} ${LIBFT}
+		@printf "%-15s ${_CYAN}${_BOLD}libft${_END}...\n" "Compiling"
+		@make -C ${LIBFT} > /dev/null
+		@printf "%-15s ${_PURPLE}${_BOLD}${NAME}${_END}...\n" "Compiling"
+		@$(CC) $(CFLAGS) ${OBJ} -Llibft -lft -L /opt/homebrew/opt/readline/lib -lreadline -o $(NAME)
+		@printf "\n${_GREEN}${_BOLD}[Compilation done !]${_END}\n"
+
+else
+
+$(OBJS_PATH)%.o: %.c $(HEADER)
+		mkdir -p $(dir $@)
+		@$(CC) $(CFLAGS) $(IFLAGS) -c $< -I .brew/opt/readline/include -o $@
+		@printf "%-15s ${_YELLOW}${_BOLD}$<${_END}...\n" "Compiling"
 $(NAME): $(OBJ) ${HEADER} ${LIBFT}
 		@printf "%-15s ${_CYAN}${_BOLD}libft${_END}...\n" "Compiling"
 		@make -C ${LIBFT} > /dev/null
 		@printf "%-15s ${_PURPLE}${_BOLD}${NAME}${_END}...\n" "Compiling"
 		@$(CC) $(CFLAGS) ${OBJ} -Llibft -lft -L/usr/local/lib -I/usr/local/include -lreadline -o $(NAME)
 		@printf "\n${_GREEN}${_BOLD}[Compilation done !]${_END}\n"
+endif
 
 clean:
 	@printf "%-15s ${_RED}${_BOLD}${NAME}${_END}...\n" "Deleting"
