@@ -63,6 +63,7 @@ typedef struct s_msh
 	char	***envp;
 }	t_msh;
 
+/*
 typedef struct s_gw
 {
 	t_state sl_st;
@@ -75,6 +76,7 @@ typedef struct s_token
 	int		i;
 	char	*new_token;
 } t_token;
+*/
 
 typedef struct s_lexing
 {
@@ -123,8 +125,10 @@ int		__get_operator(char **new_token, char *str, int i);
 int		__get_word(char **new_token, char *str, int i);
 int		__adjust_i(char *str, int i, int state);
 int		__add_token(char *str, t_list **start);
-int		__skip_spaces(char *str, int i);
+int		__skip_spaces(char *str, int *i);
 int		__create_new_token(char **str);
+int		__treat_newline(t_list **start, int *i);
+int		__init_token_if_none(char **str, int *token_status);
 
 // lexing
 int	__lexing(t_list *token, t_lexing **lexing);
