@@ -16,7 +16,7 @@ t_lexing *__skip_parenthesis(t_lexing *lexing)
 			parenthesis--;
 		lexing = lexing->next;
 	}
-	printf("%s\n", lexing->token);
+	//printf("%s\n", lexing->token);
 	return (lexing);
 }
 
@@ -29,7 +29,8 @@ t_lexing	*__find_next_operator(t_lexing *lexing)
     {
 		if (lexing->type == P_LEFT)
 			lexing = __skip_parenthesis(lexing);
-
+		if (!lexing)
+			break;
         if (lexing->type == OPERATOR)
             find = lexing;
 		lexing = lexing->next;
