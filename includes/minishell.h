@@ -63,11 +63,11 @@ typedef struct s_msh
 	char	***envp;
 }	t_msh;
 
+/*
 typedef struct s_gw
 {
 	t_state sl_st;
 	t_state st;
-	char	*tmp;
 } t_gw;
 
 typedef struct s_token
@@ -76,6 +76,7 @@ typedef struct s_token
 	int		i;
 	char	*new_token;
 } t_token;
+*/
 
 typedef struct s_lexing
 {
@@ -83,6 +84,23 @@ typedef struct s_lexing
 	t_ltype type;
 	struct s_lexing *next;
 } t_lexing;
+
+typedef struct s_node
+{
+	t_ltype type;
+	int[2] fd;
+	char *cmd;
+	struct s_node *left;
+	struct s_node *right;
+}
+
+cat | ls | 
+
+fd [0] = stdin
+fd [1] = stdout pipe
+
+fd[0] = stdin pipe
+fd[1] = stdout
 
 /*
 decouper en token / mots / operateur
@@ -115,7 +133,7 @@ int __exit(t_msh *msh);
 //tokenizer
 
 int		__return_state(char c, int state, int slash_state);
-char	*__add_char_nt(char *tmp, char c, char **new_token);
+int		__add_char_to_token(char c, char **token);
 int		__need_to_escape(int i, t_state state, char *str);
 int		__is_operator_char(char c);
 
@@ -124,10 +142,12 @@ int		__get_operator(char **new_token, char *str, int i);
 int		__get_word(char **new_token, char *str, int i);
 int		__adjust_i(char *str, int i, int state);
 int		__add_token(char *str, t_list **start);
-int		__adjust_space(char *str, int i);
+int		__skip_spaces(char *str, int *i);
 int		__create_new_token(char **str);
+int		__treat_newline(t_list **start, int *i);
+int		__init_token_if_none(char **str, int *token_status);
 
 // lexing
 int	__lexing(t_list *token, t_lexing **lexing);
-
+int __synthax_checker(t_lexing *lexing);
 #endif

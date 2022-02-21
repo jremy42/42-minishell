@@ -14,12 +14,10 @@
 
 int	__is_operator(char *content)
 {
-	int	i;
 	int	size;
 
-	i = 0;
 	size = __strlen(content);
-	if (size == 1 && __is_operator_char(content[i]))
+	if (size == 1 && __is_operator_char(content[0]) && content[0]!= '&')
 		return (1);
 	if (size == 2)
 	{
