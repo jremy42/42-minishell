@@ -84,4 +84,5 @@ char	*ft_save_memory(char *str);
 char	*ft_strdup(char *src);
 void	*ft_memcpy(void *dst, const void *src, size_t n);
 char	*ft_read_file(int fd, char *memory);
+int		__strcmp(const char *s1, const char *s2);
 #endif

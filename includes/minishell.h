@@ -36,72 +36,49 @@
 # define BOLDCYAN    "\033[1m\033[36m"      /* Bold Cyan */
 # define BOLDWHITE   "\033[1m\033[37m"      /* Bold White */
 
-typedef enum	e_operator
-{AND_IF, OR_IF, DLESS, DGREAT} t_operator;
+# define COUNT 10
 
 typedef enum	e_state
 {UNQUOTE, S_QUOTE, D_QUOTE, BACKSLASH} t_state;
 
-typedef enum	e_ltype
-{OPERATOR, WORD, NEW_LINE, P_LEFT, P_RIGHT, INVALID} t_ltype;
+typedef enum	e_token_type
+{OPERATOR, PIPE, NEW_LINE, WORD, REDIRECTION, P_LEFT, P_RIGHT, INVALID} t_token_type;
+
+typedef enum e_kind_node
+{OR = 1, AND, SEQUENCE} t_kind_node;
 
 typedef struct s_cmd
 {
-	char			*cmd;
-	char			*flag;
-	int				index;
-	int				bin;
-	int				fd;
-	struct s_cmd	*next;
+	int		redirection[2];
+	char	*arg[];
 }	t_cmd;
 
-typedef struct s_msh
-{
-	int		rv;
-	t_cmd	*cmd;
-	char	*prompt;
-	char	***envp;
-}	t_msh;
-
-/*
-typedef struct s_gw
-{
-	t_state sl_st;
-	t_state st;
-} t_gw;
-
-typedef struct s_token
-{
-	int		status;
-	int		i;
-	char	*new_token;
-} t_token;
-*/
 
 typedef struct s_lexing
 {
 	char *token;
-	t_ltype type;
+	t_token_type type;
 	struct s_lexing *next;
 } t_lexing;
 
 typedef struct s_node
 {
-	t_ltype type;
-	int[2] fd;
-	char *cmd;
-	struct s_node *left;
-	struct s_node *right;
-}
+	t_kind_node		kind;
+	t_cmd			*cmd;
+	struct s_node	*left;
+	struct s_node	*right;
+	t_lexing		*tmp;
+} t_node;
 
-cat | ls | 
-
-fd [0] = stdin
-fd [1] = stdout pipe
-
-fd[0] = stdin pipe
-fd[1] = stdout
-
+typedef struct s_msh
+{
+	int		rv;
+	t_node	*root;
+	char	*prompt;
+	char	***envp;
+	char	*error_string;
+	char 	*error_value;
+}	t_msh;
 /*
 decouper en token / mots / operateur
 cmd simple 
@@ -149,5 +126,11 @@ int		__init_token_if_none(char **str, int *token_status);
 
 // lexing
 int	__lexing(t_list *token, t_lexing **lexing);
-int __synthax_checker(t_lexing *lexing);
+int	__synthax_checker(t_lexing *lexing);
+void	__print_lexing(t_lexing *lexing);
+
+// Gardening
+
+int __create_tree(t_lexing *lexing, t_node **root);
+
 #endif

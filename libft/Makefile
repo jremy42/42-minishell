@@ -15,6 +15,7 @@ string/ft_toupper.c \
 string/ft_strchr.c \
 string/ft_strrchr.c \
 string/ft_strncmp.c \
+string/ft_strcmp.c \
 mem/ft_memchr.c \
 mem/ft_memcmp.c \
 string/ft_strnstr.c \

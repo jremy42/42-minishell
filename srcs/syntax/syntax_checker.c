@@ -38,17 +38,21 @@ int __synthax_checker(t_lexing *lexing)
             parenthesis++;
         if (lexing->type == P_RIGHT)
             parenthesis--;
+	/*
         if ((lexing->type == P_LEFT || lexing->type == P_RIGHT)
             && lexing->next && (lexing->next->type == P_LEFT || lexing->next->type == P_RIGHT))
             return(__synthax_error(lexing->token), -1);
-        
+	*/
         if (lexing->type == INVALID)
             return (__invalid_error(lexing->token), -1);
-        if (lexing->type == OPERATOR)
+        if (lexing->type == OPERATOR || lexing->type == PIPE)
         {
-            if (!lexing->next || lexing->next->type == OPERATOR)
+            // <=1 operateur || pipe
+            if (!lexing->next || lexing->next->type == OPERATOR || lexing->next->type == PIPE)
                 return (__synthax_error(lexing->token), -1);
         }
+	if (parenthesis < 0)
+            return(__synthax_error(lexing->token), -1);
         lexing = lexing->next;
     }
     if (parenthesis)

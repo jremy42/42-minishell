@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:25:57 by jremy             #+#    #+#             */
-/*   Updated: 2022/02/11 16:03:52 by jremy            ###   ########.fr       */
+/*   Updated: 2022/02/21 18:41:51 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,47 @@ void __print_lexing(t_lexing *lexing)
 	}	
 }
 
+void print2DUtil(t_node *root, int space)
+{
+	t_lexing *index;
+	
+    // Base case
+    if (root == NULL)
+        return;
+ 
+    // Increase distance between levels
+    space += COUNT;
+ 
+    // Process right child first
+    print2DUtil(root->right, space);
+ 
+    // Print current node after space
+    // count
+    printf("\n");
+    for (int i = COUNT; i < space; i++)
+        printf(" ");
+    printf("%d\n", root->kind);
+	if (root->kind == SEQUENCE)
+	{
+		index = root->tmp;
+		while (index)
+		{
+			printf("[%s] ", index->token);
+			index = index->next;
+		}
+	}
+ 
+    // Process left child
+    print2DUtil(root->left, space);
+}
+
+void print2D(t_node *root)
+{
+   // Pass initial space count as 0
+   print2DUtil(root, 0);
+   printf("\n");
+}
+
 int	__mini_parsing(char *arg, t_msh *msh)
 {
 	t_list		*start;
@@ -85,10 +126,15 @@ int	__mini_parsing(char *arg, t_msh *msh)
 	free(to_tokenize);
 	if (__lexing(start, &lexing) < 0)
 		return (write(2, "Malloc error\n", 14), -1);
-	__print_lexing(lexing);
+	//__print_lexing(lexing);
 	if (__synthax_checker(lexing) < 0)
 		return (-1);
 	__print_lexing(lexing);
+	if (!__create_tree(lexing, &(msh->root)))
+		return (-1);
+	print2D(msh->root);
+	//free lexing a faire a la fin de l'ex
+
 	return (0);
 }
 
