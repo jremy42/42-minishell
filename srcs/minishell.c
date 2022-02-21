@@ -83,6 +83,8 @@ void	__mini_parsing(char *arg, t_msh *msh)
 		printf("Le token vaut : >%s< et de type = %d\n", index->token, index->type); 
 		index = index->next;
 	}
+	if (__syntax_checker(lexing) < 0)
+		return (write(2, "MINISHELL : syntax error\n", 100), -1);
 	argv = __split(arg, ' ');
 	if (__strncmp(argv[0], "echo", 4) == 0)
 		__echo(argv, 1);
@@ -139,3 +141,4 @@ int	main (int ac, char *av[], char *envp[])
 	__pwd(1);
 	__env(NULL);
 	*/
+

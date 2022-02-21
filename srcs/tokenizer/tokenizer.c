@@ -58,7 +58,7 @@ int	__get_operator(char **new_token, char *str, int i)
 	{
 		if (*new_token && __strlen(*new_token) == 1
 			&& (str[i] == ')' || str[i] == '('))
-			break ;
+			return (--i) ;
 		tmp = __strdup(" ");
 		tmp[0] = str[i];
 		*new_token = __strjoin(*new_token, tmp);
@@ -70,7 +70,7 @@ int	__get_operator(char **new_token, char *str, int i)
 		i++;
 	}
 	if (!__is_operator_char(str[i]))
-		i--;
+		--i;
 	if (!str[i])
 		i--;
 	return (i);
