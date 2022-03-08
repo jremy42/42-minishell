@@ -50,7 +50,7 @@ typedef enum e_kind_node
 typedef struct s_cmd
 {
 	int		redirection[2];
-	char	*arg[];
+	char	**arg;
 }	t_cmd;
 
 
@@ -132,5 +132,11 @@ void	__print_lexing(t_lexing *lexing);
 // Gardening
 
 int __create_tree(t_lexing *lexing, t_node **root);
+
+
+// parsing exe 
+t_cmd *miniparsing(t_lexing *lexing);
+void print_cmd(t_cmd *cmd);
+int execute_seq(t_cmd *cmd, char ***envp);
 
 #endif

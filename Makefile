@@ -13,7 +13,8 @@ srcs/tokenizer/tokenizer_utils2.c\
 srcs/lexer/lexer.c\
 srcs/tokenizer/tokenizer.c\
 srcs/syntax/syntax_checker.c\
-srcs/tree/create_tree.c
+srcs/tree/create_tree.c\
+srcs/exe/exe.c
 
 
 IFLAGS =  -I includes/ -I libft/includes
