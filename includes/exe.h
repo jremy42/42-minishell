@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 17:32:24 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/08 18:36:00 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/09 09:30:40 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 # define _HD 1
 typedef enum s_pipe
 {
-	in;
-	out
+	in,
+	out,
 }	t_pipe;
 
 typedef struct s_sequ

@@ -126,16 +126,18 @@ void D_print_seq(t_sequ *seq)
     printf("path = %s\n", seq->path);
 }
 
-int __launhcer_fork(t_sequ *seq)
+int __launcher_fork(t_sequ *seq)
 {
     int i;
     pid_t pid;
 
-    while(i < seq->max_cmd)
+	i = 0;
+    while (i < seq->max_cmd)
     {
         if (i == 0)
-        pid = fork()
+        pid = fork();
     }
+	return (0);
 }
 
 int execute_seq(t_cmd *cmd, char ***envp)
