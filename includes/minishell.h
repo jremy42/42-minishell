@@ -148,6 +148,9 @@ int __create_tree(t_lexing *lexing, t_node **root);
 // parsing exe 
 t_cmd *miniparsing(t_lexing *lexing);
 void print_cmd(t_cmd *cmd);
-int execute_seq(t_cmd *cmd, char ***envp);
+int execute_seq(t_cmd *cmd, t_msh *msh);
+int add_next_cmd(t_cmd **start, t_lexing **lexing, t_msh *msh, int index);
+t_cmd *create_cmd_list(t_lexing *lexing, t_msh *msh);
+void print_cmd_lst(t_cmd *cmd);
 
 #endif

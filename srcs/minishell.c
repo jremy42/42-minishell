@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:25:57 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/08 17:48:00 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/09 15:48:01 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,9 +135,10 @@ int	__mini_parsing(char *arg, t_msh *msh)
 		return (-1);
 	print2D(msh->root);
 	//free lexing a faire a la fin de l'ex
-	cmd = miniparsing(msh->root->tmp);
-	//print_cmd(cmd);
-	execute_seq(cmd, msh->envp);
+	//cmd = miniparsing(msh->root->tmp);
+	cmd = create_cmd_list(lexing, msh);
+	print_cmd_lst(cmd);
+	execute_seq(cmd, msh);
 	return (0);
 }
 
