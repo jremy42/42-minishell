@@ -283,6 +283,8 @@ void execute_child(t_sequ *seq, t_cmd *cmd)
 int __launcher_fork(t_sequ *seq, t_cmd *cmd)
 {
     pid_t pid;
+    int status;
+    int ret;
 
     while (seq->index < seq->max_cmd)
     {
@@ -301,7 +303,49 @@ int __launcher_fork(t_sequ *seq, t_cmd *cmd)
             cmd = cmd->next;
         }
     }
-	return (0);
+    waitpid(pid, &status, 0);
+    if (WIFEXITED(status) > 0)
+		ret = (WEXITSTATUS(status));
+	if (WIFSIGNALED(status) > 0)
+		ret = (WTERMSIG(status));
+	while (waitpid(-1, NULL, 0) > 0)
+		;
+	return (ret);
+}
+
+int __is_builtin(char **cmd, t_msh *msh)
+{
+    if (__strncmp(argv[0], "echo", 4) == 0)
+    {
+        msh->rv =__echo(argv, 1);
+        return (1);
+    }
+	if (__strncmp(argv[0], "cd", 2) == 0)
+    {
+        msh->rv = __cd(argv[1], msh);
+         return (1);
+    }
+	if (__strncmp(argv[0], "pwd", 3) == 0)
+    {
+        msh->rv = __pwd(argv[1], msh);
+         return (1);
+    }
+	if (__strncmp(argv[0], "env", 3) == 0)
+	{
+        msh->rv = _env(argv[1], msh);
+         return (1);
+    }	__env(msh);
+	if (__strncmp(argv[0], "export", 6) == 0)
+    {
+        msh->rv = __export(argv[1], msh);
+         return (1);
+    }
+	if (__strncmp(argv[0], "unset", 5) == 0)
+    {
+        msh->rv = __unset(arg[1], msh);
+        return (1);
+    }
+    return (0)
 }
 
 int execute_seq(t_cmd *cmd, t_msh *msh)
@@ -310,7 +354,9 @@ int execute_seq(t_cmd *cmd, t_msh *msh)
 
     if(!__init_seq(&seq, msh->envp, cmd))
         return (__putstr_fd("Malloc error\n", 2), 0);
-    __launcher_fork(&seq, cmd);
+    if(seq->max_cmd == 1 && __is_builtin(cmd->arg))
+        return (0);
+    msh->rv = __launcher_fork(&seq, cmd);
     return (0);
 
 }
