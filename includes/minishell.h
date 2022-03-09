@@ -42,15 +42,20 @@ typedef enum	e_state
 {UNQUOTE, S_QUOTE, D_QUOTE, BACKSLASH} t_state;
 
 typedef enum	e_token_type
-{OPERATOR, PIPE, NEW_LINE, WORD, REDIRECTION, P_LEFT, P_RIGHT, INVALID} t_token_type;
+{OPERATOR, PIPE, NEW_LINE, WORD, REDIRECTION, HERE_DOC, P_LEFT, P_RIGHT, INVALID} t_token_type;
 
 typedef enum e_kind_node
 {OR = 1, AND, SEQUENCE} t_kind_node;
 
+//Faire les redirections juste avant de creer la liste finale des args (nom du prog et les vrai parametres)
+// Le *msh permettra de modifier la RV et de recuperer l'env necessaire a l'exe
 typedef struct s_cmd
 {
 	int		redirection[2];
+	int		index;
 	char	**arg;
+	struct s_msh *msh;
+	struct s_cmd *next;
 }	t_cmd;
 
 
@@ -61,6 +66,12 @@ typedef struct s_lexing
 	struct s_lexing *next;
 } t_lexing;
 
+// A la construction de l'AST, le node obtient son kind, son node right et left.
+// La donnee est le pointeur sur un t_lexing (cad une liste chainee de token)
+// Dans les passage successifs suivants, on va:
+//1 : Faire l'expand et MAJ du t_lexing
+//2 : Faire les redirections et Transfo du t_lexing* en t_cmd * (le nombre de parametres est maintenant connu)
+//3 : Execution des noeud et parcours de l'arbre en fonction des valeurs de retour
 typedef struct s_node
 {
 	t_kind_node		kind;

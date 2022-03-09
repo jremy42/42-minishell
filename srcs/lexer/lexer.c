@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:25:57 by jremy             #+#    #+#             */
-/*   Updated: 2022/02/11 17:12:56 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/09 11:42:01 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static int __is_redirection(char *content)
 	if (!__strcmp(content, ">"))
 		return (1);
 	if (!__strcmp(content, "<<"))
-		return (1);
+		return (2);
 	if (!__strcmp(content, ">>"))
 		return (1);
 	return (0);
@@ -53,8 +53,10 @@ t_token_type	__get_type(char *content)
 		return (NEW_LINE);
 	if (!__strcmp(content, "|"))
 		return (PIPE);
-	if (__is_redirection(content))
+	if (__is_redirection(content) == 1)
 		return (REDIRECTION);
+	if (__is_redirection(content) == 2)
+		return (HERE_DOC);
 	if (!__is_operator_char(content[i]))
 		return (WORD);
 	if (__is_operator(content) == 1)

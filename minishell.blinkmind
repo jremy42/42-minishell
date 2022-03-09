@@ -1,0 +1,114 @@
+{
+  "rootTopicKey": "47049f96-c843-40cd-af9f-48bd3ec0f056",
+  "editorRootTopicKey": "47049f96-c843-40cd-af9f-48bd3ec0f056",
+  "focusKey": "19b831cb-8f2a-400c-99b1-908b5b030b5b",
+  "extData": {
+    "TOPIC_REFERENCE": {
+      "reference": {}
+    }
+  },
+  "topics": [
+    {
+      "key": "47049f96-c843-40cd-af9f-48bd3ec0f056",
+      "parentKey": null,
+      "subKeys": [
+        "998ce639-62de-44f1-a7f1-791210abb7c2"
+      ],
+      "collapse": false,
+      "style": null,
+      "blocks": [
+        {
+          "type": "CONTENT",
+          "data": "token"
+        },
+        {
+          "type": "TOPOLOGY",
+          "data": {
+            "nodes": [],
+            "lines": [],
+            "lineName": "curve",
+            "fromArrowType": "",
+            "toArrowType": "triangleSolid",
+            "scale": 1,
+            "locked": 0
+          }
+        }
+      ]
+    },
+    {
+      "key": "998ce639-62de-44f1-a7f1-791210abb7c2",
+      "parentKey": "47049f96-c843-40cd-af9f-48bd3ec0f056",
+      "subKeys": [
+        "19b831cb-8f2a-400c-99b1-908b5b030b5b"
+      ],
+      "collapse": false,
+      "style": null,
+      "blocks": [
+        {
+          "type": "CONTENT",
+          "data": "syntax"
+        }
+      ]
+    },
+    {
+      "key": "19b831cb-8f2a-400c-99b1-908b5b030b5b",
+      "parentKey": "998ce639-62de-44f1-a7f1-791210abb7c2",
+      "subKeys": [],
+      "collapse": false,
+      "style": null,
+      "blocks": [
+        {
+          "type": "CONTENT",
+          "data": "create tree"
+        }
+      ]
+    }
+  ],
+  "config": {
+    "readOnly": false,
+    "allowUndo": true,
+    "layoutDir": 2,
+    "theme": {
+      "name": "default",
+      "randomColor": true,
+      "background": "rgb(57,60,65)",
+      "highlightColor": "#50C9CE",
+      "marginH": 60,
+      "marginV": 20,
+      "contentStyle": {
+        "lineHeight": "1.5",
+        "fontSize": "16px"
+      },
+      "linkStyle": {
+        "lineRadius": 5,
+        "lineType": "curve",
+        "lineWidth": "3px"
+      },
+      "rootTopic": {
+        "contentStyle": {
+          "fontSize": "36px"
+        },
+        "subLinkStyle": {
+          "lineType": "curve",
+          "lineWidth": "3px"
+        }
+      },
+      "primaryTopic": {
+        "contentStyle": {
+          "fontSize": "24px"
+        },
+        "subLinkStyle": {
+          "lineType": "curve",
+          "lineWidth": "3px"
+        }
+      },
+      "normalTopic": {
+        "subLinkStyle": {
+          "lineType": "curve",
+          "lineWidth": "3px"
+        }
+      }
+    }
+  },
+  "formatVersion": null
+}

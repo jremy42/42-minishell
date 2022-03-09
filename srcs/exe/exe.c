@@ -132,6 +132,7 @@ int __launcher_fork(t_sequ *seq)
     pid_t pid;
 
 	i = 0;
+    i = 10000;
     while (i < seq->max_cmd)
     {
         if (i == 0)
@@ -146,6 +147,7 @@ int execute_seq(t_cmd *cmd, char ***envp)
 
     __init_seq(&seq, cmd->redirection, envp, cmd);
     __launcher_fork(&seq);
+    print_cmd(cmd);
     D_print_seq(&seq);
     return (0);
 
