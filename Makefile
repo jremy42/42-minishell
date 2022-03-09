@@ -11,12 +11,15 @@ srcs/bin/export/export_utils.c\
 srcs/tokenizer/tokenizer_utils.c\
 srcs/tokenizer/tokenizer_utils2.c\
 srcs/lexer/lexer.c\
-srcs/tokenizer/tokenizer.c
+srcs/tokenizer/tokenizer.c\
+srcs/syntax/syntax_checker.c\
+srcs/tree/create_tree.c\
+srcs/exe/exe.c
 
 
 IFLAGS =  -I includes/ -I libft/includes
-#CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g3
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g3
+#CFLAGS = -Wall -Wextra -Werror
 CC = cc
 OBJ = $(addprefix $(OBJS_PATH), $(SRC:.c=.o))
 HEADER = includes/minishell.h
@@ -28,7 +31,8 @@ _GREY=	$'\033[30m
 _RED=	$'\033[31m
 _GREEN=	$'\033[32m
 _YELLOW=$'\033[33m
-_BLUE=	$'\033[34m
+_BLUE=	$'\033[34mint __synthax_checker(t_lexing *lexing)
+
 _PURPLE=$'\033[35m
 _CYAN=	$'\033[36m
 _WHITE=	$'\033[37m

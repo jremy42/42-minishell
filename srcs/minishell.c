@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:25:57 by jremy             #+#    #+#             */
-/*   Updated: 2022/02/11 16:03:52 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/08 17:48:00 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,45 +61,84 @@ static void	get_env(t_msh *msh, char *envp[])
 	}
 }
 
-void	__mini_parsing(char *arg, t_msh *msh)
+void __print_lexing(t_lexing *lexing)
 {
-	char		**argv;
-	int			i;
+	while (lexing)
+	{
+		printf("Le token vaut : >%s< et de type = %d\n", lexing->token, lexing->type); 
+		lexing = lexing->next;
+	}	
+}
+
+void print2DUtil(t_node *root, int space)
+{
+	t_lexing *index;
+	
+    // Base case
+    if (root == NULL)
+        return;
+ 
+    // Increase distance between levels
+    space += COUNT;
+ 
+    // Process right child first
+    print2DUtil(root->right, space);
+ 
+    // Print current node after space
+    // count
+    printf("\n");
+    for (int i = COUNT; i < space; i++)
+        printf(" ");
+    printf("%d\n", root->kind);
+	if (root->kind == SEQUENCE)
+	{
+		index = root->tmp;
+		while (index)
+		{
+			printf("[%s] ", index->token);
+			index = index->next;
+		}
+	}
+ 
+    // Process left child
+    print2DUtil(root->left, space);
+}
+
+void print2D(t_node *root)
+{
+   // Pass initial space count as 0
+   print2DUtil(root, 0);
+   printf("\n");
+}
+
+int	__mini_parsing(char *arg, t_msh *msh)
+{
 	t_list		*start;
 	t_lexing	*lexing;
-	t_lexing	*index;
+	t_cmd		*cmd;
+	//t_lexing	*index;
 	char		*to_tokenize;
 
 	start = NULL;
 	lexing = NULL;
+	(void)msh;
 	to_tokenize = __strtrim(arg, " \f\t\r\v");
 	__tokenize(to_tokenize, &start);
 	free(to_tokenize);
 	if (__lexing(start, &lexing) < 0)
-		return ;
-	index = lexing;
-	while (index)
-	{
-		printf("Le token vaut : >%s< et de type = %d\n", index->token, index->type); 
-		index = index->next;
-	}
-	argv = __split(arg, ' ');
-	if (__strncmp(argv[0], "echo", 4) == 0)
-		__echo(argv, 1);
-	if (__strncmp(argv[0], "cd", 2) == 0)
-		__cd(argv[1], msh);
-	if (__strncmp(argv[0], "pwd", 3) == 0)
-		__pwd(1);
-	if (__strncmp(argv[0], "env", 3) == 0)
-		__env(msh);
-	if (__strncmp(argv[0], "export", 6) == 0)
-		__export(argv + 1, msh);
-	if (__strncmp(argv[0], "unset", 5) == 0)
-		__unset(argv + 1, msh);
-	i = -1;
-	while (argv[++i])
-		free(argv[i]);
-	free(argv);
+		return (write(2, "Malloc error\n", 14), -1);
+	//__print_lexing(lexing);
+	if (__synthax_checker(lexing) < 0)
+		return (-1);
+	__print_lexing(lexing);
+	if (!__create_tree(lexing, &(msh->root)))
+		return (-1);
+	print2D(msh->root);
+	//free lexing a faire a la fin de l'ex
+	cmd = miniparsing(msh->root->tmp);
+	//print_cmd(cmd);
+	execute_seq(cmd, msh->envp);
+	return (0);
 }
 
 int	main (int ac, char *av[], char *envp[])
@@ -126,6 +165,7 @@ int	main (int ac, char *av[], char *envp[])
 			break ;
 		}
 		__mini_parsing(arg, &msh);
+		free(arg);
 	}
 	__exit(&msh);
 }
@@ -138,4 +178,35 @@ int	main (int ac, char *av[], char *envp[])
 	__cd("/dev");
 	__pwd(1);
 	__env(NULL);
+	*/
+
+
+/*
+
+	argv = __split(arg, ' ');
+	if (__strncmp(argv[0], "echo", 4) == 0)
+		__echo(argv, 1);
+	if (__strncmp(argv[0], "cd", 2) == 0)
+		__cd(argv[1], msh);
+	if (__strncmp(argv[0], "pwd", 3) == 0)
+		__pwd(1);
+	if (__strncmp(argv[0], "env", 3) == 0)
+		__env(msh);
+	if (__strncmp(argv[0], "export", 6) == 0)
+		__export(argv + 1, msh);
+	if (__strncmp(argv[0], "unset", 5) == 0)
+		__unset(argv + 1, msh);
+	i = -1;
+	while (argv[++i])
+		free(argv[i]);
+	free(argv);
+
+	*/
+/*
+	index = lexing;
+	while (index)
+	{
+		printf("Le token vaut : >%s< et de type = %d\n", index->token, index->type); 
+		index = index->next;
+	}	
 	*/

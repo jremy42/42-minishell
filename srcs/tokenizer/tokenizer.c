@@ -32,7 +32,8 @@ int	__get_word(char **new_token, char *str, int i)
 	slash_status = 0;
 	while (str[++i])
 	{
-		if (str[i] == '\\' && str[i + 1] && __need_to_escape(i, quote_status, str))
+		if (str[i] == '\\' && str[i + 1] && __need_to_escape(i, quote_status, str)
+			&& !slash_status)
 		{
 			slash_status = BACKSLASH;
 			continue ;
@@ -63,7 +64,7 @@ int	__get_operator(char **new_token, char *str, int i)
 		i++;
 	}
 	if (!__is_operator_char(str[i]))
-		i--;
+		--i;
 	if (!str[i])
 		i--;
 	return (i);

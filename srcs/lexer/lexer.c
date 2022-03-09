@@ -14,12 +14,10 @@
 
 int	__is_operator(char *content)
 {
-	int	i;
 	int	size;
 
-	i = 0;
 	size = __strlen(content);
-	if (size == 1 && __is_operator_char(content[i]))
+	if (size == 1 && __is_operator_char(content[0]) && content[0]!= '&')
 		return (1);
 	if (size == 2)
 	{
@@ -29,7 +27,20 @@ int	__is_operator(char *content)
 	return (0);
 }
 
-t_ltype	__get_type(char *content)
+static int __is_redirection(char *content)
+{
+	if (!__strcmp(content, "<"))
+		return (1);
+	if (!__strcmp(content, ">"))
+		return (1);
+	if (!__strcmp(content, "<<"))
+		return (1);
+	if (!__strcmp(content, ">>"))
+		return (1);
+	return (0);
+}
+
+t_token_type	__get_type(char *content)
 {
 	int	i;
 
@@ -38,8 +49,12 @@ t_ltype	__get_type(char *content)
 		return (P_LEFT);
 	if (content[0] == ')')
 		return (P_RIGHT);
-	if (__strncmp("<newline>", content, __strlen("<newline>")) == 0)
+	if (!__strcmp("<newline>", content))
 		return (NEW_LINE);
+	if (!__strcmp(content, "|"))
+		return (PIPE);
+	if (__is_redirection(content))
+		return (REDIRECTION);
 	if (!__is_operator_char(content[i]))
 		return (WORD);
 	if (__is_operator(content) == 1)
