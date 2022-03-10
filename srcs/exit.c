@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:25:57 by jremy             #+#    #+#             */
-/*   Updated: 2022/02/09 16:19:02 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/10 16:51:19 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ void destroy_env(t_msh *msh)
 }
 
 int __exit(t_msh *msh)
-{
+{	
 	destroy_env(msh);
 	free(msh->prompt);
-	return (0);
+	exit (msh->rv);
 }
