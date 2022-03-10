@@ -1,6 +1,19 @@
 #include "minishell.h"
 #include "exe.h"
 
+void	__cmd_list_clear(t_cmd *start)
+{
+	t_cmd	*next_to_free;
+
+	while (start)
+	{
+		next_to_free = start->next;
+		free(start->arg);
+		free(start);
+		start = next_to_free;
+	}
+}
+
 static void __cmd_add_back(t_cmd **alst, t_cmd *new)
 {
 	t_cmd	*nextlst;
@@ -16,31 +29,47 @@ static void __cmd_add_back(t_cmd **alst, t_cmd *new)
 	}
 }
 
+int	__get_nb_param_cmd(t_lexing *start)
+{
+    int size;
+
+    size = 0;
+    while (start && start->type != PIPE)
+    {
+        size++;
+        start = start->next;
+    }
+	return (size);
+}
+
+t_cmd	*create_new_cmd(int nb_param, int index, t_msh *msh)
+{
+    t_cmd *new;
+
+    new = malloc(sizeof(t_cmd));
+    if(!new)
+        return(NULL);
+    new->next = NULL;
+    new->redirection[0] = -1;
+    new->redirection[1] = -1;
+    new->index = index;
+    new->msh = msh;
+    new->arg = malloc(sizeof(char *) * (nb_param + 1));
+    if(!new->arg)
+        return (free(new), NULL);
+    new->arg[nb_param] = NULL;
+	return (new);
+}
+
 int add_next_cmd(t_cmd **start, t_lexing **lexing, t_msh *msh, int index)
 {
-    t_lexing *tmp;
-    int size;
     int i;
     t_cmd *new;
 
     i = 0;
-    size = 0;
-    tmp = *lexing;
-    while (tmp && tmp->type != PIPE)
-    {
-        size++;
-        tmp = tmp->next;
-    }
-    new = malloc(sizeof(t_cmd));
-    if(!new)
-        return(0);
-    new->next = NULL;
-    new->redirection[0] = -1;
-    new->redirection[1] = -1;
-    new->arg = malloc(sizeof(char *) * (size + 1));
-    new->arg[size] = NULL;
-    if(!new->arg)
-        return(0);
+	new = create_new_cmd(__get_nb_param_cmd(*lexing), index, msh);
+	if (!new)
+		return (0);
     while(*lexing && (*lexing)->type != PIPE)
     {
         new->arg[i] = (*lexing)->token;
@@ -49,8 +78,6 @@ int add_next_cmd(t_cmd **start, t_lexing **lexing, t_msh *msh, int index)
     }
     if (*lexing)
         *lexing = (*lexing)->next;
-    new->index = index;
-    new->msh = msh;
     __cmd_add_back(start, new);
     return (1);
 }
@@ -62,10 +89,10 @@ t_cmd *create_cmd_list(t_lexing *lexing, t_msh *msh)
 
     i = 0;
     start = NULL;
-    while(lexing)
+    while (lexing)
     {
         if (!add_next_cmd(&start, &lexing, msh, i))
-            return (NULL);
+            return (__cmd_list_clear(start), NULL);
         i++;
     }
     return (start);
@@ -170,7 +197,7 @@ static int __find_max_cmd(t_cmd *cmd)
     return (i);
 }
 
-static char**__create_envp(char ***envp)
+static char **__create_envp(char ***envp)
 {
     int size;
     int i;
@@ -178,10 +205,10 @@ static char**__create_envp(char ***envp)
 
     i = 0;
     size = 0;
-    while(envp[size])
+    while (envp[size])
         size++;
     ret = malloc(sizeof(char *) * size);
-    if(!ret)
+    if (!ret)
         return (NULL);
     while (i < size)
     {
@@ -197,7 +224,7 @@ int	__init_seq(t_sequ *seq, char ***envp, t_cmd *cmd)
     seq->pipe[out] = -1;
     seq->index = 0;
     seq->max_cmd = __find_max_cmd(cmd);
-    if(__find_path(envp))
+    if (__find_path(envp))
     {
         seq->path = __split(__find_path(envp), ':');
         if (!seq->path)
@@ -222,6 +249,7 @@ void D_print_seq(t_sequ *seq)
     }
 }
 
+/*
 static char	*__create_path(char *path, char *cmd)
 {
 	char	*tmp;
@@ -236,12 +264,59 @@ static char	*__create_path(char *path, char *cmd)
 		return (NULL);
 	return (tmp2);
 }
+*/
 
+char	*__create_path_and_cmd(char *path, char *cmd)
+{
+	char	*ret;
+	int		size;
+	int		i;
+
+	i = 0;
+	if (!path || !cmd)
+		return (NULL);
+	size = __strlen(path) + __strlen("/") + __strlen(cmd);
+	ret = (char *)malloc((size + 1) * sizeof(char));
+	if (!ret)
+		return (__putstr_fd("Malloc Error", 2), NULL);
+	ret[size] = '\0';
+	while (path[i])
+	{
+		ret[i] = path[i];
+		i++;
+	}
+	ret[i] = '/';
+	i = 0;
+	while (cmd[i])
+	{
+		ret[i + __strlen(path) + __strlen("/")] = cmd[i];
+		i++;
+	}
+	return (ret);
+}
+
+int	__try_paths(char **path_cmd, char **path, char *cmd_name)
+{
+    int	i;
+
+    i = 0;
+	while (path[i])
+	{
+		*path_cmd = __create_path_and_cmd(path[i], cmd_name);
+		if (!*path_cmd)
+			return(__putstr_fd("MALLOC ERROR\n", 2), 0);
+		if (access(*path_cmd, F_OK) == 0)
+			return (1);
+		i++;
+		free(*path_cmd);
+	}
+	return (0);
+}
 
 static char *__get_path(char **path, char *cmd_name)
 {
-    int i;
-    char *path_cmd;
+    int		i;
+    char	*path_cmd;
 
     i = 0;
 	if (__strchr(cmd_name, '/') != NULL)
@@ -257,9 +332,11 @@ static char *__get_path(char **path, char *cmd_name)
 		return (NULL);
 	else
     {
-        while(path[i])
+		/*
+        while (path[i])
         {
-            path_cmd = __create_path(path[i], cmd_name);
+            //path_cmd = __create_path(path[i], cmd_name);
+            path_cmd = __create_path_and_cmd(path[i], cmd_name);
             if (!path_cmd)
                 return(__putstr_fd("MALLOC ERROR\n", 2), NULL);
             if (access(path_cmd, F_OK) == 0)
@@ -267,6 +344,9 @@ static char *__get_path(char **path, char *cmd_name)
             i++;
             free(path_cmd);
         }
+		*/
+		if (__try_paths(&path_cmd, path, cmd_name) == 1)
+			return (path_cmd);
     }
     return(__putstr_fd("Command not found\n", 2), NULL);
 }
@@ -313,49 +393,51 @@ int __launcher_fork(t_sequ *seq, t_cmd *cmd)
 	return (ret);
 }
 
-int __is_builtin(char **cmd, t_msh *msh)
+int __is_builtin(char **arg)
 {
-    if (__strncmp(argv[0], "echo", 4) == 0)
-    {
-        msh->rv =__echo(argv, 1);
+	if (__strncmp(arg[0], "echo", 4) == 0)
         return (1);
-    }
-	if (__strncmp(argv[0], "cd", 2) == 0)
-    {
-        msh->rv = __cd(argv[1], msh);
+	if (__strncmp(arg[0], "cd", 2) == 0)
          return (1);
-    }
-	if (__strncmp(argv[0], "pwd", 3) == 0)
-    {
-        msh->rv = __pwd(argv[1], msh);
+	if (__strncmp(arg[0], "pwd", 3) == 0)
          return (1);
-    }
-	if (__strncmp(argv[0], "env", 3) == 0)
-	{
-        msh->rv = _env(argv[1], msh);
-         return (1);
-    }	__env(msh);
-	if (__strncmp(argv[0], "export", 6) == 0)
-    {
-        msh->rv = __export(argv[1], msh);
-         return (1);
-    }
-	if (__strncmp(argv[0], "unset", 5) == 0)
-    {
-        msh->rv = __unset(arg[1], msh);
+	if (__strncmp(arg[0], "env", 3) == 0)
         return (1);
-    }
-    return (0)
+	if (__strncmp(arg[0], "export", 6) == 0)
+         return (1);
+	if (__strncmp(arg[0], "unset", 5) == 0)
+        return (1);
+    return (0);
+}
+
+void	__exec_builtin(char **arg, t_msh *msh)
+{
+
+	if (__strncmp(arg[0], "echo", 4) == 0)
+        msh->rv =__echo(arg, 1);
+	if (__strncmp(arg[0], "cd", 2) == 0)
+        msh->rv = __cd(arg[1], msh);
+	if (__strncmp(arg[0], "pwd", 3) == 0)
+        msh->rv = __pwd(1);
+	if (__strncmp(arg[0], "env", 3) == 0)
+        msh->rv = __env(msh);
+	if (__strncmp(arg[0], "export", 6) == 0)
+        msh->rv = __export(arg + 1, msh);
+	if (__strncmp(arg[0], "unset", 5) == 0)
+        msh->rv = __unset(arg + 1, msh);
 }
 
 int execute_seq(t_cmd *cmd, t_msh *msh)
 {
     t_sequ seq;
 
-    if(!__init_seq(&seq, msh->envp, cmd))
+    if (!__init_seq(&seq, msh->envp, cmd))
         return (__putstr_fd("Malloc error\n", 2), 0);
-    if(seq->max_cmd == 1 && __is_builtin(cmd->arg))
+    if (seq.max_cmd == 1 && __is_builtin(cmd->arg))
+	{
+		__exec_builtin(cmd->arg, msh);
         return (0);
+	}
     msh->rv = __launcher_fork(&seq, cmd);
     return (0);
 

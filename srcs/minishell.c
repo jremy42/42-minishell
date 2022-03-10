@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:25:57 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/09 15:48:01 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/10 10:19:22 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,8 @@ int	__mini_parsing(char *arg, t_msh *msh)
 	//free lexing a faire a la fin de l'ex
 	//cmd = miniparsing(msh->root->tmp);
 	cmd = create_cmd_list(lexing, msh);
+	if (!cmd)
+		return (-1);
 	print_cmd_lst(cmd);
 	execute_seq(cmd, msh);
 	return (0);
