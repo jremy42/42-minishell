@@ -355,12 +355,40 @@ void execute_child(t_sequ *seq, t_cmd *cmd)
     exit (0);
 }
 
+int __connect_pipe(int pipe[2],t_cmd *cmd, int index, int prev_out )
+{
+    (void)cmd;
+    if (dup2(pipe[out], STDOUT_FILENO) < 0)
+        return (0);
+    //close(pipe[out]);
+    if (index != 0)
+    {
+        dup2(prev_out, STDIN_FILENO);
+        close(prev_out);
+    }
+    //close(pipe[in]);
+    /*
+    if (cmd->redirection[0] > -1)
+    {
+        dup2(cmd->redirection[0], STDIN_FILENO);
+    }
+     if (cmd->redirection[0] > -1)
+    {
+        close(pipe[out]);
+        dup2(cmd->redirection[0], STDOUT_FILENO);
+    }
+    */
+    return (1);
+}
+
 int __launcher_fork(t_sequ *seq, t_cmd *cmd)
 {
     pid_t pid;
     int status;
     int ret;
-
+    int prev_out;
+    
+    prev_out = 0;
     while (seq->index < seq->max_cmd)
     {
         if (pipe(seq->pipe) < 0)
@@ -370,12 +398,17 @@ int __launcher_fork(t_sequ *seq, t_cmd *cmd)
             return (__putstr_fd("Error fork\n", 2), 0);
         if (pid == 0)
         {
+            __connect_pipe(seq->pipe, cmd, seq->index, prev_out);
             execute_child(seq, cmd);
         }
         else
         {
             seq->index++;
             cmd = cmd->next;
+            close(seq->pipe[out]);
+            if(seq->index != 0)
+                close(prev_out);
+            prev_out = seq->pipe[in];
         }
     }
     waitpid(pid, &status, 0);
