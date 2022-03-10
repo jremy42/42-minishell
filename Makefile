@@ -17,6 +17,7 @@ srcs/tree/create_tree.c\
 srcs/exe/exe_childs.c\
 srcs/exe/init_seq.c\
 srcs/exe/create_cmd.c\
+srcs/exe/create_redirect.c\
 srcs/exe/launcher_forks.c\
 srcs/exe/exe.c
 

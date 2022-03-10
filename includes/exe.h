@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 17:32:24 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/10 16:43:47 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/10 18:23:01 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,8 @@ int	__init_seq(t_sequ *seq, char ***envp, t_cmd *cmd);
 int __launcher_fork(t_sequ *seq, t_cmd *cmd);
 void	__exec_builtin(char **arg, t_msh *msh);
 int __is_builtin(char **arg);
+t_redirect   *__create_new_redirect(t_lexing *lexing);
+void __redirect_add_back(t_redirect **alst, t_redirect *new);
+int __add_redirect(t_cmd *cmd, t_lexing *lexing);
+void	__redirect_list_clear(t_redirect *start);
 #endif

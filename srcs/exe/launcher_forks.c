@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 16:23:45 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/10 16:38:37 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/10 18:53:34 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ static int __last_pipe(int pipe[2], int prev_pipe_out, t_cmd *cmd)
 {
 	(void)cmd;
     (void)pipe;
-	dup2(prev_pipe_out, 0);
+	 fprintf(stderr, "last pipe\n");
+    dup2(prev_pipe_out, 0);
     close(pipe[out]);
 	close(prev_pipe_out);
     return (1);
@@ -78,11 +79,11 @@ int __launcher_fork(t_sequ *seq, t_cmd *cmd)
             return (__putstr_fd("Error fork\n", 2), 0);
         if (pid == 0)
         {
-			if (seq->index == 0)
+			if (seq->index == 0 && seq->max_cmd != 1)
 				__first_pipe(seq->pipe, cmd);
-			if (seq->index == seq->max_cmd - 1)
+			if (seq->index == seq->max_cmd - 1 && seq->max_cmd != 1)
 				__last_pipe(seq->pipe,prev_pipe_out, cmd);
-            else
+            else if (seq->max_cmd != 1 && seq->index != 0)
                 __middle_pipe(seq->pipe,prev_pipe_out, cmd);
             execute_child(seq, cmd);
         }

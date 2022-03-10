@@ -47,8 +47,18 @@ typedef enum	e_token_type
 typedef enum e_kind_node
 {OR = 1, AND, SEQUENCE} t_kind_node;
 
+typedef enum e_redir_type
+{GREAT, LESS, DGREAT} t_redir_type;
 //Faire les redirections juste avant de creer la liste finale des args (nom du prog et les vrai parametres)
 // Le *msh permettra de modifier la RV et de recuperer l'env necessaire a l'exe
+
+typedef struct s_redirect
+{
+	t_redir_type type;
+	char *file_name;
+	struct s_redirect *next;
+} t_redirect;
+
 typedef struct s_cmd
 {
 	int		redirection[2];
@@ -56,6 +66,7 @@ typedef struct s_cmd
 	char	**arg;
 	struct s_msh *msh;
 	struct s_cmd *next;
+	t_redirect *redirect;
 }	t_cmd;
 
 

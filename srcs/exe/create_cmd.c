@@ -6,14 +6,12 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 16:19:12 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/10 16:38:16 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/10 19:08:55 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "exe.h"
-
-
 
 static void __cmd_add_back(t_cmd **alst, t_cmd *new)
 {
@@ -37,6 +35,11 @@ static int	__get_nb_param_cmd(t_lexing *start)
     size = 0;
     while (start && start->type != PIPE)
     {
+        if (start->type == REDIRECTION)
+        {
+            start = start->next->next;
+            continue ;
+        }
         size++;
         start = start->next;
     }
@@ -53,6 +56,7 @@ static t_cmd	*create_new_cmd(int nb_param, int index, t_msh *msh)
     new->next = NULL;
     new->redirection[0] = -1;
     new->redirection[1] = -1;
+    new->redirect = NULL;
     new->index = index;
     new->msh = msh;
     new->arg = malloc(sizeof(char *) * (nb_param + 1));
@@ -74,6 +78,13 @@ int add_next_cmd(t_cmd **start, t_lexing **lexing, t_msh *msh, int index)
 		return (0);
     while(*lexing && (*lexing)->type != PIPE)
     {
+        if ((*lexing)->type == REDIRECTION)
+        {
+            if (!__add_redirect(new, *lexing))
+                return (0);
+            *lexing = (*lexing)->next->next;
+            continue ;
+        }
         new->arg[i] = (*lexing)->token;
 		save = *lexing;
         *lexing = (*lexing)->next;
@@ -122,6 +133,11 @@ void print_cmd(t_cmd *cmd)
 
     i = 0;
     printf("stdin = %d stdout = %d, index = %d\n", cmd->redirection[0], cmd->redirection[1], cmd->index);
+    while(cmd->redirect)
+    {
+        printf("type = %d et file = %s\n", cmd->redirect->type, cmd->redirect->file_name);
+        cmd->redirect = cmd->redirect->next;
+    }
     while(cmd->arg[i])
     {
         printf("arg %d >%s<\n",i , cmd->arg[i]);
