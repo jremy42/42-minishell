@@ -8,7 +8,7 @@ void	__cmd_list_clear(t_cmd *start)
 	while (start)
 	{
 		next_to_free = start->next;
-		free(start->arg);
+		free_split(start->arg);
 		free(start);
 		start = next_to_free;
 	}
@@ -63,8 +63,9 @@ t_cmd	*create_new_cmd(int nb_param, int index, t_msh *msh)
 
 int add_next_cmd(t_cmd **start, t_lexing **lexing, t_msh *msh, int index)
 {
-    int i;
-    t_cmd *new;
+    int			i;
+    t_cmd		*new;
+	t_lexing	*save;
 
     i = 0;
 	new = create_new_cmd(__get_nb_param_cmd(*lexing), index, msh);
@@ -73,11 +74,18 @@ int add_next_cmd(t_cmd **start, t_lexing **lexing, t_msh *msh, int index)
     while(*lexing && (*lexing)->type != PIPE)
     {
         new->arg[i] = (*lexing)->token;
+		save = *lexing;
         *lexing = (*lexing)->next;
+		free (save);
         i++;
     }
     if (*lexing)
+	{
+		save = *lexing;
         *lexing = (*lexing)->next;
+		free(save->token);
+		free(save);
+	}
     __cmd_add_back(start, new);
     return (1);
 }
@@ -423,9 +431,14 @@ int execute_seq(t_cmd *cmd, t_msh *msh)
     if (seq.max_cmd == 1 && __is_builtin(cmd->arg))
 	{
 		__exec_builtin(cmd->arg, msh);
+		free_split(seq.path);
+		free(seq.envp);
+		__cmd_list_clear(cmd);
         return (0);
 	}
     msh->rv = __launcher_fork(&seq, cmd);
+	free_split(seq.path);
+	free(seq.envp);
+	__cmd_list_clear(cmd);
     return (0);
-
 }

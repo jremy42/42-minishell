@@ -29,6 +29,7 @@ string/ft_split.c \
 stdlib/ft_itoa.c \
 string/ft_strmapi.c \
 string/ft_striteri.c \
+string/ft_free_split.c \
 print/ft_putchar_fd.c \
 print/ft_putstr_fd.c \
 print/ft_putendl_fd.c \
