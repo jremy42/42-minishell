@@ -332,19 +332,6 @@ static char *__get_path(char **path, char *cmd_name)
 		return (NULL);
 	else
     {
-		/*
-        while (path[i])
-        {
-            //path_cmd = __create_path(path[i], cmd_name);
-            path_cmd = __create_path_and_cmd(path[i], cmd_name);
-            if (!path_cmd)
-                return(__putstr_fd("MALLOC ERROR\n", 2), NULL);
-            if (access(path_cmd, F_OK) == 0)
-                return (path_cmd);
-            i++;
-            free(path_cmd);
-        }
-		*/
 		if (__try_paths(&path_cmd, path, cmd_name) == 1)
 			return (path_cmd);
     }
