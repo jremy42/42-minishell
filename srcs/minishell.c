@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:25:57 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/11 12:49:53 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/11 16:59:22 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,8 +116,8 @@ int	__mini_parsing(char *arg, t_msh *msh)
 	t_list		*start;
 	t_lexing	*lexing;
 	t_cmd		*cmd;
-	//t_lexing	*index;
 	char		*to_tokenize;
+	t_lexing	*first_error;
 
 	start = NULL;
 	lexing = NULL;
@@ -128,7 +128,11 @@ int	__mini_parsing(char *arg, t_msh *msh)
 	if (__lexing(start, &lexing) < 0)
 		return (write(2, "Malloc error\n", 14), -1);
 	//__print_lexing(lexing);
-	if (__synthax_checker(lexing) < 0)
+	first_error = __synthax_checker(lexing);
+	if (first_error)
+		fprintf(stderr, "DEBUG first error : %s\n", first_error->token);
+	__handle_here_doc(lexing, first_error, msh);
+	if(first_error)
 		return (-1);
 	__print_lexing(lexing);
 	if (!__create_tree(lexing, &(msh->root)))
@@ -141,6 +145,7 @@ int	__mini_parsing(char *arg, t_msh *msh)
 		return (-1);
 	print_cmd_lst(cmd);
 	execute_seq(cmd, msh);
+	//__cmd_list_clear(cmd);
 	return (0);
 }
 

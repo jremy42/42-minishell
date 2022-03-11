@@ -1,5 +1,4 @@
 # include "minishell.h"
-/*
 int __is_valide_operator(char *token)
 {
     if (!__strncmp(token, "&&", 2))
@@ -10,7 +9,6 @@ int __is_valide_operator(char *token)
         return (1);
     return (0);
 }
-*/
 
 void __synthax_error(char * str)
 {
@@ -27,7 +25,7 @@ void __invalid_error(char * str)
 }
 
 
-int __synthax_checker(t_lexing *lexing)
+t_lexing *__synthax_checker(t_lexing *lexing)
 {
     int parenthesis;
 
@@ -38,24 +36,19 @@ int __synthax_checker(t_lexing *lexing)
             parenthesis++;
         if (lexing->type == P_RIGHT)
             parenthesis--;
-	/*
-        if ((lexing->type == P_LEFT || lexing->type == P_RIGHT)
-            && lexing->next && (lexing->next->type == P_LEFT || lexing->next->type == P_RIGHT))
-            return(__synthax_error(lexing->token), -1);
-	*/
         if (lexing->type == INVALID)
-            return (__invalid_error(lexing->token), -1);
+            return (__invalid_error(lexing->token), lexing);
         if (lexing->type == OPERATOR || lexing->type == PIPE)
         {
             // <=1 operateur || pipe
             if (!lexing->next || lexing->next->type == OPERATOR || lexing->next->type == PIPE)
-                return (__synthax_error(lexing->token), -1);
+                return (__synthax_error(lexing->token), lexing);
         }
 	if (parenthesis < 0)
-            return(__synthax_error(lexing->token), -1);
+            return(__synthax_error(lexing->token), lexing);
         lexing = lexing->next;
     }
     if (parenthesis)
-        return (__synthax_error("end. Parenthesis no closed"), -1);
-    return (1);
+        return (__synthax_error("end. Parenthesis no closed"), lexing);
+    return (NULL);
 }

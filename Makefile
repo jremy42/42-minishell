@@ -21,6 +21,7 @@ srcs/exe/create_redirect.c\
 srcs/exe/launcher_forks.c\
 srcs/exe/redirect.c\
 srcs/exe/redirect_builtin.c\
+srcs/here_doc/here_doc.c\
 srcs/exe/exe.c
 
 

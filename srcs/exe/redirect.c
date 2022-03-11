@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 09:51:56 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/11 12:04:40 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/11 17:37:41 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,18 @@ static void    __dgreat_redirection(t_sequ *seq, t_cmd *cmd)
         __exit_child(seq, cmd, errno, 1);
 }
 
+static void    __here_doc_redirection(t_sequ *seq, t_cmd *cmd)
+{
+    int pipefd[2];
+
+    pipe(pipefd);
+    (void)seq;
+    fprintf(stderr, "here_doc\n");
+    //dup2(pipefd[0], STDIN_FILENO);
+    //dup2(pipefd[1], STDERR_FILENO);
+    __putstr_fd(cmd->redirect->file_name, STDERR_FILENO);
+}
+
 int __handle_redirect(t_sequ *seq, t_cmd *cmd)
 {
     fprintf(stderr,"Handle redirect\n");
@@ -60,6 +72,8 @@ int __handle_redirect(t_sequ *seq, t_cmd *cmd)
             __great_redirection(seq, cmd);
         if (cmd->redirect->type ==  DGREAT)
             __dgreat_redirection(seq, cmd);
+        if (cmd->redirect->type == H_D)
+            __here_doc_redirection(seq, cmd);
         cmd->redirect = cmd->redirect->next;
     }
     return (1);

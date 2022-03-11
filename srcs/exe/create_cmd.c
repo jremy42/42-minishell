@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 16:19:12 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/11 13:17:10 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/11 17:12:15 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static int	__get_nb_param_cmd(t_lexing *start)
     size = 0;
     while (start && start->type != PIPE)
     {
-        if (start->type == REDIRECTION)
+        if (start->type == REDIRECTION || start->type == HERE_DOC)
         {
             start = start->next->next;
             continue ;
@@ -78,7 +78,7 @@ int add_next_cmd(t_cmd **start, t_lexing **lexing, t_msh *msh, int index)
 		return (0);
     while(*lexing && (*lexing)->type != PIPE)
     {
-        if ((*lexing)->type == REDIRECTION)
+        if ((*lexing)->type == REDIRECTION || (*lexing)->type == HERE_DOC)
         {
             if (!__add_redirect(new, *lexing))
                 return (0);

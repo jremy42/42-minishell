@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 16:21:22 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/11 11:54:24 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/11 14:51:08 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void __exit_child(t_sequ *seq, t_cmd *cmd, int errno_copy, int error)
 	if (error)
 	{
 		cmd->msh->rv = errno_copy;
-		__putstr_fd(strerror(errno_copy), 2);
+		__putendl_fd(strerror(errno_copy), 2);
 	}
 	free_split(seq->path);
 	free(seq->envp);

@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 16:20:32 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/11 12:23:04 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/11 14:55:56 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	__cmd_list_clear(t_cmd *start)
 {
 	t_cmd	*next_to_free;
 
+	fprintf(stderr, "cmd list clear\n");
 	while (start)
 	{
 		next_to_free = start->next;
@@ -94,14 +95,14 @@ int execute_seq(t_cmd *cmd, t_msh *msh)
 		if(cmd->redirect)
 		{
 			if (!__save_fd(std))
-				return (0);
-			__handle_redirect_builtin(cmd);
+				return (__cmd_list_clear(cmd), 0);
+			if(!__handle_redirect_builtin(cmd))
+				return (__cmd_list_clear(cmd), 0);
 		}
 		__exec_builtin(cmd->arg, msh);
-		if (!__restore_fd(std))
-			return (0);
-		__cmd_list_clear(cmd);
-        return (0);
+		if (cmd->redirect && !__restore_fd(std))
+			__putendl_fd(strerror(errno), 2);
+		return (__cmd_list_clear(cmd), 0);
 	}
     if (!__init_seq(&seq, msh->envp, cmd))
         return (__putstr_fd("Malloc error\n", 2), 0);

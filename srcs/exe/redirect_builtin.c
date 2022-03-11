@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 09:51:56 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/11 12:15:23 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/11 15:00:36 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@ static int    __less_redirection(t_cmd *cmd)
     fprintf(stderr, "less\n");
     cmd->redirection[0] = open(cmd->redirect->file_name, O_RDONLY);
     if (cmd->redirection[0] < 0)
-        return (__putstr_fd(strerror(errno), 2), 0);
+        return (__putendl_fd(strerror(errno), 2), 0);
     if (dup2(cmd->redirection[0], 0) < 0)
-        return (__putstr_fd(strerror(errno), 2), 0);
+        return (__putendl_fd(strerror(errno), 2), 0);
     if (close(cmd->redirection[0]) < 0)
-        return (__putstr_fd(strerror(errno), 2), 0);
+        return (__putendl_fd(strerror(errno), 2), 0);
     return (1);
 }
 
@@ -31,11 +31,11 @@ static int    __great_redirection(t_cmd *cmd)
     fprintf(stderr,"great\n");
     cmd->redirection[1] = open(cmd->redirect->file_name, O_CREAT | O_WRONLY | O_TRUNC, 00644);
     if (cmd->redirection[1] < 0)
-        return (__putstr_fd(strerror(errno), 2), 0);
+        return (__putendl_fd(strerror(errno), 2), 0);
     if (dup2(cmd->redirection[1], 1) < 0)
-        return (__putstr_fd(strerror(errno), 2), 0);
+        return (__putendl_fd(strerror(errno), 2), 0);
     if (close(cmd->redirection[1]) < 0)
-        return (__putstr_fd(strerror(errno), 2), 0);
+        return (__putendl_fd(strerror(errno), 2), 0);
     return (1);
 }
 
@@ -44,11 +44,11 @@ static int    __dgreat_redirection(t_cmd *cmd)
         fprintf(stderr,"Dgreat\n");
     cmd->redirection[1] = open(cmd->redirect->file_name, O_CREAT | O_WRONLY | O_APPEND, 00644);
     if (cmd->redirection[1] < 0)
-        return (__putstr_fd(strerror(errno), 2), 0);
+        return (__putendl_fd(strerror(errno), 2), 0);
     if (dup2(cmd->redirection[1], 1) < 0)
-        return (__putstr_fd(strerror(errno), 2), 0);
+        return (__putendl_fd(strerror(errno), 2), 0);
     if (close(cmd->redirection[1]) < 0)
-        return (__putstr_fd(strerror(errno), 2), 0);
+        return (__putendl_fd(strerror(errno), 2), 0);
     return (1);
 }
 

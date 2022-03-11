@@ -49,7 +49,7 @@ typedef enum e_kind_node
 {OR = 1, AND, SEQUENCE} t_kind_node;
 
 typedef enum e_redir_type
-{LESS, GREAT, DGREAT} t_redir_type;
+{LESS, GREAT, DGREAT, H_D} t_redir_type;
 
 typedef struct s_redirect
 {
@@ -150,7 +150,7 @@ int		__init_token_if_none(char **str, int *token_status);
 
 // lexing
 int	__lexing(t_list *token, t_lexing **lexing);
-int	__synthax_checker(t_lexing *lexing);
+t_lexing *__synthax_checker(t_lexing *lexing);
 void	__print_lexing(t_lexing *lexing);
 void	__lexing_full_list_clear(t_lexing *start);
 void	__lexing_node_list_clear(t_lexing *start);
@@ -167,5 +167,10 @@ int execute_seq(t_cmd *cmd, t_msh *msh);
 int add_next_cmd(t_cmd **start, t_lexing **lexing, t_msh *msh, int index);
 t_cmd *create_cmd_list(t_lexing *lexing, t_msh *msh);
 void print_cmd_lst(t_cmd *cmd);
+void	__cmd_list_clear(t_cmd *start);
+
+//heredoc
+
+int __handle_here_doc(t_lexing *lexing, t_lexing *end, t_msh *msh);
 
 #endif
