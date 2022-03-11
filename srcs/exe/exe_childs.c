@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 16:21:22 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/11 10:38:40 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/11 11:29:26 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,8 @@ void execute_child(t_sequ *seq, t_cmd *cmd)
 	fprintf(stderr, "cmd->redirect =>%p\n", cmd->redirect);	
 	if(cmd->redirect)
 		__handle_redirect(seq, cmd);
+	if (!cmd->arg[0])
+		__exit_child(seq, cmd, 0, 0);
 	if (__is_builtin(cmd->arg))
 	{
 		__exec_builtin(cmd->arg, cmd->msh);
