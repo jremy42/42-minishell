@@ -47,16 +47,18 @@ all: $(NAME)
 
 ifeq ($(shell uname -s), Darwin)
 
+MAC_DIR_READLINE=$(shell brew --prefix readline)
+
 $(OBJS_PATH)%.o: %.c $(HEADER)
 		mkdir -p $(dir $@)
-		@$(CC) $(CFLAGS) $(IFLAGS) -c $< -I /opt/homebrew/opt/readline/include -o $@
+		@$(CC) $(CFLAGS) $(IFLAGS) -c $< -I $(MAC_DIR_READLINE)/include -o $@
 		@printf "%-15s ${_YELLOW}${_BOLD}$<${_END}...\n" "Compiling"
 
 $(NAME): $(OBJ) ${HEADER} ${LIBFT}
 		@printf "%-15s ${_CYAN}${_BOLD}libft${_END}...\n" "Compiling"
 		@make -C ${LIBFT} > /dev/null
 		@printf "%-15s ${_PURPLE}${_BOLD}${NAME}${_END}...\n" "Compiling"
-		@$(CC) $(CFLAGS) ${OBJ} -Llibft -lft -L /opt/homebrew/opt/readline/lib -lreadline -o $(NAME)
+		@$(CC) $(CFLAGS) ${OBJ} -Llibft -lft -L $(MAC_DIR_READLINE)/lib -lreadline -o $(NAME)
 		@printf "\n${_GREEN}${_BOLD}[Compilation done !]${_END}\n"
 
 else
