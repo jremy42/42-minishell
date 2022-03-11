@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 16:20:32 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/10 16:22:38 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/11 12:22:42 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static char	*__find_path(char ***envp)
 	return (NULL);
 }
 
-static int __find_max_cmd(t_cmd *cmd)
+int __find_max_cmd(t_cmd *cmd)
 {
     int i;
 

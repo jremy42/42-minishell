@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 16:23:45 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/11 10:30:53 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/11 12:18:49 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ int __launcher_fork(t_sequ *seq, t_cmd *cmd)
             return (__putstr_fd("Error fork\n", 2), 0);
         if (pid == 0)
         {
+            fprintf(stderr, "I m a fork\n");
 			if (seq->index == 0 && seq->max_cmd != 1)
 				__first_pipe(seq->pipe, cmd);
 			if (seq->index == seq->max_cmd - 1 && seq->max_cmd != 1)

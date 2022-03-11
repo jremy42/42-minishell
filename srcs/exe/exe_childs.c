@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 16:21:22 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/11 11:29:26 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/11 11:54:24 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ void execute_child(t_sequ *seq, t_cmd *cmd)
 		__exec_builtin(cmd->arg, cmd->msh);
 		__exit_child(seq, cmd, 0, 0);
 	}
-    path_cmd = __get_path(seq->path, cmd->arg[0]);
+	path_cmd = __get_path(seq->path, cmd->arg[0]);
     execve(path_cmd, cmd->arg, seq->envp);
     exit (0);
 }

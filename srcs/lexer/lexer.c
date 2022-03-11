@@ -6,11 +6,36 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:25:57 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/09 11:42:01 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/11 12:58:47 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	__lexing_full_list_clear(t_lexing *start)
+{
+	t_lexing	*next_to_free;
+
+	while (start)
+	{
+		next_to_free = start->next;
+		free(start->token);
+		free(start);
+		start = next_to_free;
+	}
+}
+
+void	__lexing_node_list_clear(t_lexing *start)
+{
+	t_lexing	*next_to_free;
+
+	while (start)
+	{
+		next_to_free = start->next;
+		free(start);
+		start = next_to_free;
+	}
+}
 
 int	__is_operator(char *content)
 {

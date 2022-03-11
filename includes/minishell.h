@@ -152,6 +152,8 @@ int		__init_token_if_none(char **str, int *token_status);
 int	__lexing(t_list *token, t_lexing **lexing);
 int	__synthax_checker(t_lexing *lexing);
 void	__print_lexing(t_lexing *lexing);
+void	__lexing_full_list_clear(t_lexing *start);
+void	__lexing_node_list_clear(t_lexing *start);
 
 // Gardening
 

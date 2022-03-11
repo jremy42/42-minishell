@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 16:20:32 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/11 11:00:54 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/11 12:23:04 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,25 +87,24 @@ int execute_seq(t_cmd *cmd, t_msh *msh)
 {
     t_sequ seq;
 	int std[2];
-	
-    if (!__init_seq(&seq, msh->envp, cmd))
-        return (__putstr_fd("Malloc error\n", 2), 0);
-    if (seq.max_cmd == 1 && __is_builtin(cmd->arg))
+
+    if (__find_max_cmd(cmd) == 1 && __is_builtin(cmd->arg))
 	{
+		fprintf(stderr, " I m a builtin\n");
 		if(cmd->redirect)
 		{
 			if (!__save_fd(std))
 				return (0);
-			__handle_redirect(&seq, cmd);
+			__handle_redirect_builtin(cmd);
 		}
 		__exec_builtin(cmd->arg, msh);
 		if (!__restore_fd(std))
 			return (0);
-		free_split(seq.path);
-		free(seq.envp);
 		__cmd_list_clear(cmd);
         return (0);
 	}
+    if (!__init_seq(&seq, msh->envp, cmd))
+        return (__putstr_fd("Malloc error\n", 2), 0);
     msh->rv = __launcher_fork(&seq, cmd);
 	free_split(seq.path);
 	free(seq.envp);

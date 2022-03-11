@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 16:19:12 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/11 10:41:11 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/11 13:17:10 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int add_next_cmd(t_cmd **start, t_lexing **lexing, t_msh *msh, int index)
         new->arg[i] = (*lexing)->token;
 		save = *lexing;
         *lexing = (*lexing)->next;
-		free (save);
+		//free (save);
         i++;
     }
     if (*lexing)
@@ -96,7 +96,7 @@ int add_next_cmd(t_cmd **start, t_lexing **lexing, t_msh *msh, int index)
 		save = *lexing;
         *lexing = (*lexing)->next;
 		free(save->token);
-		free(save);
+		//free(save);
 	}
     __cmd_add_back(start, new);
     return (1);
@@ -105,9 +105,11 @@ int add_next_cmd(t_cmd **start, t_lexing **lexing, t_msh *msh, int index)
 t_cmd *create_cmd_list(t_lexing *lexing, t_msh *msh)
 {
     t_cmd *start;
+    t_lexing    *save;
     int i;
 
     i = 0;
+    save = lexing;
     start = NULL;
     while (lexing)
     {
@@ -115,6 +117,7 @@ t_cmd *create_cmd_list(t_lexing *lexing, t_msh *msh)
             return (__cmd_list_clear(start), NULL);
         i++;
     }
+    __lexing_node_list_clear(save);
     return (start);
 }
 

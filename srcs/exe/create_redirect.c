@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 17:54:50 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/10 18:29:26 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/11 12:47:03 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ t_redirect   *__create_new_redirect(t_lexing *lexing)
 		new->type = GREAT;
 	if (__strcmp(lexing->token, ">>") == 0)
 		new->type = DGREAT;
+	//free(lexing->token);
 	return (new);
 }
 
