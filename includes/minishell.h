@@ -1,3 +1,4 @@
+#include <errno.h>
 #ifndef MINISHELL_H
 # define MINISHELL_H
 # include <stdio.h>
@@ -48,9 +49,7 @@ typedef enum e_kind_node
 {OR = 1, AND, SEQUENCE} t_kind_node;
 
 typedef enum e_redir_type
-{GREAT, LESS, DGREAT} t_redir_type;
-//Faire les redirections juste avant de creer la liste finale des args (nom du prog et les vrai parametres)
-// Le *msh permettra de modifier la RV et de recuperer l'env necessaire a l'exe
+{LESS, GREAT, DGREAT} t_redir_type;
 
 typedef struct s_redirect
 {
@@ -58,6 +57,9 @@ typedef struct s_redirect
 	char *file_name;
 	struct s_redirect *next;
 } t_redirect;
+ 
+//Faire les redirections juste avant de creer la liste finale des args (nom du prog et les vrai parametres)
+// Le *msh permettra de modifier la RV et de recuperer l'env necessaire a l'exe
 
 typedef struct s_cmd
 {

@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 16:21:22 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/10 18:46:17 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/11 10:38:40 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,19 +85,33 @@ static char *__get_path(char **path, char *cmd_name)
     return(__putstr_fd("Command not found\n", 2), NULL);
 }
 
+void __exit_child(t_sequ *seq, t_cmd *cmd, int errno_copy, int error)
+{
+	t_msh *tmp;
+
+	if (error)
+	{
+		cmd->msh->rv = errno_copy;
+		__putstr_fd(strerror(errno_copy), 2);
+	}
+	free_split(seq->path);
+	free(seq->envp);
+	tmp = cmd->msh;
+	__cmd_list_clear(cmd);
+    __exit(tmp);
+}
+
 void execute_child(t_sequ *seq, t_cmd *cmd)
 {
     char *path_cmd;
-	t_msh *tmp;
 
+	fprintf(stderr, "cmd->redirect =>%p\n", cmd->redirect);	
+	if(cmd->redirect)
+		__handle_redirect(seq, cmd);
 	if (__is_builtin(cmd->arg))
 	{
 		__exec_builtin(cmd->arg, cmd->msh);
-		free_split(seq->path);
-		free(seq->envp);
-		tmp = cmd->msh;
-		__cmd_list_clear(cmd);
-        __exit(tmp);
+		__exit_child(seq, cmd, 0, 0);
 	}
     path_cmd = __get_path(seq->path, cmd->arg[0]);
     execve(path_cmd, cmd->arg, seq->envp);

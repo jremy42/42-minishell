@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 16:19:12 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/10 19:08:55 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/11 10:41:11 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,11 +132,15 @@ void print_cmd(t_cmd *cmd)
     int i;
 
     i = 0;
+
+    t_redirect *tmp;
+
+    tmp = cmd->redirect;
     printf("stdin = %d stdout = %d, index = %d\n", cmd->redirection[0], cmd->redirection[1], cmd->index);
-    while(cmd->redirect)
+    while(tmp)
     {
-        printf("type = %d et file = %s\n", cmd->redirect->type, cmd->redirect->file_name);
-        cmd->redirect = cmd->redirect->next;
+        printf("type = %d et file = %s\n", tmp->type, tmp->file_name);
+        tmp = tmp->next;
     }
     while(cmd->arg[i])
     {

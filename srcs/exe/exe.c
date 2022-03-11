@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 16:20:32 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/10 19:07:04 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/11 11:00:54 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,14 +61,46 @@ void	__exec_builtin(char **arg, t_msh *msh)
         msh->rv = __unset(arg + 1, msh);
 }
 
+int	__save_fd(int *std)
+{
+	std[out] = dup(STDOUT_FILENO);
+	std[in] = dup(STDIN_FILENO);
+	if (std[out] < 0|| std[in] < 0)
+		return (0);
+	return (1);
+}
+
+int __restore_fd(int *std)
+{
+	if (dup2(std[out], STDOUT_FILENO) < 0)
+		return (0);
+	if (close(std[out]) < 0)
+		return (0);
+	if (dup2(std[in], STDIN_FILENO) < 0)
+		return (0);
+	if (close(std[in]) < 0)
+		return (0);
+	return (1);
+}
+
 int execute_seq(t_cmd *cmd, t_msh *msh)
 {
     t_sequ seq;
+	int std[2];
+	
     if (!__init_seq(&seq, msh->envp, cmd))
         return (__putstr_fd("Malloc error\n", 2), 0);
     if (seq.max_cmd == 1 && __is_builtin(cmd->arg))
 	{
+		if(cmd->redirect)
+		{
+			if (!__save_fd(std))
+				return (0);
+			__handle_redirect(&seq, cmd);
+		}
 		__exec_builtin(cmd->arg, msh);
+		if (!__restore_fd(std))
+			return (0);
 		free_split(seq.path);
 		free(seq.envp);
 		__cmd_list_clear(cmd);

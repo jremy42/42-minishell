@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 17:32:24 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/10 18:23:01 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/11 10:26:31 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,6 @@ t_redirect   *__create_new_redirect(t_lexing *lexing);
 void __redirect_add_back(t_redirect **alst, t_redirect *new);
 int __add_redirect(t_cmd *cmd, t_lexing *lexing);
 void	__redirect_list_clear(t_redirect *start);
+void __exit_child(t_sequ *seq, t_cmd *cmd, int errno_copy, int error);
+int __handle_redirect(t_sequ *seq, t_cmd *cmd);
 #endif

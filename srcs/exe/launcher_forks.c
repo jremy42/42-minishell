@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 16:23:45 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/10 18:53:34 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/11 10:30:53 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,7 @@
 
 static int __first_pipe(int pipe[2], t_cmd *cmd)
 {
-	(void)cmd;
-	//dup2(cmd->redirection[0], 0);
-	//close(cmd->redirection[0]);
+    (void)cmd;	
     close(pipe[0]);
     dup2(pipe[out], STDOUT_FILENO);
 	close(pipe[out]);
