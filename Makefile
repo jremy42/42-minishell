@@ -22,6 +22,7 @@ srcs/exe/launcher_forks.c\
 srcs/exe/redirect.c\
 srcs/exe/redirect_builtin.c\
 srcs/here_doc/here_doc.c\
+srcs/expand/expand.c\
 srcs/exe/exe.c
 
 
@@ -78,7 +79,7 @@ $(NAME): $(OBJ) ${HEADER} ${LIBFT}
 		@printf "%-15s ${_CYAN}${_BOLD}libft${_END}...\n" "Compiling"
 		@make -C ${LIBFT} > /dev/null
 		@printf "%-15s ${_PURPLE}${_BOLD}${NAME}${_END}...\n" "Compiling"
-		@$(CC) $(CFLAGS) ${OBJ} -Llibft -lft -L/usr/local/lib -I/usr/local/include -lreadline -o $(NAME)
+		@$(CC) $(CFLAGS) ${OBJ} ./libft/libft.a -L/usr/local/lib -lreadline -o $(NAME)
 		@printf "\n${_GREEN}${_BOLD}[Compilation done !]${_END}\n"
 endif
 

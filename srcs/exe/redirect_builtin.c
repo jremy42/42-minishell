@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 09:51:56 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/14 13:01:11 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/14 14:36:01 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,10 @@ static int    __here_doc_redirection(t_cmd *cmd)
 
 int __handle_redirect_builtin(t_cmd *cmd)
 {
+    t_redirect  *save;
+
+
+    save = cmd->redirect;
     DEBUG && fprintf(stderr,"Handle redirect\n");
     while(cmd->redirect)
     {
@@ -90,5 +94,6 @@ int __handle_redirect_builtin(t_cmd *cmd)
             __here_doc_redirection(cmd);
         cmd->redirect = cmd->redirect->next;
     }
+    cmd->redirect = save; 
     return (1);
 }

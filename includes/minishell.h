@@ -138,7 +138,7 @@ int __exit(t_msh *msh);
 
 //tokenizer
 
-int		__return_state(char c, int state, int slash_state);
+t_state	__return_state(char c, int state, int slash_state);
 int		__add_char_to_token(char c, char **token);
 int		__need_to_escape(int i, t_state state, char *str);
 int		__is_operator_char(char c);
@@ -177,5 +177,8 @@ void	__cmd_list_clear(t_cmd *start);
 //heredoc
 
 int __handle_here_doc(t_lexing *lexing, t_lexing *end, t_msh *msh);
+
+//expande
+int __parameter_expand_token(t_lexing *lexing, t_msh *msh);
 
 #endif

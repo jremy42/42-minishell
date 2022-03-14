@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 16:20:32 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/14 12:43:07 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/14 14:46:03 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ int	__save_fd(int *std)
 
 int __restore_fd(int *std)
 {
+	fprintf(stderr, "restore fd\n");
+	//close(0);
 	if (dup2(std[out], STDOUT_FILENO) < 0)
 		return (0);
 	if (close(std[out]) < 0)
@@ -100,10 +102,12 @@ char *__get_name(int index)
 
 int __clean_tmp_hd(t_cmd *cmd)
 {
+	t_redirect *save;
 	char *tmp;
 	
 	while(cmd)
 	{
+		save = cmd->redirect;
 		while(cmd->redirect)
 		{
 			if(cmd->redirect->type == H_D)
@@ -117,6 +121,7 @@ int __clean_tmp_hd(t_cmd *cmd)
 			}
 			cmd->redirect = cmd->redirect->next;
 		}
+		cmd->redirect = save;
 		cmd = cmd->next;
 	}
 	return (1);
@@ -138,6 +143,7 @@ int execute_seq(t_cmd *cmd, t_msh *msh)
 				return (__cmd_list_clear(cmd), 0);
 		}
 		__exec_builtin(cmd->arg, msh);
+		fprintf(stderr, "cmd->redirect : [%p]\n", cmd->redirect);
 		if (cmd->redirect && !__restore_fd(std))
 			__putendl_fd(strerror(errno), 2);
 		return (__cmd_list_clear(cmd), 0);

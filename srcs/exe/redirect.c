@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 09:51:56 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/14 12:38:10 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/14 14:38:57 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,9 @@ static void    __here_doc_redirection(t_sequ *seq, t_cmd *cmd)
 
 int __handle_redirect(t_sequ *seq, t_cmd *cmd)
 {
+    t_redirect  *save;
+
+    save = cmd->redirect;
     DEBUG && fprintf(stderr,"Handle redirect\n");
     while(cmd->redirect)
     {
@@ -87,5 +90,6 @@ int __handle_redirect(t_sequ *seq, t_cmd *cmd)
             __here_doc_redirection(seq, cmd);
         cmd->redirect = cmd->redirect->next;
     }
+    cmd->redirect = save; 
     return (1);
 }
