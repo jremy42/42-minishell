@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 16:19:12 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/11 17:12:15 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/14 10:22:06 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ t_cmd *create_cmd_list(t_lexing *lexing, t_msh *msh)
     return (start);
 }
 
-void print_cmd_lst(t_cmd *cmd)
+int print_cmd_lst(t_cmd *cmd)
 {
     while (cmd)
     {
@@ -129,8 +129,10 @@ void print_cmd_lst(t_cmd *cmd)
         cmd = cmd->next;
         printf("--\n");
     }
+	return (1);
 }
-void print_cmd(t_cmd *cmd)
+
+int print_cmd(t_cmd *cmd)
 {
     int i;
 
@@ -150,4 +152,5 @@ void print_cmd(t_cmd *cmd)
         printf("arg %d >%s<\n",i , cmd->arg[i]);
         i++;
     }
+	return (1);
 }

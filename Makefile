@@ -39,12 +39,16 @@ _GREY=	$'\033[30m
 _RED=	$'\033[31m
 _GREEN=	$'\033[32m
 _YELLOW=$'\033[33m
-_BLUE=	$'\033[34mint __synthax_checker(t_lexing *lexing)
+_BLUE=	$'\033[34m
 
 _PURPLE=$'\033[35m
 _CYAN=	$'\033[36m
 _WHITE=	$'\033[37m
 _END= $'\033[37m
+
+ifeq ($(MAKECMDGOALS), debug)
+CFLAGS += -D DEBUG=1
+endif
 
 all: $(NAME)
 
@@ -68,7 +72,7 @@ else
 
 $(OBJS_PATH)%.o: %.c $(HEADER)
 		mkdir -p $(dir $@)
-		@$(CC) $(CFLAGS) $(IFLAGS) -c $< -I .brew/opt/readline/include -o $@
+		@$(CC) $(CFLAGS) $(IFLAGS) -c $< -o $@
 		@printf "%-15s ${_YELLOW}${_BOLD}$<${_END}...\n" "Compiling"
 $(NAME): $(OBJ) ${HEADER} ${LIBFT}
 		@printf "%-15s ${_CYAN}${_BOLD}libft${_END}...\n" "Compiling"
@@ -94,4 +98,6 @@ re: fclean all
 run : $(NAME) ./.ignore_readline
 	valgrind --leak-check=full --track-fds=yes --show-leak-kinds=all --suppressions=.ignore_readline -q ./minishell
 
-.PHONY: all clean fclean bonus re run
+debug : $(NAME)
+
+.PHONY: all clean fclean bonus re run debug

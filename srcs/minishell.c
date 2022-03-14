@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:25:57 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/11 16:59:22 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/14 10:27:17 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,13 +61,14 @@ static void	get_env(t_msh *msh, char *envp[])
 	}
 }
 
-void __print_lexing(t_lexing *lexing)
+int __print_lexing(t_lexing *lexing)
 {
 	while (lexing)
 	{
 		printf("Le token vaut : >%s< et de type = %d\n", lexing->token, lexing->type); 
 		lexing = lexing->next;
 	}	
+	return (1);
 }
 
 void print2DUtil(t_node *root, int space)
@@ -104,11 +105,12 @@ void print2DUtil(t_node *root, int space)
     print2DUtil(root->left, space);
 }
 
-void print2D(t_node *root)
+int print2D(t_node *root)
 {
    // Pass initial space count as 0
    print2DUtil(root, 0);
    printf("\n");
+   return (1);
 }
 
 int	__mini_parsing(char *arg, t_msh *msh)
@@ -127,23 +129,22 @@ int	__mini_parsing(char *arg, t_msh *msh)
 	free(to_tokenize);
 	if (__lexing(start, &lexing) < 0)
 		return (write(2, "Malloc error\n", 14), -1);
-	//__print_lexing(lexing);
 	first_error = __synthax_checker(lexing);
 	if (first_error)
 		fprintf(stderr, "DEBUG first error : %s\n", first_error->token);
 	__handle_here_doc(lexing, first_error, msh);
+	DEBUG && __print_lexing(lexing);
 	if(first_error)
 		return (-1);
-	__print_lexing(lexing);
 	if (!__create_tree(lexing, &(msh->root)))
 		return (-1);
-	print2D(msh->root);
+	DEBUG && print2D(msh->root);
 	//free lexing a faire a la fin de l'ex
 	//cmd = miniparsing(msh->root->tmp);
 	cmd = create_cmd_list(lexing, msh);
 	if (!cmd)
 		return (-1);
-	print_cmd_lst(cmd);
+	DEBUG && print_cmd_lst(cmd);
 	execute_seq(cmd, msh);
 	//__cmd_list_clear(cmd);
 	return (0);

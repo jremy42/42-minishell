@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 16:20:32 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/11 14:55:56 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/14 10:43:26 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int execute_seq(t_cmd *cmd, t_msh *msh)
 
     if (__find_max_cmd(cmd) == 1 && __is_builtin(cmd->arg))
 	{
-		fprintf(stderr, " I m a builtin\n");
+		DEBUG && fprintf(stderr, " I m a builtin\n");
 		if(cmd->redirect)
 		{
 			if (!__save_fd(std))

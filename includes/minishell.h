@@ -39,6 +39,11 @@
 
 # define COUNT 10
 
+# ifndef DEBUG
+# define DEBUG 0
+# endif
+
+
 typedef enum	e_state
 {UNQUOTE, S_QUOTE, D_QUOTE, BACKSLASH} t_state;
 
@@ -151,7 +156,7 @@ int		__init_token_if_none(char **str, int *token_status);
 // lexing
 int	__lexing(t_list *token, t_lexing **lexing);
 t_lexing *__synthax_checker(t_lexing *lexing);
-void	__print_lexing(t_lexing *lexing);
+int	__print_lexing(t_lexing *lexing);
 void	__lexing_full_list_clear(t_lexing *start);
 void	__lexing_node_list_clear(t_lexing *start);
 
@@ -162,11 +167,11 @@ int __create_tree(t_lexing *lexing, t_node **root);
 
 // parsing exe 
 t_cmd *miniparsing(t_lexing *lexing);
-void print_cmd(t_cmd *cmd);
+int print_cmd(t_cmd *cmd);
 int execute_seq(t_cmd *cmd, t_msh *msh);
 int add_next_cmd(t_cmd **start, t_lexing **lexing, t_msh *msh, int index);
 t_cmd *create_cmd_list(t_lexing *lexing, t_msh *msh);
-void print_cmd_lst(t_cmd *cmd);
+int print_cmd_lst(t_cmd *cmd);
 void	__cmd_list_clear(t_cmd *start);
 
 //heredoc
