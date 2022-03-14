@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 17:32:24 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/11 14:26:51 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/14 12:42:25 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ typedef struct s_sequ
 	int		max_cmd;
 	int		index;
 	int		pipe[2];
+	int		hd_count;
 	char	**path;
     char    **envp;
 }	t_sequ;
@@ -38,4 +39,6 @@ void __exit_child(t_sequ *seq, t_cmd *cmd, int errno_copy, int error);
 int __handle_redirect(t_sequ *seq, t_cmd *cmd);
 int __handle_redirect_builtin(t_cmd *cmd);
 int __find_max_cmd(t_cmd *cmd);
+char *__get_name(int index);
+
 #endif

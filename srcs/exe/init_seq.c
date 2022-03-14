@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 16:20:32 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/11 12:22:42 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/14 12:13:17 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	__init_seq(t_sequ *seq, char ***envp, t_cmd *cmd)
     return (1);
 }
 
-void D_print_seq(t_sequ *seq)
+int D_print_seq(t_sequ *seq)
 {
     int i;
 
@@ -90,4 +90,5 @@ void D_print_seq(t_sequ *seq)
         printf("path = %s\n", seq->path[i]);
         i++;
     }
+    return (1);
 }

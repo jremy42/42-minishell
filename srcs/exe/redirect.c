@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 09:51:56 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/11 17:37:41 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/14 12:38:10 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 static void    __less_redirection(t_sequ *seq, t_cmd *cmd)
 {
-    fprintf(stderr, "less\n");
+    DEBUG && fprintf(stderr, "less\n");
     cmd->redirection[0] = open(cmd->redirect->file_name, O_RDONLY);
     if (cmd->redirection[0] < 0)
         __exit_child(seq, cmd, errno, 1);
@@ -27,7 +27,7 @@ static void    __less_redirection(t_sequ *seq, t_cmd *cmd)
 
 static void    __great_redirection(t_sequ *seq, t_cmd *cmd)
 {
-    fprintf(stderr,"great\n");
+    DEBUG && fprintf(stderr,"great\n");
     cmd->redirection[1] = open(cmd->redirect->file_name, O_CREAT | O_WRONLY | O_TRUNC, 00644);
     if (cmd->redirection[1] < 0)
         __exit_child(seq, cmd, errno, 1);
@@ -39,7 +39,7 @@ static void    __great_redirection(t_sequ *seq, t_cmd *cmd)
 
 static void    __dgreat_redirection(t_sequ *seq, t_cmd *cmd)
 {
-        fprintf(stderr,"Dgreat\n");
+    DEBUG && fprintf(stderr,"Dgreat\n");
     cmd->redirection[1] = open(cmd->redirect->file_name, O_CREAT | O_WRONLY | O_APPEND, 00644);
     if (cmd->redirection[1] < 0)
         __exit_child(seq, cmd, errno, 1);
@@ -51,19 +51,30 @@ static void    __dgreat_redirection(t_sequ *seq, t_cmd *cmd)
 
 static void    __here_doc_redirection(t_sequ *seq, t_cmd *cmd)
 {
-    int pipefd[2];
+    char *tmp_file;
+    int     fd;
 
-    pipe(pipefd);
     (void)seq;
-    fprintf(stderr, "here_doc\n");
-    //dup2(pipefd[0], STDIN_FILENO);
-    //dup2(pipefd[1], STDERR_FILENO);
-    __putstr_fd(cmd->redirect->file_name, STDERR_FILENO);
+    DEBUG && fprintf(stderr, "here_doc\n");
+    tmp_file = __get_name(cmd->index);
+    fd = open(tmp_file, O_CREAT | O_WRONLY | O_TRUNC, 00644);
+    __putstr_fd(cmd->redirect->file_name, fd);
+    close(fd);
+    cmd->redirection[0] = open(tmp_file, O_RDONLY);
+    if (cmd->redirection[0] < 0)
+        __exit_child(seq, cmd, errno, 1);
+    if (dup2(cmd->redirection[0], 0) < 0)
+        __exit_child(seq, cmd, errno, 1);
+    if (close(cmd->redirection[0]) < 0)
+        __exit_child(seq, cmd, errno, 1);
+    //creer le fichier
+    //faire la redirection vers le open du ficher
+    // count_hd ++ dans le seq
 }
 
 int __handle_redirect(t_sequ *seq, t_cmd *cmd)
 {
-    fprintf(stderr,"Handle redirect\n");
+    DEBUG && fprintf(stderr,"Handle redirect\n");
     while(cmd->redirect)
     {
         if (cmd->redirect->type ==  LESS)

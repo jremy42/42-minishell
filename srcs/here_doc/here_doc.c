@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 15:19:06 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/11 16:55:37 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/14 11:08:53 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,9 @@ static char	*__get_stdin(char *eof)
 {
 	char	*line;
     char    *ret;
+	int		i;
 
+	i = 0;
 	line = NULL;
     ret = __strdup("");
     if (!ret)
@@ -29,6 +31,8 @@ static char	*__get_stdin(char *eof)
 		if (!line || (__strncmp(line, eof, __strlen(eof)) == 0
 			&& __strlen(line) == __strlen(eof) + 1))
 		{
+			if (!line)
+				printf("warning: here-document at line %d delimited by end-of-file (wanted `%s')\n",i, eof);
 			get_next_line(-1);
 			free(line);
 			break ;
@@ -37,6 +41,7 @@ static char	*__get_stdin(char *eof)
 		free (line);
 		if (!ret)
 			return (get_next_line(-1), NULL);
+		i++;
 	}
 	return (ret);
 }
@@ -88,7 +93,7 @@ int		__retrieve_hd(t_lexing *lexing)
 		return (0);
 	free(lexing->next->token);
 	lexing->next->token = hd_content;
-	fprintf(stderr, "This is the heredoc : [%s]\n", hd_content);
+	DEBUG && fprintf(stderr, "This is the heredoc : [%s]\n", hd_content);
 	return (1);
 }
 

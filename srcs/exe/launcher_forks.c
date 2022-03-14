@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 16:23:45 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/11 12:18:49 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/14 12:15:55 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static int __last_pipe(int pipe[2], int prev_pipe_out, t_cmd *cmd)
 {
 	(void)cmd;
     (void)pipe;
-	 fprintf(stderr, "last pipe\n");
+    DEBUG && fprintf(stderr, "last pipe\n");
     dup2(prev_pipe_out, 0);
     close(pipe[out]);
 	close(prev_pipe_out);
@@ -77,7 +77,7 @@ int __launcher_fork(t_sequ *seq, t_cmd *cmd)
             return (__putstr_fd("Error fork\n", 2), 0);
         if (pid == 0)
         {
-            fprintf(stderr, "I m a fork\n");
+            DEBUG && fprintf(stderr, "I m a fork\n");
 			if (seq->index == 0 && seq->max_cmd != 1)
 				__first_pipe(seq->pipe, cmd);
 			if (seq->index == seq->max_cmd - 1 && seq->max_cmd != 1)

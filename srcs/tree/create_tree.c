@@ -115,7 +115,7 @@ int __create_tree(t_lexing *lexing, t_node **root)
 	t_lexing	*next_operator;
 
 	
-	printf("\n\n\n");
+	DEBUG && printf("\n\n\n");
 	//__print_lexing(lexing);
 
 	next_operator = __find_next_operator(lexing);
@@ -130,7 +130,7 @@ int __create_tree(t_lexing *lexing, t_node **root)
 		*root = btree_create_node_sequence(lexing);
 		return (1);
 	}
-	printf("next operator : [%s]\n", next_operator->token);
+	DEBUG && printf("next operator : [%s]\n", next_operator->token);
 	*root = btree_create_node_operator(next_operator);
 	if (!*root)
 		return (0);

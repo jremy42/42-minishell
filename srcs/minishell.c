@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:25:57 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/14 10:27:17 by fle-blay         ###   ########.fr       */
+/*   Updated: 2022/03/14 11:42:12 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int __print_lexing(t_lexing *lexing)
 {
 	while (lexing)
 	{
-		printf("Le token vaut : >%s< et de type = %d\n", lexing->token, lexing->type); 
+		fprintf(stderr, "Le token vaut : >%s< et de type = %d\n", lexing->token, lexing->type); 
 		lexing = lexing->next;
 	}	
 	return (1);
@@ -124,6 +124,8 @@ int	__mini_parsing(char *arg, t_msh *msh)
 	start = NULL;
 	lexing = NULL;
 	(void)msh;
+	if(!__strcmp(arg,""))
+		return(0);
 	to_tokenize = __strtrim(arg, " \f\t\r\v");
 	__tokenize(to_tokenize, &start);
 	free(to_tokenize);
@@ -139,8 +141,12 @@ int	__mini_parsing(char *arg, t_msh *msh)
 	if (!__create_tree(lexing, &(msh->root)))
 		return (-1);
 	DEBUG && print2D(msh->root);
-	//free lexing a faire a la fin de l'ex
-	//cmd = miniparsing(msh->root->tmp);
+
+	/*
+	__parameter_expand_token(lexing);
+	__glob_expand_token(lexing);
+	*/
+
 	cmd = create_cmd_list(lexing, msh);
 	if (!cmd)
 		return (-1);
