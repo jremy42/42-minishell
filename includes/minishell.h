@@ -191,6 +191,7 @@ int __handle_here_doc(t_lexing *lexing, t_lexing *end, t_msh *msh);
 
 //expande
 int __parameter_expand_token(t_lexing *lexing, t_msh *msh);
-void __open_dir(t_msh *msh, t_lexing *lexing);
+int __open_dir(t_msh *msh, t_lexing *lexing);
+t_lexing	*__lexnew(char *content);
 
 #endif

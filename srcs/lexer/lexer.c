@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:25:57 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/15 09:14:24 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/15 17:52:57 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	__lexing_full_list_clear(t_lexing *start)
 	{
 		next_to_free = start->next;
 		free(start->token);
+		start->token = NULL;
 		free(start);
 		start = next_to_free;
 	}
