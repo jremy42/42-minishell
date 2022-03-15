@@ -23,6 +23,7 @@ srcs/exe/redirect.c\
 srcs/exe/redirect_builtin.c\
 srcs/here_doc/here_doc.c\
 srcs/expand/expand.c\
+srcs/expand/globe.c\
 srcs/exe/exe.c
 
 

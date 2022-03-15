@@ -25,17 +25,17 @@ t_lexing	*__find_next_operator(t_lexing *lexing)
 	t_lexing *find;
 
 	find = NULL;
-    while (lexing)
-    {
+	while (lexing)
+	{
 		if (lexing->type == P_LEFT)
 			lexing = __skip_parenthesis(lexing);
 		if (!lexing)
 			break;
-        if (lexing->type == OPERATOR)
-            find = lexing;
+		if (lexing->type == OPERATOR)
+			find = lexing;
 		lexing = lexing->next;
-    }
-    return (find);
+	}
+	return (find);
 }
 
 static int	trim_parenthesis(t_lexing **lexing)
@@ -70,9 +70,9 @@ t_node	*btree_create_node_sequence(t_lexing *lexing)
 	new->left = NULL;
 	new->right = NULL;
 	new->kind = SEQUENCE;
-    //new->cmd = create_cmd_array(lexing);
+	//new->cmd = create_cmd_array(lexing);
 	new->cmd = NULL;
-    new->tmp = lexing;
+	new->tmp = lexing;
 	return (new);
 }
 
@@ -87,7 +87,7 @@ t_node	*btree_create_node_operator(t_lexing *lexing)
 	new->right = NULL;
 	new->kind = !__strcmp(lexing->token, "||") * OR
 		+ !__strcmp(lexing->token, "&&") * AND;
-    new->cmd = NULL;
+	new->cmd = NULL;
 	return (new);
 }
 

@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 15:19:06 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/14 11:08:53 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/15 09:14:36 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@
 static char	*__get_stdin(char *eof)
 {
 	char	*line;
-    char    *ret;
+	char    *ret;
 	int		i;
 
 	i = 0;
 	line = NULL;
-    ret = __strdup("");
-    if (!ret)
+	ret = __strdup("");
+	if (!ret)
 		return (NULL);
 	while (1)
 	{
@@ -59,7 +59,7 @@ static int	__get_user_input(char *eof)
 		return (close(file), -1);
 	__putstr_fd(stdin, file);
 	free(stdin);
-    close(file);
+	close(file);
 	return (1);
 }
 
@@ -99,34 +99,34 @@ int		__retrieve_hd(t_lexing *lexing)
 
 int __handle_here_doc(t_lexing *lexing, t_lexing *end, t_msh *msh)
 {
-    pid_t       pid;
-    char        *eof;
-    t_lexing    *save;
-    
-    save = lexing;
-    while (lexing != end)
-    {
-        if (lexing->type == HERE_DOC)
-        {
-            eof = lexing->next->token;
-            pid = fork();
-            if (pid == 0)
-            {
-                if (!__get_user_input(eof))
-                    __putendl_fd("malloc error", 2);
-                msh->rv = errno;
-                __lexing_full_list_clear(save);
-                __exit(msh);
-            }
-            else
+	pid_t       pid;
+	char        *eof;
+	t_lexing    *save;
+	
+	save = lexing;
+	while (lexing != end)
+	{
+		if (lexing->type == HERE_DOC)
+		{
+			eof = lexing->next->token;
+			pid = fork();
+			if (pid == 0)
 			{
-                waitpid(pid, NULL, 0);
+				if (!__get_user_input(eof))
+					__putendl_fd("malloc error", 2);
+				msh->rv = errno;
+				__lexing_full_list_clear(save);
+				__exit(msh);
+			}
+			else
+			{
+				waitpid(pid, NULL, 0);
 				if(__retrieve_hd(lexing) < 0)
 					return (0);
 				lexing = lexing->next;
 			}
-        }
-        lexing = lexing->next;
-    }
-    return (1);
+		}
+		lexing = lexing->next;
+	}
+	return (1);
 }

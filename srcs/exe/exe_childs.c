@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 16:21:22 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/14 10:54:30 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/15 09:15:05 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,9 @@ static char	*__create_path_and_cmd(char *path, char *cmd)
 
 static int	__try_paths(char **path_cmd, char **path, char *cmd_name)
 {
-    int	i;
+	int	i;
 
-    i = 0;
+	i = 0;
 	while (path[i])
 	{
 		*path_cmd = __create_path_and_cmd(path[i], cmd_name);
@@ -62,10 +62,10 @@ static int	__try_paths(char **path_cmd, char **path, char *cmd_name)
 
 static char *__get_path(char **path, char *cmd_name)
 {
-    int		i;
-    char	*path_cmd;
+	int		i;
+	char	*path_cmd;
 
-    i = 0;
+	i = 0;
 	if (__strchr(cmd_name, '/') != NULL)
 	{
 		if (__strncmp(cmd_name, "./", 2) == 0 && access(cmd_name + 2, F_OK) == 0)
@@ -73,16 +73,16 @@ static char *__get_path(char **path, char *cmd_name)
 		if (access(cmd_name, F_OK) == 0)
 			return (cmd_name);
 		if (cmd_name[__strlen(cmd_name) - 1] == '/')
-            return (NULL);
+			return (NULL);
 	}
 	if (path == NULL)
 		return (NULL);
 	else
-    {
+	{
 		if (__try_paths(&path_cmd, path, cmd_name) == 1)
 			return (path_cmd);
-    }
-    return(__putstr_fd("Command not found\n", 2), NULL);
+	}
+	return(__putstr_fd("Command not found\n", 2), NULL);
 }
 
 void __exit_child(t_sequ *seq, t_cmd *cmd, int errno_copy, int error)
@@ -98,12 +98,12 @@ void __exit_child(t_sequ *seq, t_cmd *cmd, int errno_copy, int error)
 	free(seq->envp);
 	tmp = cmd->msh;
 	__cmd_list_clear(cmd);
-    __exit(tmp);
+	__exit(tmp);
 }
 
 void execute_child(t_sequ *seq, t_cmd *cmd)
 {
-    char *path_cmd;
+	char *path_cmd;
 
 	DEBUG && fprintf(stderr, "cmd->redirect =>%p\n", cmd->redirect);	
 	if(cmd->redirect)
@@ -116,6 +116,6 @@ void execute_child(t_sequ *seq, t_cmd *cmd)
 		__exit_child(seq, cmd, 0, 0);
 	}
 	path_cmd = __get_path(seq->path, cmd->arg[0]);
-    execve(path_cmd, cmd->arg, seq->envp);
-    exit (0);
+	execve(path_cmd, cmd->arg, seq->envp);
+	exit (0);
 }

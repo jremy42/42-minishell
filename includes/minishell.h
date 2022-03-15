@@ -56,6 +56,9 @@ typedef enum e_kind_node
 typedef enum e_redir_type
 {LESS, GREAT, DGREAT, H_D} t_redir_type;
 
+typedef enum	e_globe_type
+{FIRST, MIDDLE, LAST} t_globe_type;
+
 typedef struct s_redirect
 {
 	t_redir_type type;
@@ -83,6 +86,14 @@ typedef struct s_lexing
 	t_token_type type;
 	struct s_lexing *next;
 } t_lexing;
+
+typedef struct s_glob
+{
+	char *to_find;
+	t_globe_type type;
+	struct s_glob *next;
+} t_glob;
+
 
 // A la construction de l'AST, le node obtient son kind, son node right et left.
 // La donnee est le pointeur sur un t_lexing (cad une liste chainee de token)
@@ -180,5 +191,6 @@ int __handle_here_doc(t_lexing *lexing, t_lexing *end, t_msh *msh);
 
 //expande
 int __parameter_expand_token(t_lexing *lexing, t_msh *msh);
+void __open_dir(t_msh *msh, t_lexing *lexing);
 
 #endif

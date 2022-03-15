@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 16:20:32 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/14 14:46:03 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/15 09:15:02 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,35 +31,35 @@ void	__cmd_list_clear(t_cmd *start)
 int __is_builtin(char **arg)
 {
 	if (__strcmp(arg[0], "echo") == 0)
-        return (1);
+		return (1);
 	if (__strcmp(arg[0], "cd") == 0)
-         return (1);
+		 return (1);
 	if (__strcmp(arg[0], "pwd") == 0)
-         return (1);
+		 return (1);
 	if (__strcmp(arg[0], "env") == 0)
-        return (1);
+		return (1);
 	if (__strcmp(arg[0], "export") == 0)
-         return (1);
+		 return (1);
 	if (__strcmp(arg[0], "unset") == 0)
-        return (1);
-    return (0);
+		return (1);
+	return (0);
 }
 
 void	__exec_builtin(char **arg, t_msh *msh)
 {
 
 	if (__strcmp(arg[0], "echo") == 0)
-        msh->rv =__echo(arg, 1);
+		msh->rv =__echo(arg, 1);
 	if (__strcmp(arg[0], "cd") == 0)
-        msh->rv = __cd(arg[1], msh);
+		msh->rv = __cd(arg[1], msh);
 	if (__strcmp(arg[0], "pwd") == 0)
-        msh->rv = __pwd(1);
+		msh->rv = __pwd(1);
 	if (__strcmp(arg[0], "env") == 0)
-        msh->rv = __env(msh);
+		msh->rv = __env(msh);
 	if (__strcmp(arg[0], "export") == 0)
-        msh->rv = __export(arg + 1, msh);
+		msh->rv = __export(arg + 1, msh);
 	if (__strcmp(arg[0], "unset") == 0)
-        msh->rv = __unset(arg + 1, msh);
+		msh->rv = __unset(arg + 1, msh);
 }
 
 int	__save_fd(int *std)
@@ -129,10 +129,10 @@ int __clean_tmp_hd(t_cmd *cmd)
 
 int execute_seq(t_cmd *cmd, t_msh *msh)
 {
-    t_sequ seq;
+	t_sequ seq;
 	int std[2];
 	
-    if (__find_max_cmd(cmd) == 1 && __is_builtin(cmd->arg))
+	if (__find_max_cmd(cmd) == 1 && __is_builtin(cmd->arg))
 	{
 		DEBUG && fprintf(stderr, " I m a builtin\n");
 		if(cmd->redirect)
@@ -148,12 +148,12 @@ int execute_seq(t_cmd *cmd, t_msh *msh)
 			__putendl_fd(strerror(errno), 2);
 		return (__cmd_list_clear(cmd), 0);
 	}
-    if (!__init_seq(&seq, msh->envp, cmd))
-        return (__putstr_fd("Malloc error\n", 2), 0);
-    msh->rv = __launcher_fork(&seq, cmd);
+	if (!__init_seq(&seq, msh->envp, cmd))
+		return (__putstr_fd("Malloc error\n", 2), 0);
+	msh->rv = __launcher_fork(&seq, cmd);
 	__clean_tmp_hd(cmd);
 	free_split(seq.path);
 	free(seq.envp);
 	__cmd_list_clear(cmd);
-    return (0);
+	return (0);
 }

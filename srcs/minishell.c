@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:25:57 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/14 16:23:53 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/15 12:33:36 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,22 +75,22 @@ void print2DUtil(t_node *root, int space)
 {
 	t_lexing *index;
 	
-    // Base case
-    if (root == NULL)
-        return;
+	// Base case
+	if (root == NULL)
+		return;
  
-    // Increase distance between levels
-    space += COUNT;
+	// Increase distance between levels
+	space += COUNT;
  
-    // Process right child first
-    print2DUtil(root->right, space);
+	// Process right child first
+	print2DUtil(root->right, space);
  
-    // Print current node after space
-    // count
-    printf("\n");
-    for (int i = COUNT; i < space; i++)
-        printf(" ");
-    printf("%d\n", root->kind);
+	// Print current node after space
+	// count
+	printf("\n");
+	for (int i = COUNT; i < space; i++)
+		printf(" ");
+	printf("%d\n", root->kind);
 	if (root->kind == SEQUENCE)
 	{
 		index = root->tmp;
@@ -101,8 +101,8 @@ void print2DUtil(t_node *root, int space)
 		}
 	}
  
-    // Process left child
-    print2DUtil(root->left, space);
+	// Process left child
+	print2DUtil(root->left, space);
 }
 
 int print2D(t_node *root)
@@ -148,6 +148,7 @@ int	__mini_parsing(char *arg, t_msh *msh)
 //	debut de la fx d'exe de node
 	
 	__print_lexing(lexing);
+	__open_dir(msh, lexing);
 	__parameter_expand_token(lexing, msh);
 	//__glob_expand_token(lexing);
 	cmd = create_cmd_list(lexing, msh);

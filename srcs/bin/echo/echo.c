@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:41:54 by jremy             #+#    #+#             */
-/*   Updated: 2022/02/08 15:26:18 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/15 09:43:54 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,20 @@ static	int	__get_flags(char **str)
 	return (i);
 }
 
+int	__is_only_char(char *str, char c)
+{
+	int i;
+
+	i = 0;
+	while(str[i])
+	{
+		if (str[i] != c)
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 int	__echo(char **str, int fd)
 {
 	int	i;
@@ -35,10 +49,10 @@ int	__echo(char **str, int fd)
 	if (__get_flags(str) > 1)
 	{
 		if (__strncmp(str[i], "-n", 2) == 0
-			&& (__strlen(str[i]) == __strlen("-n")))
+			&& (__is_only_char(str[i] + 2,'n')))
 			flags = 1;
 		while (str[i] != NULL && (__strncmp(str[i], "-n", 2) == 0
-			&& (__strlen(str[i]) == __strlen("-n"))))
+			&& (__is_only_char(str[i] + 2,'n'))))
 			i++;
 	}
 	while (str[i] != NULL)

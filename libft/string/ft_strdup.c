@@ -32,3 +32,27 @@ char	*__strdup(const char *src)
 	result[i] = '\0';
 	return (result);
 }
+
+char	*__strndup(const char *src, size_t n)
+{
+	size_t		i;
+	char	*result;
+	size_t		len;
+
+	i = 0;
+	if (!src)
+		return (NULL);
+	len = __strlen(src);
+	if (len > n)
+		len = n;
+	result = malloc(sizeof(char) * (len + 1));
+	if (!result)
+		return (NULL);
+	result[len] = '\0';
+	while (i < len && src[i])
+	{
+		result[i] = src[i];
+		i++;
+	}
+	return (result);
+}

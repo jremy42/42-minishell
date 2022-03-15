@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 16:01:03 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/10 11:14:30 by fle-blay         ###   ########.fr       */
+/*   Updated: 2022/03/15 11:52:07 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ char	*ft_get_line(char *str);
 int		ft_size_line(char *str);
 char	*ft_save_memory(char *str);
 char	*ft_strdup(char *src);
+char	*__strndup(const char *src, size_t n);
 void	*ft_memcpy(void *dst, const void *src, size_t n);
 char	*ft_read_file(int fd, char *memory);
 int		__strcmp(const char *s1, const char *s2);
