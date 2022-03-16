@@ -14,6 +14,7 @@ srcs/lexer/lexer.c\
 srcs/tokenizer/tokenizer.c\
 srcs/syntax/syntax_checker.c\
 srcs/tree/create_tree.c\
+srcs/tree/exec_tree.c\
 srcs/exe/exe_childs.c\
 srcs/exe/init_seq.c\
 srcs/exe/create_cmd.c\

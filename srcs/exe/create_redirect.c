@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 17:54:50 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/15 09:15:10 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/16 12:27:56 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	__redirect_list_clear(t_redirect *start)
 		next_to_free = start->next;
 		
 		DEBUG && fprintf(stderr, "freeing [%s]\n", start->file_name);
-		free(start->file_name);
+		//free(start->file_name);
 		free(start);
 		start = next_to_free;
 	}
@@ -61,7 +61,7 @@ t_redirect   *__create_new_redirect(t_lexing *lexing)
 		new->type = DGREAT;
 	if (__strcmp(lexing->token, "<<") == 0)
 		new->type = H_D;
-	free(lexing->token);
+	//free(lexing->token);
 	return (new);
 }
 

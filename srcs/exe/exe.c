@@ -6,14 +6,14 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 16:20:32 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/15 09:15:02 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/16 11:15:39by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "exe.h"
 
-void	__cmd_list_clear(t_cmd *start)
+void	__cmd_node_list_clear(t_cmd *start)
 {
 	t_cmd	*next_to_free;
 
@@ -22,7 +22,8 @@ void	__cmd_list_clear(t_cmd *start)
 	{
 		next_to_free = start->next;
 		__redirect_list_clear(start->redirect);
-		free_split(start->arg);
+		//free_split(start->arg);
+		free(start->arg);
 		free(start);
 		start = next_to_free;
 	}
@@ -138,15 +139,15 @@ int execute_seq(t_cmd *cmd, t_msh *msh)
 		if(cmd->redirect)
 		{
 			if (!__save_fd(std))
-				return (__cmd_list_clear(cmd), 0);
+				return (__cmd_node_list_clear(cmd), 0);
 			if(!__handle_redirect_builtin(cmd))
-				return (__cmd_list_clear(cmd), 0);
+				return (__cmd_node_list_clear(cmd), 0);
 		}
 		__exec_builtin(cmd->arg, msh);
 		fprintf(stderr, "cmd->redirect : [%p]\n", cmd->redirect);
 		if (cmd->redirect && !__restore_fd(std))
 			__putendl_fd(strerror(errno), 2);
-		return (__cmd_list_clear(cmd), 0);
+		return (__cmd_node_list_clear(cmd), 0);
 	}
 	if (!__init_seq(&seq, msh->envp, cmd))
 		return (__putstr_fd("Malloc error\n", 2), 0);
@@ -154,6 +155,6 @@ int execute_seq(t_cmd *cmd, t_msh *msh)
 	__clean_tmp_hd(cmd);
 	free_split(seq.path);
 	free(seq.envp);
-	__cmd_list_clear(cmd);
-	return (0);
+	__cmd_node_list_clear(cmd);
+	return (1);
 }

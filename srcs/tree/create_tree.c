@@ -71,8 +71,8 @@ t_node	*btree_create_node_sequence(t_lexing *lexing)
 	new->right = NULL;
 	new->kind = SEQUENCE;
 	//new->cmd = create_cmd_array(lexing);
-	new->cmd = NULL;
-	new->tmp = lexing;
+	//new->cmd = NULL;
+	new->leaf_lexing = lexing;
 	return (new);
 }
 
@@ -87,7 +87,10 @@ t_node	*btree_create_node_operator(t_lexing *lexing)
 	new->right = NULL;
 	new->kind = !__strcmp(lexing->token, "||") * OR
 		+ !__strcmp(lexing->token, "&&") * AND;
-	new->cmd = NULL;
+	new->leaf_lexing = lexing;
+	free(lexing->token);
+	lexing->token = NULL;
+	//new->cmd = NULL;
 	return (new);
 }
 

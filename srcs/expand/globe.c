@@ -247,7 +247,7 @@ int __insert_token(t_lexing *lexing, char *new_glob_match, int reset)
 	return (1);
 }
 
-int    __open_dir(t_msh *msh, t_lexing *lexing)
+int    __handle_wildcards(t_msh *msh, t_lexing *lexing)
 {
 	t_list		*dir_content;
 	t_list		*save;

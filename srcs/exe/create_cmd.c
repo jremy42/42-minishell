@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 16:19:12 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/15 09:15:16 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/16 12:24:06 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,8 @@ int add_next_cmd(t_cmd **start, t_lexing **lexing, t_msh *msh, int index)
 	{
 		save = *lexing;
 		*lexing = (*lexing)->next;
-		free(save->token);
+		//free(save->token);
+
 		//free(save);
 	}
 	__cmd_add_back(start, new);
@@ -114,10 +115,10 @@ t_cmd *create_cmd_list(t_lexing *lexing, t_msh *msh)
 	while (lexing)
 	{
 		if (!add_next_cmd(&start, &lexing, msh, i))
-			return (__cmd_list_clear(start), NULL);
+			return (__cmd_node_list_clear(start), NULL);
 		i++;
 	}
-	__lexing_node_list_clear(save);
+	//__lexing_node_list_clear(save);
 	return (start);
 }
 

@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 16:21:22 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/15 09:15:05 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/16 11:21:06 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ void __exit_child(t_sequ *seq, t_cmd *cmd, int errno_copy, int error)
 	free_split(seq->path);
 	free(seq->envp);
 	tmp = cmd->msh;
-	__cmd_list_clear(cmd);
+	__cmd_node_list_clear(cmd);
 	__exit(tmp);
 }
 

@@ -104,10 +104,10 @@ typedef struct s_glob
 typedef struct s_node
 {
 	t_kind_node		kind;
-	t_cmd			*cmd;
+	//t_cmd			*cmd;
 	struct s_node	*left;
 	struct s_node	*right;
-	t_lexing		*tmp;
+	t_lexing		*leaf_lexing;
 } t_node;
 
 typedef struct s_msh
@@ -174,6 +174,8 @@ void	__lexing_node_list_clear(t_lexing *start);
 // Gardening
 
 int __create_tree(t_lexing *lexing, t_node **root);
+int __execute_tree(t_node *current_node, t_msh *msh);
+void __destroy_tree(t_node *current_node);
 
 
 // parsing exe 
@@ -183,7 +185,7 @@ int execute_seq(t_cmd *cmd, t_msh *msh);
 int add_next_cmd(t_cmd **start, t_lexing **lexing, t_msh *msh, int index);
 t_cmd *create_cmd_list(t_lexing *lexing, t_msh *msh);
 int print_cmd_lst(t_cmd *cmd);
-void	__cmd_list_clear(t_cmd *start);
+void	__cmd_node_list_clear(t_cmd *start);
 
 //heredoc
 
@@ -191,7 +193,7 @@ int __handle_here_doc(t_lexing *lexing, t_lexing *end, t_msh *msh);
 
 //expande
 int __parameter_expand_token(t_lexing *lexing, t_msh *msh);
-int __open_dir(t_msh *msh, t_lexing *lexing);
+int __handle_wildcards(t_msh *msh, t_lexing *lexing);
 t_lexing	*__lexnew(char *content);
 
 #endif

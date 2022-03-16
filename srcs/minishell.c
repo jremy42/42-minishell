@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:25:57 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/15 12:33:36 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/16 11:21:06 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void print2DUtil(t_node *root, int space)
 	printf("%d\n", root->kind);
 	if (root->kind == SEQUENCE)
 	{
-		index = root->tmp;
+		index = root->leaf_lexing;
 		while (index)
 		{
 			printf("[%s] ", index->token);
@@ -117,7 +117,7 @@ int	__mini_parsing(char *arg, t_msh *msh)
 {
 	t_list		*start;
 	t_lexing	*lexing;
-	t_cmd		*cmd;
+	//t_cmd		*cmd;
 	char		*to_tokenize;
 	t_lexing	*first_error;
 
@@ -141,25 +141,30 @@ int	__mini_parsing(char *arg, t_msh *msh)
 	if (!__create_tree(lexing, &(msh->root)))
 		return (-1);
 	DEBUG && print2D(msh->root);
-
+	msh->rv = __execute_tree(msh->root, msh);
+	
 	//parcourir l'arbre et expand juste avant d'exe
 	// ceci afin de prendre en compte les modif de l'env	
 	
 //	debut de la fx d'exe de node
 	
+	/*
+	
 	__print_lexing(lexing);
-	__open_dir(msh, lexing);
 	__parameter_expand_token(lexing, msh);
+	__hande_wildcards(msh, lexing);
 	//__glob_expand_token(lexing);
 	cmd = create_cmd_list(lexing, msh);
 	if (!cmd)
 		return (-1);
 	DEBUG && print_cmd_lst(cmd);
 	execute_seq(cmd, msh);
-	//__cmd_list_clear(cmd);
+	//__cmd_node_list_clear(cmd);
+	*/
 
 // fin de la fx d'exe de node
-	return (0);
+	__destroy_tree(msh->root);
+	return (msh->rv);
 }
 
 int	main (int ac, char *av[], char *envp[])
