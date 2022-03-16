@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 14:53:22 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/15 09:14:41 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/16 15:22:1 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,17 @@ int __parameter_expand(char *start_word, t_msh *msh, char **expanded_token, int 
 	int	j;
 
 	j = 0;
+	if (start_word[0] == '?')
+	{
+		tmp = __itoa(msh->rv);
+		if (!tmp)
+			return (0);
+		*i += 1;
+		*expanded_token = __strjoin(*expanded_token, tmp);
+		if(!*expanded_token)
+			return(free(tmp), 0);
+		return (free(tmp), 1);
+	}
 	while (__isalnum(start_word[j]) || start_word[j] == '_')
 		j++;
 	tmp = __substr(start_word, 0,j);
@@ -32,13 +43,13 @@ int __parameter_expand(char *start_word, t_msh *msh, char **expanded_token, int 
 		env_key = __substr(msh->envp[j][0], 0, __strchr(msh->envp[j][0], '=') - msh->envp[j][0]);
 		if(!env_key)
 			return(free(tmp), 0);
-		fprintf(stderr, "key evaluated : [%s]\n", env_key);
+		DEBUG && fprintf(stderr, "key evaluated : [%s]\n", env_key);
 		if (!__strcmp(tmp, env_key) && msh->envp[j][1])
 		{
-			fprintf(stderr, "found key ! : [%s]\n", msh->envp[j][0]);
+			DEBUG && fprintf(stderr, "found key ! : [%s]\n", msh->envp[j][0]);
 			free(env_key);
 			free(tmp);
-			*expanded_token=__strjoin(*expanded_token, __strchr(msh->envp[j][0], '=') + 1 );
+			*expanded_token =__strjoin(*expanded_token, __strchr(msh->envp[j][0], '=') + 1 );
 			if(!*expanded_token)
 				return(0);
 			return(1);
@@ -82,7 +93,6 @@ int __expand_word(char **token_word, t_msh  *msh)
 		}
 		if (quote_status != __return_state(tmp[i], quote_status, slash_status))
 		{
-			fprintf(stderr, "Sur un %c\n", tmp[i]);
 			quote_status = __return_state(tmp[i], quote_status, slash_status);
 			i++;
 			continue ;
@@ -109,9 +119,11 @@ int __parameter_expand_token(t_lexing *lexing, t_msh *msh)
 		if(lexing->type == WORD)
 			if(!__expand_word(&lexing->token, msh))
 				return (__putendl_fd("Malloc error", 2), 0);
-		fprintf(stderr, "new_token : [%s]\n", lexing->token);
+		DEBUG && fprintf(stderr, "new_token : [%s]\n", lexing->token);
 		lexing = lexing->next;
 	}
 	return (1);
 }
 
+//passer lexing a expand word;
+//si il y a un espace dans le treat dollar > cut au premiere espace et creer un autre token a la suite

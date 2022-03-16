@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:25:57 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/16 11:21:06 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/16 16:10:31 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ int print2D(t_node *root)
    return (1);
 }
 
-int	__mini_parsing(char *arg, t_msh *msh)
+int	__treat_user_input(char *arg, t_msh *msh)
 {
 	t_list		*start;
 	t_lexing	*lexing;
@@ -177,6 +177,24 @@ int	main (int ac, char *av[], char *envp[])
 
 	msh = (t_msh){.rv = 0};
 	get_env(&msh, envp);
+	if (ac > 1)
+	{
+		if (!__strcmp(av[1], "-c"))
+		{
+			if (av[2])
+				return (__treat_user_input(av[2], &msh), __exit(&msh));
+			else
+			{
+				msh.rv = 2;
+				return(__putendl_fd("Minishell : -c: option requires an argument", 2),__exit(&msh));
+			}
+		}
+		else
+		{
+			msh.rv = 1;
+			return(__putendl_fd("Minishell : invalid option", 2),__exit(&msh));
+		}
+	}
 	while (42)
 	{
 		signal(SIGINT, __signal);
@@ -190,49 +208,8 @@ int	main (int ac, char *av[], char *envp[])
 			arg = NULL;
 			break ;
 		}
-		__mini_parsing(arg, &msh);
+		__treat_user_input(arg, &msh);
 		free(arg);
 	}
 	__exit(&msh);
 }
-
-/*
-	__pwd(1);
-	__echo(arg, 1);
-	__cd("srcs");
-	__pwd(1);
-	__cd("/dev");
-	__pwd(1);
-	__env(NULL);
-	*/
-
-
-/*
-
-	argv = __split(arg, ' ');
-	if (__strncmp(argv[0], "echo", 4) == 0)
-		__echo(argv, 1);
-	if (__strncmp(argv[0], "cd", 2) == 0)
-		__cd(argv[1], msh);
-	if (__strncmp(argv[0], "pwd", 3) == 0)
-		__pwd(1);
-	if (__strncmp(argv[0], "env", 3) == 0)
-		__env(msh);
-	if (__strncmp(argv[0], "export", 6) == 0)
-		__export(argv + 1, msh);
-	if (__strncmp(argv[0], "unset", 5) == 0)
-		__unset(argv + 1, msh);
-	i = -1;
-	while (argv[++i])
-		free(argv[i]);
-	free(argv);
-
-	*/
-/*
-	index = lexing;
-	while (index)
-	{
-		printf("Le token vaut : >%s< et de type = %d\n", index->token, index->type); 
-		index = index->next;
-	}	
-	*/

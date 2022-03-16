@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 14:13:52 by fle-blay          #+#    #+#             */
-/*   Updated: 2022/03/15 09:15:45 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/16 19:40:56 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,25 @@ int	update_key_val(t_msh *msh, char *key_val)
 	return (__SUCCESS);
 }
 
+int	join_key_val(t_msh *msh, char *key_val)
+{
+	int	pos;
+
+	pos = key_exist(msh, key_val);
+	free(msh->envp[pos][1]);
+	printf("strstr %s\n", __strstr(key_val, "+=") + 2);
+	msh->envp[pos][0] = __strjoin(msh->envp[pos][0],__strstr(key_val, "+=") + 2);
+	msh->envp[pos][1] = __strdup("1");
+	if (!msh->envp[pos][0] || !msh->envp[pos][1])
+		return (__FAIL);
+	return (__SUCCESS);
+}
+
 int	add_key_val(t_msh *msh, char *key_val, int i)
 {
 	char	***new_env;
 
+	fprintf(stderr,"Add key value\n");
 	new_env = (char ***)malloc((i + 2) * sizeof(char **));
 	if (!new_env)
 		return (__FAIL);

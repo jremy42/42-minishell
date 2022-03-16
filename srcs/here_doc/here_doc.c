@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 15:19:06 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/15 09:14:36 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/16 17:11:22 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static char	*__get_stdin(char *eof)
 			&& __strlen(line) == __strlen(eof) + 1))
 		{
 			if (!line)
-				printf("warning: here-document at line %d delimited by end-of-file (wanted `%s')\n",i, eof);
+				DEBUG && printf("warning: here-document at line %d delimited by end-of-file (wanted `%s')\n",i, eof);
 			get_next_line(-1);
 			free(line);
 			break ;
@@ -112,6 +112,7 @@ int __handle_here_doc(t_lexing *lexing, t_lexing *end, t_msh *msh)
 			pid = fork();
 			if (pid == 0)
 			{
+				signal(SIGINT, SIG_DFL);
 				if (!__get_user_input(eof))
 					__putendl_fd("malloc error", 2);
 				msh->rv = errno;

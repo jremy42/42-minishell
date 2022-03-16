@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 09:50:45 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/16 11:12:12 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/16 17:11:38 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int __execute_pipe_seq(t_lexing *lexing, t_msh *msh)
 		return (-1);
 	DEBUG && print_cmd_lst(cmd);
 	execute_seq(cmd, msh);
-	fprintf(stderr, "Return code for current pipesequence [%d]\n", msh->rv);
+	DEBUG && fprintf(stderr, "Return code for current pipesequence [%d]\n", msh->rv);
 	return (1);
 }
 

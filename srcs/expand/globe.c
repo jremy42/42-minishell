@@ -96,7 +96,7 @@ void    __print_dir(t_list *dir_content)
 {
     while (dir_content)
     {
-        fprintf(stderr, "next_entry from list: [%s]\n", (char *)dir_content->content);
+        DEBUG &&fprintf(stderr, "next_entry from list: [%s]\n", (char *)dir_content->content);
         dir_content = dir_content->next;
     }
 }
@@ -201,14 +201,14 @@ int __file_find(char *file_name, t_glob *glob_lst)
 	}
 	if(glob_lst->type == 2)
 	{
-		tmp = strstr(file_name, glob_lst->to_find);
+		tmp = __strstr(file_name, glob_lst->to_find);
 		if (tmp && tmp[__strlen(glob_lst->to_find)] == 0)
 			return(1);	
 		return (0);
 	}
 	else
 	{
-		tmp = strstr(file_name, glob_lst->to_find);
+		tmp = __strstr(file_name, glob_lst->to_find);
     	if (!tmp)
 			return (0);
    	 	tmp += __strlen(glob_lst->to_find);
@@ -231,7 +231,7 @@ int __insert_token(t_lexing *lexing, char *new_glob_match, int reset)
 	if (first)
 	{
 		tmp = __strdup(new_glob_match);
-		printf("tmp = [%s]\n", tmp);
+		DEBUG && printf("tmp = [%s]\n", tmp);
 		if (!tmp)
 			return (0);
 		first = 0;
@@ -272,12 +272,13 @@ int    __handle_wildcards(t_msh *msh, t_lexing *lexing)
 			{
 				if(__file_find((char *)dir_content->content, glob_lst))
 				{
-					printf("find = >%s<\n", (char *)dir_content->content);
+					DEBUG && printf("find = >%s<\n", (char *)dir_content->content);
 					if (!__insert_token(lexing, (char *)dir_content->content, 0))
 						return ( __glob_list_clear(glob_lst), __lstclear(&save, free), 0);
 				}
 				dir_content = dir_content->next;
 			}
+			__insert_token(NULL, NULL, 1);
 			__glob_list_clear(glob_lst);
 		}
 		dir_content = save;

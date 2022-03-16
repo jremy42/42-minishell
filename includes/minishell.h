@@ -142,6 +142,7 @@ int		add_key_val(t_msh *msh, char *key_val, int i);
 int		update_key_val(t_msh *msh, char *key_val);
 int		key_exist(t_msh *msh, char *key);
 int		get_envp_size(t_msh *msh);
+int	join_key_val(t_msh *msh, char *key_val);
 
 //Others
 void    __signal(int signal);

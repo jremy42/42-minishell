@@ -76,7 +76,7 @@ int	__save_fd(int *std)
 
 int __restore_fd(int *std)
 {
-	fprintf(stderr, "restore fd\n");
+	DEBUG && fprintf(stderr, "restore fd\n");
 	//close(0);
 	if (dup2(std[out], STDOUT_FILENO) < 0)
 		return (0);
@@ -146,7 +146,7 @@ int execute_seq(t_cmd *cmd, t_msh *msh)
 				return (__cmd_node_list_clear(cmd), 0);
 		}
 		__exec_builtin(cmd->arg, msh);
-		fprintf(stderr, "cmd->redirect : [%p]\n", cmd->redirect);
+		DEBUG && fprintf(stderr, "cmd->redirect : [%p]\n", cmd->redirect);
 		if (cmd->redirect && !__restore_fd(std))
 			__putendl_fd(strerror(errno), 2);
 		return (__cmd_node_list_clear(cmd), 0);
