@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 16:23:45 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/15 09:14:53 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/16 12:43:26 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static int wait_ret(pid_t pid)
 	if (WIFEXITED(status) > 0)
 		ret = (WEXITSTATUS(status));
 	if (WIFSIGNALED(status) > 0)
-		ret = (WTERMSIG(status));
+		ret = (WTERMSIG(status) + 128);
 	while (waitpid(-1, NULL, 0) > 0)
 		;
 	return(ret);

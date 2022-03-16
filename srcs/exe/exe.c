@@ -31,6 +31,8 @@ void	__cmd_node_list_clear(t_cmd *start)
 
 int __is_builtin(char **arg)
 {
+	if (!arg || !arg[0])
+		return (0);
 	if (__strcmp(arg[0], "echo") == 0)
 		return (1);
 	if (__strcmp(arg[0], "cd") == 0)

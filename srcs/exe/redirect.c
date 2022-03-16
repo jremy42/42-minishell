@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 09:51:56 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/15 09:14:45 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/16 13:09:12 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ static void    __here_doc_redirection(t_sequ *seq, t_cmd *cmd)
 	__putstr_fd(cmd->redirect->file_name, fd);
 	close(fd);
 	cmd->redirection[0] = open(tmp_file, O_RDONLY);
+	free(tmp_file);
 	if (cmd->redirection[0] < 0)
 		__exit_child(seq, cmd, errno, 1);
 	if (dup2(cmd->redirection[0], 0) < 0)

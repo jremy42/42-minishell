@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 09:51:56 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/15 09:14:49 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/16 13:09:29 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ static int    __here_doc_redirection(t_cmd *cmd)
 	__putstr_fd(cmd->redirect->file_name, fd);
 	close(fd);
 	cmd->redirection[0] = open(tmp_file, O_RDONLY);
+	free(tmp_file);
 	if (cmd->redirection[0] < 0)
 		return (__putendl_fd(strerror(errno), 2), 0);
 	if (dup2(cmd->redirection[0], 0) < 0)
