@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 10:21:11 by fle-blay          #+#    #+#             */
-/*   Updated: 2022/03/16 19:22:17 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/17 13:10:46 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,28 @@ int	print_exported_values(char ***envp)
 	return (1);
 }
 
+
+int	__check_valid_identifier(char *key_val)
+{
+	int	i;
+
+	i = 0;
+	while(key_val[i] && key_val[i]!= '=')
+	{
+		if (key_val[i]== '+' && key_val[i + 1] == '=')
+			return (1);
+		if (!__isalnum(key_val[i]) && key_val[i]!= '_')
+		{
+			__putstr_fd("Minishell : export : '", 2);
+			__putstr_fd(key_val, 2);
+			__putendl_fd("' not a valid identifier", 2);
+			return (0);
+		}
+		i++;
+	}
+	return (1);
+}
+
 int	__export(char **key_val, t_msh *msh)
 {
 	int	i;
@@ -69,14 +91,16 @@ int	__export(char **key_val, t_msh *msh)
 	{
 		if (__strchr(key_val[i], '='))
 		{
-			if (!key_exist(msh, key_val[i]) && !__strchr(key_val[i], '+'))
+			if (!__check_valid_identifier(key_val[i]))
+				return (__FAIL);
+			if (!key_exist(msh, key_val[i]))
 				status = add_key_val(msh, key_val[i], get_envp_size(msh));
-			else if(__strstr(key_val[i], "+="))
-				status = join_key_val(msh, key_val[i]);
 			else
 				status = update_key_val(msh, key_val[i]);
 		}
 		else
+			if (!__check_valid_identifier(key_val[i]))
+				return (__FAIL);
 			status = modify_status_key_val(msh, key_val[i]);
 	}
 	return (status);
