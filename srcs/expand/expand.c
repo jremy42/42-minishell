@@ -60,9 +60,9 @@ int __parameter_expand(char *start_word, t_msh *msh, char **expanded_token, int 
 	return (free(tmp), 1);
 }
 
-int	__treat_dollar(char c, t_state quote_status)
+int	__treat_dollar(char c, char next_char, t_state quote_status)
 {
-	if (c == '$' && (quote_status == UNQUOTE || quote_status == D_QUOTE))
+	if (c == '$' && next_char && (quote_status == UNQUOTE || quote_status == D_QUOTE))
 		return (1);
 	return (0);
 }
@@ -73,6 +73,7 @@ int __expand_word(char **token_word, t_msh  *msh)
 	t_state quote_status;
 	char *tmp;
 	int     i;
+	int		ret;
 	char    *expanded_token_word;
 	
 	expanded_token_word = __strdup("");
@@ -82,6 +83,7 @@ int __expand_word(char **token_word, t_msh  *msh)
 	quote_status = UNQUOTE;
 	slash_status = 0;
 	i = 0;
+	ret = 1;
 	while(tmp[i])
 	{
 		if (tmp[i] == '\\' && tmp[i + 1] && __need_to_escape(i, quote_status, tmp)
@@ -97,10 +99,11 @@ int __expand_word(char **token_word, t_msh  *msh)
 			i++;
 			continue ;
 		}
-		if(!slash_status && __treat_dollar(tmp[i], quote_status))
+		if(!slash_status && __treat_dollar(tmp[i], tmp[i + 1], quote_status))
 		{
 			if(!__parameter_expand(tmp + i + 1, msh, &expanded_token_word, &i))
 				return (0);
+			ret = 2;
 		}
 		else
 			__add_char_to_token(tmp[i], &expanded_token_word);
@@ -109,17 +112,45 @@ int __expand_word(char **token_word, t_msh  *msh)
 	}
 	free(*token_word);
 	*token_word = expanded_token_word;
+	return (ret);
+}
+
+int	__split_expanded_token(t_lexing *lexing)
+{
+	char	**split_token;
+	int		i;
+
+	i = 0;
+	split_token = __split(lexing->token, ' ');
+	if (!split_token)
+		return (0);
+	while (split_token[i])	
+	{
+		if (!__insert_token(lexing, split_token[i], 0))
+			return (free_split(split_token), 0);
+		i++;
+	}
+	__insert_token(NULL, NULL, 1);
 	return (1);
 }
 
 int __parameter_expand_token(t_lexing *lexing, t_msh *msh)
 {
+	int ret;
+
+	ret = 0;
 	while(lexing)
 	{
 		if(lexing->type == WORD)
-			if(!__expand_word(&lexing->token, msh))
+		{
+			ret = __expand_word(&lexing->token, msh);
+			if(!ret)
 				return (__putendl_fd("Malloc error", 2), 0);
-		DEBUG && fprintf(stderr, "new_token : [%s]\n", lexing->token);
+			DEBUG && fprintf(stderr, "new_token : [%s]\n", lexing->token);
+			if (ret == 2)
+				if (!__split_expanded_token(lexing))
+					return (__putendl_fd("Malloc error", 2), 0);
+		}
 		lexing = lexing->next;
 	}
 	return (1);
