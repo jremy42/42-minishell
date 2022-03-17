@@ -196,6 +196,6 @@ int __handle_here_doc(t_lexing *lexing, t_lexing *end, t_msh *msh);
 int __parameter_expand_token(t_lexing *lexing, t_msh *msh);
 int __handle_wildcards(t_msh *msh, t_lexing *lexing);
 t_lexing	*__lexnew(char *content);
-int __insert_token(t_lexing *lexing, char *new_glob_match, int reset);
+int __insert_token(t_lexing *lexing, char *new_glob_match, int reset, t_lexing *true_end);
 
 #endif

@@ -47,7 +47,7 @@ _BLUE=	$'\033[34m
 _PURPLE=$'\033[35m
 _CYAN=	$'\033[36m
 _WHITE=	$'\033[37m
-_END= $'\033[37m
+_END= $'\033[0m
 
 ifeq ($(MAKECMDGOALS), debug)
 CFLAGS += -D DEBUG=1

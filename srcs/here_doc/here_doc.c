@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 15:19:06 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/16 17:11:22 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/17 19:01:21 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,18 +46,43 @@ static char	*__get_stdin(char *eof)
 	return (ret);
 }
 
-static int	__get_user_input(char *eof)
+static int	__get_user_input(char **eof)
 {
 	char	*stdin;
 	int		file;
-
+	int		quote;
+	char	*tmp;
+	
+	quote = 0;
+	if(((*eof)[0] == '"' && (*eof)[__strlen(*eof) - 1] == '"'))
+	{
+		tmp = __strtrim(*eof,"\"");
+		if (!tmp)
+			return (0);
+		free(*eof);
+		*eof = tmp;
+		quote = 1;
+	}
+	else if(((*eof)[0] == '\'' && (*eof)[__strlen(*eof) - 1] == '\''))
+	{
+		tmp = __strtrim(*eof,"\'");
+		if (!tmp)
+			return (0);
+		free(*eof);
+		*eof = tmp;
+		quote = 1;
+	}
 	file = open(".hd.tmp", O_CREAT | O_WRONLY | O_TRUNC, 00644);
 	if (file < 0)
 		return (-1);
-	stdin = __get_stdin(eof);
+	stdin = __get_stdin(*eof);
 	if (!stdin)
 		return (close(file), -1);
+	if(quote)
+		__putstr_fd("\'",file);
 	__putstr_fd(stdin, file);
+	if(quote)
+		__putstr_fd("\'",file);
 	free(stdin);
 	close(file);
 	return (1);
@@ -113,8 +138,9 @@ int __handle_here_doc(t_lexing *lexing, t_lexing *end, t_msh *msh)
 			if (pid == 0)
 			{
 				signal(SIGINT, SIG_DFL);
-				if (!__get_user_input(eof))
+				if (!__get_user_input(&eof))
 					__putendl_fd("malloc error", 2);
+				lexing->next->token = eof;
 				msh->rv = errno;
 				__lexing_full_list_clear(save);
 				__exit(msh);

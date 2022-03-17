@@ -217,7 +217,7 @@ int __file_find(char *file_name, t_glob *glob_lst)
 	return (0);
 }
 
-int __insert_token(t_lexing *lexing, char *new_glob_match, int reset)
+int __insert_token(t_lexing *lexing, char *new_glob_match, int reset, t_lexing *true_end)
 {
 	static int first = 1;
 	char *tmp;
@@ -242,6 +242,8 @@ int __insert_token(t_lexing *lexing, char *new_glob_match, int reset)
 	new_token = __lexnew(new_glob_match);
 	if (!new_token)
 		return (0);
+	while (lexing->next != true_end)
+		lexing = lexing->next;
 	new_token->next = lexing->next;
 	lexing->next = new_token;
 	return (1);
@@ -273,17 +275,18 @@ int    __handle_wildcards(t_msh *msh, t_lexing *lexing)
 				if(__file_find((char *)dir_content->content, glob_lst))
 				{
 					DEBUG && printf("find = >%s<\n", (char *)dir_content->content);
-					if (!__insert_token(lexing, (char *)dir_content->content, 0))
+					if (!__insert_token(lexing, (char *)dir_content->content, 0, save_next))
 						return ( __glob_list_clear(glob_lst), __lstclear(&save, free), 0);
+					//lexing = lexing->next;
 				}
 				dir_content = dir_content->next;
 			}
-			__insert_token(NULL, NULL, 1);
+			__insert_token(NULL, NULL, 1, NULL);
 			__glob_list_clear(glob_lst);
 		}
 		dir_content = save;
 		lexing = save_next;
 	}
 	__lstclear(&dir_content, free);
-	return (__insert_token(NULL, NULL, 1));
+	return (__insert_token(NULL, NULL, 1, NULL));
 }

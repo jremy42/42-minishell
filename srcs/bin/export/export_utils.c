@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 14:13:52 by fle-blay          #+#    #+#             */
-/*   Updated: 2022/03/16 19:40:56 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/17 16:43:06 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,22 @@ int	get_envp_size(t_msh *msh)
 int	key_exist(t_msh *msh, char *key)
 {
 	int		i;
+	char *plus;
+	char *equal;
+	char to_find;
 
+	plus = __strchr(key, '+');
+	equal = __strchr(key, '=');
+	if(!equal && !plus)
+		return (0);
 	i = 0;
+	if (!plus || plus > equal)
+		to_find = '=';
+	else
+		to_find = '+';
 	while (msh->envp[i])
 	{
-		if (!__strncmp(msh->envp[i][0], key, __strchr(key, '=') - key))
+		if (!__strncmp(msh->envp[i][0], key, __strchr(key, to_find) - key))
 			return (i); 
 		i++;	
 	}
@@ -56,7 +67,7 @@ int	join_key_val(t_msh *msh, char *key_val)
 
 	pos = key_exist(msh, key_val);
 	free(msh->envp[pos][1]);
-	printf("strstr %s\n", __strstr(key_val, "+=") + 2);
+	//printf("strstr %s\n", __strstr(key_val, "+=") + 2);
 	msh->envp[pos][0] = __strjoin(msh->envp[pos][0],__strstr(key_val, "+=") + 2);
 	msh->envp[pos][1] = __strdup("1");
 	if (!msh->envp[pos][0] || !msh->envp[pos][1])

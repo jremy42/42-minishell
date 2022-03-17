@@ -121,16 +121,20 @@ int	__split_expanded_token(t_lexing *lexing)
 	int		i;
 
 	i = 0;
+
+	printf("lexing->token = %s\n", lexing->token);
 	split_token = __split(lexing->token, ' ');
 	if (!split_token)
 		return (0);
 	while (split_token[i])	
 	{
-		if (!__insert_token(lexing, split_token[i], 0))
+		if (!__insert_token(lexing, split_token[i], 0, NULL))
 			return (free_split(split_token), 0);
 		i++;
 	}
-	__insert_token(NULL, NULL, 1);
+	free_split(split_token);
+	__insert_token(NULL, NULL, 1, NULL); //reset static 
+	//free(split_token);
 	return (1);
 }
 
@@ -143,10 +147,11 @@ int __parameter_expand_token(t_lexing *lexing, t_msh *msh)
 	{
 		if(lexing->type == WORD)
 		{
+						DEBUG && fprintf(stderr, "new_token before parameter expand: [%s]\n", lexing->token);
 			ret = __expand_word(&lexing->token, msh);
 			if(!ret)
 				return (__putendl_fd("Malloc error", 2), 0);
-			DEBUG && fprintf(stderr, "new_token : [%s]\n", lexing->token);
+			DEBUG && fprintf(stderr, "new_token after parameter expand: [%s]\n", lexing->token);
 			if (ret == 2)
 				if (!__split_expanded_token(lexing))
 					return (__putendl_fd("Malloc error", 2), 0);
