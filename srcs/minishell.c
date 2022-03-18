@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:25:57 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/16 16:10:31 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/18 19:01:39 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,9 +137,9 @@ int	__treat_user_input(char *arg, t_msh *msh)
 	__handle_here_doc(lexing, first_error, msh);
 	DEBUG && __print_lexing(lexing);
 	if(first_error)
-		return (-1);
+		return (__lexing_full_list_clear(lexing), -1);
 	if (!__create_tree(lexing, &(msh->root)))
-		return (-1);
+		return (__destroy_tree(msh->root), -1);
 	DEBUG && print2D(msh->root);
 	msh->rv = __execute_tree(msh->root, msh);
 	

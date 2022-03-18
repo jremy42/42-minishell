@@ -6,23 +6,69 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 09:50:45 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/17 11:27:51 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/18 18:33:45 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int __check_parenthesis_in_pipe(t_lexing *lexing)
+{
+	int			p_left;
+	int			p_right;
+
+	p_left = 0;
+	p_right = 0;
+	while(lexing && lexing->type == P_LEFT)
+	{
+		p_left++;
+		lexing = lexing->next;
+	}
+	if (lexing->type == P_RIGHT)
+		return (fprintf(stderr, "Empty parenthesis\n"), 0);
+	while(lexing && lexing->type != PIPE)
+	{
+		if(lexing->type == P_RIGHT)
+			p_right++;
+		if (lexing->type == P_LEFT)
+			return (0);
+		lexing = lexing->next;
+	}
+	if (p_left != p_right)
+		return (0);
+	return (1);
+}
+
+
+
 static int __execute_pipe_seq(t_lexing *lexing, t_msh *msh)
 {
 	t_cmd *cmd;
+	int	trim;
+	t_lexing *next_pipe;
 	
 	DEBUG && __print_lexing(lexing);
+	trim = 1;
+	next_pipe = lexing;
+	while(next_pipe)
+	{ 
+		if(!__check_parenthesis_in_pipe(next_pipe))
+		{
+			printf("synthax error with parenthesis in %s:\n", next_pipe->token);
+			return (-1);
+		}
+		while(next_pipe->next && next_pipe->type != PIPE)
+			next_pipe = next_pipe->next;
+		trim = 1;
+		next_pipe = next_pipe->next;
+	}
 	if (!__parameter_expand_token(lexing, msh))
 		__exit(msh);
 	__handle_wildcards(msh, lexing);
 	cmd = create_cmd_list(lexing, msh);
 	if (!cmd)
 		return (-1);
-	DEBUG && print_cmd_lst(cmd);
+	print_cmd_lst(cmd);
 	execute_seq(cmd, msh);
 	DEBUG && fprintf(stderr, "Return code for current pipesequence [%d]\n", msh->rv);
 	return (1);

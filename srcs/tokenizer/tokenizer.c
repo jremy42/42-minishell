@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:25:57 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/15 09:13:57 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/18 18:46:57 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	__get_operator(char **new_token, char *str, int i)
 	{
 		if (*new_token && __strlen(*new_token) == 1
 			&& (str[i] == ')' || str[i] == '('))
-			break ;
+			return (i - 1);
 		__add_char_to_token(str[i], new_token);
 		if (str[i] == '(' || str[i] == ')')
 			break ;

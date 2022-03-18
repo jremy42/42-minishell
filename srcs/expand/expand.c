@@ -141,8 +141,10 @@ int	__split_expanded_token(t_lexing *lexing)
 int __parameter_expand_token(t_lexing *lexing, t_msh *msh)
 {
 	int ret;
+	t_lexing *previous;
 
 	ret = 0;
+	previous = lexing;
 	while(lexing)
 	{
 		if(lexing->type == WORD)
@@ -152,10 +154,11 @@ int __parameter_expand_token(t_lexing *lexing, t_msh *msh)
 			if(!ret)
 				return (__putendl_fd("Malloc error", 2), 0);
 			DEBUG && fprintf(stderr, "new_token after parameter expand: [%s]\n", lexing->token);
-			if (ret == 2)
+			if (ret == 2 && previous->type != REDIRECTION)
 				if (!__split_expanded_token(lexing))
 					return (__putendl_fd("Malloc error", 2), 0);
 		}
+		previous = lexing;
 		lexing = lexing->next;
 	}
 	return (1);
