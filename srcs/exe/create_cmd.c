@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 16:19:12 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/18 18:29:41 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/21 16:06:01 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void __cmd_add_back(t_cmd **alst, t_cmd *new)
 		nextlst->next = new;
 	}
 }
-
+/*
 static int	__get_nb_param_cmd(t_lexing *start)
 {
 	int size;
@@ -45,7 +45,30 @@ static int	__get_nb_param_cmd(t_lexing *start)
 	}
 	return (size);
 }
+*/
 
+static int	__get_nb_param_cmd(t_lexing *start)
+{
+	int size;
+
+	size = 0;
+	while (start && start->type != PIPE)
+	{
+		if (start->type == REDIRECTION || start->type == HERE_DOC )
+		{
+			start = start->next->next;
+			continue ;
+		}
+		if( start->type == P_LEFT || start->type == P_RIGHT)
+		{
+			start = start->next;
+			continue;
+		}
+		size++;
+		start = start->next;
+	}
+	return (size);
+}
 static t_cmd	*create_new_cmd(int nb_param, int index, t_msh *msh)
 {
 	t_cmd *new;
@@ -71,6 +94,7 @@ int add_next_cmd(t_cmd **start, t_lexing **lexing, t_msh *msh, int index)
 	int			i;
 	t_cmd		*new;
 	t_lexing	*save;
+	//t_lexing	*two_burne;
 
 	i = 0;
 	new = create_new_cmd(__get_nb_param_cmd(*lexing), index, msh);
@@ -80,7 +104,11 @@ int add_next_cmd(t_cmd **start, t_lexing **lexing, t_msh *msh, int index)
 	{
 		if((*lexing)->type == P_LEFT || (*lexing)->type == P_RIGHT)
 		{
+			//fprintf(stderr, "to be freeed [%s]\n", (*lexing)->token);
+			//two_burne = *lexing;
 			*lexing = (*lexing)->next;
+			//free(two_burne->token);
+			//free(two_burne);
 			continue;
 		}
 		if ((*lexing)->type == REDIRECTION || (*lexing)->type == HERE_DOC)
@@ -133,7 +161,7 @@ int print_cmd_lst(t_cmd *cmd)
 	{
 		print_cmd(cmd);
 		cmd = cmd->next;
-		printf("--\n");
+		//printf("--\n");
 	}
 	return (1);
 }
@@ -147,15 +175,15 @@ int print_cmd(t_cmd *cmd)
 	t_redirect *tmp;
 
 	tmp = cmd->redirect;
-	printf("stdin = %d stdout = %d, index = %d\n", cmd->redirection[0], cmd->redirection[1], cmd->index);
+	//printf("stdin = %d stdout = %d, index = %d\n", cmd->redirection[0], cmd->redirection[1], cmd->index);
 	while(tmp)
 	{
-		printf("type = %d et file = %s\n", tmp->type, tmp->file_name);
+		//printf("type = %d et file = %s\n", tmp->type, tmp->file_name);
 		tmp = tmp->next;
 	}
 	while(cmd->arg[i])
 	{
-		printf("arg %d >%s<\n",i , cmd->arg[i]);
+		//printf("arg %d >%s<\n",i , cmd->arg[i]);
 		i++;
 	}
 	return (1);

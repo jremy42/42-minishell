@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:25:57 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/21 12:40:24 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/21 17:52:19 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,9 +131,9 @@ int	__treat_user_input(char *arg, t_msh *msh)
 	free(to_tokenize);
 	if (__lexing(start, &lexing) < 0)
 		return (write(2, "Malloc error\n", 14), -1);
-	first_error = __synthax_checker(lexing);
+	first_error = __synthax_checker(lexing, msh);
 	if (first_error)
-		fprintf(stderr, "DEBUG first error : %s\n", first_error->token);
+		DEBUG && fprintf(stderr, "DEBUG first error : %s\n", first_error->token);
 	__handle_here_doc(lexing, first_error, msh);
 	DEBUG && __print_lexing(lexing);
 	if(first_error)
@@ -197,13 +197,11 @@ int	main (int ac, char *av[], char *envp[])
 	}
 	while (42)
 	{
-		//write(1, "\x1b[#F", 2);
-		//write(1, "\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b", 2);
 		signal(SIGINT, __signal);
 		signal(SIGQUIT, __signal);
 		arg = readline(__get_prompt(&msh));
 		add_history(arg);
-		if (__strncmp(arg, "exit", __strlen("exit")) == 0 || arg == NULL)
+		if (arg == NULL)
 		{
 			if (arg)
 				free(arg);

@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 16:20:32 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/21 11:24:47 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/21 16:02:22 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int D_print_seq(t_sequ *seq)
 	DEBUG && printf("max cmd = %d\n", seq->max_cmd);
 	while (seq->path[i])
 	{
-		printf("path = %s\n", seq->path[i]);
+		DEBUG && printf("path = %s\n", seq->path[i]);
 		i++;
 	}
 	return (1);

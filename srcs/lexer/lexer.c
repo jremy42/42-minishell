@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:25:57 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/16 17:11:30 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/21 16:00:54 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	__lexing_full_list_clear(t_lexing *start)
 
 	while (start)
 	{
-		DEBUG && printf("start = %s\n", start->token);
+		DEBUG && printf("lexing full lst clear free = %s\n", start->token);
 		next_to_free = start->next;
 		free(start->token);
 		start->token = NULL;

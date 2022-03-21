@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:25:57 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/21 12:42:32 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/21 17:14:09 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,6 @@ int __exit(t_msh *msh)
 	__destroy_tree(&msh->root);
 	destroy_env(msh);
 	free(msh->prompt);
+	//fprintf(stderr, "exit de [%d] \n", msh->rv);
 	exit (msh->rv);
 }
