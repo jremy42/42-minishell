@@ -31,8 +31,8 @@ srcs/exe/exe.c
 
 
 IFLAGS =  -I includes/ -I libft/includes
-CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g3
-#CFLAGS = -Wall -Wextra -Werror
+#CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g3
+CFLAGS = -Wall -Wextra -Werror
 CC = cc
 OBJ = $(addprefix $(OBJS_PATH), $(SRC:.c=.o))
 HEADER = includes/minishell.h

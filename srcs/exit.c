@@ -6,23 +6,24 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:25:57 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/16 11:54:14 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/21 12:42:32 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void __destroy_tree(t_node *current_node)
+void __destroy_tree(t_node **current_node)
 {
-	if (!current_node)
+	if (!*current_node)
 		return ;
-    __destroy_tree(current_node->left);
-    __destroy_tree(current_node->right);
-	if (current_node->kind == SEQUENCE)
-		__lexing_full_list_clear(current_node->leaf_lexing);
+    __destroy_tree(&((*current_node)->left));
+    __destroy_tree(&((*current_node)->right));
+	if ((*current_node)->kind == SEQUENCE)
+		__lexing_full_list_clear((*current_node)->leaf_lexing);
 	else
-		free(current_node->leaf_lexing);
-    free(current_node);
+		free((*current_node)->leaf_lexing);
+    free(*current_node);
+	*current_node = NULL;
 }
 
 void destroy_env(t_msh *msh)
@@ -44,6 +45,7 @@ void destroy_env(t_msh *msh)
 
 int __exit(t_msh *msh)
 {	
+	__destroy_tree(&msh->root);
 	destroy_env(msh);
 	free(msh->prompt);
 	exit (msh->rv);

@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 16:23:45 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/16 12:43:26 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/21 12:49:13 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static int wait_ret(pid_t pid)
 	return(ret);
 }
 
-int __launcher_fork(t_sequ *seq, t_cmd *cmd)
+int __launcher_fork(t_sequ *seq, t_cmd *cmd, t_cmd *first_cmd)
 {
 	pid_t pid;
    
@@ -84,7 +84,7 @@ int __launcher_fork(t_sequ *seq, t_cmd *cmd)
 				__last_pipe(seq->pipe,prev_pipe_out, cmd);
 			else if (seq->max_cmd != 1 && seq->index != 0)
 				__middle_pipe(seq->pipe,prev_pipe_out, cmd);
-			execute_child(seq, cmd);
+			execute_child(seq, cmd, first_cmd);
 		}
 		else
 		{

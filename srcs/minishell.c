@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:25:57 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/18 19:01:39 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/21 12:40:24 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	*__get_prompt(t_msh *msh)
 	__bzero(path, PATH_MAX);
 	if (msh->prompt)
 		free(msh->prompt);
-	if (g_rv == 0)
+	if (msh->rv == 0)
 		msh->prompt = __strdup(BOLDGREEN"➜  "RESET BOLDCYAN);
 	else
 		msh->prompt = __strdup(BOLDRED"➜  "RESET BOLDCYAN);
@@ -139,7 +139,7 @@ int	__treat_user_input(char *arg, t_msh *msh)
 	if(first_error)
 		return (__lexing_full_list_clear(lexing), -1);
 	if (!__create_tree(lexing, &(msh->root)))
-		return (__destroy_tree(msh->root), -1);
+		return (__destroy_tree(&msh->root), -1);
 	DEBUG && print2D(msh->root);
 	msh->rv = __execute_tree(msh->root, msh);
 	
@@ -163,7 +163,7 @@ int	__treat_user_input(char *arg, t_msh *msh)
 	*/
 
 // fin de la fx d'exe de node
-	__destroy_tree(msh->root);
+	__destroy_tree(&msh->root);
 	return (msh->rv);
 }
 
@@ -197,6 +197,8 @@ int	main (int ac, char *av[], char *envp[])
 	}
 	while (42)
 	{
+		//write(1, "\x1b[#F", 2);
+		//write(1, "\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b", 2);
 		signal(SIGINT, __signal);
 		signal(SIGQUIT, __signal);
 		arg = readline(__get_prompt(&msh));
@@ -208,6 +210,7 @@ int	main (int ac, char *av[], char *envp[])
 			arg = NULL;
 			break ;
 		}
+		signal(SIGINT, __signal_treat);
 		__treat_user_input(arg, &msh);
 		free(arg);
 	}

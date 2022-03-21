@@ -153,7 +153,7 @@ int execute_seq(t_cmd *cmd, t_msh *msh)
 	}
 	if (!__init_seq(&seq, msh->envp, cmd))
 		return (__putstr_fd("Malloc error\n", 2), 0);
-	msh->rv = __launcher_fork(&seq, cmd);
+	msh->rv = __launcher_fork(&seq, cmd, cmd);
 	__clean_tmp_hd(cmd);
 	free_split(seq.path);
 	free(seq.envp);

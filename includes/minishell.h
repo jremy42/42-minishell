@@ -157,6 +157,7 @@ int	chdir_previous(t_msh *msh);
 
 //Others
 void    __signal(int signal);
+void    __signal_treat(int signal);
 int __exit(t_msh *msh);
 
 //tokenizer
@@ -187,7 +188,7 @@ void	__lexing_node_list_clear(t_lexing *start);
 
 int __create_tree(t_lexing *lexing, t_node **root);
 int __execute_tree(t_node *current_node, t_msh *msh);
-void __destroy_tree(t_node *current_node);
+void __destroy_tree(t_node **current_node);
 
 
 // parsing exe 
@@ -198,6 +199,7 @@ int add_next_cmd(t_cmd **start, t_lexing **lexing, t_msh *msh, int index);
 t_cmd *create_cmd_list(t_lexing *lexing, t_msh *msh);
 int print_cmd_lst(t_cmd *cmd);
 void	__cmd_node_list_clear(t_cmd *start);
+int __clean_tmp_hd(t_cmd *cmd);
 
 //heredoc
 
