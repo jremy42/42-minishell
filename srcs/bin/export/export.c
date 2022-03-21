@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fle-blay <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/09 10:21:11 by fle-blay          #+#    #+#             */
-/*   Updated: 2022/03/17 14:47:26by jremy            ###   ########.fr       */
+/*   Created: 2022/03/21 10:06:28 by fle-blay          #+#    #+#             */
+/*   Updated: 2022/03/21 10:11:50 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*get_key(t_msh *msh, char *key)
 	{
 		if (!__strncmp(msh->envp[i][0], key, __strlen(key)))
 			break ;
-		i++;	
+		i++;
 	}
 	if (!msh->envp[i])
 	{
@@ -50,8 +50,8 @@ int	get_number_exported_values(char ***envp)
 
 char	*get_smallest_exported_value(char ***envp)
 {
-	int	i;
-	char *smallest;
+	int		i;
+	char	*smallest;
 
 	i = 0;
 	while (envp[i])
@@ -59,7 +59,7 @@ char	*get_smallest_exported_value(char ***envp)
 		if (envp[i][1])
 		{
 			smallest = envp[i][0];
-			break;
+			break ;
 		}
 		i++;
 	}
@@ -78,8 +78,8 @@ char	*get_smallest_exported_value(char ***envp)
 
 char	*get_biggest_exported_value(char ***envp)
 {
-	int	i;
-	char *biggest;
+	int		i;
+	char	*biggest;
 
 	i = 0;
 	while (envp[i])
@@ -87,7 +87,7 @@ char	*get_biggest_exported_value(char ***envp)
 		if (envp[i][1])
 		{
 			biggest = envp[i][0];
-			break;
+			break ;
 		}
 		i++;
 	}
@@ -104,21 +104,19 @@ char	*get_biggest_exported_value(char ***envp)
 	return (biggest);
 }
 
-
-char *get_smallest_sup_value(char *old_small, char ***envp)
+char	*get_smallest_sup_value(char *old_small, char ***envp)
 {
-	char *ret;
-	int	i;
+	char	*ret;
+	int		i;
 
 	ret = get_biggest_exported_value(envp);
-
 	i = 0;
 	while (envp[i])
 	{
 		if (envp[i][1])
 		{
 			if (__strcmp(old_small, envp[i][0]) < 0)
-				if(__strcmp(ret, envp[i][0]) > 0)
+				if (__strcmp(ret, envp[i][0]) > 0)
 					ret = envp[i][0];
 		}
 		i++;
@@ -126,21 +124,22 @@ char *get_smallest_sup_value(char *old_small, char ***envp)
 	return (ret);
 }
 
-void __get_printed_export(char *curr_printed)
+void	__get_printed_export(char *curr_printed)
 {
 	write(1, "export ", 7);
 	write(1, curr_printed, __strchr(curr_printed, '=') - curr_printed + 1);
 	write(1, "\"", 1);
-	write(1, __strchr(curr_printed, '=') + 1, __strlen(__strchr(curr_printed, '=')) - 1 );
+	write(1, __strchr(curr_printed, '=') + 1,
+		__strlen(__strchr(curr_printed, '=')) - 1);
 	write(1, "\"\n", 2);
 }
 
 int	print_exported_values(char ***envp)
 {
-	int	i;
-	int max;
-	char *old_printed;
-	char *curr_printed;
+	int		i;
+	int		max;
+	char	*old_printed;
+	char	*curr_printed;
 
 	i = 0;
 	max = get_number_exported_values(envp);

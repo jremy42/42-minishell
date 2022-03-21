@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 14:13:52 by fle-blay          #+#    #+#             */
-/*   Updated: 2022/03/17 16:43:06 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/21 10:05:21 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,20 +18,20 @@ int	get_envp_size(t_msh *msh)
 
 	i = 0;
 	while (msh->envp[i])
-		i++;	
+		i++;
 	return (i);
 }
 
 int	key_exist(t_msh *msh, char *key)
 {
 	int		i;
-	char *plus;
-	char *equal;
-	char to_find;
+	char	*plus;
+	char	*equal;
+	char	to_find;
 
 	plus = __strchr(key, '+');
 	equal = __strchr(key, '=');
-	if(!equal && !plus)
+	if (!equal && !plus)
 		return (0);
 	i = 0;
 	if (!plus || plus > equal)
@@ -41,8 +41,8 @@ int	key_exist(t_msh *msh, char *key)
 	while (msh->envp[i])
 	{
 		if (!__strncmp(msh->envp[i][0], key, __strchr(key, to_find) - key))
-			return (i); 
-		i++;	
+			return (i);
+		i++;
 	}
 	return (0);
 }
@@ -67,8 +67,8 @@ int	join_key_val(t_msh *msh, char *key_val)
 
 	pos = key_exist(msh, key_val);
 	free(msh->envp[pos][1]);
-	//printf("strstr %s\n", __strstr(key_val, "+=") + 2);
-	msh->envp[pos][0] = __strjoin(msh->envp[pos][0],__strstr(key_val, "+=") + 2);
+	msh->envp[pos][0] = __strjoin(msh->envp[pos][0],
+			__strstr(key_val, "+=") + 2);
 	msh->envp[pos][1] = __strdup("1");
 	if (!msh->envp[pos][0] || !msh->envp[pos][1])
 		return (__FAIL);
@@ -79,7 +79,6 @@ int	add_key_val(t_msh *msh, char *key_val, int i)
 {
 	char	***new_env;
 
-	fprintf(stderr,"Add key value\n");
 	new_env = (char ***)malloc((i + 2) * sizeof(char **));
 	if (!new_env)
 		return (__FAIL);
@@ -101,24 +100,3 @@ int	add_key_val(t_msh *msh, char *key_val, int i)
 	msh->envp = new_env;
 	return (__SUCCESS);
 }
-
-int	modify_status_key_val(t_msh *msh, char *key_val)
-{
-	int		i;
-
-	i = 0;
-	while (msh->envp[i])
-	{
-		if (!__strncmp(msh->envp[i][0], key_val, __strlen(key_val)))
-			break ;
-		i++;
-	}
-	if (!msh->envp[i])
-		return (__FAIL);
-	free(msh->envp[i][1]);
-	msh->envp[i][1] = __strdup("1");
-	if (!msh->envp[i][1])
-		return (__FAIL);
-	return (__SUCCESS);
-}
-

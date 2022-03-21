@@ -144,6 +144,17 @@ int		key_exist(t_msh *msh, char *key);
 int		get_envp_size(t_msh *msh);
 int	join_key_val(t_msh *msh, char *key_val);
 
+//cd utils
+
+char	*create_absolut_pwd(char *pwd, char *new_path);
+int	update_oldpwd(t_msh *msh);
+int	update_pwd(t_msh *msh);
+int	chdir_absolute_path(char *new_path);
+int	chdir_previous(t_msh *msh);
+
+
+
+
 //Others
 void    __signal(int signal);
 int __exit(t_msh *msh);

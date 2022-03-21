@@ -1,13 +1,15 @@
 SRC = srcs/minishell.c \
 srcs/bin/pwd/pwd.c\
 srcs/bin/echo/echo.c\
+srcs/bin/cd/cd_utils.c\
 srcs/bin/cd/cd.c\
 srcs/bin/env/env.c\
 srcs/bin/export/export.c\
+srcs/bin/export/export_utils.c\
+srcs/bin/export/export_utils_2.c\
 srcs/bin/unset/unset.c\
 srcs/signal.c\
 srcs/exit.c\
-srcs/bin/export/export_utils.c\
 srcs/tokenizer/tokenizer_utils.c\
 srcs/tokenizer/tokenizer_utils2.c\
 srcs/lexer/lexer.c\
