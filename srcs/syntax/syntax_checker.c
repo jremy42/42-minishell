@@ -69,7 +69,7 @@ static int	trim_parenthesis_in_pipe(t_lexing **lexing, t_lexing **previous_lexin
 }
 */
 
-t_lexing *__synthax_checker(t_lexing *lexing)
+t_lexing *__synthax_checker(t_lexing *lexing, t_msh *msh)
 {
 	int parenthesis;
 
@@ -82,18 +82,27 @@ t_lexing *__synthax_checker(t_lexing *lexing)
 			parenthesis--;
 		if (lexing->type == INVALID)
 			return (__invalid_error(lexing->token), lexing);
-		if (lexing->type == OPERATOR || lexing->type == PIPE)
+		if (lexing->type == OPERATOR || lexing->type == PIPE || lexing->type == REDIRECTION)
 		{
 
 			// <=1 operateur || pipe
-			if (!lexing->next || lexing->next->type == OPERATOR || lexing->next->type == PIPE)
+			if (!lexing->next || lexing->next->type == OPERATOR || lexing->next->type == PIPE || lexing->next->type == REDIRECTION)
+			{
+				msh->rv = 2;
 				return (__synthax_error(lexing->token), lexing);
+			}
 		}
 	if (parenthesis < 0)
-			return(__synthax_error(lexing->token), lexing);
+	{
+		msh->rv = 2;
+		return(__synthax_error(lexing->token), lexing);
+	}
 		lexing = lexing->next;
 	}
 	if (parenthesis != 0)
+	{
+		msh->rv = 2;
 		return (__synthax_error("end. Parenthesis no closed"), lexing);
+	}
 	return (NULL);
 }

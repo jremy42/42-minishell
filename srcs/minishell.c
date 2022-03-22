@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:25:57 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/18 19:01:39 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/21 17:52:19 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	*__get_prompt(t_msh *msh)
 	__bzero(path, PATH_MAX);
 	if (msh->prompt)
 		free(msh->prompt);
-	if (g_rv == 0)
+	if (msh->rv == 0)
 		msh->prompt = __strdup(BOLDGREEN"➜  "RESET BOLDCYAN);
 	else
 		msh->prompt = __strdup(BOLDRED"➜  "RESET BOLDCYAN);
@@ -131,15 +131,15 @@ int	__treat_user_input(char *arg, t_msh *msh)
 	free(to_tokenize);
 	if (__lexing(start, &lexing) < 0)
 		return (write(2, "Malloc error\n", 14), -1);
-	first_error = __synthax_checker(lexing);
+	first_error = __synthax_checker(lexing, msh);
 	if (first_error)
-		fprintf(stderr, "DEBUG first error : %s\n", first_error->token);
+		DEBUG && fprintf(stderr, "DEBUG first error : %s\n", first_error->token);
 	__handle_here_doc(lexing, first_error, msh);
 	DEBUG && __print_lexing(lexing);
 	if(first_error)
 		return (__lexing_full_list_clear(lexing), -1);
 	if (!__create_tree(lexing, &(msh->root)))
-		return (__destroy_tree(msh->root), -1);
+		return (__destroy_tree(&msh->root), -1);
 	DEBUG && print2D(msh->root);
 	msh->rv = __execute_tree(msh->root, msh);
 	
@@ -163,7 +163,7 @@ int	__treat_user_input(char *arg, t_msh *msh)
 	*/
 
 // fin de la fx d'exe de node
-	__destroy_tree(msh->root);
+	__destroy_tree(&msh->root);
 	return (msh->rv);
 }
 
@@ -201,13 +201,14 @@ int	main (int ac, char *av[], char *envp[])
 		signal(SIGQUIT, __signal);
 		arg = readline(__get_prompt(&msh));
 		add_history(arg);
-		if (__strncmp(arg, "exit", __strlen("exit")) == 0 || arg == NULL)
+		if (arg == NULL)
 		{
 			if (arg)
 				free(arg);
 			arg = NULL;
 			break ;
 		}
+		signal(SIGINT, __signal_treat);
 		__treat_user_input(arg, &msh);
 		free(arg);
 	}

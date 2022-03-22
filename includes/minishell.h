@@ -133,6 +133,7 @@ int	__cd(char *new_path, t_msh *msh);
 int	__env(t_msh *msh);
 int	__unset(char **arg, t_msh *msh);
 int	__export(char **key_val, t_msh *msh);
+int	__bin_exit(char **key_val, t_msh *msh);
 
 //Export utils
 
@@ -159,6 +160,7 @@ int	chdir_previous(t_msh *msh);
 
 //Others
 void    __signal(int signal);
+void    __signal_treat(int signal);
 int __exit(t_msh *msh);
 
 //tokenizer
@@ -180,7 +182,7 @@ int		__init_token_if_none(char **str, int *token_status);
 
 // lexing
 int	__lexing(t_list *token, t_lexing **lexing);
-t_lexing *__synthax_checker(t_lexing *lexing);
+t_lexing *__synthax_checker(t_lexing *lexing, t_msh *msh);
 int	__print_lexing(t_lexing *lexing);
 void	__lexing_full_list_clear(t_lexing *start);
 void	__lexing_node_list_clear(t_lexing *start);
@@ -189,7 +191,7 @@ void	__lexing_node_list_clear(t_lexing *start);
 
 int __create_tree(t_lexing *lexing, t_node **root);
 int __execute_tree(t_node *current_node, t_msh *msh);
-void __destroy_tree(t_node *current_node);
+void __destroy_tree(t_node **current_node);
 
 
 // parsing exe 
@@ -200,6 +202,8 @@ int add_next_cmd(t_cmd **start, t_lexing **lexing, t_msh *msh, int index);
 t_cmd *create_cmd_list(t_lexing *lexing, t_msh *msh);
 int print_cmd_lst(t_cmd *cmd);
 void	__cmd_node_list_clear(t_cmd *start);
+void	__cmd_full_list_clear(t_cmd *start);
+int __clean_tmp_hd(t_cmd *cmd);
 
 //heredoc
 

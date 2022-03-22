@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 16:21:22 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/16 11:21:06 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/21 17:18:28 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,33 +89,53 @@ void __exit_child(t_sequ *seq, t_cmd *cmd, int errno_copy, int error)
 {
 	t_msh *tmp;
 
+	if (errno_copy)
+		cmd->msh->rv = errno_copy;
 	if (error)
 	{
 		cmd->msh->rv = errno_copy;
 		__putendl_fd(strerror(errno_copy), 2);
 	}
+	__clean_tmp_hd(cmd);
 	free_split(seq->path);
 	free(seq->envp);
 	tmp = cmd->msh;
-	__cmd_node_list_clear(cmd);
+	DEBUG && fprintf(stderr, "msh : [%p] token [%s]\n", tmp->root, tmp->root->leaf_lexing->token);
+	if (tmp->root)
+		__cmd_node_list_clear(cmd);
+	else
+		__cmd_full_list_clear(cmd);
 	__exit(tmp);
 }
 
-void execute_child(t_sequ *seq, t_cmd *cmd)
+void execute_child(t_sequ *seq, t_cmd *cmd, t_cmd *first_cmd)
 {
 	char *path_cmd;
-
+	
 	DEBUG && fprintf(stderr, "cmd->redirect =>%p\n", cmd->redirect);	
 	if(cmd->redirect)
 		__handle_redirect(seq, cmd);
 	if (!cmd->arg[0])
-		__exit_child(seq, cmd, 0, 0);
+		__exit_child(seq, first_cmd, 0, 0);
 	if (__is_builtin(cmd->arg))
 	{
 		__exec_builtin(cmd->arg, cmd->msh);
-		__exit_child(seq, cmd, 0, 0);
+		__exit_child(seq, first_cmd, cmd->msh->rv, 0);
 	}
 	path_cmd = __get_path(seq->path, cmd->arg[0]);
-	execve(path_cmd, cmd->arg, seq->envp);
-	exit (0);
+	if (!path_cmd)
+	{
+		if (access(cmd->arg[0], F_OK) < 0)
+			__exit_child(seq, first_cmd, 127, 0);
+		if (access(cmd->arg[0], X_OK) < 0)
+		{
+			__putendl_fd("Minishell : Permission denied", 2);
+			__exit_child(seq, first_cmd, 126, 0);
+		}
+	}
+	if (path_cmd)
+		execve(path_cmd, cmd->arg, seq->envp);
+	//fprintf(stderr, " Fail execve\n");
+	__exit_child(seq, first_cmd, errno, 0);
+	
 }

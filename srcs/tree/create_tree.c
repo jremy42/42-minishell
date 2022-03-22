@@ -41,16 +41,24 @@ t_lexing	*__find_next_operator(t_lexing *lexing)
 static int	trim_parenthesis(t_lexing **lexing)
 {
 	t_lexing	*index;
+	t_lexing	*rebirth_2_burne;
+	t_lexing	*rebirth_2_burne2;
 
 	if ((*lexing)->type == P_LEFT)
 	{
 		index = (*lexing)->next;
+		rebirth_2_burne = *lexing;
 		while (index->next->next)
 			index = index->next;
 		if (index->next->type == P_RIGHT)
 		{
 			*lexing = (*lexing)->next;
+			rebirth_2_burne2 = index->next;
 			index->next = NULL;	
+			free(rebirth_2_burne->token);
+			free(rebirth_2_burne);
+			free(rebirth_2_burne2->token);
+			free(rebirth_2_burne2);
 		}
 		return (1);
 	}

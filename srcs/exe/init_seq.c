@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 16:20:32 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/16 17:10:09 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/21 16:02:22 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static char **__create_envp(char ***envp)
 	size = 0;
 	while (envp[size])
 		size++;
-	ret = malloc(sizeof(char *) * size);
+	ret = malloc(sizeof(char *) * (size + 1));
 	if (!ret)
 		return (NULL);
 	while (i < size)
@@ -58,6 +58,7 @@ static char **__create_envp(char ***envp)
 		ret[i] = envp[i][0];
 		i++;
 	}
+	ret[size] = NULL;
 	return (ret);
 }
 
@@ -87,7 +88,7 @@ int D_print_seq(t_sequ *seq)
 	DEBUG && printf("max cmd = %d\n", seq->max_cmd);
 	while (seq->path[i])
 	{
-		printf("path = %s\n", seq->path[i]);
+		DEBUG && printf("path = %s\n", seq->path[i]);
 		i++;
 	}
 	return (1);

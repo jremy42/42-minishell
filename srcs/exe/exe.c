@@ -29,6 +29,22 @@ void	__cmd_node_list_clear(t_cmd *start)
 	}
 }
 
+void	__cmd_full_list_clear(t_cmd *start)
+{
+	t_cmd	*next_to_free;
+
+	DEBUG && fprintf(stderr, "cmd list clear\n");
+	while (start)
+	{
+		next_to_free = start->next;
+		__redirect_list_clear(start->redirect);
+		free_split(start->arg);
+		free(start->arg);
+		free(start);
+		start = next_to_free;
+	}
+}
+
 int __is_builtin(char **arg)
 {
 	if (!arg || !arg[0])
@@ -44,6 +60,8 @@ int __is_builtin(char **arg)
 	if (__strcmp(arg[0], "export") == 0)
 		 return (1);
 	if (__strcmp(arg[0], "unset") == 0)
+		return (1);
+	if (__strcmp(arg[0], "exit") == 0)
 		return (1);
 	return (0);
 }
@@ -63,6 +81,8 @@ void	__exec_builtin(char **arg, t_msh *msh)
 		msh->rv = __export(arg + 1, msh);
 	if (__strcmp(arg[0], "unset") == 0)
 		msh->rv = __unset(arg + 1, msh);
+	if (__strcmp(arg[0], "exit") == 0)
+		msh->rv = __bin_exit(arg, msh);
 }
 
 int	__save_fd(int *std)
@@ -153,7 +173,7 @@ int execute_seq(t_cmd *cmd, t_msh *msh)
 	}
 	if (!__init_seq(&seq, msh->envp, cmd))
 		return (__putstr_fd("Malloc error\n", 2), 0);
-	msh->rv = __launcher_fork(&seq, cmd);
+	msh->rv = __launcher_fork(&seq, cmd, cmd);
 	__clean_tmp_hd(cmd);
 	free_split(seq.path);
 	free(seq.envp);
