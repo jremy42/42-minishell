@@ -29,6 +29,7 @@ srcs/here_doc/here_doc.c\
 srcs/expand/expand.c\
 srcs/expand/globe.c\
 srcs/exe/exe.c\
+srcs/debug.c\
 srcs/bin/exit/exit.c
 
 

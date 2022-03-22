@@ -86,7 +86,7 @@ t_lexing *__synthax_checker(t_lexing *lexing, t_msh *msh)
 		{
 
 			// <=1 operateur || pipe
-			if (!lexing->next || lexing->next->type == OPERATOR || lexing->next->type == PIPE || lexing->next->type == REDIRECTION)
+			if (!lexing->next || lexing->next->type == OPERATOR || lexing->next->type == PIPE || lexing->next->type == REDIRECTION || lexing->next->type == NEW_LINE)
 			{
 				msh->rv = 2;
 				return (__synthax_error(lexing->token), lexing);

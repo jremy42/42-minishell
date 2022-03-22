@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 16:19:12 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/21 16:06:01 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/22 09:48:01 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,25 +27,6 @@ static void __cmd_add_back(t_cmd **alst, t_cmd *new)
 		nextlst->next = new;
 	}
 }
-/*
-static int	__get_nb_param_cmd(t_lexing *start)
-{
-	int size;
-
-	size = 0;
-	while (start && start->type != PIPE)
-	{
-		if (start->type == REDIRECTION || start->type == HERE_DOC || start->type == P_LEFT || start->type == P_RIGHT)
-		{
-			start = start->next->next;
-			continue ;
-		}
-		size++;
-		start = start->next;
-	}
-	return (size);
-}
-*/
 
 static int	__get_nb_param_cmd(t_lexing *start)
 {

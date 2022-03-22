@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:25:57 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/21 17:52:19 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/22 11:23:28by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,89 +41,85 @@ char	*__get_prompt(t_msh *msh)
 	return (msh->prompt);
 }
 
-static void	get_env(t_msh *msh, char *envp[])
+int	get_size_env(char *envp[])
+{
+	int size;
+	
+	size = 0;
+	if (!envp)
+		return (-1);
+	while (envp[size])
+		size++;
+	return (size);
+}
+
+static int	get_env(t_msh *msh, char *envp[])
 {
 	int	i;
+	int size;
 
-	i = 0;
-	if (!envp)
-		return ;
-	while (envp[i])
-		i++;
-	msh->envp = (char ***)malloc((i + 1) * sizeof(char **));
-	msh->envp[i] = NULL;
-	while (i--)
+	i = -1;
+	size = get_size_env(envp);
+	if (size == -1)
+		return (1);
+	msh->envp = (char ***)malloc((size + 1) * sizeof(char **));
+	if (!msh->envp)
+		return (0);
+	msh->envp[size] = NULL;
+	while (++i < size)
 	{
 		msh->envp[i] = (char **)malloc((3) * sizeof(char *));
+		if(!msh->envp[i])
+			return (0);
 		msh->envp[i][0] = __strdup(envp[i]);
+		if(!msh->envp[i][0])
+			return (0);
 		msh->envp[i][1] = __strdup("1");
+		if(!msh->envp[i][0])
+			return (0);
 		msh->envp[i][2] = NULL;
 	}
-}
-
-int __print_lexing(t_lexing *lexing)
-{
-	while (lexing)
-	{
-		fprintf(stderr, "Le token vaut : >%s< et de type = %d\n", lexing->token, lexing->type); 
-		lexing = lexing->next;
-	}	
 	return (1);
-}
-
-void print2DUtil(t_node *root, int space)
-{
-	t_lexing *index;
-	
-	// Base case
-	if (root == NULL)
-		return;
- 
-	// Increase distance between levels
-	space += COUNT;
- 
-	// Process right child first
-	print2DUtil(root->right, space);
- 
-	// Print current node after space
-	// count
-	printf("\n");
-	for (int i = COUNT; i < space; i++)
-		printf(" ");
-	printf("%d\n", root->kind);
-	if (root->kind == SEQUENCE)
-	{
-		index = root->leaf_lexing;
-		while (index)
-		{
-			printf("[%s] ", index->token);
-			index = index->next;
-		}
-	}
- 
-	// Process left child
-	print2DUtil(root->left, space);
-}
-
-int print2D(t_node *root)
-{
-   // Pass initial space count as 0
-   print2DUtil(root, 0);
-   printf("\n");
-   return (1);
 }
 
 int	__treat_user_input(char *arg, t_msh *msh)
 {
 	t_list		*start;
 	t_lexing	*lexing;
-	//t_cmd		*cmd;
 	char		*to_tokenize;
 	t_lexing	*first_error;
 
 	start = NULL;
 	lexing = NULL;
-	(void)msh;
+	if(!__strcmp(arg,""))
+		return(0);
+	to_tokenize = __strtrim(arg, " \f\t\r\v");
+	if (!to_tokenize)
+		return (write(2, "Malloc error\n", 14), -1);
+	__tokenize(to_tokenize, &start, msh);
+	free(to_tokenize);
+	if (__lexing(start, &lexing) < 0)
+		return (write(2, "Malloc error\n", 14), -1);
+	first_error = __synthax_checker(lexing, msh);
+	__handle_here_doc(lexing, first_error, msh);
+	if(first_error)
+		return (__lexing_full_list_clear(lexing), -1);
+	if (!__create_tree(lexing, &(msh->root)))
+		return (__destroy_tree(&msh->root), -1);
+	msh->rv = __execute_tree(msh->root, msh);	
+	__destroy_tree(&msh->root);
+	return (msh->rv);
+}
+/*
+int	__treat_user_input(char *arg, t_msh *msh)
+{
+	t_list		*start;
+	t_lexing	*lexing;
+	char		*to_tokenize;
+	t_lexing	*first_error;
+
+	start = NULL;
+	lexing = NULL;
 	if(!__strcmp(arg,""))
 		return(0);
 	to_tokenize = __strtrim(arg, " \f\t\r\v");
@@ -140,43 +136,23 @@ int	__treat_user_input(char *arg, t_msh *msh)
 		return (__lexing_full_list_clear(lexing), -1);
 	if (!__create_tree(lexing, &(msh->root)))
 		return (__destroy_tree(&msh->root), -1);
-	DEBUG && print2D(msh->root);
-	msh->rv = __execute_tree(msh->root, msh);
-	
-	//parcourir l'arbre et expand juste avant d'exe
-	// ceci afin de prendre en compte les modif de l'env	
-	
-//	debut de la fx d'exe de node
-	
-	/*
-	
-	__print_lexing(lexing);
-	__parameter_expand_token(lexing, msh);
-	__hande_wildcards(msh, lexing);
-	//__glob_expand_token(lexing);
-	cmd = create_cmd_list(lexing, msh);
-	if (!cmd)
-		return (-1);
-	DEBUG && print_cmd_lst(cmd);
-	execute_seq(cmd, msh);
-	//__cmd_node_list_clear(cmd);
-	*/
-
-// fin de la fx d'exe de node
+	print2D(msh->root);
+	msh->rv = __execute_tree(msh->root, msh);	
 	__destroy_tree(&msh->root);
 	return (msh->rv);
 }
+*/
 
 int	main (int ac, char *av[], char *envp[])
 {
 	char	*arg;
 	t_msh	msh;
-	(void)	ac;
-	(void)	av;
-	(void)	envp;
-
+	char 	**inputs;
+	int		i;
+	
 	msh = (t_msh){.rv = 0};
-	get_env(&msh, envp);
+	if (!get_env(&msh, envp))
+		return (destroy_env(&msh), 1);
 	if (ac > 1)
 	{
 		if (!__strcmp(av[1], "-c"))
@@ -209,8 +185,38 @@ int	main (int ac, char *av[], char *envp[])
 			break ;
 		}
 		signal(SIGINT, __signal_treat);
-		__treat_user_input(arg, &msh);
+		inputs = __split(arg, '\n');
+		i = 0;
+		while(inputs[i])
+		{
+			__treat_user_input(inputs[i], &msh);
+			i++;
+		}
+		free_split(inputs);
 		free(arg);
 	}
 	__exit(&msh);
 }
+
+
+
+	//parcourir l'arbre et expand juste avant d'exe
+	// ceci afin de prendre en compte les modif de l'env	
+	
+//	debut de la fx d'exe de node
+	
+	/*
+	
+	__print_lexing(lexing);
+	__parameter_expand_token(lexing, msh);
+	__hande_wildcards(msh, lexing);
+	//__glob_expand_token(lexing);
+	cmd = create_cmd_list(lexing, msh);
+	if (!cmd)
+		return (-1);
+	DEBUG && print_cmd_lst(cmd);
+	execute_seq(cmd, msh);
+	//__cmd_node_list_clear(cmd);
+	*/
+
+// fin de la fx d'exe de node

@@ -161,6 +161,8 @@ int	chdir_previous(t_msh *msh);
 //Others
 void    __signal(int signal);
 void    __signal_treat(int signal);
+void __destroy_tree(t_node **current_node);
+void	destroy_env(t_msh *msh);
 int __exit(t_msh *msh);
 
 //tokenizer
@@ -170,14 +172,14 @@ int		__add_char_to_token(char c, char **token);
 int		__need_to_escape(int i, t_state state, char *str);
 int		__is_operator_char(char c);
 
-int		__tokenize(char *s, t_list **start);
+int		__tokenize(char *s, t_list **start, t_msh *msh);
 int		__get_operator(char **new_token, char *str, int i);
 int		__get_word(char **new_token, char *str, int i);
 int		__adjust_i(char *str, int i, int state);
 int		__add_token(char *str, t_list **start);
 int		__skip_spaces(char *str, int *i);
 int		__create_new_token(char **str);
-int		__treat_newline(t_list **start, int *i);
+int		__treat_newline(t_list **start, t_msh *msh);
 int		__init_token_if_none(char **str, int *token_status);
 
 // lexing
@@ -214,5 +216,10 @@ int __parameter_expand_token(t_lexing *lexing, t_msh *msh);
 int __handle_wildcards(t_msh *msh, t_lexing *lexing);
 t_lexing	*__lexnew(char *content);
 int __insert_token(t_lexing *lexing, char *new_glob_match, int reset, t_lexing *true_end);
+
+//debug
+int __print_lexing(t_lexing *lexing);
+void print2DUtil(t_node *root, int space);
+int print2D(t_node *root);
 
 #endif
