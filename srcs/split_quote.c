@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 15:10:32 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/23 18:15:08 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/23 18:35:50 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static char	**__freetab(char**tab, int index)
 	return (NULL);
 }
 
-static size_t __is_in_charset(char c, char *charset)
+size_t __is_in_charset(char c, char *charset)
 {
 	int i;
 

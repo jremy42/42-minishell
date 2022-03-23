@@ -30,6 +30,35 @@ t_glob	*__glob_new(char *content, t_globe_type type, int size)
 	return (newlst);
 }
 
+int	__move_to_next_unquoted_charset(char *str, char *charset)
+{
+	t_state slash_status;
+	t_state quote_status;
+	int i;
+
+	quote_status = UNQUOTE;
+	slash_status = 0;
+	i = 0;
+	while(str[i])
+	{
+		if (str[i] == '\\' && str[i + 1] && __need_to_escape(i, quote_status, str)
+			&& !slash_status)
+		{
+			slash_status = BACKSLASH;
+			i++;
+			continue ;
+		}
+		if (quote_status != __return_state(str[i], quote_status, slash_status))
+			quote_status = __return_state(str[i], quote_status, slash_status);
+		if(!slash_status && quote_status == UNQUOTE && __is_in_charset(str[i], charset))
+			return(i);
+		else
+			i++;
+		slash_status = 0;
+	}
+	return (-1);
+}
+
 int	__move_to_next_unquoted_char(char *str, char c)
 {
 	t_state slash_status;

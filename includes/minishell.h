@@ -220,7 +220,10 @@ int __field_spliting_token(t_lexing *lexing, t_msh *msh);
 int __quote_removal_token(t_lexing *lexing, t_msh *msh);
 int __quote_removal_glob(t_glob *glob, t_msh *msh);
 int	__move_to_next_unquoted_star(char *str);
+int	__move_to_next_unquoted_char(char *str, char c);
+int	__move_to_next_unquoted_charset(char *str, char *charset);
 int	__get_char_quote_status(char *str, char *to_find);
+size_t __is_in_charset(char c, char *charset);
 
 //debug
 int __print_lexing(t_lexing *lexing);
