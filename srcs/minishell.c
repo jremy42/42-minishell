@@ -93,6 +93,7 @@ int	__treat_user_input(char *arg, t_msh *msh)
 	lexing = NULL;
 	if(!__strcmp(arg,""))
 		return(0);
+	msh->rv = 0;
 	to_tokenize = __strtrim(arg, " \f\t\r\v");
 	if(!__strcmp(to_tokenize,""))
 		return(free(to_tokenize), 0);
@@ -105,7 +106,7 @@ int	__treat_user_input(char *arg, t_msh *msh)
 		return (write(2, "Malloc error\n", 14), -1);
 	first_error = __synthax_checker(lexing, msh);
 	__handle_here_doc(lexing, first_error, msh);
-	if(first_error)
+	if(first_error || msh->rv == 2)
 		return (__lexing_full_list_clear(lexing), -1);
 	if (!__create_tree(lexing, &(msh->root)))
 		return (__destroy_tree(&msh->root), -1);
