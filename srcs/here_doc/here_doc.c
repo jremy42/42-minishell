@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 15:19:06 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/17 19:01:21 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/23 09:17:58 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 static char	*__get_stdin(char *eof)
 {
 	char	*line;
-	char    *ret;
+	char	*ret;
 	int		i;
 
 	i = 0;
@@ -29,10 +29,11 @@ static char	*__get_stdin(char *eof)
 		__putstr_fd("heredoc> ", 2);
 		line = get_next_line(0);
 		if (!line || (__strncmp(line, eof, __strlen(eof)) == 0
-			&& __strlen(line) == __strlen(eof) + 1))
+				&& __strlen(line) == __strlen(eof) + 1))
 		{
 			if (!line)
-				DEBUG && printf("warning: here-document at line %d delimited by end-of-file (wanted `%s')\n",i, eof);
+				DEBUG && printf("warning: here-document at line %d\
+				delimited by end-of-file (wanted `%s')\n",i, eof);
 			get_next_line(-1);
 			free(line);
 			break ;
