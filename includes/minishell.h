@@ -216,6 +216,9 @@ int __parameter_expand_token(t_lexing *lexing, t_msh *msh);
 int __handle_wildcards(t_msh *msh, t_lexing *lexing);
 t_lexing	*__lexnew(char *content);
 int __insert_token(t_lexing *lexing, char *new_glob_match, int reset, t_lexing *true_end);
+int __field_spliting_token(t_lexing *lexing, t_msh *msh);
+int __quote_removal_token(t_lexing *lexing, t_msh *msh);
+int	__move_to_next_unquoted_star(char *str);
 
 //debug
 int __print_lexing(t_lexing *lexing);

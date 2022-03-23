@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 09:50:45 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/21 17:31:03 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/22 15:19:10 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,9 @@ static int __execute_pipe_seq(t_lexing *lexing, t_msh *msh)
 	}
 	if (!__parameter_expand_token(lexing, msh))
 		__exit(msh);
+	__field_spliting_token(lexing, msh);
 	__handle_wildcards(msh, lexing);
+	__quote_removal_token(lexing, msh);
 	cmd = create_cmd_list(lexing, msh);
 	if (!cmd)
 		return (-1);

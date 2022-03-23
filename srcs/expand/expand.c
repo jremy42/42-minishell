@@ -73,7 +73,6 @@ int __expand_word(char **token_word, t_msh  *msh)
 	t_state quote_status;
 	char *tmp;
 	int     i;
-	int		ret;
 	char    *expanded_token_word;
 	
 	expanded_token_word = __strdup("");
@@ -83,27 +82,24 @@ int __expand_word(char **token_word, t_msh  *msh)
 	quote_status = UNQUOTE;
 	slash_status = 0;
 	i = 0;
-	ret = 1;
 	while(tmp[i])
 	{
 		if (tmp[i] == '\\' && tmp[i + 1] && __need_to_escape(i, quote_status, tmp)
 			&& !slash_status)
 		{
 			slash_status = BACKSLASH;
+			__add_char_to_token(tmp[i], &expanded_token_word);
 			i++;
 			continue ;
 		}
+	
 		if (quote_status != __return_state(tmp[i], quote_status, slash_status))
-		{
 			quote_status = __return_state(tmp[i], quote_status, slash_status);
-			i++;
-			continue ;
-		}
+		
 		if(!slash_status && __treat_dollar(tmp[i], tmp[i + 1], quote_status))
 		{
 			if(!__parameter_expand(tmp + i + 1, msh, &expanded_token_word, &i))
 				return (0);
-			ret = 2;
 		}
 		else
 			__add_char_to_token(tmp[i], &expanded_token_word);
@@ -112,7 +108,7 @@ int __expand_word(char **token_word, t_msh  *msh)
 	}
 	free(*token_word);
 	*token_word = expanded_token_word;
-	return (ret);
+	return (1);
 }
 
 int	__split_expanded_token(t_lexing *lexing)
@@ -122,7 +118,7 @@ int	__split_expanded_token(t_lexing *lexing)
 
 	i = 0;
 
-	DEBUG && printf("lexing->token = %s\n", lexing->token);
+	printf("lexing->token = %s\n", lexing->token);
 	split_token = __split(lexing->token, ' ');
 	if (!split_token)
 		return (0);
@@ -140,25 +136,15 @@ int	__split_expanded_token(t_lexing *lexing)
 
 int __parameter_expand_token(t_lexing *lexing, t_msh *msh)
 {
-	int ret;
-	t_lexing *previous;
-
-	ret = 0;
-	previous = lexing;
 	while(lexing)
 	{
 		if(lexing->type == WORD)
 		{
 						DEBUG && fprintf(stderr, "new_token before parameter expand: [%s]\n", lexing->token);
-			ret = __expand_word(&lexing->token, msh);
-			if(!ret)
+			if(!__expand_word(&lexing->token, msh))
 				return (__putendl_fd("Malloc error", 2), 0);
 			DEBUG && fprintf(stderr, "new_token after parameter expand: [%s]\n", lexing->token);
-			if (ret == 2 && previous->type != REDIRECTION)
-				if (!__split_expanded_token(lexing))
-					return (__putendl_fd("Malloc error", 2), 0);
 		}
-		previous = lexing;
 		lexing = lexing->next;
 	}
 	return (1);
@@ -166,3 +152,8 @@ int __parameter_expand_token(t_lexing *lexing, t_msh *msh)
 
 //passer lexing a expand word;
 //si il y a un espace dans le treat dollar > cut au premiere espace et creer un autre token a la suite
+/*
+if (ret == 2 && previous->type != REDIRECTION)
+				if (!__split_expanded_token(lexing))
+					return (__putendl_fd("Malloc error", 2), 0);
+					*/

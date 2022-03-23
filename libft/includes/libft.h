@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 16:01:03 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/16 14:56:31 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/23 12:56:06 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,5 +88,6 @@ char	*ft_read_file(int fd, char *memory);
 int		__strcmp(const char *s1, const char *s2);
 void	free_split(char **split);
 char	*__strstr(const char *str, const char *find);
+char	*__strrstr(const char *str, const char *find);
 
 #endif

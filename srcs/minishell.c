@@ -96,7 +96,8 @@ int	__treat_user_input(char *arg, t_msh *msh)
 	to_tokenize = __strtrim(arg, " \f\t\r\v");
 	if (!to_tokenize)
 		return (write(2, "Malloc error\n", 14), -1);
-	__tokenize(to_tokenize, &start, msh);
+	if (!__tokenize(to_tokenize, &start, msh))
+		return (free(to_tokenize), __lstclear(&start, free), 0);
 	free(to_tokenize);
 	if (__lexing(start, &lexing) < 0)
 		return (write(2, "Malloc error\n", 14), -1);

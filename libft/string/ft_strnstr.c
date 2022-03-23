@@ -65,3 +65,28 @@ char	*__strstr(const char *str, const char *find)
 	}
 	return (NULL);
 }
+
+
+char	*__strrstr(const char *str, const char *find)
+{
+	int		find_len;
+	int		str_len;
+	
+	if (*find == '\0')
+		return ((char *)str);
+	find_len = (int)__strlen(find);
+	if (*str == '\0')
+		return (NULL);
+	str_len = (int)__strlen(str);
+	if (find_len > str_len)
+		return ((char *)str);
+	while (--str_len >= 0)
+	{
+		if (str[str_len] == find[0])
+		{
+			if (__strncmp((char *)str + str_len, (char *)find, find_len) == 0)
+				return ((char *)str + str_len);
+		}
+	}
+	return (NULL);
+}

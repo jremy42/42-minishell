@@ -27,10 +27,12 @@ srcs/exe/redirect.c\
 srcs/exe/redirect_builtin.c\
 srcs/here_doc/here_doc.c\
 srcs/expand/expand.c\
-srcs/expand/globe.c\
+srcs/expand/last_globe.c\
 srcs/exe/exe.c\
 srcs/debug.c\
-srcs/bin/exit/exit.c
+srcs/bin/exit/exit.c\
+srcs/expand/field_spliting.c\
+srcs/expand/quote_remove.c
 
 
 IFLAGS =  -I includes/ -I libft/includes
