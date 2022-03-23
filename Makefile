@@ -32,7 +32,8 @@ srcs/exe/exe.c\
 srcs/debug.c\
 srcs/bin/exit/exit.c\
 srcs/expand/field_spliting.c\
-srcs/expand/quote_remove.c
+srcs/expand/quote_remove.c\
+srcs/split_quote.c
 
 
 IFLAGS =  -I includes/ -I libft/includes

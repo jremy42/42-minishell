@@ -28,3 +28,21 @@ size_t	__strlcpy(char *dst, const char *src, size_t size)
 		dst[i] = '\0';
 	return (__strlen(src));
 }
+
+char	*__strncpy(char *dst, char *src, size_t count)
+{
+	size_t	i;
+
+	i = 0;
+	while (src[i] && i < count)
+	{
+		dst[i] = src[i];
+		i++;
+	}
+	while (i < count)
+	{
+		dst[i] = '\0';
+		i++;
+	}
+	return (dst);
+}

@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 16:01:03 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/23 12:56:06 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/23 18:17:53 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ char	*__strdup(const char *src);
 char	*__substr(char const *s, unsigned int start, size_t len);
 char	*__strjoin(char const *s1, char const *s2);
 char	*__strtrim(char const *s1, char const *set);
-char	**__split(char const *s, char c);
+char	**__split(char *s, char c);
 char	*__itoa(int n);
 char	*__strmapi(char const *s, char (*f)(unsigned int, char));
 void	__striteri(char *s, void (*f)(unsigned int, char *));
@@ -89,5 +89,6 @@ int		__strcmp(const char *s1, const char *s2);
 void	free_split(char **split);
 char	*__strstr(const char *str, const char *find);
 char	*__strrstr(const char *str, const char *find);
+char	*__strncpy(char *dst, char *src, size_t count);
 
 #endif

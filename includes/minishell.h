@@ -220,10 +220,13 @@ int __field_spliting_token(t_lexing *lexing, t_msh *msh);
 int __quote_removal_token(t_lexing *lexing, t_msh *msh);
 int __quote_removal_glob(t_glob *glob, t_msh *msh);
 int	__move_to_next_unquoted_star(char *str);
+int	__get_char_quote_status(char *str, char *to_find);
 
 //debug
 int __print_lexing(t_lexing *lexing);
 void print2DUtil(t_node *root, int space);
 int print2D(t_node *root);
+
+char	**__split_unquoted_charset(char *s, char *charset);
 
 #endif

@@ -30,7 +30,7 @@ static char	**__freetab(char**tab, int index)
 	return (NULL);
 }
 
-static size_t	__count_word(const char *s, char c)
+static size_t	__count_word(char *s, char c)
 {
 	size_t	i;
 	size_t	count_word;
@@ -51,7 +51,7 @@ static size_t	__count_word(const char *s, char c)
 	return (count_word);
 }
 
-static char	*__getnextstr(const char *s, char c, size_t *len_nextstr)
+static char	*__getnextstr(char *s, char c, size_t *len_nextstr)
 {
 	size_t	i;
 
@@ -74,25 +74,8 @@ static char	*__getnextstr(const char *s, char c, size_t *len_nextstr)
 	return ((char *)s + i);
 }
 
-static char	*__strncpy(char *dst, const char *src, size_t count)
-{
-	size_t	i;
 
-	i = 0;
-	while (src[i] && i < count)
-	{
-		dst[i] = src[i];
-		i++;
-	}
-	while (i < count)
-	{
-		dst[i] = '\0';
-		i++;
-	}
-	return (dst);
-}
-
-char	**__split(const char *s, char c)
+char	**__split(char *s, char c)
 {
 	char	**result;
 	size_t	count_word;

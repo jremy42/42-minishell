@@ -186,7 +186,7 @@ int	main (int ac, char *av[], char *envp[])
 			break ;
 		}
 		signal(SIGINT, __signal_treat);
-		inputs = __split(arg, '\n');
+		inputs = __split_unquoted_charset(arg, "\n;");
 		i = 0;
 		while(inputs[i])
 		{
