@@ -273,7 +273,7 @@ int __file_find(char *file_name, t_glob *glob_lst)
 	{
 		fprintf(stderr,"last = file_name >%s< to_find = %s\n",file_name, glob_lst->to_find);
 		tmp = __strrstr(file_name, glob_lst->to_find);
-		fprintf(stderr,"tmp >%s<",tmp);
+		fprintf(stderr,"tmp >%s<\n",tmp);
 		if (tmp && tmp[__strlen(glob_lst->to_find)] == 0)
 			return(1);	
 		return (0);
@@ -338,9 +338,10 @@ int    __handle_wildcards(t_msh *msh, t_lexing *lexing)
 	while(lexing)
 	{
 		save_next = lexing->next;
-		if(__strchr(lexing->token, '*'))
+		if(__move_to_next_unquoted_char(lexing->token, '*') >= 0)
 		{
 			glob_lst = __create_glob_lst(&lexing->token);
+			__quote_removal_glob(glob_lst, msh);
 			if (!glob_lst)
 				return (0);
 			while(dir_content)

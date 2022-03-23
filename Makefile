@@ -56,7 +56,7 @@ _CYAN=	$'\033[36m
 _WHITE=	$'\033[37m
 _END= $'\033[0m
 
-ifeq ($(MAKECMDGOALS), debug)
+ifeq ($(MAKECMDGOALS), d)
 CFLAGS += -D DEBUG=1
 endif
 
@@ -108,6 +108,11 @@ re: fclean all
 run : $(NAME) ./.ignore_readline
 	valgrind --leak-check=full --track-fds=yes --show-leak-kinds=all --suppressions=.ignore_readline -q ./minishell
 
-debug : $(NAME)
+fshellclean:
+	rm -f $(NAME)
+	@printf "%-15s ${_RED}${_BOLD}${NAME}${_END}...\n" "Deleting"
+	@rm -rf ${OBJS_PATH} 2> /dev/null
+
+d : fshellclean $(NAME)
 
 .PHONY: all clean fclean bonus re run debug

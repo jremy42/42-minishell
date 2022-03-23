@@ -79,7 +79,7 @@ char	*__strrstr(const char *str, const char *find)
 		return (NULL);
 	str_len = (int)__strlen(str);
 	if (find_len > str_len)
-		return ((char *)str);
+		return (NULL);
 	while (--str_len >= 0)
 	{
 		if (str[str_len] == find[0])

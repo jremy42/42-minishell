@@ -368,6 +368,7 @@ int    __handle_wildcards(t_msh *msh, t_lexing *lexing)
 		if(__strchr(lexing->token, '*') && __move_to_next_unquoted_star(lexing->token) >= 0)
 		{
 			glob_lst = __create_glob_lst(&lexing->token);
+			__quote_removal_glob(glob_lst, msh);
 			if (!glob_lst)
 				return (0);
 			while(dir_content)
