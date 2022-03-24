@@ -13,51 +13,69 @@
 #include "minishell.h"
 #include "exe.h"
 
-int __parameter_expand(char *start_word, t_msh *msh, char **expanded_token, int *i)
+
+int	__treat_last_rv(char **expanded_token, int *i, t_msh *msh)
 {
-	char *tmp;
-	char *env_key;
+	char *candidate;
+
+	candidate = __itoa(msh->rv);
+	if (!candidate)
+		return (0);
+	*i += 1;
+	*expanded_token = __strjoin(*expanded_token, candidate);
+	if(!*expanded_token)
+		return(free(candidate), 0);
+	return (free(candidate), 1);
+}
+
+char *__get_candidate(char *start_word, int *i)
+{
+	char *candidate;
 	int	j;
 
 	j = 0;
-	if (start_word[0] == '?')
-	{
-		tmp = __itoa(msh->rv);
-		if (!tmp)
-			return (0);
-		*i += 1;
-		*expanded_token = __strjoin(*expanded_token, tmp);
-		if(!*expanded_token)
-			return(free(tmp), 0);
-		return (free(tmp), 1);
-	}
 	while (__isalnum(start_word[j]) || start_word[j] == '_')
 		j++;
-	tmp = __substr(start_word, 0,j);
-	if(!tmp)
-		return(0);
+	candidate = __substr(start_word, 0, j);
+	if(!candidate)
+		return(NULL);
 	*i += j;
+	return (candidate);
+}
+
+int	__substitute_candidate(char *env_key, char *candidate, char **expanded_token, char *env_value)
+{
+	free(env_key);
+	free(candidate);
+	*expanded_token =__strjoin(*expanded_token, env_value);
+	if(!*expanded_token)
+		return(0);
+	return(1);
+}
+
+int __parameter_expand(char *start_word, t_msh *msh, char **expanded_token, int *i)
+{
+	char *candidate;
+	char *env_key;
+	int	j;
+
+	if (start_word[0] == '?')
+		return(__treat_last_rv(expanded_token, i, msh));
+	candidate = __get_candidate(start_word, i);
+	if (!candidate)
+		return (0);
 	j = 0;
 	while(msh->envp[j])
 	{
 		env_key = __substr(msh->envp[j][0], 0, __strchr(msh->envp[j][0], '=') - msh->envp[j][0]);
 		if(!env_key)
-			return(free(tmp), 0);
-		DEBUG && fprintf(stderr, "key evaluated : [%s]\n", env_key);
-		if (!__strcmp(tmp, env_key) && msh->envp[j][1])
-		{
-			DEBUG && fprintf(stderr, "found key ! : [%s]\n", msh->envp[j][0]);
-			free(env_key);
-			free(tmp);
-			*expanded_token =__strjoin(*expanded_token, __strchr(msh->envp[j][0], '=') + 1 );
-			if(!*expanded_token)
-				return(0);
-			return(1);
-		}
+			return(free(candidate), 0);
+		if (!__strcmp(candidate, env_key) && msh->envp[j][1])
+			return(__substitute_candidate(env_key, candidate, expanded_token, __strchr(msh->envp[j][0], '=') + 1 ));
 		free(env_key);
 		j++;
 	}
-	return (free(tmp), 1);
+	return (free(candidate), 1);
 }
 
 int	__treat_dollar(char c, char next_char, t_state quote_status)

@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 10:06:28 by fle-blay          #+#    #+#             */
-/*   Updated: 2022/03/24 12:45:35 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/24 13:06:18 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ int	__export(char **key_val, t_msh *msh)
 		}
 		else
 			status = modify_status_key_val(msh, key_val[i]);
-		printf("boucle inf dans __export\n");
 	}
 	return (status);
 }
