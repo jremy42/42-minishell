@@ -113,6 +113,7 @@ typedef struct s_node
 typedef struct s_msh
 {
 	int		rv;
+	int		syntax_error;
 	t_node	*root;
 	char	*prompt;
 	char	***envp;
@@ -164,6 +165,7 @@ void    __signal_treat(int signal);
 void __destroy_tree(t_node **current_node);
 void	destroy_env(t_msh *msh);
 int __exit(t_msh *msh);
+int	__exit_error(t_msh *msh, int error);
 
 //tokenizer
 

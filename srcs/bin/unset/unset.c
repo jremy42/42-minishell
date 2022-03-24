@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 17:29:51 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/22 09:25:45 by fle-blay         ###   ########.fr       */
+/*   Updated: 2022/03/24 12:34:58 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,10 @@ int	__unset(char **arg, t_msh *msh)
 		return (__SUCCESS);
 	while (msh->envp[i])
 	{
-		if (__is_arg(arg, msh->envp[i][0]) == 1)
+		if (msh->envp[i][0] && __is_arg(arg, msh->envp[i][0]) == 1)
 		{
-			msh->envp[i][0][0] = '\0';
+			free(msh->envp[i][0]);
+			msh->envp[i][0] = NULL;
 			msh->envp[i][1][0] = '0';
 		}
 		i++;

@@ -89,12 +89,14 @@ t_lexing *__synthax_checker(t_lexing *lexing, t_msh *msh)
 			if (!lexing->next || lexing->next->type == OPERATOR || lexing->next->type == PIPE || lexing->next->type == REDIRECTION || lexing->next->type == NEW_LINE)
 			{
 				msh->rv = 2;
+				msh->syntax_error = 2;
 				return (__synthax_error(lexing->token), lexing);
 			}
 		}
 	if (parenthesis < 0)
 	{
 		msh->rv = 2;
+		msh->syntax_error= 2;
 		return(__synthax_error(lexing->token), lexing);
 	}
 		lexing = lexing->next;
@@ -102,6 +104,7 @@ t_lexing *__synthax_checker(t_lexing *lexing, t_msh *msh)
 	if (parenthesis != 0)
 	{
 		msh->rv = 2;
+		msh->syntax_error = 2;
 		return (__synthax_error("end. Parenthesis no closed"), lexing);
 	}
 	return (NULL);

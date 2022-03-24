@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:25:57 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/21 11:08:11 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/24 09:24:57 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,6 @@ void	__signal(int signal)
 void	__signal_treat(int signal)
 {
 	(void)signal;
-	write(1, "\b\b", 2);
+	write(1, "\b\b\n", 3);
 		g_rv = 130;
 }

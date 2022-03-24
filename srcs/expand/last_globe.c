@@ -48,8 +48,7 @@ int	__move_to_next_unquoted_charset(char *str, char *charset)
 			i++;
 			continue ;
 		}
-		if (quote_status != __return_state(str[i], quote_status, slash_status))
-			quote_status = __return_state(str[i], quote_status, slash_status);
+		quote_status = __return_state(str[i], quote_status, slash_status);
 		if(!slash_status && quote_status == UNQUOTE && __is_in_charset(str[i], charset))
 			return(i);
 		else
@@ -77,8 +76,7 @@ int	__move_to_next_unquoted_char(char *str, char c)
 			i++;
 			continue ;
 		}
-		if (quote_status != __return_state(str[i], quote_status, slash_status))
-			quote_status = __return_state(str[i], quote_status, slash_status);
+		quote_status = __return_state(str[i], quote_status, slash_status);
 		if(!slash_status && str[i] == c && quote_status == UNQUOTE )
 			return(i);
 		else
@@ -179,8 +177,7 @@ int	__get_char_quote_status(char *str, char *to_find)
 			i++;
 			continue ;
 		}
-		if (quote_status != __return_state(str[i], quote_status, slash_status))
-			quote_status = __return_state(str[i], quote_status, slash_status);
+		quote_status = __return_state(str[i], quote_status, slash_status);
 		i++;
 		slash_status = 0;
 	}
@@ -293,23 +290,23 @@ int __file_find(char *file_name, t_glob *glob_lst)
 		return(__file_find(file_name,glob_lst->next));
 	if (glob_lst->type == 0)
 	{
-		fprintf(stderr,"first = file_name >%s< to_find = %s\n",file_name, glob_lst->to_find);
+		DEBUG && fprintf(stderr,"first = file_name >%s< to_find = %s\n",file_name, glob_lst->to_find);
 		if(!__strncmp(file_name, glob_lst->to_find, __strlen(glob_lst->to_find)))
 			return(__file_find(file_name + __strlen(glob_lst->to_find), glob_lst->next));
 		return (0);
 	}
 	if(glob_lst->type == 2)
 	{
-		fprintf(stderr,"last = file_name >%s< to_find = %s\n",file_name, glob_lst->to_find);
+		DEBUG && fprintf(stderr,"last = file_name >%s< to_find = %s\n",file_name, glob_lst->to_find);
 		tmp = __strrstr(file_name, glob_lst->to_find);
-		fprintf(stderr,"tmp >%s<\n",tmp);
+		DEBUG && fprintf(stderr,"tmp >%s<\n",tmp);
 		if (tmp && tmp[__strlen(glob_lst->to_find)] == 0)
 			return(1);	
 		return (0);
 	}
 	else
 	{
-		fprintf(stderr,"middle = file_name >%s< to_find = %s\n",file_name, glob_lst->to_find);
+		DEBUG && fprintf(stderr,"middle = file_name >%s< to_find = %s\n",file_name, glob_lst->to_find);
 		tmp = __strstr(file_name, glob_lst->to_find);
     	if (!tmp)
 			return (0);

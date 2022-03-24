@@ -15,28 +15,39 @@
 
 int	g_rv;
 
+int	__get_pos_last_dir(char *cwd)
+{
+	int i;
+
+	i = 0;
+	while (cwd[i])
+		i++;
+	while (cwd[i] != '/' && i >= 0)
+		i--;
+	i++;
+	return (i);
+}
+
 char	*__get_prompt(t_msh *msh)
 {
 	char	path[PATH_MAX];
-	int		i;
 
-	i = 0;
 	__bzero(path, PATH_MAX);
-	if (msh->prompt)
-		free(msh->prompt);
+	free(msh->prompt);
 	if (msh->rv == 0)
 		msh->prompt = __strdup(BOLDGREEN"➜  "RESET BOLDCYAN);
 	else
 		msh->prompt = __strdup(BOLDRED"➜  "RESET BOLDCYAN);
+	if (!msh->prompt)
+		return(__putendl_fd("Minishell : Malloc Error", 2), __exit_error(msh, 3), NULL);
 	if (getcwd(path, PATH_MAX))
 	{
-		while (path[i])
-			i++;
-		while (path[i] != '/' && i >= 0)
-			i--;
-		i++;
-		msh->prompt = __strjoin(msh->prompt, path + i);
+		msh->prompt = __strjoin(msh->prompt, path + __get_pos_last_dir(path));
+		if (!msh->prompt)
+			return(__putendl_fd("Minishell : Malloc Error", 2), __exit_error(msh, 3), NULL);
 		msh->prompt = __strjoin(msh->prompt, RESET BOLDYELLOW "  ~  "RESET);
+		if (!msh->prompt)
+			return(__putendl_fd("Minishell : Malloc Error", 2), __exit_error(msh, 3), NULL);
 	}
 	return (msh->prompt);
 }
@@ -47,7 +58,7 @@ int	get_size_env(char *envp[])
 	
 	size = 0;
 	if (!envp)
-		return (-1);
+		return (0);
 	while (envp[size])
 		size++;
 	return (size);
@@ -60,8 +71,6 @@ static int	get_env(t_msh *msh, char *envp[])
 
 	i = -1;
 	size = get_size_env(envp);
-	if (size == -1)
-		return (1);
 	msh->envp = (char ***)malloc((size + 1) * sizeof(char **));
 	if (!msh->envp)
 		return (0);
@@ -93,7 +102,7 @@ int	__treat_user_input(char *arg, t_msh *msh)
 	lexing = NULL;
 	if(!__strcmp(arg,""))
 		return(0);
-	msh->rv = 0;
+	msh->syntax_error = 0;
 	to_tokenize = __strtrim(arg, " \f\t\r\v");
 	if(!__strcmp(to_tokenize,""))
 		return(free(to_tokenize), 0);
@@ -106,7 +115,7 @@ int	__treat_user_input(char *arg, t_msh *msh)
 		return (write(2, "Malloc error\n", 14), -1);
 	first_error = __synthax_checker(lexing, msh);
 	__handle_here_doc(lexing, first_error, msh);
-	if(first_error || msh->rv == 2)
+	if(msh->syntax_error == 2)
 		return (__lexing_full_list_clear(lexing), -1);
 	if (!__create_tree(lexing, &(msh->root)))
 		return (__destroy_tree(&msh->root), -1);
@@ -147,59 +156,82 @@ int	__treat_user_input(char *arg, t_msh *msh)
 }
 */
 
-int	main (int ac, char *av[], char *envp[])
+static int __non_interative_mode(char **av, t_msh *msh)
+{
+	int i;
+	char **inputs;
+
+	i = 0;
+	if (!__strcmp(av[1], "-c"))
+	{
+		if (av[2])
+		{
+			inputs = __split_unquoted_charset(av[2], "\n;");
+			if (!inputs)
+				return(__putendl_fd("Minishell : Malloc Error", 2), __exit_error(msh, 3));
+			while(inputs[i])
+			{
+				__treat_user_input(inputs[i], msh);
+				i++;
+			}	
+			return (free_split(inputs), __exit(msh));
+		}
+		else
+			return(__putendl_fd("Minishell : -c: option requires an argument", 2), __exit_error(msh, 2));
+	}
+	else
+		return(__putendl_fd("Minishell : invalid option", 2), __exit_error(msh, 1));
+
+}
+
+static void __update_rv(t_msh *msh)
+{
+	if (g_rv > 0)
+		msh->rv = g_rv;
+	g_rv = 0;
+}
+
+int	__interactive_mode(t_msh *msh)
 {
 	char	*arg;
-	t_msh	msh;
 	char 	**inputs;
 	int		i;
+
+	while (42)
+	{
+		signal(SIGINT, __signal);
+		signal(SIGQUIT, __signal);
+		arg = readline(__get_prompt(msh));
+		add_history(arg);
+		__update_rv(msh);
+		if (arg == NULL)
+			break ;
+		signal(SIGINT, __signal_treat);
+		inputs = __split_unquoted_charset(arg, "\n;");
+		if (!inputs)
+				return(__putendl_fd("Minishell : Malloc Error while splitting input", 2), __exit_error(msh, 3));
+		i = -1;
+		while(inputs[++i])
+			__treat_user_input(inputs[i], msh);
+		free_split(inputs);
+		free(arg);
+	}
+	return (msh->rv);
+}
+
+
+int	main (int ac, char *av[], char *envp[])
+{
+	t_msh	msh;
 	
 	msh = (t_msh){.rv = 0};
 	if (!get_env(&msh, envp))
 		return (destroy_env(&msh), 1);
 	if (ac > 1)
-	{
-		if (!__strcmp(av[1], "-c"))
-		{
-			if (av[2])
-				return (__treat_user_input(av[2], &msh), __exit(&msh));
-			else
-			{
-				msh.rv = 2;
-				return(__putendl_fd("Minishell : -c: option requires an argument", 2),__exit(&msh));
-			}
-		}
-		else
-		{
-			msh.rv = 1;
-			return(__putendl_fd("Minishell : invalid option", 2),__exit(&msh));
-		}
-	}
-	while (42)
-	{
-		signal(SIGINT, __signal);
-		signal(SIGQUIT, __signal);
-		arg = readline(__get_prompt(&msh));
-		add_history(arg);
-		if (arg == NULL)
-		{
-			if (arg)
-				free(arg);
-			arg = NULL;
-			break ;
-		}
-		signal(SIGINT, __signal_treat);
-		inputs = __split_unquoted_charset(arg, "\n;");
-		i = 0;
-		while(inputs[i])
-		{
-			__treat_user_input(inputs[i], &msh);
-			i++;
-		}
-		free_split(inputs);
-		free(arg);
-	}
+		__non_interative_mode(av, &msh);
+	__interactive_mode(&msh);
 	__exit(&msh);
+	return (0);
 }
 
 

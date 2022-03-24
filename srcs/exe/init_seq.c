@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 16:20:32 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/21 16:02:22 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/24 11:21:41 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static char	*__find_path(char ***envp)
 	i = 0;
 	while (envp[i] != NULL)
 	{
-		if (__strncmp(envp[i][0], "PATH", 4) == 0)
+		if (envp[i][1][0] != '0' && __strncmp(envp[i][0], "PATH", 4) == 0)
 			return (envp[i][0] + 5);
 		i++;
 	}
@@ -48,6 +48,8 @@ static char **__create_envp(char ***envp)
 
 	i = 0;
 	size = 0;
+	if (!envp)
+		return(NULL);
 	while (envp[size])
 		size++;
 	ret = malloc(sizeof(char *) * (size + 1));
@@ -68,12 +70,14 @@ int	__init_seq(t_sequ *seq, char ***envp, t_cmd *cmd)
 	seq->pipe[out] = -1;
 	seq->index = 0;
 	seq->max_cmd = __find_max_cmd(cmd);
-	if (__find_path(envp))
+	if (envp && __find_path(envp))
 	{
 		seq->path = __split(__find_path(envp), ':');
 		if (!seq->path)
 			return (0);
 	}
+	else
+		seq->path = NULL;
 	seq->envp = __create_envp(envp);
 	if (!seq->envp)
 		return (0);

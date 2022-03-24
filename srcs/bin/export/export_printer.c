@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_printer.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fle-blay <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 09:36:33 by fle-blay          #+#    #+#             */
-/*   Updated: 2022/03/22 09:39:04 by fle-blay         ###   ########.fr       */
+/*   Updated: 2022/03/24 12:38:26 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static char	*get_smallest_exported_value(char ***envp)
 	i = 0;
 	while (envp[i])
 	{
-		if (envp[i][1])
+		if (envp[i][1][0] != '0' && envp[i][0])
 		{
 			smallest = envp[i][0];
 			break ;
@@ -30,7 +30,7 @@ static char	*get_smallest_exported_value(char ***envp)
 	i = 0;
 	while (envp[i])
 	{
-		if (envp[i][1])
+		if (envp[i][1][0] != '0' && envp[i][0])
 		{
 			if (__strcmp(smallest, envp[i][0]) > 0)
 				smallest = envp[i][0];
@@ -48,7 +48,7 @@ static char	*get_biggest_exported_value(char ***envp)
 	i = 0;
 	while (envp[i])
 	{
-		if (envp[i][1])
+		if (envp[i][1][0] != '0')
 		{
 			biggest = envp[i][0];
 			break ;
@@ -58,7 +58,7 @@ static char	*get_biggest_exported_value(char ***envp)
 	i = 0;
 	while (envp[i])
 	{
-		if (envp[i][1])
+		if (envp[i][1][0] != '0' && envp[i][0])
 		{
 			if (__strcmp(biggest, envp[i][0]) < 0)
 				biggest = envp[i][0];
@@ -77,7 +77,7 @@ static char	*get_smallest_sup_value(char *old_small, char ***envp)
 	i = 0;
 	while (envp[i])
 	{
-		if (envp[i][1])
+		if (envp[i][1][0] != '0' && envp[i][0])
 		{
 			if (__strcmp(old_small, envp[i][0]) < 0)
 				if (__strcmp(ret, envp[i][0]) > 0)
@@ -105,8 +105,12 @@ int	print_exported_values(char ***envp)
 	char	*old_printed;
 	char	*curr_printed;
 
+	if (!envp || !envp[0])
+		return (0);
 	i = 0;
 	max = get_number_exported_values(envp);
+	if (max == 0)
+		return (0);
 	old_printed = get_smallest_exported_value(envp);
 	__get_printed_export(old_printed);
 	while (max - 1)
@@ -117,5 +121,5 @@ int	print_exported_values(char ***envp)
 		max--;
 		i = 0;
 	}
-	return (1);
+	return (0);
 }

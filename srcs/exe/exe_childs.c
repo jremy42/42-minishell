@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 16:21:22 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/21 17:18:28 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/24 11:14:19 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,9 @@ static char	*__create_path_and_cmd(char *path, char *cmd)
 	i = 0;
 	if (!path || !cmd)
 		return (NULL);
-	size = __strlen(path) + __strlen("/") + __strlen(cmd);
+	size = __strlen(path);
+	size += __strlen("/");
+	size += __strlen(cmd);
 	ret = (char *)malloc((size + 1) * sizeof(char));
 	if (!ret)
 		return (__putstr_fd("Malloc Error", 2), NULL);
@@ -47,6 +49,8 @@ static int	__try_paths(char **path_cmd, char **path, char *cmd_name)
 	int	i;
 
 	i = 0;
+	if (!path)
+		return (0);
 	while (path[i])
 	{
 		*path_cmd = __create_path_and_cmd(path[i], cmd_name);
@@ -82,7 +86,7 @@ static char *__get_path(char **path, char *cmd_name)
 		if (__try_paths(&path_cmd, path, cmd_name) == 1)
 			return (path_cmd);
 	}
-	return(__putstr_fd("Command not found\n", 2), NULL);
+	return(NULL);
 }
 
 void __exit_child(t_sequ *seq, t_cmd *cmd, int errno_copy, int error)
@@ -126,7 +130,10 @@ void execute_child(t_sequ *seq, t_cmd *cmd, t_cmd *first_cmd)
 	if (!path_cmd)
 	{
 		if (access(cmd->arg[0], F_OK) < 0)
+		{
+			__putendl_fd("Minishell : Command not found", 2);
 			__exit_child(seq, first_cmd, 127, 0);
+		}
 		if (access(cmd->arg[0], X_OK) < 0)
 		{
 			__putendl_fd("Minishell : Permission denied", 2);

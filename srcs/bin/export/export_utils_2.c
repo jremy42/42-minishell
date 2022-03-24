@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils_2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fle-blay <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 10:04:49 by fle-blay          #+#    #+#             */
-/*   Updated: 2022/03/22 09:35:39 by fle-blay         ###   ########.fr       */
+/*   Updated: 2022/03/24 12:29:07 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	get_number_exported_values(char ***envp)
 	count = 0;
 	while (envp[i])
 	{
-		if (envp[i][1])
+		if (envp[i][1][0] != '0')
 			count++;
 		i++;
 	}
