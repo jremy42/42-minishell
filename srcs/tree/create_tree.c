@@ -1,5 +1,33 @@
 #include "minishell.h"
 
+t_node *__give_node(int count, int reset)
+{
+	int i;
+	static int state = -1;
+	static t_node	**node_tab;
+
+	i = -1;
+	if (reset)
+	{
+		state = 0;
+		node_tab = (t_node **)malloc(count * sizeof(t_node *));
+		if (!node_tab)
+			return (NULL);
+		while (++i < count)
+		{
+			node_tab[i] = (t_node *)malloc(sizeof(t_node));
+			if (!node_tab[i])
+			{
+				while (--i >= 0)
+					free(node_tab[i]);
+				return (free(node_tab),NULL);
+			}
+		}
+		return (node_tab[0]);
+	}
+	else
+		return (node_tab[state++]);
+}
 
 t_lexing *__skip_parenthesis(t_lexing *lexing)
 {
@@ -38,7 +66,7 @@ t_lexing	*__find_next_operator(t_lexing *lexing)
 	return (find);
 }
 
-static int	trim_parenthesis(t_lexing **lexing)
+static int	trim_parenthesis(t_lexing **lexing, t_lexing **parenthesis)
 {
 	t_lexing	*index;
 	t_lexing	*rebirth_2_burne;
@@ -55,10 +83,10 @@ static int	trim_parenthesis(t_lexing **lexing)
 			*lexing = (*lexing)->next;
 			rebirth_2_burne2 = index->next;
 			index->next = NULL;	
-			free(rebirth_2_burne->token);
-			free(rebirth_2_burne);
-			free(rebirth_2_burne2->token);
-			free(rebirth_2_burne2);
+			rebirth_2_burne->next = NULL;
+			rebirth_2_burne2->next = NULL;
+			__lexadd_back(parenthesis, rebirth_2_burne);
+			__lexadd_back(parenthesis, rebirth_2_burne2);
 		}
 		return (1);
 	}
@@ -72,7 +100,8 @@ t_node	*btree_create_node_sequence(t_lexing *lexing)
 {
 	t_node	*new;
 
-	new = malloc(sizeof(t_node));
+	//new = malloc(sizeof(t_node));
+	new = __give_node(0, 0);
 	if (!new)
 		return (NULL);
 	new->left = NULL;
@@ -84,11 +113,13 @@ t_node	*btree_create_node_sequence(t_lexing *lexing)
 	return (new);
 }
 
+
+
 t_node	*btree_create_node_operator(t_lexing *lexing)
 {
 	t_node	*new;
 
-	new = malloc(sizeof(t_node));
+	new = __give_node(0, 0);
 	if (!new)
 		return (NULL);
 	new->left = NULL;
@@ -98,6 +129,7 @@ t_node	*btree_create_node_operator(t_lexing *lexing)
 	new->leaf_lexing = lexing;
 	free(lexing->token);
 	lexing->token = NULL;
+	//lexing->next = NULL;
 	//new->cmd = NULL;
 	return (new);
 }
@@ -121,10 +153,9 @@ t_lexing	*split_lexing_right(t_lexing *lexing, t_lexing *next_operator)
 	return (lexing);
 }
 
-int __create_tree(t_lexing *lexing, t_node **root)
+int __create_tree(t_lexing *lexing, t_node **root, t_lexing **parenthesis)
 {
 	t_lexing	*next_operator;
-	static int i = 0;
 
 	DEBUG && printf("\n\n\n");
 	//__print_lexing(lexing);
@@ -132,28 +163,20 @@ int __create_tree(t_lexing *lexing, t_node **root)
 	next_operator = __find_next_operator(lexing);
 	if (!next_operator)
 	{
-		if (!trim_parenthesis(&lexing))
-			return (write(2, "Syntax Error\n", 6), 2);
+		if (!trim_parenthesis(&lexing, parenthesis))
+			return (write(2, "Syntax Error\n", 6), 0);
 		next_operator = __find_next_operator(lexing);
 	}
 	if (!next_operator)
 	{
-		if (i !=1)
-			*root = btree_create_node_sequence(lexing);
-		else
-			*root = NULL;
-		i++;
-		if (!*root)
-			return (0);
+		*root = btree_create_node_sequence(lexing);
 		return (1);
 	}
 	DEBUG && printf("next operator : [%s]\n", next_operator->token);
 	*root = btree_create_node_operator(next_operator);
-	if (!*root)
+	if(!__create_tree(split_lexing_right(lexing, next_operator),&((*root)->right), parenthesis))
 		return (0);
-	if(!__create_tree(split_lexing_right(lexing, next_operator),&((*root)->right)))
-		return (0);
-	if(!__create_tree(split_lexing_left(lexing, next_operator), &((*root)->left)))
+	if(!__create_tree(split_lexing_left(lexing, next_operator), &((*root)->left), parenthesis))
 		return (0);
 	return (1);
 }

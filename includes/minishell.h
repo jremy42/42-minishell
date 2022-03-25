@@ -213,12 +213,15 @@ t_lexing *__synthax_checker(t_lexing *lexing, t_msh *msh);
 int	__print_lexing(t_lexing *lexing);
 void	__lexing_full_list_clear(t_lexing **start);
 void	__lexing_node_list_clear(t_lexing *start);
-
+void	__lexing_not_in_tree_list_clear(t_lexing *start);
+void	__lexadd_back(t_lexing **alst, t_lexing *new);
+int		__count_node(t_lexing *lexing);
 // Gardening
 
-int __create_tree(t_lexing *lexing, t_node **root);
+int __create_tree(t_lexing *lexing, t_node **root, t_lexing **parenthesis);
 int __execute_tree(t_node *current_node, t_msh *msh);
 void __destroy_tree(t_node **current_node);
+t_node *__give_node(int count, int reset);
 
 
 // parsing exe 

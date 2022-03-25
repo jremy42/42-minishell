@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:25:57 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/25 13:06:10 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/25 18:08:56 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,9 +127,11 @@ int	__treat_user_input(char *arg, t_msh *msh)
 	char		*to_tokenize;
 	t_lexing	*first_error;
 	int			syntax_tree;
+	t_lexing	*parenthesis;
 
 	token = NULL;
 	lexing = NULL;
+	parenthesis = NULL;
 	if(!__check_input(arg, &to_tokenize, msh))
 		return (0);
 	if (!__tokenize(to_tokenize, &token, msh))
@@ -142,13 +144,18 @@ int	__treat_user_input(char *arg, t_msh *msh)
 		return (__lexing_full_list_clear(&lexing), __exit_error(msh, 3, "here_doc"));
 	if(msh->syntax_error == 2)
 		return (__lexing_full_list_clear(&lexing), -1);
-	syntax_tree = __create_tree(lexing, &(msh->root));
+	if(!__give_node(__count_node(lexing), 1))
+		return (__lexing_full_list_clear(&lexing),__exit_error(msh, 3, "create tree"));
+	syntax_tree = __create_tree(lexing, &(msh->root), &parenthesis);
+	DEBUG && print2D(msh->root);
+	printf("clear parenthesis\n");
+	__lexing_full_list_clear(&parenthesis);
+	parenthesis = NULL;
 	if (syntax_tree == 0)
-		return (__lexing_full_list_clear(&lexing), __exit_error(msh, 3, "create tree"));
-	if (syntax_tree == 2)
 		return (__destroy_tree(&msh->root), -1);
-	__exit_error(msh, 1, "Malloc test");
-	msh->rv = __execute_tree(msh->root, msh);	
+	//__exit_error(msh, 1, "Malloc test");
+	msh->rv = __execute_tree(msh->root, msh);
+	printf("destroy tree\n");
 	__destroy_tree(&msh->root);
 	return (msh->rv);
 }
@@ -172,7 +179,7 @@ int __non_interative_mode(char **av, t_msh *msh)
 				__treat_user_input(inputs[i], msh);
 				i++;
 			}	
-			return (free_split(inputs), __exit(msh));
+			return  (__exit(msh));
 		}
 		else
 			return(__putendl_fd("Minishell : -c: option requires an argument", 2), __exit_error(msh, 2, ""));

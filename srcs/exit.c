@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:25:57 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/25 13:06:41 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/25 16:40:39 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void __destroy_tree(t_node **current_node)
 {
-	if (!*current_node)
+	if (!current_node || !*current_node)
 		return ;
     __destroy_tree(&((*current_node)->left));
     __destroy_tree(&((*current_node)->right));

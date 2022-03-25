@@ -6,11 +6,26 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:25:57 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/25 13:11:19 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/25 17:50:23 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+
+int __count_node(t_lexing *lexing)
+{
+	int i;
+
+	i = 0;
+	while(lexing)
+	{
+		if (lexing->type == OPERATOR)
+			i++;
+		lexing = lexing->next;
+	}
+	return (2 * i + 1);
+}
 
 void	__lexing_full_list_clear(t_lexing **start)
 {
@@ -18,7 +33,7 @@ void	__lexing_full_list_clear(t_lexing **start)
 
 	if (!start)
 		return ;
-	while (*start)
+	while (*start && (*start)->token)
 	{
 		DEBUG && printf("lexing full lst clear free = %s\n", (*start)->token);
 		next_to_free = (*start)->next;
