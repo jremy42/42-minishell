@@ -12,7 +12,7 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <sys/stat.h>
-#include <signal.h>
+# include <signal.h>
 
 # define PATH_MAX 4096
 # define PROMPT_MAX 5000
@@ -40,31 +40,53 @@
 # define COUNT 10
 
 # ifndef DEBUG
-# define DEBUG 0
+#  define DEBUG 0
 # endif
 
+typedef enum e_state {
+	UNQUOTE,
+	S_QUOTE,
+	D_QUOTE,
+	BACKSLASH
+}	t_state;
 
-typedef enum	e_state
-{UNQUOTE, S_QUOTE, D_QUOTE, BACKSLASH} t_state;
+typedef enum e_token_type{
+	OPERATOR,
+	PIPE,
+	EW_LINE,
+	WORD,
+	REDIRECTION,
+	HERE_DOC,
+	P_LEFT,
+	P_RIGHT,
+	INVALID
+}	t_token_type;
 
-typedef enum	e_token_type
-{OPERATOR, PIPE, NEW_LINE, WORD, REDIRECTION, HERE_DOC, P_LEFT, P_RIGHT, INVALID} t_token_type;
+typedef enum e_kind_node {
+	OR = 1,
+	AND,
+	SEQUENCE
+}	t_kind_node;
 
-typedef enum e_kind_node
-{OR = 1, AND, SEQUENCE} t_kind_node;
+typedef enum e_redir_type {
+	LESS,
+	GREAT,
+	DGREAT,
+	H_D
+}	t_redir_type;
 
-typedef enum e_redir_type
-{LESS, GREAT, DGREAT, H_D} t_redir_type;
-
-typedef enum	e_globe_type
-{FIRST, MIDDLE, LAST} t_globe_type;
+typedef enum e_globe_type {
+	FIRST,
+	MIDDLE,
+	LAST
+}	t_globe_type;
 
 typedef struct s_redirect
 {
-	t_redir_type type;
-	char *file_name;
-	struct s_redirect *next;
-} t_redirect;
+	t_redir_type		type;
+	char				*file_name;
+	struct s_redirect	*next;
+}	t_redirect;
  
 //Faire les redirections juste avant de creer la liste finale des args (nom du prog et les vrai parametres)
 // Le *msh permettra de modifier la RV et de recuperer l'env necessaire a l'exe
