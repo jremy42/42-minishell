@@ -124,8 +124,8 @@ t_lexing	*split_lexing_right(t_lexing *lexing, t_lexing *next_operator)
 int __create_tree(t_lexing *lexing, t_node **root)
 {
 	t_lexing	*next_operator;
+	static int i = 0;
 
-	
 	DEBUG && printf("\n\n\n");
 	//__print_lexing(lexing);
 
@@ -133,19 +133,27 @@ int __create_tree(t_lexing *lexing, t_node **root)
 	if (!next_operator)
 	{
 		if (!trim_parenthesis(&lexing))
-			return (write(2, "Error\n", 6), 0);
+			return (write(2, "Syntax Error\n", 6), 2);
 		next_operator = __find_next_operator(lexing);
 	}
 	if (!next_operator)
 	{
-		*root = btree_create_node_sequence(lexing);
+		if (i !=1)
+			*root = btree_create_node_sequence(lexing);
+		else
+			*root = NULL;
+		i++;
+		if (!*root)
+			return (0);
 		return (1);
 	}
 	DEBUG && printf("next operator : [%s]\n", next_operator->token);
 	*root = btree_create_node_operator(next_operator);
 	if (!*root)
 		return (0);
-	__create_tree(split_lexing_right(lexing, next_operator),&((*root)->right));
-	__create_tree(split_lexing_left(lexing, next_operator), &((*root)->left));
+	if(!__create_tree(split_lexing_right(lexing, next_operator),&((*root)->right)))
+		return (0);
+	if(!__create_tree(split_lexing_left(lexing, next_operator), &((*root)->left)))
+		return (0);
 	return (1);
 }

@@ -53,7 +53,7 @@ typedef enum e_state {
 typedef enum e_token_type{
 	OPERATOR,
 	PIPE,
-	EW_LINE,
+	NEW_LINE,
 	WORD,
 	REDIRECTION,
 	HERE_DOC,
@@ -141,6 +141,7 @@ typedef struct s_msh
 	char	***envp;
 	char	*error_string;
 	char 	*error_value;
+	char	**all_input;
 }	t_msh;
 /*
 decouper en token / mots / operateur
@@ -187,7 +188,7 @@ void    __signal_treat(int signal);
 void __destroy_tree(t_node **current_node);
 void	destroy_env(t_msh *msh);
 int __exit(t_msh *msh);
-int	__exit_error(t_msh *msh, int error);
+int	__exit_error(t_msh *msh, int error, char *str);
 
 //tokenizer
 
@@ -210,7 +211,7 @@ int		__init_token_if_none(char **str, int *token_status);
 int	__lexing(t_list *token, t_lexing **lexing);
 t_lexing *__synthax_checker(t_lexing *lexing, t_msh *msh);
 int	__print_lexing(t_lexing *lexing);
-void	__lexing_full_list_clear(t_lexing *start);
+void	__lexing_full_list_clear(t_lexing **start);
 void	__lexing_node_list_clear(t_lexing *start);
 
 // Gardening

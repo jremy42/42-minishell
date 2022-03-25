@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 11:20:24 by jremy             #+#    #+#             */
-/*   Updated: 2022/01/24 17:07:08 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/25 12:30:19 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,10 @@ char	*ft_strjoingnl(char *dest, char *src)
 	size_src = ft_strlen(src);
 	result = malloc(sizeof(char) * ((size_dest + size_src) + 1));
 	if (!result)
+	{
+		free(dest);
 		return (NULL);
+	}
 	ft_memcpy(result, dest, size_dest);
 	ft_memcpy(result + size_dest, src, size_src);
 	free(dest);

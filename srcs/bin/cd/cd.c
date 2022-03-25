@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 14:13:35 by fle-blay          #+#    #+#             */
-/*   Updated: 2022/03/21 09:37:00 by fle-blay         ###   ########.fr       */
+/*   Updated: 2022/03/25 12:51:31 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,7 @@ int	__cd(char *new_path, t_msh *msh)
 	else if (new_path[0] == '-' && __strlen(new_path) == 1)
 		chdir_previous(msh);
 	else
-	{
-		update_oldpwd(msh);
+	{ update_oldpwd(msh);
 		if (new_path[0] == '/')
 			chdir(new_path);
 		else

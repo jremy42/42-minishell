@@ -54,3 +54,6 @@ dkms.conf
 
 #vim swap file
 *.swap
+
+#mallocator
+./ft_mallocator

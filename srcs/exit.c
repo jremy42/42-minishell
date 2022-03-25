@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:25:57 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/24 09:51:03 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/25 13:06:41 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void __destroy_tree(t_node **current_node)
     __destroy_tree(&((*current_node)->left));
     __destroy_tree(&((*current_node)->right));
 	if ((*current_node)->kind == SEQUENCE)
-		__lexing_full_list_clear((*current_node)->leaf_lexing);
+		__lexing_full_list_clear(&((*current_node)->leaf_lexing));
 	else
 		free((*current_node)->leaf_lexing);
     free(*current_node);
@@ -48,14 +48,24 @@ int	__exit(t_msh *msh)
 	__destroy_tree(&msh->root);
 	destroy_env(msh);
 	free(msh->prompt);
+	free_split(msh->all_input);
 	exit (msh->rv);
 }
 
-int	__exit_error(t_msh *msh, int error)
+void __error_msg(int error, char *str)
+{
+	if (error == 3)
+		__putstr_fd("Minishell : Malloc error in",2);
+	__putstr_fd(str, 2);
+}
+
+int	__exit_error(t_msh *msh, int error, char *str)
 {	
 	msh->rv = error;
+	__error_msg(msh->rv, str);
 	__destroy_tree(&msh->root);
 	destroy_env(msh);
 	free(msh->prompt);
+	free_split(msh->all_input);
 	exit (msh->rv);
 }

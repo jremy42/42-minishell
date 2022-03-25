@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 15:19:06 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/23 09:17:58 by fle-blay         ###   ########.fr       */
+/*   Updated: 2022/03/25 13:07:22 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,22 +101,22 @@ int		__retrieve_hd(t_lexing *lexing)
 		return (0);
 	fd = open(".hd.tmp", O_RDONLY);
 	if (fd < 0)
-		return (0);
+		return (free(hd_content), 0);
 	read_status = 1;
 	while (read_status)
 	{
 		read_status = read(fd, buf, 32);
 		if (read_status < 0)
-			return (0);
+			return (free(hd_content), close (fd), unlink("hd.tmp"), 0);
 		buf[read_status]='\0';
 		hd_content = __strjoin(hd_content, buf);
 		if (!hd_content)
-			return (0);
+			return (close (fd), unlink("hd.tmp"), 0);
 	}
 	if (close(fd) < 0)
-		return (0);
+		return (free(hd_content), 0);
 	if (unlink(".hd.tmp") < 0)
-		return (0);
+		return (free(hd_content), 0);
 	free(lexing->next->token);
 	lexing->next->token = hd_content;
 	DEBUG && fprintf(stderr, "This is the heredoc : [%s]\n", hd_content);
@@ -143,13 +143,13 @@ int __handle_here_doc(t_lexing *lexing, t_lexing *end, t_msh *msh)
 					__putendl_fd("malloc error", 2);
 				lexing->next->token = eof;
 				msh->rv = errno;
-				__lexing_full_list_clear(save);
+				__lexing_full_list_clear(&save);
 				__exit(msh);
 			}
 			else
 			{
 				waitpid(pid, NULL, 0);
-				if(__retrieve_hd(lexing) < 0)
+				if(!__retrieve_hd(lexing))
 					return (0);
 				lexing = lexing->next;
 			}

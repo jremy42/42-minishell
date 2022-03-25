@@ -6,24 +6,27 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:25:57 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/22 11:13:13 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/25 13:11:19 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	__lexing_full_list_clear(t_lexing *start)
+void	__lexing_full_list_clear(t_lexing **start)
 {
 	t_lexing	*next_to_free;
 
-	while (start)
+	if (!start)
+		return ;
+	while (*start)
 	{
-		DEBUG && printf("lexing full lst clear free = %s\n", start->token);
-		next_to_free = start->next;
-		free(start->token);
-		start->token = NULL;
-		free(start);
-		start = next_to_free;
+		DEBUG && printf("lexing full lst clear free = %s\n", (*start)->token);
+		next_to_free = (*start)->next;
+		free((*start)->token);
+		(*start)->token = NULL;
+		free(*start);
+		*start = NULL;
+		*start = next_to_free;
 	}
 }
 
@@ -92,8 +95,7 @@ t_token_type	__get_type(char *content)
 		return (INVALID);
 }
 
-t_lexing	*__lexnew(char *content)
-{
+t_lexing	*__lexnew(char *content) {
 	t_lexing	*newlst;
 
 	newlst = malloc(sizeof(t_lexing));
@@ -101,7 +103,7 @@ t_lexing	*__lexnew(char *content)
 		return (NULL);
 	newlst->token = __strdup(content);
 	if (!newlst->token)
-		return (NULL);
+		return (free(newlst), NULL);
 	newlst->type = __get_type(content);
 	newlst->next = NULL;
 	return (newlst);
@@ -132,10 +134,10 @@ int	__lexing(t_list *token, t_lexing **lexing)
 	{
 		new = __lexnew((char *)tmp->content);
 		if (!new)
-			return (-1);
+			return (__lstclear(&token, &free), 0);
 		__lexadd_back(lexing, new);
 		tmp = tmp->next;
 	}
 	__lstclear(&token, &free);
-	return (0);
+	return (1);
 }

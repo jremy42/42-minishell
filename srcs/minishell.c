@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:25:57 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/22 11:23:28by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/25 13:06:10 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,15 +39,15 @@ char	*__get_prompt(t_msh *msh)
 	else
 		msh->prompt = __strdup(BOLDRED"➜  "RESET BOLDCYAN);
 	if (!msh->prompt)
-		return(__putendl_fd("Minishell : Malloc Error", 2), __exit_error(msh, 3), NULL);
+		return(__exit_error(msh, 3, "get prompt"), NULL);
 	if (getcwd(path, PATH_MAX))
 	{
 		msh->prompt = __strjoin(msh->prompt, path + __get_pos_last_dir(path));
 		if (!msh->prompt)
-			return(__putendl_fd("Minishell : Malloc Error", 2), __exit_error(msh, 3), NULL);
+			return(__exit_error(msh, 3, "get prompt"), NULL);
 		msh->prompt = __strjoin(msh->prompt, RESET BOLDYELLOW "  ~  "RESET);
 		if (!msh->prompt)
-			return(__putendl_fd("Minishell : Malloc Error", 2), __exit_error(msh, 3), NULL);
+			return(__exit_error(msh, 3, "get prompt"), NULL);
 	}
 	return (msh->prompt);
 }
@@ -63,8 +63,24 @@ int	get_size_env(char *envp[])
 		size++;
 	return (size);
 }
+void	partial_destroy_env(t_msh *msh, int limit)
+{
+	int	i;
 
-static int	get_env(t_msh *msh, char *envp[])
+	i = 0;
+	if (!msh->envp)
+		return ;
+	while (i < limit)
+	{
+		free(msh->envp[i][0]);
+		free(msh->envp[i][1]);
+		free(msh->envp[i]);
+		i++;
+	}
+	free(msh->envp);
+}
+
+int	get_env(t_msh *msh, char *envp[])
 {
 	int	i;
 	int size;
@@ -79,84 +95,65 @@ static int	get_env(t_msh *msh, char *envp[])
 	{
 		msh->envp[i] = (char **)malloc((3) * sizeof(char *));
 		if(!msh->envp[i])
-			return (0);
+			return (partial_destroy_env(msh, i), 0);
 		msh->envp[i][0] = __strdup(envp[i]);
 		if(!msh->envp[i][0])
-			return (0);
+			return (free(msh->envp[i]), partial_destroy_env(msh, i), 0);
 		msh->envp[i][1] = __strdup("1");
-		if(!msh->envp[i][0])
-			return (0);
+		if(!msh->envp[i][1])
+			return (free(msh->envp[i][0]), free(msh->envp[i]), partial_destroy_env(msh, i), 0);
 		msh->envp[i][2] = NULL;
 	}
 	return (1);
 }
 
-int	__treat_user_input(char *arg, t_msh *msh)
+int __check_input(char *arg, char **to_tokenize, t_msh *msh)
 {
-	t_list		*start;
-	t_lexing	*lexing;
-	char		*to_tokenize;
-	t_lexing	*first_error;
-
-	start = NULL;
-	lexing = NULL;
-	if(!__strcmp(arg,""))
-		return(0);
 	msh->syntax_error = 0;
-	to_tokenize = __strtrim(arg, " \f\t\r\v");
-	if(!__strcmp(to_tokenize,""))
-		return(free(to_tokenize), 0);
-	if (!to_tokenize)
-		return (write(2, "Malloc error\n", 14), -1);
-	if (!__tokenize(to_tokenize, &start, msh))
-		return (free(to_tokenize), __lstclear(&start, free), 0);
-	free(to_tokenize);
-	if (__lexing(start, &lexing) < 0)
-		return (write(2, "Malloc error\n", 14), -1);
-	first_error = __synthax_checker(lexing, msh);
-	__handle_here_doc(lexing, first_error, msh);
-	if(msh->syntax_error == 2)
-		return (__lexing_full_list_clear(lexing), -1);
-	if (!__create_tree(lexing, &(msh->root)))
-		return (__destroy_tree(&msh->root), -1);
-	msh->rv = __execute_tree(msh->root, msh);	
-	__destroy_tree(&msh->root);
-	return (msh->rv);
+	if(!__strcmp(arg,""))
+		return(0);
+	*to_tokenize = __strtrim(arg, " \f\t\r\v");
+	if (!*to_tokenize)
+		return (__exit_error(msh, 3, "check input"));
+	if(!__strcmp(*to_tokenize,""))
+		return(free(*to_tokenize), 0);
+	return (1);
 }
-/*
+
 int	__treat_user_input(char *arg, t_msh *msh)
 {
-	t_list		*start;
+	t_list		*token;
 	t_lexing	*lexing;
 	char		*to_tokenize;
 	t_lexing	*first_error;
+	int			syntax_tree;
 
-	start = NULL;
+	token = NULL;
 	lexing = NULL;
-	if(!__strcmp(arg,""))
-		return(0);
-	to_tokenize = __strtrim(arg, " \f\t\r\v");
-	__tokenize(to_tokenize, &start);
-	free(to_tokenize);
-	if (__lexing(start, &lexing) < 0)
-		return (write(2, "Malloc error\n", 14), -1);
+	if(!__check_input(arg, &to_tokenize, msh))
+		return (0);
+	if (!__tokenize(to_tokenize, &token, msh))
+		return (free(to_tokenize), __exit_error(msh, 3, "tokenize"));
+	free(to_tokenize);	
+	if (!__lexing(token, &lexing))
+		return (__lexing_full_list_clear(&lexing), __exit_error(msh, 3, "lexing"));
 	first_error = __synthax_checker(lexing, msh);
-	if (first_error)
-		DEBUG && fprintf(stderr, "DEBUG first error : %s\n", first_error->token);
-	__handle_here_doc(lexing, first_error, msh);
-	DEBUG && __print_lexing(lexing);
-	if(first_error)
-		return (__lexing_full_list_clear(lexing), -1);
-	if (!__create_tree(lexing, &(msh->root)))
+	if(!__handle_here_doc(lexing, first_error, msh))
+		return (__lexing_full_list_clear(&lexing), __exit_error(msh, 3, "here_doc"));
+	if(msh->syntax_error == 2)
+		return (__lexing_full_list_clear(&lexing), -1);
+	syntax_tree = __create_tree(lexing, &(msh->root));
+	if (syntax_tree == 0)
+		return (__lexing_full_list_clear(&lexing), __exit_error(msh, 3, "create tree"));
+	if (syntax_tree == 2)
 		return (__destroy_tree(&msh->root), -1);
-	print2D(msh->root);
+	__exit_error(msh, 1, "Malloc test");
 	msh->rv = __execute_tree(msh->root, msh);	
 	__destroy_tree(&msh->root);
 	return (msh->rv);
 }
-*/
 
-static int __non_interative_mode(char **av, t_msh *msh)
+int __non_interative_mode(char **av, t_msh *msh)
 {
 	int i;
 	char **inputs;
@@ -168,7 +165,8 @@ static int __non_interative_mode(char **av, t_msh *msh)
 		{
 			inputs = __split_unquoted_charset(av[2], "\n;");
 			if (!inputs)
-				return(__putendl_fd("Minishell : Malloc Error", 2), __exit_error(msh, 3));
+				return(__exit_error(msh, 3, "split input"));
+			msh->all_input = inputs;
 			while(inputs[i])
 			{
 				__treat_user_input(inputs[i], msh);
@@ -177,10 +175,10 @@ static int __non_interative_mode(char **av, t_msh *msh)
 			return (free_split(inputs), __exit(msh));
 		}
 		else
-			return(__putendl_fd("Minishell : -c: option requires an argument", 2), __exit_error(msh, 2));
+			return(__putendl_fd("Minishell : -c: option requires an argument", 2), __exit_error(msh, 2, ""));
 	}
 	else
-		return(__putendl_fd("Minishell : invalid option", 2), __exit_error(msh, 1));
+		return(__putendl_fd("Minishell : invalid option", 2), __exit_error(msh, 1, ""));
 
 }
 
@@ -209,7 +207,8 @@ int	__interactive_mode(t_msh *msh)
 		signal(SIGINT, __signal_treat);
 		inputs = __split_unquoted_charset(arg, "\n;");
 		if (!inputs)
-				return(__putendl_fd("Minishell : Malloc Error while splitting input", 2), __exit_error(msh, 3));
+				return(__exit_error(msh, 3, "spliting inputs"));
+		msh->all_input = inputs;
 		i = -1;
 		while(inputs[++i])
 			__treat_user_input(inputs[i], msh);
@@ -226,7 +225,7 @@ int	main (int ac, char *av[], char *envp[])
 	
 	msh = (t_msh){.rv = 0};
 	if (!get_env(&msh, envp))
-		return (destroy_env(&msh), 1);
+		return (1);
 	if (ac > 1)
 		__non_interative_mode(av, &msh);
 	__interactive_mode(&msh);

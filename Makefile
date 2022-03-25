@@ -37,8 +37,8 @@ srcs/split_quote.c
 
 
 IFLAGS =  -I includes/ -I libft/includes
-CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g3
-#CFLAGS = -Wall -Wextra -Werror
+#CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g3
+CFLAGS = -Wall -Wextra -Werror
 CC = cc
 OBJ = $(addprefix $(OBJS_PATH), $(SRC:.c=.o))
 HEADER = includes/minishell.h
@@ -115,5 +115,10 @@ fshellclean:
 	@rm -rf ${OBJS_PATH} 2> /dev/null
 
 d : fshellclean $(NAME)
+
+malloc_test: $(OBJ) ${HEADER} ${LIBFT}
+	make -C ${LIBFT} > /dev/null
+	$(CC) $(CFLAGS) -fsanitize=undefined -rdynamic -o $@ ${OBJ} -L./libft -lft -L/usr/local/lib -lreadline -L./ft_mallocator -lmallocator
+
 
 .PHONY: all clean fclean bonus re run debug

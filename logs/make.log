@@ -1,0 +1,40 @@
+cp: cannot stat 'libmallocator.a': No such file or directory
+make: Entering directory '/mnt/nfs/homes/jremy/Desktop'
+make: *** No rule to make target 'malloc_test'.  Stop.
+make: Leaving directory '/mnt/nfs/homes/jremy/Desktop'
+make: Entering directory '/mnt/nfs/homes/jremy/Desktop'
+make: *** No rule to make target 'fclean'.  Stop.
+make: Leaving directory '/mnt/nfs/homes/jremy/Desktop'
+make: Entering directory '/mnt/nfs/homes/jremy/Desktop'
+make: *** No rule to make target 'malloc_test'.  Stop.
+make: Leaving directory '/mnt/nfs/homes/jremy/Desktop'
+make: Entering directory '/mnt/nfs/homes/jremy/Desktop'
+make: *** No rule to make target 'fclean'.  Stop.
+make: Leaving directory '/mnt/nfs/homes/jremy/Desktop'
+make: Entering directory '/mnt/nfs/homes/jremy/Desktop'
+make: *** No rule to make target 'malloc_test'.  Stop.
+make: Leaving directory '/mnt/nfs/homes/jremy/Desktop'
+make: Entering directory '/mnt/nfs/homes/jremy/Desktop'
+make: *** No rule to make target 'fclean'.  Stop.
+make: Leaving directory '/mnt/nfs/homes/jremy/Desktop'
+make: Entering directory '/mnt/nfs/homes/jremy/Desktop'
+make: *** No rule to make target 'malloc_test'.  Stop.
+make: Leaving directory '/mnt/nfs/homes/jremy/Desktop'
+make: Entering directory '/mnt/nfs/homes/jremy/Desktop'
+make: *** No rule to make target 'fclean'.  Stop.
+make: Leaving directory '/mnt/nfs/homes/jremy/Desktop'
+make: Entering directory '/mnt/nfs/homes/jremy/Desktop'
+make: *** No rule to make target 'malloc_test'.  Stop.
+make: Leaving directory '/mnt/nfs/homes/jremy/Desktop'
+make: Entering directory '/mnt/nfs/homes/jremy/Desktop'
+make: *** No rule to make target 'fclean'.  Stop.
+make: Leaving directory '/mnt/nfs/homes/jremy/Desktop'
+make: Entering directory '/mnt/nfs/homes/jremy/Desktop'
+make: *** No rule to make target 'malloc_test'.  Stop.
+make: Leaving directory '/mnt/nfs/homes/jremy/Desktop'
+make: Entering directory '/mnt/nfs/homes/jremy/Desktop'
+make: *** No rule to make target 'fclean'.  Stop.
+make: Leaving directory '/mnt/nfs/homes/jremy/Desktop'
+make: Entering directory '/mnt/nfs/homes/jremy/Desktop'
+make: *** No rule to make target 'malloc_test'.  Stop.
+make: Leaving directory '/mnt/nfs/homes/jremy/Desktop'

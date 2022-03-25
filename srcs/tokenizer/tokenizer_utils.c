@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:25:57 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/15 09:14:11 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/25 11:01:05 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ int	__add_char_to_token(char c, char **token)
 	appended_token = (char *)malloc((token_len + 2) * sizeof(char));
 	if (!appended_token)
 	{
-		free (token);
+		free (*token);
+		*token = NULL;
 		return (0);
 	}
 	while (i < token_len)
