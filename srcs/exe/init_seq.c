@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 16:20:32 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/24 11:21:41 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/28 15:08:39 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int __find_max_cmd(t_cmd *cmd)
 	return (i);
 }
 
-static char **__create_envp(char ***envp)
+char **__create_envp(char ***envp)
 {
 	int size;
 	int i;
@@ -80,7 +80,7 @@ int	__init_seq(t_sequ *seq, char ***envp, t_cmd *cmd)
 		seq->path = NULL;
 	seq->envp = __create_envp(envp);
 	if (!seq->envp)
-		return (0);
+		return (free_split(seq->path), 0);
 	return (1);
 }
 

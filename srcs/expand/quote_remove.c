@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:10:26 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/23 14:54:54 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/28 14:59:36 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ int __quote_remove(char **token_word, t_msh  *msh)
 			continue ;
 		}
 		else
-			__add_char_to_token(tmp[i], &quote_removed_token_word);
+			if(!__add_char_to_token(tmp[i], &quote_removed_token_word))
+				return(free(quote_removed_token_word), 0);
 		i++;
 		slash_status = 0;
 	}

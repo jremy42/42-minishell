@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fle-blay <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 09:36:28 by fle-blay          #+#    #+#             */
-/*   Updated: 2022/03/21 09:56:01 by fle-blay         ###   ########.fr       */
+/*   Updated: 2022/03/28 19:09:58 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,14 @@ int	update_oldpwd(t_msh *msh)
 		return (__FAIL);
 	old_pwd = __strdup("OLDPWD=");
 	if (!old_pwd)
-		return (__FAIL);
+		return (__MALLOC);
 	old_pwd = __strjoin(old_pwd, cwd);
 	if (!old_pwd)
-		return (__FAIL);
+		return (__MALLOC);
 	values[0] = old_pwd;
 	values[1] = NULL;
-	__export(values, msh);
+	if (__export(values, msh) == __MALLOC)
+		return (free(old_pwd), __MALLOC);
 	free(old_pwd);
 	return (__SUCCESS);
 }
@@ -60,10 +61,10 @@ int	update_pwd(t_msh *msh)
 		return (__FAIL);
 	pwd = __strdup("PWD=");
 	if (!pwd)
-		return (__FAIL);
+		return (__MALLOC);
 	pwd = __strjoin(pwd, cwd);
 	if (!pwd)
-		return (__FAIL);
+		return (__MALLOC);
 	values[0] = pwd;
 	values[1] = NULL;
 	__export(values, msh);
@@ -71,7 +72,7 @@ int	update_pwd(t_msh *msh)
 	return (__SUCCESS);
 }
 
-int	chdir_absolute_path(char *new_path)
+int	chdir_absolute_path(char *new_path, t_msh *msh)
 {
 	char	*new_pwd;
 	char	path[PATH_MAX];
@@ -80,27 +81,31 @@ int	chdir_absolute_path(char *new_path)
 		return (__FAIL);
 	new_pwd = create_absolut_pwd(path, new_path);
 	if (!new_pwd)
-		return (__FAIL);
+		return (__MALLOC);
+	if (!__access_dir(new_pwd))
+		return (free(new_pwd), __FAIL);
 	else
 	{
+		if (update_oldpwd(msh) == __MALLOC)
+			return(free(new_pwd), __MALLOC);
 		chdir(new_pwd);
 		free(new_pwd);
 	}
-	return (__SUCCESS);
+	return (update_pwd(msh));
 }
 
 int	chdir_previous(t_msh *msh)
 {
 	char	*save;
 
-	save = NULL;
-	if (!get_key(msh, "OLDPWD"))
+	if (!get_key(msh, "OLDPWD") || !__access_dir(get_key(msh, "OLDPWD")))
 		return (__FAIL);
 	save = __strdup(get_key(msh, "OLDPWD"));
 	if (!save)
-		return (__FAIL);
-	update_oldpwd(msh);
+		return (__MALLOC);
+	if (update_oldpwd(msh) == __MALLOC)
+			return(__MALLOC);
 	chdir(save);
 	free(save);
-	return (__SUCCESS);
+	return (update_pwd(msh));
 }

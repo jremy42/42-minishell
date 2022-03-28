@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 14:17:11 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/21 09:57:29 by fle-blay         ###   ########.fr       */
+/*   Updated: 2022/03/28 12:50:42 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,27 +15,16 @@
 int	__env(t_msh *msh)
 {
 	int		i;
-	char	*tmp;
 
-	tmp = NULL;
 	if (!msh->envp)
-		return (__FAIL);
-	tmp = __strdup("");
-	if (!tmp)
-		return (__MALLOC);
+		return (__SUCCESS);
 	i = 0;
 	while (msh->envp[i])
 	{
-		if (__strncmp(msh->envp[i][1], "1", 2) == 0)
-		{
-			tmp = __strjoin(tmp, msh->envp[i][0]);
-			tmp = __strjoin(tmp, "\n");
-			if (!tmp)
-				return (__MALLOC);
-		}
+		
+		if (!__strcmp(msh->envp[i][1], "1") && __strchr(msh->envp[i][0], '=' ))
+			__putendl_fd(msh->envp[i][0], 1);
 		i++;
 	}
-	__putstr_fd(tmp, 1);
-	free(tmp);
 	return (__SUCCESS);
 }

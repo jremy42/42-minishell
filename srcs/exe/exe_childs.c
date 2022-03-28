@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 16:21:22 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/24 11:14:19 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/28 16:37:09 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ void execute_child(t_sequ *seq, t_cmd *cmd, t_cmd *first_cmd)
 		__exit_child(seq, first_cmd, 0, 0);
 	if (__is_builtin(cmd->arg))
 	{
-		__exec_builtin(cmd->arg, cmd->msh);
+		__exec_builtin(cmd->arg, cmd->msh, cmd);
 		__exit_child(seq, first_cmd, cmd->msh->rv, 0);
 	}
 	path_cmd = __get_path(seq->path, cmd->arg[0]);
@@ -141,7 +141,14 @@ void execute_child(t_sequ *seq, t_cmd *cmd, t_cmd *first_cmd)
 		}
 	}
 	if (path_cmd)
+	{
+		if (access(path_cmd, X_OK) < 0)
+		{
+			__putendl_fd("Minishell : Permission denied", 2);
+			__exit_child(seq, first_cmd, 126, 0);
+		}
 		execve(path_cmd, cmd->arg, seq->envp);
+	}
 	//fprintf(stderr, " Fail execve\n");
 	__exit_child(seq, first_cmd, errno, 0);
 	

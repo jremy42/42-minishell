@@ -157,7 +157,7 @@ int	__cd(char *new_path, t_msh *msh);
 int	__env(t_msh *msh);
 int	__unset(char **arg, t_msh *msh);
 int	__export(char **key_val, t_msh *msh);
-int	__bin_exit(char **key_val, t_msh *msh);
+int	__bin_exit(char **key_val, t_msh *msh, t_cmd *cmd);
 
 //Export utils
 
@@ -176,8 +176,9 @@ int	print_exported_values(char ***envp);
 char	*create_absolut_pwd(char *pwd, char *new_path);
 int	update_oldpwd(t_msh *msh);
 int	update_pwd(t_msh *msh);
-int	chdir_absolute_path(char *new_path);
+int	chdir_absolute_path(char *new_path, t_msh *msh);
 int	chdir_previous(t_msh *msh);
+int __access_dir(char *dir);
 
 
 

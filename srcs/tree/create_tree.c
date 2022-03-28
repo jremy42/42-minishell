@@ -1,15 +1,25 @@
 #include "minishell.h"
 
+
+t_node *__reinit_node(t_node ***node_tab)
+{
+	free_split((char**)*node_tab);
+	*node_tab = NULL;
+	return (NULL);
+}
 t_node *__give_node(int count, int reset)
 {
 	int i;
 	static int state = -1;
-	static t_node	**node_tab;
+	static t_node	**node_tab = NULL;
 
 	i = -1;
 	if (reset)
 	{
 		state = 0;
+		free(node_tab);
+		if (count == 0)
+			return (NULL);
 		node_tab = (t_node **)malloc(count * sizeof(t_node *));
 		if (!node_tab)
 			return (NULL);
@@ -17,11 +27,7 @@ t_node *__give_node(int count, int reset)
 		{
 			node_tab[i] = (t_node *)malloc(sizeof(t_node));
 			if (!node_tab[i])
-			{
-				while (--i >= 0)
-					free(node_tab[i]);
-				return (free(node_tab),NULL);
-			}
+				return (__reinit_node(&node_tab));
 		}
 		return (node_tab[0]);
 	}

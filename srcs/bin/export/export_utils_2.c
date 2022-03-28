@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 10:04:49 by fle-blay          #+#    #+#             */
-/*   Updated: 2022/03/24 12:29:07 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/28 12:39:15 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,11 @@ int	modify_status_key_val(t_msh *msh, char *key_val)
 		i++;
 	}
 	if (!msh->envp[i])
-		return (__FAIL);
+		return (add_key_val(msh, key_val, get_envp_size(msh)));
 	free(msh->envp[i][1]);
 	msh->envp[i][1] = __strdup("1");
 	if (!msh->envp[i][1])
-		return (__FAIL);
+		return (__MALLOC);
 	return (__SUCCESS);
 }
 
@@ -46,7 +46,7 @@ char	*get_key(t_msh *msh, char *key)
 	if (!msh->envp[i])
 	{
 		__putstr_fd(key, 2);
-		__putstr_fd("not set\n", 2);
+		__putstr_fd(" not set\n", 2);
 		return (NULL);
 	}
 	return (__strchr(msh->envp[i][0], '=') + 1);

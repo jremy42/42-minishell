@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 09:50:45 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/22 15:19:10 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/28 16:43:36 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int __check_parenthesis_in_pipe(t_lexing *lexing)
 
 
 
-static int __execute_pipe_seq(t_lexing *lexing, t_msh *msh)
+int __execute_pipe_seq(t_lexing *lexing, t_msh *msh)
 {
 	t_cmd *cmd;
 	int	trim;
@@ -64,14 +64,25 @@ static int __execute_pipe_seq(t_lexing *lexing, t_msh *msh)
 	}
 	if (!__parameter_expand_token(lexing, msh))
 		__exit(msh);
-	__field_spliting_token(lexing, msh);
-	__handle_wildcards(msh, lexing);
-	__quote_removal_token(lexing, msh);
+	printf("Param expand done\n");
+	if(!__field_spliting_token(lexing, msh))
+		__exit(msh);
+	printf("fieldsplit done\n");
+	if(!__handle_wildcards(msh, lexing))
+		__exit(msh);
+	printf("wildcard done\n");
+	if (!__quote_removal_token(lexing, msh))
+		__exit(msh);
+	printf("quote remove done\n");
 	cmd = create_cmd_list(lexing, msh);
 	if (!cmd)
-		return (-1);
+		__exit(msh);
+	printf("cmd list create done\n");
 	print_cmd_lst(cmd);
 	execute_seq(cmd, msh);
+	printf("exit list done\n");
+	if(msh->rv == 240)
+		__exit(msh);
 	return (msh->rv);
 }
 

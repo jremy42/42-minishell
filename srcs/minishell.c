@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:25:57 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/25 18:08:56 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/28 15:46:55 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,14 +148,14 @@ int	__treat_user_input(char *arg, t_msh *msh)
 		return (__lexing_full_list_clear(&lexing),__exit_error(msh, 3, "create tree"));
 	syntax_tree = __create_tree(lexing, &(msh->root), &parenthesis);
 	DEBUG && print2D(msh->root);
-	printf("clear parenthesis\n");
+	//printf("clear parenthesis\n");
 	__lexing_full_list_clear(&parenthesis);
 	parenthesis = NULL;
 	if (syntax_tree == 0)
 		return (__destroy_tree(&msh->root), -1);
 	//__exit_error(msh, 1, "Malloc test");
 	msh->rv = __execute_tree(msh->root, msh);
-	printf("destroy tree\n");
+	//printf("destroy tree\n");
 	__destroy_tree(&msh->root);
 	return (msh->rv);
 }
@@ -231,6 +231,7 @@ int	main (int ac, char *av[], char *envp[])
 	t_msh	msh;
 	
 	msh = (t_msh){.rv = 0};
+	//printf("size = %lu\n", sizeof(t_glob));
 	if (!get_env(&msh, envp))
 		return (1);
 	if (ac > 1)

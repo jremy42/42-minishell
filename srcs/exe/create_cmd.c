@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 16:19:12 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/22 09:48:01 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/28 15:28:47 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ int add_next_cmd(t_cmd **start, t_lexing **lexing, t_msh *msh, int index)
 		if ((*lexing)->type == REDIRECTION || (*lexing)->type == HERE_DOC)
 		{
 			if (!__add_redirect(new, *lexing))
-				return (0);
+				return(__redirect_list_clear(new->redirect), (free(new->arg), free(new), 0));
 			*lexing = (*lexing)->next->next;
 			continue ;
 		}

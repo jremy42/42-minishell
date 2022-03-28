@@ -92,7 +92,7 @@ int __expand_word(char **token_word, t_msh  *msh)
 	char *tmp;
 	int     i;
 	char    *expanded_token_word;
-	
+
 	expanded_token_word = __strdup("");
 	if (!expanded_token_word)
 		return (0);
@@ -106,21 +106,22 @@ int __expand_word(char **token_word, t_msh  *msh)
 			&& !slash_status)
 		{
 			slash_status = BACKSLASH;
-			__add_char_to_token(tmp[i], &expanded_token_word);
+			if (!__add_char_to_token(tmp[i], &expanded_token_word))
+				return(free(expanded_token_word), 0);
 			i++;
 			continue ;
 		}
-	
-		if (quote_status != __return_state(tmp[i], quote_status, slash_status))
-			quote_status = __return_state(tmp[i], quote_status, slash_status);
-		
+		quote_status = __return_state(tmp[i], quote_status, slash_status);		
 		if(!slash_status && __treat_dollar(tmp[i], tmp[i + 1], quote_status))
 		{
 			if(!__parameter_expand(tmp + i + 1, msh, &expanded_token_word, &i))
-				return (0);
+				return (free(expanded_token_word), 0);
 		}
 		else
-			__add_char_to_token(tmp[i], &expanded_token_word);
+		{
+			if (!__add_char_to_token(tmp[i], &expanded_token_word))
+				return(free(expanded_token_word), 0);
+		}
 		i++;
 		slash_status = 0;
 	}

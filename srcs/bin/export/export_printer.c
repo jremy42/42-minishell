@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 09:36:33 by fle-blay          #+#    #+#             */
-/*   Updated: 2022/03/24 12:38:26 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/28 12:42:32 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,11 +91,16 @@ static char	*get_smallest_sup_value(char *old_small, char ***envp)
 static void	__get_printed_export(char *curr_printed)
 {
 	write(1, "export ", 7);
-	write(1, curr_printed, __strchr(curr_printed, '=') - curr_printed + 1);
-	write(1, "\"", 1);
-	write(1, __strchr(curr_printed, '=') + 1,
-		__strlen(__strchr(curr_printed, '=')) - 1);
-	write(1, "\"\n", 2);
+	if(__strchr(curr_printed, '='))
+	{
+		write(1, curr_printed, __strchr(curr_printed, '=') - curr_printed + 1);
+		write(1, "\"", 1);
+		write(1, __strchr(curr_printed, '=') + 1,
+			__strlen(__strchr(curr_printed, '=')) - 1);
+		write(1, "\"\n", 2);
+	}
+	else
+		__putendl_fd(curr_printed, 1);
 }
 
 int	print_exported_values(char ***envp)

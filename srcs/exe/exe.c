@@ -66,7 +66,7 @@ int __is_builtin(char **arg)
 	return (0);
 }
 
-void	__exec_builtin(char **arg, t_msh *msh)
+int	__exec_builtin(char **arg, t_msh *msh,  t_cmd *cmd)
 {
 
 	if (__strcmp(arg[0], "echo") == 0)
@@ -86,7 +86,8 @@ void	__exec_builtin(char **arg, t_msh *msh)
 	if (__strcmp(arg[0], "unset") == 0)
 		msh->rv = __unset(arg + 1, msh);
 	if (__strcmp(arg[0], "exit") == 0)
-		msh->rv = __bin_exit(arg, msh);
+		msh->rv = __bin_exit(arg, msh, cmd);
+	return(msh->rv);
 }
 
 int	__save_fd(int *std)
@@ -169,14 +170,14 @@ int execute_seq(t_cmd *cmd, t_msh *msh)
 			if(!__handle_redirect_builtin(cmd))
 				return (__cmd_node_list_clear(cmd), 0);
 		}
-		__exec_builtin(cmd->arg, msh);
+		__exec_builtin(cmd->arg, msh, cmd);
 		DEBUG && fprintf(stderr, "cmd->redirect : [%p]\n", cmd->redirect);
 		if (cmd->redirect && !__restore_fd(std))
 			__putendl_fd(strerror(errno), 2);
-		return (__cmd_node_list_clear(cmd), 0);
+		return (__cmd_node_list_clear(cmd), msh->rv);
 	}
 	if (!__init_seq(&seq, msh->envp, cmd))
-		return (__putstr_fd("Malloc error\n", 2), 0);
+		return (__cmd_node_list_clear(cmd), __putstr_fd("Malloc error\n", 2), 0);
 	msh->rv = __launcher_fork(&seq, cmd, cmd);
 	__clean_tmp_hd(cmd);
 	free_split(seq.path);

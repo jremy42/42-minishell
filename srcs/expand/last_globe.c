@@ -23,8 +23,8 @@ t_glob	*__glob_new(char *content, t_globe_type type, int size)
 		return (NULL);
 	newlst->to_find = __strndup(content, size);
 	DEBUG && fprintf(stderr, " add glob >%s< type >%d<\n", newlst->to_find, type);
-	if (!newlst->to_find)
-		return (NULL);
+	if (!newlst->to_find && size)
+		return (free(newlst), NULL);
 	newlst->type = type;
 	newlst->next = NULL;
 	return (newlst);
@@ -107,6 +107,7 @@ void	__glob_list_clear(t_glob *start)
 	while (start)
 	{
 		next_to_free = start->next;
+		printf("start->to_find : [%s], type : %d\n", start->to_find, start->type);
 		free(start->to_find);
 		free(start);
 		start = next_to_free;
@@ -135,16 +136,16 @@ t_list    *__init_dir_content(void)
         {
             tmp = __strdup(curr_dir->d_name);
             if (!tmp)
-                return (__lstclear(&dir_content, NULL), NULL);
+                return (__lstclear(&dir_content, free), closedir(dp), NULL);
             new_entry = __lstnew(tmp);
             if (!new_entry)
-                return (__lstclear(&dir_content, NULL), NULL);
+                return (free(tmp), __lstclear(&dir_content, free), closedir(dp), NULL);
             __lstadd_back(&dir_content, new_entry);
         }
         curr_dir = readdir(dp);
     }
     if (closedir(dp) < 0)
-        return (__lstclear(&dir_content, NULL), NULL);
+        return (__lstclear(&dir_content, free), NULL);
     return (dir_content);
 }
 
@@ -286,7 +287,7 @@ int __file_find(char *file_name, t_glob *glob_lst)
 
 	if (!glob_lst)
 		return (1);
-	if(!glob_lst->to_find[0])
+	if(!glob_lst->to_find)
 		return(__file_find(file_name,glob_lst->next));
 	if (glob_lst->type == 0)
 	{
@@ -367,9 +368,10 @@ int    __handle_wildcards(t_msh *msh, t_lexing *lexing)
 		if(__move_to_next_unquoted_char(lexing->token, '*') >= 0)
 		{
 			glob_lst = __create_glob_lst(&lexing->token);
-			__quote_removal_glob(glob_lst, msh);
 			if (!glob_lst)
-				return (0);
+				return (__lstclear(&dir_content, free), 0);
+			if(!__quote_removal_glob(glob_lst, msh))
+				return ( __glob_list_clear(glob_lst),__lstclear(&dir_content, free), 0);
 			while(dir_content)
 			{
 				if(__file_find((char *)dir_content->content, glob_lst))

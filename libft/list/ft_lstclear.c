@@ -21,7 +21,8 @@ void	__lstclear(t_list **alst, void (*del)(void *))
 	while (*alst != NULL)
 	{
 		tmp = (*alst)->next;
-		del((*alst)->content);
+		if (del)
+			del((*alst)->content);
 		free(*alst);
 		*alst = tmp;
 	}

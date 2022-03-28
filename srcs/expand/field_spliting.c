@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:10:26 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/22 15:29:43 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/28 15:32:10 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ int	__split_token(t_lexing *lexing, t_msh *msh)
 	t_list		*save;
 	start = NULL;
 	
-	__tokenize(lexing->token, &start, msh);
+	if (!__tokenize(lexing->token, &start, msh))
+		return (0);
 	save = start;
 	while (start)	
 	{
