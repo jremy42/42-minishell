@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 16:21:22 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/29 19:16:57 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/29 19:24:24 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,12 +132,12 @@ void execute_child(t_sequ *seq, t_cmd *cmd, t_cmd *first_cmd)
 	{
 		if (access(cmd->arg[0], F_OK) < 0)
 		{
-			print_error(cmd->arg[0], "command not found\n", NULL);
+			print_error(cmd->arg[0], "Command not found\n", NULL);
 			__exit_child(seq, first_cmd, 127, 0);
 		}
 		if (access(cmd->arg[0], X_OK) < 0)
 		{
-			print_error(cmd->arg[0], "permission denied\n", NULL);
+			print_error(cmd->arg[0], "Permission denied\n", NULL);
 			__exit_child(seq, first_cmd, 126, 0);
 		}
 		stat(cmd->arg[0], &buff);
@@ -152,7 +152,7 @@ void execute_child(t_sequ *seq, t_cmd *cmd, t_cmd *first_cmd)
 	{
 		if (access(path_cmd, X_OK) < 0)
 		{
-			print_error(cmd->arg[0], "permission denied\n", NULL);
+			print_error(cmd->arg[0], "Permission denied\n", NULL);
 			__exit_child(seq, first_cmd, 126, 0);
 		}
 		stat(path_cmd, &buff);
