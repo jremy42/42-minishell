@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 14:53:33 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/29 17:37:38 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/29 17:42:39 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,21 +19,10 @@ static	int	__check_overflow(long long result)
 	return (0);
 }
 
-static int	__check_digit(const char *nb)
+static int	__isisspace(char c)
 {
-	int		i;
-	int		check;
-
-	i = 0;
-	check = 0;
-	while (nb[i])
-	{
-		if (__isdigit(nb[i]) != 1)
-			return (-1);
-		i++;
-	}
-	if (i == check)
-		return (-1);
+	if ((c > 0 && c < 18) || (c == 32))
+		return (1);
 	return (0);
 }
 
@@ -45,9 +34,9 @@ int	__atol(const char *nb, int *res)
 
 	i = 0;
 	sign = 1;
-	result = 0;
-	if (__check_digit(nb) == -1)
-		return (0);
+	result = 0;	
+	while (__isisspace(nb[i]))
+		i++;
 	if (nb[i] == '-' || nb[i] == '+')
 	{
 		if (nb[i] == '-')
