@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 16:21:22 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/28 16:37:09 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/29 15:35:10 by fred             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,12 +131,12 @@ void execute_child(t_sequ *seq, t_cmd *cmd, t_cmd *first_cmd)
 	{
 		if (access(cmd->arg[0], F_OK) < 0)
 		{
-			__putendl_fd("Minishell : Command not found", 2);
+			print_error(cmd->arg[0], "command not found\n", NULL);
 			__exit_child(seq, first_cmd, 127, 0);
 		}
 		if (access(cmd->arg[0], X_OK) < 0)
 		{
-			__putendl_fd("Minishell : Permission denied", 2);
+			print_error(cmd->arg[0], "permission denied\n", NULL);
 			__exit_child(seq, first_cmd, 126, 0);
 		}
 	}
@@ -144,7 +144,7 @@ void execute_child(t_sequ *seq, t_cmd *cmd, t_cmd *first_cmd)
 	{
 		if (access(path_cmd, X_OK) < 0)
 		{
-			__putendl_fd("Minishell : Permission denied", 2);
+			print_error(cmd->arg[0], "permission denied\n", NULL);
 			__exit_child(seq, first_cmd, 126, 0);
 		}
 		execve(path_cmd, cmd->arg, seq->envp);

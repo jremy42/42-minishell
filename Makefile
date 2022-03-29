@@ -39,7 +39,7 @@ srcs/split_quote.c
 IFLAGS =  -I includes/ -I libft/includes
 CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g3
 #CFLAGS = -Wall -Wextra -Werror
-CC = cc
+CC = clang
 OBJ = $(addprefix $(OBJS_PATH), $(SRC:.c=.o))
 HEADER = includes/minishell.h
 LIBFT = ./libft

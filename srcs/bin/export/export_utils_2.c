@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 10:04:49 by fle-blay          #+#    #+#             */
-/*   Updated: 2022/03/28 12:39:15 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/29 14:49:23 by fred             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,7 @@ char	*get_key(t_msh *msh, char *key)
 		i++;
 	}
 	if (!msh->envp[i])
-	{
-		__putstr_fd(key, 2);
-		__putstr_fd(" not set\n", 2);
 		return (NULL);
-	}
 	return (__strchr(msh->envp[i][0], '=') + 1);
 }
 
