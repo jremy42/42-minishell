@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 16:10:37 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/29 16:35:17 by fred             ###   ########.fr       */
+/*   Updated: 2022/03/29 17:34:29 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,11 @@ int	__bin_exit(char **key_val, t_msh *msh, t_cmd *cmd)
 			}
 			i++;
 		}
-		msh->rv = __atoi(key_val[1]);
+		if(!__atol(key_val[1], &msh->rv))
+		{
+			print_error("exit", key_val[1], "numeric argument required");
+			msh->rv = -1;
+		}
 		__cmd_node_list_clear(cmd);
 		__exit(msh);
 	}

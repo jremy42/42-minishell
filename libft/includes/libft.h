@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 16:01:03 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/23 18:17:53 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/29 17:26:50 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <stdlib.h>
 # include <unistd.h>
+# include <limits.h>
 # define BUFFER_SIZE 1
 
 typedef struct s_list
@@ -90,5 +91,6 @@ void	free_split(char **split);
 char	*__strstr(const char *str, const char *find);
 char	*__strrstr(const char *str, const char *find);
 char	*__strncpy(char *dst, char *src, size_t count);
+int		__atol(const char *nb, int *res);
 
 #endif

@@ -45,6 +45,7 @@ list/ft_lstdelone.c \
 list/ft_lstclear.c \
 list/ft_lstiter.c \
 list/ft_lstmap.c\
+stdlib/ft_atol.c\
 garbage_collector/free.c\
 garbage_collector/malloc.c
 
