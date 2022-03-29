@@ -191,6 +191,8 @@ void	destroy_env(t_msh *msh);
 int __exit(t_msh *msh);
 int	__exit_error(t_msh *msh, int error, char *str);
 
+int	update_shlvl(t_msh *msh);
+
 //tokenizer
 
 t_state	__return_state(char c, int state, int slash_state);

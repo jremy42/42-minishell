@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:25:57 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/28 15:46:55 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/29 09:52:17 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,10 @@ int	get_env(t_msh *msh, char *envp[])
 			return (free(msh->envp[i][0]), free(msh->envp[i]), partial_destroy_env(msh, i), 0);
 		msh->envp[i][2] = NULL;
 	}
+	if (update_pwd(msh) == __MALLOC)
+		__exit_error(msh, 240, "Malloc Error in update pwd");
+	if (update_shlvl(msh) == __MALLOC)
+		__exit_error(msh, 240, "Malloc Error in update shlvl");
 	return (1);
 }
 

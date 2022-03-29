@@ -137,7 +137,7 @@ int	__split_expanded_token(t_lexing *lexing)
 
 	i = 0;
 
-	printf("lexing->token = %s\n", lexing->token);
+	DEBUG && printf("lexing->token = %s\n", lexing->token);
 	split_token = __split(lexing->token, ' ');
 	if (!split_token)
 		return (0);

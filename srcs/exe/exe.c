@@ -70,11 +70,7 @@ int	__exec_builtin(char **arg, t_msh *msh,  t_cmd *cmd)
 {
 
 	if (__strcmp(arg[0], "echo") == 0)
-	{
-		__putstr_fd("\x1b[33m", 1);
 		msh->rv =__echo(arg, 1);
-		__putstr_fd("\x1b[0m", 1);
-	}
 	if (__strcmp(arg[0], "cd") == 0)
 		msh->rv = __cd(arg[1], msh);
 	if (__strcmp(arg[0], "pwd") == 0)

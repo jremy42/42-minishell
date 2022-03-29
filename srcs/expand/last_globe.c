@@ -107,7 +107,7 @@ void	__glob_list_clear(t_glob *start)
 	while (start)
 	{
 		next_to_free = start->next;
-		printf("start->to_find : [%s], type : %d\n", start->to_find, start->type);
+		DEBUG && printf("start->to_find : [%s], type : %d\n", start->to_find, start->type);
 		free(start->to_find);
 		free(start);
 		start = next_to_free;
