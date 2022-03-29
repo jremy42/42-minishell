@@ -25,7 +25,7 @@ int __access_dir(char *dir)
 	//__putstr_fd("No such file or directory\n", 2);
 		return (0);
 	}
-	if (access(dir, R_OK) < 0)
+	if (access(dir, X_OK) < 0)
 	{
 		__putstr_fd("Minishell : cd : ", 2);
 		__putendl_fd(strerror(errno), 2);
