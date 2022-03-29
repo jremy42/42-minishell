@@ -12,14 +12,14 @@ int __is_valide_operator(char *token)
 
 void __synthax_error(char * str)
 {
-	write(2,"Syntax error near :", 19);
+	write(2,"minishell: syntax error near :", 19);
 	write(2, str, __strlen(str));
 	write(2, "\n", 1);
 }
 
 void __invalid_error(char * str)
 {
-	write(2,"Valid token but not handled in minishell:", 42);
+	write(2,"minishell: Valid token but not handled in minishell:", 42);
 	write(2, str, __strlen(str));
 	write(2, "\n", 1);
 }
