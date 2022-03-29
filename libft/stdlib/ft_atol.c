@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 14:53:33 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/29 17:42:39 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/29 17:50:46 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static	int	__check_overflow(long long result)
 {
-	if (result < INT_MIN || result > INT_MAX)
+	if (result < LLONG_MIN || result > LLONG_MAX)
 		return (-1);
 	return (0);
 }
@@ -28,7 +28,7 @@ static int	__isisspace(char c)
 
 int	__atol(const char *nb, int *res)
 {
-	long long	result;
+	unsigned long long	result;
 	int			sign;
 	int			i;
 
