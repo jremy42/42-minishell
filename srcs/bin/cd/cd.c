@@ -14,26 +14,12 @@
 #include <unistd.h>
 #include <stdio.h>
 
-int __access_dir(char *dir)
+int __access_dir(char *dir, char *true_dir)
 {
 	struct stat buff;
 
-	if (access(dir, F_OK) < 0)
-	{
-		__putstr_fd("minishell : cd : ", 2);
-		__putstr_fd(dir, 2);
-		__putendl_fd(strerror(errno), 2);
-	//__putstr_fd("No such file or directory\n", 2);
-		return (0);
-	}
-	if (access(dir, X_OK) < 0)
-	{
-		__putstr_fd("minishell : cd : ", 2);
-		__putstr_fd(dir, 2);
-		__putendl_fd(strerror(errno), 2);
-		//__putstr_fd("Permission denied\n", 2);
-		return (0);
-	}
+	if (access(dir, F_OK) < 0 || access(dir, X_OK) < 0)
+		return(print_error("cd",true_dir, strerror(errno)), 0);
 	stat(dir, &buff);
 	if(!S_ISDIR(buff.st_mode))
 	{
@@ -51,7 +37,7 @@ int	__cd(char *new_path, t_msh *msh)
 
 	if (!new_path)
 	{
-		if (!get_key(msh, "HOME") || !__access_dir(get_key(msh, "HOME")))
+		if (!get_key(msh, "HOME") || !__access_dir(get_key(msh, "HOME"),get_key(msh, "HOME")))
 			return (__FAIL);
 		if (update_oldpwd(msh) == __MALLOC)
 			return (__MALLOC);
@@ -64,7 +50,7 @@ int	__cd(char *new_path, t_msh *msh)
 	{
 		if (new_path[0] == '/')
 		{
-			if (!__access_dir(new_path))
+			if (!__access_dir(new_path, new_path))
 				return (__FAIL);
 			if (update_oldpwd(msh) == __MALLOC)
 				return (__MALLOC);

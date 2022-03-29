@@ -178,7 +178,7 @@ int	update_oldpwd(t_msh *msh);
 int	update_pwd(t_msh *msh);
 int	chdir_absolute_path(char *new_path, t_msh *msh);
 int	chdir_previous(t_msh *msh);
-int __access_dir(char *dir);
+int __access_dir(char *dir, char *true_dir);
 
 
 
@@ -190,8 +190,8 @@ void __destroy_tree(t_node **current_node);
 void	destroy_env(t_msh *msh);
 int __exit(t_msh *msh);
 int	__exit_error(t_msh *msh, int error, char *str);
-
 int	update_shlvl(t_msh *msh);
+void print_error(char *cmd, char *arg, char *error_msg);
 
 //tokenizer
 
