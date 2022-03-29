@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:25:57 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/29 09:52:17 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/29 12:34:21 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,12 @@ char	*__get_prompt(t_msh *msh)
 		if (!msh->prompt)
 			return(__exit_error(msh, 3, "get prompt"), NULL);
 		msh->prompt = __strjoin(msh->prompt, RESET BOLDYELLOW "  ~  "RESET);
+		if (!msh->prompt)
+			return(__exit_error(msh, 3, "get prompt"), NULL);
+	}
+	else
+	{
+		msh->prompt = __strjoin(msh->prompt, RESET);
 		if (!msh->prompt)
 			return(__exit_error(msh, 3, "get prompt"), NULL);
 	}
@@ -211,6 +217,7 @@ int	__interactive_mode(t_msh *msh)
 		signal(SIGINT, __signal);
 		signal(SIGQUIT, __signal);
 		arg = readline(__get_prompt(msh));
+		//arg = readline(NULL);
 		add_history(arg);
 		__update_rv(msh);
 		if (arg == NULL)
@@ -224,6 +231,8 @@ int	__interactive_mode(t_msh *msh)
 		while(inputs[++i])
 			__treat_user_input(inputs[i], msh);
 		free_split(inputs);
+		msh->all_input = NULL;
+		inputs = NULL;
 		free(arg);
 	}
 	return (msh->rv);

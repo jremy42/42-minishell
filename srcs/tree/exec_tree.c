@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 09:50:45 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/29 10:08:32 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/29 11:16:53 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,26 +63,26 @@ int __execute_pipe_seq(t_lexing *lexing, t_msh *msh)
 		next_pipe = next_pipe->next;
 	}
 	if (!__parameter_expand_token(lexing, msh))
-		__exit(msh);
+		__exit_error(msh,240, "Malloc error in parameter expand\n");
 	DEBUG && printf("Param expand done\n");
 	if(!__field_spliting_token(lexing, msh))
-		__exit(msh);
+		__exit_error(msh,240, "Malloc error in field spliting\n");
 	DEBUG && printf("fieldsplit done\n");
 	if(!__handle_wildcards(msh, lexing))
-		__exit(msh);
+		__exit_error(msh,240, "Malloc error in wildcard\n");
 	DEBUG && printf("wildcard done\n");
 	if (!__quote_removal_token(lexing, msh))
-		__exit(msh);
+		__exit_error(msh,240, "Malloc error in quote removale\n");
 	DEBUG && printf("quote remove done\n");
 	cmd = create_cmd_list(lexing, msh);
 	if (!cmd)
-		__exit(msh);
+		__exit_error(msh,240, "Malloc error in create cmd list\n");
 	DEBUG && printf("cmd list create done\n");
 	print_cmd_lst(cmd);
 	execute_seq(cmd, msh);
 	DEBUG && printf("exit list done\n");
 	if(msh->rv == 240)
-		__exit(msh);
+		__exit_error(msh,240, "Malloc error in exe\n");
 	return (msh->rv);
 }
 

@@ -58,7 +58,7 @@ _CYAN=	$'\033[36m
 _WHITE=	$'\033[37m
 _END= $'\033[37m
 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g3
 IFLAGS = -I includes/
 HEADER = includes/libft.h
 NAME = libft.a

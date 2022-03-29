@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 09:36:28 by fle-blay          #+#    #+#             */
-/*   Updated: 2022/03/29 10:01:13 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/29 12:40:32 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	update_oldpwd(t_msh *msh)
 	char	cwd[PATH_MAX];
 
 	if (!getcwd(cwd, PATH_MAX))
-		return (__FAIL);
+        return (__putendl_fd("Minishell : getcwd: cannot access directories:",2), __FAIL);
 	old_pwd = __strdup("OLDPWD=");
 	if (!old_pwd)
 		return (__MALLOC);
@@ -97,8 +97,8 @@ int	update_pwd(t_msh *msh)
 	char	cwd[PATH_MAX];
 
 	if (!getcwd(cwd, PATH_MAX))
-		return (__FAIL);
-	pwd = __strdup("PWD=");
+ 		return (__putendl_fd("Minishell : getcwd: cannot access directories:",2), __FAIL);
+ 	pwd = __strdup("PWD=");
 	if (!pwd)
 		return (__MALLOC);
 	pwd = __strjoin(pwd, cwd);
@@ -118,7 +118,7 @@ int	chdir_absolute_path(char *new_path, t_msh *msh)
 	char	path[PATH_MAX];
 
 	if (!getcwd(path, PATH_MAX))
-		return (__FAIL);
+		return (__putendl_fd("Minishell : getcwd: cannot access directories:",2), __FAIL);
 	new_pwd = create_absolut_pwd(path, new_path);
 	if (!new_pwd)
 		return (__MALLOC);

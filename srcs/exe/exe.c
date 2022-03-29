@@ -83,6 +83,7 @@ int	__exec_builtin(char **arg, t_msh *msh,  t_cmd *cmd)
 		msh->rv = __unset(arg + 1, msh);
 	if (__strcmp(arg[0], "exit") == 0)
 		msh->rv = __bin_exit(arg, msh, cmd);
+	//fprintf(stderr,"msh->rv = %d\n", msh->rv);
 	return(msh->rv);
 }
 

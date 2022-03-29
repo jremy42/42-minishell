@@ -114,21 +114,19 @@ void	__glob_list_clear(t_glob *start)
 	}
 }
 
-t_list    *__init_dir_content(void)
+int   __init_dir_content(t_list **dir_content)
 {
     char    path[PATH_MAX];
     struct  dirent *curr_dir;
     DIR     *dp;
-    t_list  *dir_content;
     t_list  *new_entry;
     char    *tmp;
 
-    dir_content = NULL;
     if (!getcwd(path, PATH_MAX))
-        return (NULL);
+        return (__putendl_fd("Minishell : getcwd: cannot access directories:",2), 1);
     dp = opendir(path);
     if (!dp)
-        return (NULL);
+        return (0);
     curr_dir = readdir(dp);
     while (curr_dir)
     {
@@ -136,17 +134,17 @@ t_list    *__init_dir_content(void)
         {
             tmp = __strdup(curr_dir->d_name);
             if (!tmp)
-                return (__lstclear(&dir_content, free), closedir(dp), NULL);
+                return (__lstclear(dir_content, free), closedir(dp), 0);
             new_entry = __lstnew(tmp);
             if (!new_entry)
-                return (free(tmp), __lstclear(&dir_content, free), closedir(dp), NULL);
-            __lstadd_back(&dir_content, new_entry);
+                return (free(tmp), __lstclear(dir_content, free), closedir(dp), 0);
+            __lstadd_back(dir_content, new_entry);
         }
         curr_dir = readdir(dp);
     }
     if (closedir(dp) < 0)
-        return (__lstclear(&dir_content, free), NULL);
-    return (dir_content);
+        return (__lstclear(dir_content, free), 0);
+    return (1);
 }
 
 void    __print_dir(t_list *dir_content)
@@ -356,11 +354,9 @@ int    __handle_wildcards(t_msh *msh, t_lexing *lexing)
 	t_glob		*glob_lst;
 	t_lexing	*save_next;
 
-    (void)msh;
-    dir_content = __init_dir_content();
-    if (!dir_content)
+	dir_content = NULL;
+    if (!__init_dir_content(&dir_content))
 		return(0);
-	//__print_dir(dir_content);
 	save = dir_content;
 	while(lexing)
 	{

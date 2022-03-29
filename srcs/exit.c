@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:25:57 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/28 13:07:00 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/29 10:45:23 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ int	__exit(t_msh *msh)
 	destroy_env(msh);
 	free(msh->prompt);
 	free_split(msh->all_input);
+	msh->all_input = NULL;
 	__give_node(0, 1);
 	exit (msh->rv);
 }
@@ -68,6 +69,7 @@ int	__exit_error(t_msh *msh, int error, char *str)
 	destroy_env(msh);
 	free(msh->prompt);
 	free_split(msh->all_input);
+	msh->all_input = NULL;
 	__give_node(0, 1);
 	exit (msh->rv);
 }

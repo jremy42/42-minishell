@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:43:02 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/22 09:11:02 by fle-blay         ###   ########.fr       */
+/*   Updated: 2022/03/29 12:40:54 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,5 @@ int	__pwd(int fd)
 		__putstr_fd("\n", fd);
 		return (__SUCCESS);
 	}
-	return (__FAIL);
+	return (__putendl_fd("Minishell : getcwd: cannot access directories:",2), __FAIL);
 }
