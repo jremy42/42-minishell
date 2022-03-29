@@ -170,6 +170,7 @@ int		get_envp_size(t_msh *msh);
 int	join_key_val(t_msh *msh, char *key_val);
 int	get_number_exported_values(char ***envp);
 int	print_exported_values(char ***envp);
+int	__check_valid_identifier(char *key_val);
 
 //cd utils
 
