@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 14:53:33 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/29 17:27:25 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/29 17:37:38 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,6 @@ int	__atol(const char *nb, int *res)
 			return (0);
 		i++;
 	}
-	*res = (int)result;
+	*res = (int)result * sign;
 	return (1);
 }
