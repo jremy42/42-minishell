@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 16:21:22 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/29 15:35:10 by fred             ###   ########.fr       */
+/*   Updated: 2022/03/29 19:16:57 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,7 @@ void __exit_child(t_sequ *seq, t_cmd *cmd, int errno_copy, int error)
 void execute_child(t_sequ *seq, t_cmd *cmd, t_cmd *first_cmd)
 {
 	char *path_cmd;
+	struct stat buff;
 	
 	DEBUG && fprintf(stderr, "cmd->redirect =>%p\n", cmd->redirect);	
 	if(cmd->redirect)
@@ -139,12 +140,25 @@ void execute_child(t_sequ *seq, t_cmd *cmd, t_cmd *first_cmd)
 			print_error(cmd->arg[0], "permission denied\n", NULL);
 			__exit_child(seq, first_cmd, 126, 0);
 		}
+		stat(cmd->arg[0], &buff);
+		if(S_ISDIR(buff.st_mode))
+		{
+			print_error(cmd->arg[0], "Is a directory\n", NULL);
+			__exit_child(seq, first_cmd, 126, 0);
+		}
+
 	}
 	if (path_cmd)
 	{
 		if (access(path_cmd, X_OK) < 0)
 		{
 			print_error(cmd->arg[0], "permission denied\n", NULL);
+			__exit_child(seq, first_cmd, 126, 0);
+		}
+		stat(path_cmd, &buff);
+		if(S_ISDIR(buff.st_mode))
+		{
+			print_error(cmd->arg[0], "Is a directory\n", NULL);
 			__exit_child(seq, first_cmd, 126, 0);
 		}
 		execve(path_cmd, cmd->arg, seq->envp);
