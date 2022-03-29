@@ -92,42 +92,17 @@ SHLVL=1$$
 TERM=xterm-256color$
 ================================================================================
 
-|> WITH exit -9223372036854775809\n
+|> WITH exit -9223372036854775808\n
+|  STATUS: expected 0 actual 255
 |---------------------------------------EXPECTED--------------------------------
-minishell: exit: -9223372036854775809: numeric argument required$
 |---------------------------------------ACTUAL----------------------------------
-================================================================================
-
-|> WITH exit 9223372036854775808\n
-|  STATUS: expected 255 actual 0
-|---------------------------------------EXPECTED--------------------------------
-minishell: exit: 9223372036854775808: numeric argument required$
-|---------------------------------------ACTUAL----------------------------------
-================================================================================
-
-|> WITH exit 18446744073709551615\n
-|---------------------------------------EXPECTED--------------------------------
-minishell: exit: 18446744073709551615: numeric argument required$
-|---------------------------------------ACTUAL----------------------------------
+minishell: exit: -9223372036854775808: numeric argument required$
 ================================================================================
 
 |> WITH exit 18446744073709551616\n
 |  STATUS: expected 255 actual 0
 |---------------------------------------EXPECTED--------------------------------
 minishell: exit: 18446744073709551616: numeric argument required$
-|---------------------------------------ACTUAL----------------------------------
-================================================================================
-
-|> WITH exit -9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999\n
-|  STATUS: expected 255 actual 1
-|---------------------------------------EXPECTED--------------------------------
-minishell: exit: -9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999: numeric argument required$
-|---------------------------------------ACTUAL----------------------------------
-================================================================================
-
-|> WITH exit 9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999\n
-|---------------------------------------EXPECTED--------------------------------
-minishell: exit: 9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999: numeric argument required$
 |---------------------------------------ACTUAL----------------------------------
 ================================================================================
 
@@ -166,12 +141,6 @@ exit: too many arguments$
 minishell: exit: Mollitia: numeric argument required$
 |---------------------------------------ACTUAL----------------------------------
 exit: too many arguments$
-================================================================================
-
-|> WITH exit 99999999999999999999999999999999999999999999999999999; echo should have exited\n
-|---------------------------------------EXPECTED--------------------------------
-minishell: exit: 99999999999999999999999999999999999999999999999999999: numeric argument required$
-|---------------------------------------ACTUAL----------------------------------
 ================================================================================
 
 |> WITH export\n
@@ -391,11 +360,11 @@ $
 Minishell : export : 'asdf ' not a valid identifier$
 AddressSanitizer:DEADLYSIGNAL$
 =================================================================$
-==124725==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000001 (pc 0x0000004e1642 bp 0x7ffe123d6350 sp 0x7ffe123d6330 T0)$
-==124725==The signal is caused by a READ memory access.$
-==124725==Hint: address points to the zero page.$
-    #0 0x4e1642 in __strlen /home/fred/Documents/Minishell/libft/string/ft_strlen.c:20:12$
-    #1 0x4e2afd in __strjoin /home/fred/Documents/Minishell/libft/string/ft_strjoin.c:42:24$
+==181591==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000001 (pc 0x0000004e1692 bp 0x7ffcddecb930 sp 0x7ffcddecb910 T0)$
+==181591==The signal is caused by a READ memory access.$
+==181591==Hint: address points to the zero page.$
+    #0 0x4e1692 in __strlen /home/fred/Documents/Minishell/libft/string/ft_strlen.c:20:12$
+    #1 0x4e2b4d in __strjoin /home/fred/Documents/Minishell/libft/string/ft_strjoin.c:42:24$
     #2 0x4d942e in __substitute_candidate /home/fred/Documents/Minishell/srcs/expand/expand.c:50:19$
     #3 0x4d9aed in __parameter_expand /home/fred/Documents/Minishell/srcs/expand/expand.c:76:12$
     #4 0x4da509 in __expand_word /home/fred/Documents/Minishell/srcs/expand/expand.c:120:8$
@@ -405,12 +374,12 @@ AddressSanitizer:DEADLYSIGNAL$
     #8 0x4c4d86 in __treat_user_input /home/fred/Documents/Minishell/srcs/minishell.c:167:12$
     #9 0x4c50bd in __non_interative_mode /home/fred/Documents/Minishell/srcs/minishell.c:189:5$
     #10 0x4c571d in main /home/fred/Documents/Minishell/srcs/minishell.c:251:3$
-    #11 0x7fe9dc87b0b2 in __libc_start_main /build/glibc-sMfBJT/glibc-2.31/csu/../csu/libc-start.c:308:16$
+    #11 0x7f811c6f70b2 in __libc_start_main /build/glibc-sMfBJT/glibc-2.31/csu/../csu/libc-start.c:308:16$
     #12 0x41b3ed in _start (/home/fred/Documents/Minishell/minishell+0x41b3ed)$
 $
 AddressSanitizer can not provide additional info.$
 SUMMARY: AddressSanitizer: SEGV /home/fred/Documents/Minishell/libft/string/ft_strlen.c:20:12 in __strlen$
-==124725==ABORTING$
+==181591==ABORTING$
 ================================================================================
 
 |> WITH export 'asdf ' B ' asdf asdf asd f' ' asdf ' '' 'asdf ' C; echo $A$B$C\n
@@ -439,11 +408,11 @@ $
 Minishell : export : 'asdf ' not a valid identifier$
 AddressSanitizer:DEADLYSIGNAL$
 =================================================================$
-==124731==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000001 (pc 0x0000004e1642 bp 0x7ffe16f68850 sp 0x7ffe16f68830 T0)$
-==124731==The signal is caused by a READ memory access.$
-==124731==Hint: address points to the zero page.$
-    #0 0x4e1642 in __strlen /home/fred/Documents/Minishell/libft/string/ft_strlen.c:20:12$
-    #1 0x4e2afd in __strjoin /home/fred/Documents/Minishell/libft/string/ft_strjoin.c:42:24$
+==181597==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000001 (pc 0x0000004e1692 bp 0x7ffd45abeab0 sp 0x7ffd45abea90 T0)$
+==181597==The signal is caused by a READ memory access.$
+==181597==Hint: address points to the zero page.$
+    #0 0x4e1692 in __strlen /home/fred/Documents/Minishell/libft/string/ft_strlen.c:20:12$
+    #1 0x4e2b4d in __strjoin /home/fred/Documents/Minishell/libft/string/ft_strjoin.c:42:24$
     #2 0x4d942e in __substitute_candidate /home/fred/Documents/Minishell/srcs/expand/expand.c:50:19$
     #3 0x4d9aed in __parameter_expand /home/fred/Documents/Minishell/srcs/expand/expand.c:76:12$
     #4 0x4da509 in __expand_word /home/fred/Documents/Minishell/srcs/expand/expand.c:120:8$
@@ -453,12 +422,12 @@ AddressSanitizer:DEADLYSIGNAL$
     #8 0x4c4d86 in __treat_user_input /home/fred/Documents/Minishell/srcs/minishell.c:167:12$
     #9 0x4c50bd in __non_interative_mode /home/fred/Documents/Minishell/srcs/minishell.c:189:5$
     #10 0x4c571d in main /home/fred/Documents/Minishell/srcs/minishell.c:251:3$
-    #11 0x7f002cc530b2 in __libc_start_main /build/glibc-sMfBJT/glibc-2.31/csu/../csu/libc-start.c:308:16$
+    #11 0x7f5eab0470b2 in __libc_start_main /build/glibc-sMfBJT/glibc-2.31/csu/../csu/libc-start.c:308:16$
     #12 0x41b3ed in _start (/home/fred/Documents/Minishell/minishell+0x41b3ed)$
 $
 AddressSanitizer can not provide additional info.$
 SUMMARY: AddressSanitizer: SEGV /home/fred/Documents/Minishell/libft/string/ft_strlen.c:20:12 in __strlen$
-==124731==ABORTING$
+==181597==ABORTING$
 ================================================================================
 
 |> WITH export A B C; echo $A$B$C\n
@@ -468,11 +437,11 @@ $
 |---------------------------------------ACTUAL----------------------------------
 AddressSanitizer:DEADLYSIGNAL$
 =================================================================$
-==124734==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000001 (pc 0x0000004e1642 bp 0x7fffa6c6d050 sp 0x7fffa6c6d030 T0)$
-==124734==The signal is caused by a READ memory access.$
-==124734==Hint: address points to the zero page.$
-    #0 0x4e1642 in __strlen /home/fred/Documents/Minishell/libft/string/ft_strlen.c:20:12$
-    #1 0x4e2afd in __strjoin /home/fred/Documents/Minishell/libft/string/ft_strjoin.c:42:24$
+==181600==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000001 (pc 0x0000004e1692 bp 0x7fff1c6ea1d0 sp 0x7fff1c6ea1b0 T0)$
+==181600==The signal is caused by a READ memory access.$
+==181600==Hint: address points to the zero page.$
+    #0 0x4e1692 in __strlen /home/fred/Documents/Minishell/libft/string/ft_strlen.c:20:12$
+    #1 0x4e2b4d in __strjoin /home/fred/Documents/Minishell/libft/string/ft_strjoin.c:42:24$
     #2 0x4d942e in __substitute_candidate /home/fred/Documents/Minishell/srcs/expand/expand.c:50:19$
     #3 0x4d9aed in __parameter_expand /home/fred/Documents/Minishell/srcs/expand/expand.c:76:12$
     #4 0x4da509 in __expand_word /home/fred/Documents/Minishell/srcs/expand/expand.c:120:8$
@@ -482,12 +451,12 @@ AddressSanitizer:DEADLYSIGNAL$
     #8 0x4c4d86 in __treat_user_input /home/fred/Documents/Minishell/srcs/minishell.c:167:12$
     #9 0x4c50bd in __non_interative_mode /home/fred/Documents/Minishell/srcs/minishell.c:189:5$
     #10 0x4c571d in main /home/fred/Documents/Minishell/srcs/minishell.c:251:3$
-    #11 0x7f67164fa0b2 in __libc_start_main /build/glibc-sMfBJT/glibc-2.31/csu/../csu/libc-start.c:308:16$
+    #11 0x7f06b08670b2 in __libc_start_main /build/glibc-sMfBJT/glibc-2.31/csu/../csu/libc-start.c:308:16$
     #12 0x41b3ed in _start (/home/fred/Documents/Minishell/minishell+0x41b3ed)$
 $
 AddressSanitizer can not provide additional info.$
 SUMMARY: AddressSanitizer: SEGV /home/fred/Documents/Minishell/libft/string/ft_strlen.c:20:12 in __strlen$
-==124734==ABORTING$
+==181600==ABORTING$
 ================================================================================
 
 |> WITH export A B C; env\n
