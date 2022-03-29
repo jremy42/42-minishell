@@ -126,7 +126,7 @@ int   __init_dir_content(t_list **dir_content)
         return (__putendl_fd("Minishell : getcwd: cannot access directories:",2), 1);
     dp = opendir(path);
     if (!dp)
-        return (0);
+        return (1);
     curr_dir = readdir(dp);
     while (curr_dir)
     {
