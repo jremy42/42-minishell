@@ -282,6 +282,7 @@ export TERM="xterm-256color"
 |---------------------------------------EXPECTED--------------------------------
 minishell: export: `1=a': not a valid identifier$
 |---------------------------------------ACTUAL----------------------------------
+minishell: export: 1=a: not a valid identifier$
 ================================================================================
 
 |> WITH export BONJOURJESUIS =a\n
@@ -289,66 +290,74 @@ minishell: export: `1=a': not a valid identifier$
 |---------------------------------------EXPECTED--------------------------------
 minishell: export: `=a': not a valid identifier$
 |---------------------------------------ACTUAL----------------------------------
+minishell: export: =a: not a valid identifier$
 ================================================================================
 
 |> WITH export BONJOUR\\JESUIS=a\n
+|  STATUS: expected 1 actual 0
 |---------------------------------------EXPECTED--------------------------------
 minishell: export: `BONJOUR\JESUIS=a': not a valid identifier$
 |---------------------------------------ACTUAL----------------------------------
-Minishell : export : 'BONJOUR\JESUIS=a' not a valid identifier$
+minishell: export: BONJOUR\JESUIS=a: not a valid identifier$
 ================================================================================
 
 |> WITH export BONJOUR\'JESUIS=a\n
+|  STATUS: expected 1 actual 0
 |---------------------------------------EXPECTED--------------------------------
 minishell: export: `BONJOUR'JESUIS=a': not a valid identifier$
 |---------------------------------------ACTUAL----------------------------------
-Minishell : export : 'BONJOUR'JESUIS=a' not a valid identifier$
+minishell: export: BONJOUR'JESUIS=a: not a valid identifier$
 ================================================================================
 
 |> WITH export BONJOUR\"JESUIS=a\n
+|  STATUS: expected 1 actual 0
 |---------------------------------------EXPECTED--------------------------------
 minishell: export: `BONJOUR"JESUIS=a': not a valid identifier$
 |---------------------------------------ACTUAL----------------------------------
-Minishell : export : 'BONJOUR"JESUIS=a' not a valid identifier$
+minishell: export: BONJOUR"JESUIS=a: not a valid identifier$
 ================================================================================
 
 |> WITH export BONJOUR\$JESUIS=a\n
+|  STATUS: expected 1 actual 0
 |---------------------------------------EXPECTED--------------------------------
 minishell: export: `BONJOUR$JESUIS=a': not a valid identifier$
 |---------------------------------------ACTUAL----------------------------------
-Minishell : export : 'BONJOUR$JESUIS=a' not a valid identifier$
+minishell: export: BONJOUR$JESUIS=a: not a valid identifier$
 ================================================================================
 
 |> WITH export BONJOUR\&JESUIS=a\n
+|  STATUS: expected 1 actual 0
 |---------------------------------------EXPECTED--------------------------------
 minishell: export: `BONJOUR&JESUIS=a': not a valid identifier$
 |---------------------------------------ACTUAL----------------------------------
-Minishell : export : 'BONJOUR&JESUIS=a' not a valid identifier$
+minishell: export: BONJOUR&JESUIS=a: not a valid identifier$
 ================================================================================
 
 |> WITH export BONJOUR\|JESUIS=a\n
+|  STATUS: expected 1 actual 0
 |---------------------------------------EXPECTED--------------------------------
 minishell: export: `BONJOUR|JESUIS=a': not a valid identifier$
 |---------------------------------------ACTUAL----------------------------------
-Minishell : export : 'BONJOUR|JESUIS=a' not a valid identifier$
+minishell: export: BONJOUR|JESUIS=a: not a valid identifier$
 ================================================================================
 
 |> WITH export BONJOUR\;JESUIS=a\n
+|  STATUS: expected 1 actual 0
 |---------------------------------------EXPECTED--------------------------------
 minishell: export: `BONJOUR;JESUIS=a': not a valid identifier$
 |---------------------------------------ACTUAL----------------------------------
-Minishell : export : 'BONJOUR;JESUIS=a' not a valid identifier$
+minishell: export: BONJOUR;JESUIS=a: not a valid identifier$
 ================================================================================
 
 |> WITH export \B\O\N\ \ \ \ \ \ \ JOURJESUIS=a\n
+|  STATUS: expected 1 actual 0
 |---------------------------------------EXPECTED--------------------------------
 minishell: export: `BON       JOURJESUIS=a': not a valid identifier$
 |---------------------------------------ACTUAL----------------------------------
-Minishell : export : 'BON       JOURJESUIS=a' not a valid identifier$
+minishell: export: BON       JOURJESUIS=a: not a valid identifier$
 ================================================================================
 
 |> WITH export A 'asdf ' B ' asdf asdf asd f' ' asdf ' '' 'asdf ' C; echo $A$B$C\n
-|  STATUS: expected 0 actual 1
 |---------------------------------------EXPECTED--------------------------------
 minishell: export: `asdf ': not a valid identifier$
 minishell: export: ` asdf asdf asd f': not a valid identifier$
@@ -357,29 +366,12 @@ minishell: export: `': not a valid identifier$
 minishell: export: `asdf ': not a valid identifier$
 $
 |---------------------------------------ACTUAL----------------------------------
-Minishell : export : 'asdf ' not a valid identifier$
-AddressSanitizer:DEADLYSIGNAL$
-=================================================================$
-==181591==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000001 (pc 0x0000004e1692 bp 0x7ffcddecb930 sp 0x7ffcddecb910 T0)$
-==181591==The signal is caused by a READ memory access.$
-==181591==Hint: address points to the zero page.$
-    #0 0x4e1692 in __strlen /home/fred/Documents/Minishell/libft/string/ft_strlen.c:20:12$
-    #1 0x4e2b4d in __strjoin /home/fred/Documents/Minishell/libft/string/ft_strjoin.c:42:24$
-    #2 0x4d942e in __substitute_candidate /home/fred/Documents/Minishell/srcs/expand/expand.c:50:19$
-    #3 0x4d9aed in __parameter_expand /home/fred/Documents/Minishell/srcs/expand/expand.c:76:12$
-    #4 0x4da509 in __expand_word /home/fred/Documents/Minishell/srcs/expand/expand.c:120:8$
-    #5 0x4da9ff in __parameter_expand_token /home/fred/Documents/Minishell/srcs/expand/expand.c:166:8$
-    #6 0x4d0de6 in __execute_pipe_seq /home/fred/Documents/Minishell/srcs/tree/exec_tree.c:65:7$
-    #7 0x4d106f in __execute_tree /home/fred/Documents/Minishell/srcs/tree/exec_tree.c:93:3$
-    #8 0x4c4d86 in __treat_user_input /home/fred/Documents/Minishell/srcs/minishell.c:167:12$
-    #9 0x4c50bd in __non_interative_mode /home/fred/Documents/Minishell/srcs/minishell.c:189:5$
-    #10 0x4c571d in main /home/fred/Documents/Minishell/srcs/minishell.c:251:3$
-    #11 0x7f811c6f70b2 in __libc_start_main /build/glibc-sMfBJT/glibc-2.31/csu/../csu/libc-start.c:308:16$
-    #12 0x41b3ed in _start (/home/fred/Documents/Minishell/minishell+0x41b3ed)$
+minishell: export: asdf : not a valid identifier$
+minishell: export:  asdf asdf asd f: not a valid identifier$
+minishell: export:  asdf : not a valid identifier$
+minishell: export: : not a valid identifier$
+minishell: export: asdf : not a valid identifier$
 $
-AddressSanitizer can not provide additional info.$
-SUMMARY: AddressSanitizer: SEGV /home/fred/Documents/Minishell/libft/string/ft_strlen.c:20:12 in __strlen$
-==181591==ABORTING$
 ================================================================================
 
 |> WITH export 'asdf ' B ' asdf asdf asd f' ' asdf ' '' 'asdf ' C; echo $A$B$C\n
@@ -391,12 +383,15 @@ minishell: export: `': not a valid identifier$
 minishell: export: `asdf ': not a valid identifier$
 $
 |---------------------------------------ACTUAL----------------------------------
-Minishell : export : 'asdf ' not a valid identifier$
+minishell: export: asdf : not a valid identifier$
+minishell: export:  asdf asdf asd f: not a valid identifier$
+minishell: export:  asdf : not a valid identifier$
+minishell: export: : not a valid identifier$
+minishell: export: asdf : not a valid identifier$
 $
 ================================================================================
 
 |> WITH export A 'asdf ' B ' asdf asdf asd f' ' asdf ' '' 'asdf '; echo $A$B$C\n
-|  STATUS: expected 0 actual 1
 |---------------------------------------EXPECTED--------------------------------
 minishell: export: `asdf ': not a valid identifier$
 minishell: export: ` asdf asdf asd f': not a valid identifier$
@@ -405,58 +400,12 @@ minishell: export: `': not a valid identifier$
 minishell: export: `asdf ': not a valid identifier$
 $
 |---------------------------------------ACTUAL----------------------------------
-Minishell : export : 'asdf ' not a valid identifier$
-AddressSanitizer:DEADLYSIGNAL$
-=================================================================$
-==181597==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000001 (pc 0x0000004e1692 bp 0x7ffd45abeab0 sp 0x7ffd45abea90 T0)$
-==181597==The signal is caused by a READ memory access.$
-==181597==Hint: address points to the zero page.$
-    #0 0x4e1692 in __strlen /home/fred/Documents/Minishell/libft/string/ft_strlen.c:20:12$
-    #1 0x4e2b4d in __strjoin /home/fred/Documents/Minishell/libft/string/ft_strjoin.c:42:24$
-    #2 0x4d942e in __substitute_candidate /home/fred/Documents/Minishell/srcs/expand/expand.c:50:19$
-    #3 0x4d9aed in __parameter_expand /home/fred/Documents/Minishell/srcs/expand/expand.c:76:12$
-    #4 0x4da509 in __expand_word /home/fred/Documents/Minishell/srcs/expand/expand.c:120:8$
-    #5 0x4da9ff in __parameter_expand_token /home/fred/Documents/Minishell/srcs/expand/expand.c:166:8$
-    #6 0x4d0de6 in __execute_pipe_seq /home/fred/Documents/Minishell/srcs/tree/exec_tree.c:65:7$
-    #7 0x4d106f in __execute_tree /home/fred/Documents/Minishell/srcs/tree/exec_tree.c:93:3$
-    #8 0x4c4d86 in __treat_user_input /home/fred/Documents/Minishell/srcs/minishell.c:167:12$
-    #9 0x4c50bd in __non_interative_mode /home/fred/Documents/Minishell/srcs/minishell.c:189:5$
-    #10 0x4c571d in main /home/fred/Documents/Minishell/srcs/minishell.c:251:3$
-    #11 0x7f5eab0470b2 in __libc_start_main /build/glibc-sMfBJT/glibc-2.31/csu/../csu/libc-start.c:308:16$
-    #12 0x41b3ed in _start (/home/fred/Documents/Minishell/minishell+0x41b3ed)$
+minishell: export: asdf : not a valid identifier$
+minishell: export:  asdf asdf asd f: not a valid identifier$
+minishell: export:  asdf : not a valid identifier$
+minishell: export: : not a valid identifier$
+minishell: export: asdf : not a valid identifier$
 $
-AddressSanitizer can not provide additional info.$
-SUMMARY: AddressSanitizer: SEGV /home/fred/Documents/Minishell/libft/string/ft_strlen.c:20:12 in __strlen$
-==181597==ABORTING$
-================================================================================
-
-|> WITH export A B C; echo $A$B$C\n
-|  STATUS: expected 0 actual 1
-|---------------------------------------EXPECTED--------------------------------
-$
-|---------------------------------------ACTUAL----------------------------------
-AddressSanitizer:DEADLYSIGNAL$
-=================================================================$
-==181600==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000001 (pc 0x0000004e1692 bp 0x7fff1c6ea1d0 sp 0x7fff1c6ea1b0 T0)$
-==181600==The signal is caused by a READ memory access.$
-==181600==Hint: address points to the zero page.$
-    #0 0x4e1692 in __strlen /home/fred/Documents/Minishell/libft/string/ft_strlen.c:20:12$
-    #1 0x4e2b4d in __strjoin /home/fred/Documents/Minishell/libft/string/ft_strjoin.c:42:24$
-    #2 0x4d942e in __substitute_candidate /home/fred/Documents/Minishell/srcs/expand/expand.c:50:19$
-    #3 0x4d9aed in __parameter_expand /home/fred/Documents/Minishell/srcs/expand/expand.c:76:12$
-    #4 0x4da509 in __expand_word /home/fred/Documents/Minishell/srcs/expand/expand.c:120:8$
-    #5 0x4da9ff in __parameter_expand_token /home/fred/Documents/Minishell/srcs/expand/expand.c:166:8$
-    #6 0x4d0de6 in __execute_pipe_seq /home/fred/Documents/Minishell/srcs/tree/exec_tree.c:65:7$
-    #7 0x4d106f in __execute_tree /home/fred/Documents/Minishell/srcs/tree/exec_tree.c:93:3$
-    #8 0x4c4d86 in __treat_user_input /home/fred/Documents/Minishell/srcs/minishell.c:167:12$
-    #9 0x4c50bd in __non_interative_mode /home/fred/Documents/Minishell/srcs/minishell.c:189:5$
-    #10 0x4c571d in main /home/fred/Documents/Minishell/srcs/minishell.c:251:3$
-    #11 0x7f06b08670b2 in __libc_start_main /build/glibc-sMfBJT/glibc-2.31/csu/../csu/libc-start.c:308:16$
-    #12 0x41b3ed in _start (/home/fred/Documents/Minishell/minishell+0x41b3ed)$
-$
-AddressSanitizer can not provide additional info.$
-SUMMARY: AddressSanitizer: SEGV /home/fred/Documents/Minishell/libft/string/ft_strlen.c:20:12 in __strlen$
-==181600==ABORTING$
 ================================================================================
 
 |> WITH export A B C; env\n
@@ -476,115 +425,131 @@ TERM=xterm-256color
 ================================================================================
 
 |> WITH export 'AH@'=nop\n
+|  STATUS: expected 1 actual 0
 |---------------------------------------EXPECTED--------------------------------
 minishell: export: `AH@=nop': not a valid identifier$
 |---------------------------------------ACTUAL----------------------------------
-Minishell : export : 'AH@=nop' not a valid identifier$
+minishell: export: AH@=nop: not a valid identifier$
 ================================================================================
 
 |> WITH export "AH'"=nop\n
+|  STATUS: expected 1 actual 0
 |---------------------------------------EXPECTED--------------------------------
 minishell: export: `AH'=nop': not a valid identifier$
 |---------------------------------------ACTUAL----------------------------------
-Minishell : export : 'AH'=nop' not a valid identifier$
+minishell: export: AH'=nop: not a valid identifier$
 ================================================================================
 
 |> WITH export 'AH"'=nop\n
+|  STATUS: expected 1 actual 0
 |---------------------------------------EXPECTED--------------------------------
 minishell: export: `AH"=nop': not a valid identifier$
 |---------------------------------------ACTUAL----------------------------------
-Minishell : export : 'AH"=nop' not a valid identifier$
+minishell: export: AH"=nop: not a valid identifier$
 ================================================================================
 
 |> WITH export 'AH$'=nop\n
+|  STATUS: expected 1 actual 0
 |---------------------------------------EXPECTED--------------------------------
 minishell: export: `AH$=nop': not a valid identifier$
 |---------------------------------------ACTUAL----------------------------------
-Minishell : export : 'AH$=nop' not a valid identifier$
+minishell: export: AH$=nop: not a valid identifier$
 ================================================================================
 
 |> WITH export 'AH!'=nop\n
+|  STATUS: expected 1 actual 0
 |---------------------------------------EXPECTED--------------------------------
 minishell: export: `AH!=nop': not a valid identifier$
 |---------------------------------------ACTUAL----------------------------------
-Minishell : export : 'AH!=nop' not a valid identifier$
+minishell: export: AH!=nop: not a valid identifier$
 ================================================================================
 
 |> WITH export 'AH|'=nop\n
+|  STATUS: expected 1 actual 0
 |---------------------------------------EXPECTED--------------------------------
 minishell: export: `AH|=nop': not a valid identifier$
 |---------------------------------------ACTUAL----------------------------------
-Minishell : export : 'AH|=nop' not a valid identifier$
+minishell: export: AH|=nop: not a valid identifier$
 ================================================================================
 
 |> WITH export 'AH;'=nop\n
+|  STATUS: expected 1 actual 0
 |---------------------------------------EXPECTED--------------------------------
 minishell: export: `AH;=nop': not a valid identifier$
 |---------------------------------------ACTUAL----------------------------------
-Minishell : export : 'AH;=nop' not a valid identifier$
+minishell: export: AH;=nop: not a valid identifier$
 ================================================================================
 
 |> WITH export 'AH&'=nop\n
+|  STATUS: expected 1 actual 0
 |---------------------------------------EXPECTED--------------------------------
 minishell: export: `AH&=nop': not a valid identifier$
 |---------------------------------------ACTUAL----------------------------------
-Minishell : export : 'AH&=nop' not a valid identifier$
+minishell: export: AH&=nop: not a valid identifier$
 ================================================================================
 
 |> WITH export 'AH\'=nop\n
+|  STATUS: expected 1 actual 0
 |---------------------------------------EXPECTED--------------------------------
 minishell: export: `AH\=nop': not a valid identifier$
 |---------------------------------------ACTUAL----------------------------------
-Minishell : export : 'AH\=nop' not a valid identifier$
+minishell: export: AH\=nop: not a valid identifier$
 ================================================================================
 
 |> WITH export BONJOUR\\JESUIS\n
+|  STATUS: expected 1 actual 0
 |---------------------------------------EXPECTED--------------------------------
 minishell: export: `BONJOUR\JESUIS': not a valid identifier$
 |---------------------------------------ACTUAL----------------------------------
-Minishell : export : 'BONJOUR\JESUIS' not a valid identifier$
+minishell: export: BONJOUR\JESUIS: not a valid identifier$
 ================================================================================
 
 |> WITH export BONJOUR\'JESUIS\n
+|  STATUS: expected 1 actual 0
 |---------------------------------------EXPECTED--------------------------------
 minishell: export: `BONJOUR'JESUIS': not a valid identifier$
 |---------------------------------------ACTUAL----------------------------------
-Minishell : export : 'BONJOUR'JESUIS' not a valid identifier$
+minishell: export: BONJOUR'JESUIS: not a valid identifier$
 ================================================================================
 
 |> WITH export BONJOUR\"JESUIS\n
+|  STATUS: expected 1 actual 0
 |---------------------------------------EXPECTED--------------------------------
 minishell: export: `BONJOUR"JESUIS': not a valid identifier$
 |---------------------------------------ACTUAL----------------------------------
-Minishell : export : 'BONJOUR"JESUIS' not a valid identifier$
+minishell: export: BONJOUR"JESUIS: not a valid identifier$
 ================================================================================
 
 |> WITH export BONJOUR\$JESUIS\n
+|  STATUS: expected 1 actual 0
 |---------------------------------------EXPECTED--------------------------------
 minishell: export: `BONJOUR$JESUIS': not a valid identifier$
 |---------------------------------------ACTUAL----------------------------------
-Minishell : export : 'BONJOUR$JESUIS' not a valid identifier$
+minishell: export: BONJOUR$JESUIS: not a valid identifier$
 ================================================================================
 
 |> WITH export BONJOUR\&JESUIS\n
+|  STATUS: expected 1 actual 0
 |---------------------------------------EXPECTED--------------------------------
 minishell: export: `BONJOUR&JESUIS': not a valid identifier$
 |---------------------------------------ACTUAL----------------------------------
-Minishell : export : 'BONJOUR&JESUIS' not a valid identifier$
+minishell: export: BONJOUR&JESUIS: not a valid identifier$
 ================================================================================
 
 |> WITH export BONJOUR\|JESUIS\n
+|  STATUS: expected 1 actual 0
 |---------------------------------------EXPECTED--------------------------------
 minishell: export: `BONJOUR|JESUIS': not a valid identifier$
 |---------------------------------------ACTUAL----------------------------------
-Minishell : export : 'BONJOUR|JESUIS' not a valid identifier$
+minishell: export: BONJOUR|JESUIS: not a valid identifier$
 ================================================================================
 
 |> WITH export BONJOUR\;JESUIS\n
+|  STATUS: expected 1 actual 0
 |---------------------------------------EXPECTED--------------------------------
 minishell: export: `BONJOUR;JESUIS': not a valid identifier$
 |---------------------------------------ACTUAL----------------------------------
-Minishell : export : 'BONJOUR;JESUIS' not a valid identifier$
+minishell: export: BONJOUR;JESUIS: not a valid identifier$
 ================================================================================
 
 |> WITH [EXPORTS A='a'] unset 'A '; echo $A\n
@@ -592,6 +557,7 @@ Minishell : export : 'BONJOUR;JESUIS' not a valid identifier$
 minishell: unset: `A ': not a valid identifier$
 a$
 |---------------------------------------ACTUAL----------------------------------
+minishell: unset: A : not a valid identifier$
 a$
 ================================================================================
 
@@ -600,7 +566,7 @@ a$
 minishell: unset: `A=': not a valid identifier$
 a$
 |---------------------------------------ACTUAL----------------------------------
-a$
+$
 ================================================================================
 
 |> WITH [EXPORTS A='a' B='b' C='c'] unset A 'asdf ' B ' asdf asdf asd f' ' asdf ' '' 'asdf ' C; echo $A$B$C\n
@@ -612,6 +578,11 @@ minishell: unset: `': not a valid identifier$
 minishell: unset: `asdf ': not a valid identifier$
 $
 |---------------------------------------ACTUAL----------------------------------
+minishell: unset: asdf : not a valid identifier$
+minishell: unset:  asdf asdf asd f: not a valid identifier$
+minishell: unset:  asdf : not a valid identifier$
+minishell: unset: : not a valid identifier$
+minishell: unset: asdf : not a valid identifier$
 $
 ================================================================================
 
@@ -624,6 +595,11 @@ minishell: unset: `': not a valid identifier$
 minishell: unset: `asdf ': not a valid identifier$
 a$
 |---------------------------------------ACTUAL----------------------------------
+minishell: unset: asdf : not a valid identifier$
+minishell: unset:  asdf asdf asd f: not a valid identifier$
+minishell: unset:  asdf : not a valid identifier$
+minishell: unset: : not a valid identifier$
+minishell: unset: asdf : not a valid identifier$
 a$
 ================================================================================
 
@@ -636,6 +612,11 @@ minishell: unset: `': not a valid identifier$
 minishell: unset: `asdf ': not a valid identifier$
 c$
 |---------------------------------------ACTUAL----------------------------------
+minishell: unset: asdf : not a valid identifier$
+minishell: unset:  asdf asdf asd f: not a valid identifier$
+minishell: unset:  asdf : not a valid identifier$
+minishell: unset: : not a valid identifier$
+minishell: unset: asdf : not a valid identifier$
 c$
 ================================================================================
 
@@ -648,6 +629,11 @@ minishell: unset: ` asdf ': not a valid identifier$
 minishell: unset: `': not a valid identifier$
 minishell: unset: `asdf ': not a valid identifier$
 |---------------------------------------ACTUAL----------------------------------
+minishell: unset: asdf : not a valid identifier$
+minishell: unset:  asdf asdf asd f: not a valid identifier$
+minishell: unset:  asdf : not a valid identifier$
+minishell: unset: : not a valid identifier$
+minishell: unset: asdf : not a valid identifier$
 ================================================================================
 
 |> WITH [EXPORTS A='a' B='b' C='c'] unset 'asdf ' B ' asdf asdf asd f' ' asdf ' '' 'asdf ' C\n
@@ -659,10 +645,14 @@ minishell: unset: ` asdf ': not a valid identifier$
 minishell: unset: `': not a valid identifier$
 minishell: unset: `asdf ': not a valid identifier$
 |---------------------------------------ACTUAL----------------------------------
+minishell: unset: asdf : not a valid identifier$
+minishell: unset:  asdf asdf asd f: not a valid identifier$
+minishell: unset:  asdf : not a valid identifier$
+minishell: unset: : not a valid identifier$
+minishell: unset: asdf : not a valid identifier$
 ================================================================================
 
 |> WITH [EXPORTS A='a' B='b' C='c'] unset A 'asdf ' B ' asdf asdf asd f' ' asdf ' '' 'asdf '\n
-|  STATUS: expected 1 actual 0
 |---------------------------------------EXPECTED--------------------------------
 minishell: unset: `asdf ': not a valid identifier$
 minishell: unset: ` asdf asdf asd f': not a valid identifier$
@@ -670,69 +660,74 @@ minishell: unset: ` asdf ': not a valid identifier$
 minishell: unset: `': not a valid identifier$
 minishell: unset: `asdf ': not a valid identifier$
 |---------------------------------------ACTUAL----------------------------------
+minishell: unset: asdf : not a valid identifier$
+minishell: unset:  asdf asdf asd f: not a valid identifier$
+minishell: unset:  asdf : not a valid identifier$
+minishell: unset: : not a valid identifier$
+minishell: unset: asdf : not a valid identifier$
 ================================================================================
 
 |> WITH unset 'AH@'=nop\n
-|  STATUS: expected 1 actual 0
 |---------------------------------------EXPECTED--------------------------------
 minishell: unset: `AH@=nop': not a valid identifier$
 |---------------------------------------ACTUAL----------------------------------
+minishell: unset: AH@=nop: not a valid identifier$
 ================================================================================
 
 |> WITH unset "AH'"=nop\n
-|  STATUS: expected 1 actual 0
 |---------------------------------------EXPECTED--------------------------------
 minishell: unset: `AH'=nop': not a valid identifier$
 |---------------------------------------ACTUAL----------------------------------
+minishell: unset: AH'=nop: not a valid identifier$
 ================================================================================
 
 |> WITH unset 'AH"'=nop\n
-|  STATUS: expected 1 actual 0
 |---------------------------------------EXPECTED--------------------------------
 minishell: unset: `AH"=nop': not a valid identifier$
 |---------------------------------------ACTUAL----------------------------------
+minishell: unset: AH"=nop: not a valid identifier$
 ================================================================================
 
 |> WITH unset 'AH$'=nop\n
-|  STATUS: expected 1 actual 0
 |---------------------------------------EXPECTED--------------------------------
 minishell: unset: `AH$=nop': not a valid identifier$
 |---------------------------------------ACTUAL----------------------------------
+minishell: unset: AH$=nop: not a valid identifier$
 ================================================================================
 
 |> WITH unset 'AH!'=nop\n
-|  STATUS: expected 1 actual 0
 |---------------------------------------EXPECTED--------------------------------
 minishell: unset: `AH!=nop': not a valid identifier$
 |---------------------------------------ACTUAL----------------------------------
+minishell: unset: AH!=nop: not a valid identifier$
 ================================================================================
 
 |> WITH unset 'AH|'=nop\n
-|  STATUS: expected 1 actual 0
 |---------------------------------------EXPECTED--------------------------------
 minishell: unset: `AH|=nop': not a valid identifier$
 |---------------------------------------ACTUAL----------------------------------
+minishell: unset: AH|=nop: not a valid identifier$
 ================================================================================
 
 |> WITH unset 'AH;'=nop\n
-|  STATUS: expected 1 actual 0
 |---------------------------------------EXPECTED--------------------------------
 minishell: unset: `AH;=nop': not a valid identifier$
 |---------------------------------------ACTUAL----------------------------------
+minishell: unset: AH;=nop: not a valid identifier$
 ================================================================================
 
 |> WITH unset 'AH&'=nop\n
-|  STATUS: expected 1 actual 0
 |---------------------------------------EXPECTED--------------------------------
 minishell: unset: `AH&=nop': not a valid identifier$
 |---------------------------------------ACTUAL----------------------------------
+minishell: unset: AH&=nop: not a valid identifier$
 ================================================================================
 
 |> WITH unset 'AH\'=nop\n
-|  STATUS: expected 1 actual 0
 |---------------------------------------EXPECTED--------------------------------
 minishell: unset: `AH\=nop': not a valid identifier$
 |---------------------------------------ACTUAL----------------------------------
+minishell: unset: AH\=nop: not a valid identifier$
 ================================================================================
 
 |> WITH echo \t\v\f\r !#$%*+,-./0123456789:;=?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_abcdefghijklmnopqrstuvwxyz{}~\n

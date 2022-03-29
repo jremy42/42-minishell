@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:25:57 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/25 11:01:05 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/29 19:15:56 by fred             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	__need_to_escape(int i, t_state state, char *str)
 		return (1);
 	if (state == UNQUOTE)
 		return (1);
-	return (1);
+	return (0);
 }
 
 int	__add_char_to_token(char c, char **token)
