@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 16:19:12 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/30 11:39:26 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/30 12:17:05 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static t_cmd	*create_new_cmd(int nb_param, int index, t_msh *msh)
 
 	new = malloc(sizeof(t_cmd));
 	if (!new)
-		return(NULL);
+		return (NULL);
 	new->next = NULL;
 	new->redirection[0] = -1;
 	new->redirection[1] = -1;
@@ -86,7 +86,8 @@ int	create_cmd_arg_and_redirection(t_lexing **lexing, t_cmd *new)
 		if ((*lexing)->type == REDIRECTION || (*lexing)->type == HERE_DOC)
 		{
 			if (!__add_redirect(new, *lexing))
-				return (__redirect_list_clear(new->redirect), (free(new->arg), free(new), 0));
+				return (__redirect_list_clear(new->redirect),
+					(free(new->arg), free(new), 0));
 			*lexing = (*lexing)->next->next;
 			continue ;
 		}
@@ -104,7 +105,7 @@ int	add_next_cmd(t_cmd **start, t_lexing **lexing, t_msh *msh, int index)
 	new = create_new_cmd(__get_nb_param_cmd(*lexing), index, msh);
 	if (!new)
 		return (0);
-	if(!create_cmd_arg_and_redirection(lexing, new))
+	if (!create_cmd_arg_and_redirection(lexing, new))
 		return (0);
 	if (*lexing)
 		*lexing = (*lexing)->next;
@@ -147,7 +148,6 @@ int	print_cmd(t_cmd *cmd)
 
 	i = 0;
 	tmp = cmd->redirect;
-	DEBUG && printf("stdin = %d stdout = %d, index = %d\n", cmd->redirection[0], cmd->redirection[1], cmd->index);
 	while (tmp)
 	{
 		DEBUG && printf("type = %d et file = %s\n", tmp->type, tmp->file_name);

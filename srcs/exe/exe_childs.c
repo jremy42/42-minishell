@@ -6,12 +6,22 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 16:21:22 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/30 10:55:34 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/30 12:19:05 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "exe.h"
+
+static int	__get_path_size(char *path, char *cmd)
+{
+	int	size;
+
+	size = __strlen(path);
+	size += __strlen("/");
+	size += __strlen(cmd);
+	return (size);
+}
 
 static char	*__create_path_and_cmd(char *path, char *cmd)
 {
@@ -22,9 +32,7 @@ static char	*__create_path_and_cmd(char *path, char *cmd)
 	i = 0;
 	if (!path || !cmd)
 		return (NULL);
-	size = __strlen(path);
-	size += __strlen("/");
-	size += __strlen(cmd);
+	size = __get_path_size(path, cmd);
 	ret = (char *)malloc((size + 1) * sizeof(char));
 	if (!ret)
 		return (__putstr_fd("Malloc Error", 2), NULL);

@@ -7,6 +7,7 @@ t_node *__reinit_node(t_node ***node_tab)
 	*node_tab = NULL;
 	return (NULL);
 }
+
 t_node *__give_node(int count, int reset)
 {
 	int i;

@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 15:19:06 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/25 13:07:22 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/30 13:03:33 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ static char	*__get_stdin(char *eof)
 				&& __strlen(line) == __strlen(eof) + 1))
 		{
 			if (!line)
-				DEBUG && printf("warning: here-document at line %d\
-				delimited by end-of-file (wanted `%s')\n",i, eof);
+				printf("warning: here-document at line %d\
+					delimited by end-of-file (wanted `%s')\n", i, eof);
 			get_next_line(-1);
 			free(line);
 			break ;
@@ -53,20 +53,20 @@ static int	__get_user_input(char **eof)
 	int		file;
 	int		quote;
 	char	*tmp;
-	
+
 	quote = 0;
-	if(((*eof)[0] == '"' && (*eof)[__strlen(*eof) - 1] == '"'))
+	if (((*eof)[0] == '"' && (*eof)[__strlen(*eof) - 1] == '"'))
 	{
-		tmp = __strtrim(*eof,"\"");
+		tmp = __strtrim(*eof, "\"");
 		if (!tmp)
 			return (0);
 		free(*eof);
 		*eof = tmp;
 		quote = 1;
 	}
-	else if(((*eof)[0] == '\'' && (*eof)[__strlen(*eof) - 1] == '\''))
+	else if (((*eof)[0] == '\'' && (*eof)[__strlen(*eof) - 1] == '\''))
 	{
-		tmp = __strtrim(*eof,"\'");
+		tmp = __strtrim(*eof, "\'");
 		if (!tmp)
 			return (0);
 		free(*eof);
@@ -79,23 +79,23 @@ static int	__get_user_input(char **eof)
 	stdin = __get_stdin(*eof);
 	if (!stdin)
 		return (close(file), -1);
-	if(quote)
-		__putstr_fd("\'",file);
+	if (quote)
+		__putstr_fd("\'", file);
 	__putstr_fd(stdin, file);
-	if(quote)
-		__putstr_fd("\'",file);
+	if (quote)
+		__putstr_fd("\'", file);
 	free(stdin);
 	close(file);
 	return (1);
 }
 
-int		__retrieve_hd(t_lexing *lexing)
+int	__retrieve_hd(t_lexing *lexing)
 {
 	char	*hd_content;
 	int		fd;
 	char	buf[32];
 	int		read_status;
-	
+
 	hd_content = __strdup("");
 	if (!hd_content)
 		return (0);
@@ -108,7 +108,7 @@ int		__retrieve_hd(t_lexing *lexing)
 		read_status = read(fd, buf, 32);
 		if (read_status < 0)
 			return (free(hd_content), close (fd), unlink("hd.tmp"), 0);
-		buf[read_status]='\0';
+		buf[read_status] = '\0';
 		hd_content = __strjoin(hd_content, buf);
 		if (!hd_content)
 			return (close (fd), unlink("hd.tmp"), 0);
@@ -123,12 +123,23 @@ int		__retrieve_hd(t_lexing *lexing)
 	return (1);
 }
 
-int __handle_here_doc(t_lexing *lexing, t_lexing *end, t_msh *msh)
+static void	__init_child_hd(char *eof, t_lexing *lex, t_msh *msh, t_lexing *sv)
 {
-	pid_t       pid;
-	char        *eof;
-	t_lexing    *save;
-	
+	signal(SIGINT, SIG_DFL);
+	if (!__get_user_input(&eof))
+		__putendl_fd("minishell: malloc error in here doc", 2);
+	lex->next->token = eof;
+	msh->rv = errno;
+	__lexing_full_list_clear(&sv);
+	__exit(msh);
+}
+
+int	__handle_here_doc(t_lexing *lexing, t_lexing *end, t_msh *msh)
+{
+	pid_t		pid;
+	char		*eof;
+	t_lexing	*save;
+
 	save = lexing;
 	while (lexing != end)
 	{
@@ -137,19 +148,11 @@ int __handle_here_doc(t_lexing *lexing, t_lexing *end, t_msh *msh)
 			eof = lexing->next->token;
 			pid = fork();
 			if (pid == 0)
-			{
-				signal(SIGINT, SIG_DFL);
-				if (!__get_user_input(&eof))
-					__putendl_fd("malloc error", 2);
-				lexing->next->token = eof;
-				msh->rv = errno;
-				__lexing_full_list_clear(&save);
-				__exit(msh);
-			}
+				__init_child_hd(eof, lexing, msh, save);
 			else
 			{
 				waitpid(pid, NULL, 0);
-				if(!__retrieve_hd(lexing))
+				if (!__retrieve_hd(lexing))
 					return (0);
 				lexing = lexing->next;
 			}

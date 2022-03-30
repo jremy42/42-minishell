@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 16:20:32 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/28 15:08:39 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/30 12:23:03 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ static char	*__find_path(char ***envp)
 	return (NULL);
 }
 
-int __find_max_cmd(t_cmd *cmd)
+int	__find_max_cmd(t_cmd *cmd)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (cmd)
@@ -40,16 +40,16 @@ int __find_max_cmd(t_cmd *cmd)
 	return (i);
 }
 
-char **__create_envp(char ***envp)
+char	**__create_envp(char ***envp)
 {
-	int size;
-	int i;
-	char **ret;
+	int		size;
+	int		i;
+	char	**ret;
 
 	i = 0;
 	size = 0;
 	if (!envp)
-		return(NULL);
+		return (NULL);
 	while (envp[size])
 		size++;
 	ret = malloc(sizeof(char *) * (size + 1));
@@ -84,9 +84,10 @@ int	__init_seq(t_sequ *seq, char ***envp, t_cmd *cmd)
 	return (1);
 }
 
-int D_print_seq(t_sequ *seq)
+/*
+int	D_print_seq(t_sequ *seq)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	DEBUG && printf("max cmd = %d\n", seq->max_cmd);
@@ -97,3 +98,4 @@ int D_print_seq(t_sequ *seq)
 	}
 	return (1);
 }
+*/

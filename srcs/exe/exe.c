@@ -107,38 +107,38 @@ int	__restore_fd(int *std)
 	return (1);
 }
 
-char *__get_name(int index)
+char	*__get_name(int index)
 {
-	char *tmp;
-	char *cmd_nbr;
-	
+	char	*tmp;
+	char	*cmd_nbr;
+
 	cmd_nbr = __itoa(index);
 	if (!cmd_nbr)
 		return (NULL);
-	tmp = __strjoin(__strdup(".hd.tmp"),cmd_nbr);
+	tmp = __strjoin(__strdup(".hd.tmp"), cmd_nbr);
 	if (!tmp)
 		return (free(cmd_nbr), NULL);
-	return(free(cmd_nbr), tmp);
+	return (free(cmd_nbr), tmp);
 }
 
-int __clean_tmp_hd(t_cmd *cmd)
+int	__clean_tmp_hd(t_cmd *cmd)
 {
-	t_redirect *save;
-	char *tmp;
-	
-	while(cmd)
+	t_redirect	*save;
+	char		*tmp;
+
+	while (cmd)
 	{
 		save = cmd->redirect;
-		while(cmd->redirect)
+		while (cmd->redirect)
 		{
-			if(cmd->redirect->type == H_D)
+			if (cmd->redirect->type == H_D)
 			{
 				tmp = __get_name(cmd->index);
 				if (!tmp)
-					return (0);	
+					return (0);
 				unlink(tmp);
 				free(tmp);
-				break;
+				break ;
 			}
 			cmd->redirect = cmd->redirect->next;
 		}
@@ -150,21 +150,20 @@ int __clean_tmp_hd(t_cmd *cmd)
 
 int execute_seq(t_cmd *cmd, t_msh *msh)
 {
-	t_sequ seq;
-	int std[2];
-	
+	t_sequ		seq;
+	int			std[2];
+
 	if (__find_max_cmd(cmd) == 1 && __is_builtin(cmd->arg))
 	{
 		DEBUG && fprintf(stderr, " I m a builtin\n");
-		if(cmd->redirect)
+		if (cmd->redirect)
 		{
 			if (!__save_fd(std))
 				return (__cmd_node_list_clear(cmd), 0);
-			if(!__handle_redirect_builtin(cmd))
+			if (!__handle_redirect_builtin(cmd))
 				return (__cmd_node_list_clear(cmd), 0);
 		}
 		__exec_builtin(cmd->arg, msh, cmd);
-		DEBUG && fprintf(stderr, "cmd->redirect : [%p]\n", cmd->redirect);
 		if (cmd->redirect && !__restore_fd(std))
 			__putendl_fd(strerror(errno), 2);
 		return (__cmd_node_list_clear(cmd), msh->rv);
@@ -173,8 +172,6 @@ int execute_seq(t_cmd *cmd, t_msh *msh)
 		return (__cmd_node_list_clear(cmd), __putstr_fd("Malloc error\n", 2), 0);
 	msh->rv = __launcher_fork(&seq, cmd, cmd);
 	__clean_tmp_hd(cmd);
-	free_split(seq.path);
-	free(seq.envp);
-	__cmd_node_list_clear(cmd);
-	return (1);
+	return (free_split(seq.path), free(seq.envp),
+		__cmd_node_list_clear(cmd), 1);
 }
