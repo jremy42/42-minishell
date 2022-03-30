@@ -252,15 +252,15 @@ int __clean_tmp_hd(t_cmd *cmd);
 //heredoc
 
 int __handle_here_doc(t_lexing *lexing, t_lexing *end, t_msh *msh);
-
+void	__signal_hd(int signal);
 //expande
 int __parameter_expand_token(t_lexing *lexing, t_msh *msh);
-int __handle_wildcards(t_msh *msh, t_lexing *lexing);
+int __handle_wildcards(t_lexing *lexing);
 t_lexing	*__lexnew(char *content);
 int __insert_token(t_lexing *lexing, char *new_glob_match, int reset, t_lexing *true_end);
 int __field_spliting_token(t_lexing *lexing, t_msh *msh);
-int __quote_removal_token(t_lexing *lexing, t_msh *msh);
-int __quote_removal_glob(t_glob *glob, t_msh *msh);
+int __quote_removal_token(t_lexing *lexing);
+int __quote_removal_glob(t_glob *glob);
 int	__move_to_next_unquoted_star(char *str);
 int	__move_to_next_unquoted_char(char *str, char c);
 int	__move_to_next_unquoted_charset(char *str, char *charset);

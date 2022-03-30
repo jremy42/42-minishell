@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:25:57 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/30 10:38:08 by fle-blay         ###   ########.fr       */
+/*   Updated: 2022/03/30 15:07:24 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,7 @@ static void __init_user_input_struct(t_user_input *ui)
 int	__treat_user_input(char *arg, t_msh *msh)
 {
 	t_user_input ui;
+	int ret_hd;
 
 	__init_user_input_struct(&ui);
 	if(!__check_input(arg, &ui.to_tokenize, msh))
@@ -145,8 +146,11 @@ int	__treat_user_input(char *arg, t_msh *msh)
 	if (!__lexing(ui.token, &ui.lexing))
 		return (__lexing_full_list_clear(&ui.lexing), __exit_error(msh, 3, "lexing"));
 	ui.first_error = __synthax_checker(ui.lexing, msh);
-	if(!__handle_here_doc(ui.lexing, ui.first_error, msh))
+	ret_hd = __handle_here_doc(ui.lexing, ui.first_error, msh);
+	if (!ret_hd)
 		return (__lexing_full_list_clear(&ui.lexing), __exit_error(msh, 3, "here_doc"));
+	if (ret_hd == 130)
+		return (__lexing_full_list_clear(&ui.lexing), 0);
 	if(msh->syntax_error == 2)
 		return (__lexing_full_list_clear(&ui.lexing), -1);
 	if(!__give_node(__count_node(ui.lexing), 1))

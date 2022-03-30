@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 09:52:39 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/30 14:19:05 by fle-blay         ###   ########.fr       */
+/*   Updated: 2022/03/30 15:38:59 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -363,7 +363,7 @@ int __insert_token(t_lexing *lexing,
 	return (1);
 }
 
-int	__glob_expand_token(t_msh *msh, t_lexing *lexing,
+int	__glob_expand_token(t_lexing *lexing,
 	t_list *d_content, t_lexing *s_nxt)
 {
 	t_glob		*glob_lst;
@@ -371,7 +371,7 @@ int	__glob_expand_token(t_msh *msh, t_lexing *lexing,
 	glob_lst = __create_glob_lst(&lexing->token);
 	if (!glob_lst)
 		return (__lstclear(&d_content, free), 0);
-	if(!__quote_removal_glob(glob_lst, msh))
+	if(!__quote_removal_glob(glob_lst))
 		return ( __glob_list_clear(glob_lst),__lstclear(&d_content, free), 0);
 	while (d_content)
 	{
@@ -385,7 +385,7 @@ int	__glob_expand_token(t_msh *msh, t_lexing *lexing,
 	return (1);
 }
 
-int    __handle_wildcards(t_msh *msh, t_lexing *lexing)
+int    __handle_wildcards(t_lexing *lexing)
 {
 	t_list		*dir_content;
 	t_list		*save;
@@ -399,7 +399,7 @@ int    __handle_wildcards(t_msh *msh, t_lexing *lexing)
 	{
 		save_next = lexing->next;
 		if (__move_to_next_unquoted_char(lexing->token, '*') >= 0
-			&& !__glob_expand_token(msh, lexing, dir_content, save_next))
+			&& !__glob_expand_token(lexing, dir_content, save_next))
 			return (__lstclear(&save, free), 0);
 		dir_content = save;
 		lexing = save_next;

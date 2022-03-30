@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 09:50:45 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/29 11:16:53 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/30 15:36:48 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int __execute_pipe_seq(t_lexing *lexing, t_msh *msh)
 	if(!__handle_wildcards(msh, lexing))
 		__exit_error(msh,240, "Malloc error in wildcard\n");
 	DEBUG && printf("wildcard done\n");
-	if (!__quote_removal_token(lexing, msh))
+	if (!__quote_removal_token(lexing))
 		__exit_error(msh,240, "Malloc error in quote removale\n");
 	DEBUG && printf("quote remove done\n");
 	cmd = create_cmd_list(lexing, msh);

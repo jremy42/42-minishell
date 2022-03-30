@@ -6,18 +6,27 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 15:19:06 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/30 14:43:14 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/30 15:21:17 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "exe.h"
 
-static void	__treat_eof(char *line, char *eof)
+extern int	g_rv;
+
+static void	__treat_eof(char *line, char *eof, t_msh *msh)
 {
+	if (!line && g_rv)
+	{
+		get_next_line(-1);
+		free(line);
+		msh->rv = 130;
+		return;
+	}
 	if (!line)
 	{
-		__putstr_fd("warning: here-doc delimited by end-of-file (wanted`%s')",
+		__putstr_fd("warning: here-doc delimited by end-of-file (wanted`",
 			2);
 		__putstr_fd(eof, 2);
 		__putstr_fd("')\n", 2);
@@ -26,7 +35,7 @@ static void	__treat_eof(char *line, char *eof)
 	free(line);
 }
 
-static char	*__get_stdin(char *eof)
+static char	*__get_stdin(char *eof, t_msh *msh)
 {
 	char	*line;
 	char	*ret;
@@ -42,7 +51,7 @@ static char	*__get_stdin(char *eof)
 		if (!line || (__strncmp(line, eof, __strlen(eof)) == 0
 				&& __strlen(line) == __strlen(eof) + 1))
 		{
-			__treat_eof(line, eof);
+			__treat_eof(line, eof, msh);
 			break ;
 		}
 		ret = __strjoin(ret, line);
@@ -79,7 +88,7 @@ static int	__trim_quote(char **eof, int *quote)
 	return (1);
 }
 
-static int	__get_user_input(char **eof)
+static int	__get_user_input(char **eof, t_msh *msh)
 {
 	char	*stdin;
 	int		file;
@@ -91,7 +100,7 @@ static int	__get_user_input(char **eof)
 	file = open(".hd.tmp", O_CREAT | O_WRONLY | O_TRUNC, 00644);
 	if (file < 0)
 		return (-1);
-	stdin = __get_stdin(*eof);
+	stdin = __get_stdin(*eof, msh);
 	if (!stdin)
 		return (close(file), -1);
 	if (quote)
@@ -140,16 +149,33 @@ int	__retrieve_hd(t_lexing *lexing)
 
 static void	__init_child_hd(char *eof, t_lexing *lex, t_msh *msh, t_lexing *sv)
 {
-	signal(SIGINT, SIG_DFL);
+	g_rv = 0;
+	msh->rv = 0;
+	signal(SIGINT, __signal_hd);
 	signal(SIGQUIT, SIG_IGN);
-	if (!__get_user_input(&eof))
+	if (!__get_user_input(&eof, msh))
 		__putendl_fd("minishell: malloc error in here doc", 2);
 	lex->next->token = eof;
-	msh->rv = errno;
 	__lexing_full_list_clear(&sv);
 	__exit(msh);
 }
 
+static int	wait_here_doc(pid_t pid, t_msh *msh)
+{
+	int	status;
+	int	ret;
+
+	ret = 0;
+	status = 0;
+	waitpid(pid, &status, 0);
+	if (WIFEXITED(status) > 0)
+		ret = (WEXITSTATUS(status));
+	if (WIFSIGNALED(status) > 0)
+		ret = (WTERMSIG(status) + 128);
+	if (ret == 130)
+		msh->rv = 130;
+	return (ret);
+}
 int	__handle_here_doc(t_lexing *lexing, t_lexing *end, t_msh *msh)
 {
 	pid_t		pid;
@@ -167,7 +193,8 @@ int	__handle_here_doc(t_lexing *lexing, t_lexing *end, t_msh *msh)
 				__init_child_hd(eof, lexing, msh, save);
 			else
 			{
-				waitpid(pid, NULL, 0);
+				if (wait_here_doc(pid, msh) == 130)
+					return (130);
 				if (!__retrieve_hd(lexing))
 					return (0);
 				lexing = lexing->next;
