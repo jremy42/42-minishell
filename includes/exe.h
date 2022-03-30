@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 17:32:24 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/28 16:37:41 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/30 18:23:36 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,5 +40,13 @@ int __handle_redirect(t_sequ *seq, t_cmd *cmd);
 int __handle_redirect_builtin(t_cmd *cmd);
 int __find_max_cmd(t_cmd *cmd);
 char *__get_name(int index);
+void	__cmd_add_back(t_cmd **alst, t_cmd *new);
+char	*__get_path(char **path, char *cmd_n);
+int	__is_builtin(char **arg);
+int	__exec_builtin(char **arg, t_msh *msh, t_cmd *cmd);
+int	__save_fd(int *std);
+int	__restore_fd(int *std);
+void	__init_child(t_sequ *seq, t_cmd *cmd, t_cmd *first_cmd, int pv_pipe_out);
+
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 15:19:06 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/30 17:56:26 by fle-blay         ###   ########.fr       */
+/*   Updated: 2022/03/30 18:10:14 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	__treat_eof(char *line, char *eof, t_msh *msh)
 		get_next_line(-1);
 		free(line);
 		msh->rv = 130;
-		return;
+		return ;
 	}
 	if (!line)
 	{
@@ -113,6 +113,17 @@ static int	__get_user_input(char **eof, t_msh *msh)
 	return (1);
 }
 
+static int	__end_of_retrieve_hd(int fd, char *hd_content, t_lexing *lexing)
+{
+	if (close(fd) < 0)
+		return (free(hd_content), 0);
+	if (unlink(".hd.tmp") < 0)
+		return (free(hd_content), 0);
+	free(lexing->next->token);
+	lexing->next->token = hd_content;
+	return (1);
+}
+
 int	__retrieve_hd(t_lexing *lexing)
 {
 	char	*hd_content;
@@ -137,13 +148,7 @@ int	__retrieve_hd(t_lexing *lexing)
 		if (!hd_content)
 			return (close (fd), unlink("hd.tmp"), 0);
 	}
-	if (close(fd) < 0)
-		return (free(hd_content), 0);
-	if (unlink(".hd.tmp") < 0)
-		return (free(hd_content), 0);
-	free(lexing->next->token);
-	lexing->next->token = hd_content;
-	return (1);
+	return (__end_of_retrieve_hd(fd, hd_content, lexing));
 }
 
 static void	__init_child_hd(char *eof, t_lexing *lex, t_msh *msh, t_lexing *sv)

@@ -51,7 +51,6 @@ t_lexing *__skip_parenthesis(t_lexing *lexing)
 			parenthesis--;
 		lexing = lexing->next;
 	}
-	//printf("%s\n", lexing->token);
 	return (lexing);
 }
 
@@ -99,23 +98,19 @@ static int	trim_parenthesis(t_lexing **lexing, t_lexing **parenthesis)
 	}
 	else if ((*lexing)->type == P_RIGHT)
 		return (0);
-	else
-		return (1);
+	return (1);
 }
 
 t_node	*btree_create_node_sequence(t_lexing *lexing)
 {
 	t_node	*new;
 
-	//new = malloc(sizeof(t_node));
 	new = __give_node(0, 0);
 	if (!new)
 		return (NULL);
 	new->left = NULL;
 	new->right = NULL;
 	new->kind = SEQUENCE;
-	//new->cmd = create_cmd_array(lexing);
-	//new->cmd = NULL;
 	new->leaf_lexing = lexing;
 	return (new);
 }
@@ -135,9 +130,7 @@ t_node	*btree_create_node_operator(t_lexing *lexing)
 		+ !__strcmp(lexing->token, "&&") * AND;
 	new->leaf_lexing = lexing;
 	free(lexing->token);
-	lexing->token = NULL;
-	//lexing->next = NULL;
-	//new->cmd = NULL;
+	lexing->token = NULL;	
 	return (new);
 }
 
@@ -164,9 +157,6 @@ int __create_tree(t_lexing *lexing, t_node **root, t_lexing **parenthesis)
 {
 	t_lexing	*next_operator;
 
-	DEBUG && printf("\n\n\n");
-	//__print_lexing(lexing);
-
 	next_operator = __find_next_operator(lexing);
 	if (!next_operator)
 	{
@@ -179,7 +169,6 @@ int __create_tree(t_lexing *lexing, t_node **root, t_lexing **parenthesis)
 		*root = btree_create_node_sequence(lexing);
 		return (1);
 	}
-	DEBUG && printf("next operator : [%s]\n", next_operator->token);
 	*root = btree_create_node_operator(next_operator);
 	if(!__create_tree(split_lexing_right(lexing, next_operator),&((*root)->right), parenthesis))
 		return (0);
