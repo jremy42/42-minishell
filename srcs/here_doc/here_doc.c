@@ -6,20 +6,31 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 15:19:06 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/30 13:03:33 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/30 14:43:14 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "exe.h"
 
+static void	__treat_eof(char *line, char *eof)
+{
+	if (!line)
+	{
+		__putstr_fd("warning: here-doc delimited by end-of-file (wanted`%s')",
+			2);
+		__putstr_fd(eof, 2);
+		__putstr_fd("')\n", 2);
+	}
+	get_next_line(-1);
+	free(line);
+}
+
 static char	*__get_stdin(char *eof)
 {
 	char	*line;
 	char	*ret;
-	int		i;
 
-	i = 0;
 	line = NULL;
 	ret = __strdup("");
 	if (!ret)
@@ -31,30 +42,22 @@ static char	*__get_stdin(char *eof)
 		if (!line || (__strncmp(line, eof, __strlen(eof)) == 0
 				&& __strlen(line) == __strlen(eof) + 1))
 		{
-			if (!line)
-				printf("warning: here-document at line %d\
-					delimited by end-of-file (wanted `%s')\n", i, eof);
-			get_next_line(-1);
-			free(line);
+			__treat_eof(line, eof);
 			break ;
 		}
 		ret = __strjoin(ret, line);
 		free (line);
 		if (!ret)
 			return (get_next_line(-1), NULL);
-		i++;
 	}
 	return (ret);
 }
 
-static int	__get_user_input(char **eof)
+static int	__trim_quote(char **eof, int *quote)
 {
-	char	*stdin;
-	int		file;
-	int		quote;
 	char	*tmp;
 
-	quote = 0;
+	tmp = NULL;
 	if (((*eof)[0] == '"' && (*eof)[__strlen(*eof) - 1] == '"'))
 	{
 		tmp = __strtrim(*eof, "\"");
@@ -62,7 +65,7 @@ static int	__get_user_input(char **eof)
 			return (0);
 		free(*eof);
 		*eof = tmp;
-		quote = 1;
+		*quote = 1;
 	}
 	else if (((*eof)[0] == '\'' && (*eof)[__strlen(*eof) - 1] == '\''))
 	{
@@ -71,8 +74,20 @@ static int	__get_user_input(char **eof)
 			return (0);
 		free(*eof);
 		*eof = tmp;
-		quote = 1;
+		*quote = 1;
 	}
+	return (1);
+}
+
+static int	__get_user_input(char **eof)
+{
+	char	*stdin;
+	int		file;
+	int		quote;
+
+	quote = 0;
+	if (!__trim_quote(eof, &quote))
+		return (0);
 	file = open(".hd.tmp", O_CREAT | O_WRONLY | O_TRUNC, 00644);
 	if (file < 0)
 		return (-1);
@@ -126,6 +141,7 @@ int	__retrieve_hd(t_lexing *lexing)
 static void	__init_child_hd(char *eof, t_lexing *lex, t_msh *msh, t_lexing *sv)
 {
 	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_IGN);
 	if (!__get_user_input(&eof))
 		__putendl_fd("minishell: malloc error in here doc", 2);
 	lex->next->token = eof;
