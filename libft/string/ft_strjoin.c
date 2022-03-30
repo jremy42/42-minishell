@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>+#+  +:+   +#+*/
 /*+#+#+#+#+#+   +#+   */
 /*   Created: 2021/11/23 18:06:59 by jremy #+##+# */
-/*   Updated: 2022/02/08 15:33:40 by fle-blay         ###   ########.fr       */
+/*   Updated: 2022/03/30 09:36:39 by fle-blay         ###   ########.fr       */
 /**/
 /* ************************************************************************** */
 
@@ -48,6 +48,27 @@ char	*__strjoin(char const *s1, char const *s2)
 	}
 	result = __strcpy(result, s1);
 	result = __strcat(result, s2);
+	free((char *)s1);
+	return (result);
+}
+
+char	*__strjoin2(char const *s1, char const *s2, char const *s3)
+{
+	size_t	size;
+	char	*result;
+
+	if (!s1 || !s2 || !s3)
+		return (NULL);
+	size = __strlen(s1) + __strlen(s2) + __strlen(s3);
+	result = __calloc(size + 1, sizeof(char));
+	if (!result)
+	{
+		free((char *)s1);
+		return (NULL);
+	}
+	result = __strcpy(result, s1);
+	result = __strcat(result, s2);
+	result = __strcat(result, s3);
 	free((char *)s1);
 	return (result);
 }

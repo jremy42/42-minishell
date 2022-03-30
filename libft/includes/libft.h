@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 16:01:03 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/29 17:26:50 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/30 09:24:43 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ void	*__calloc(size_t elementCount, size_t elementSize);
 char	*__strdup(const char *src);
 char	*__substr(char const *s, unsigned int start, size_t len);
 char	*__strjoin(char const *s1, char const *s2);
+char	*__strjoin2(char const *s1, char const *s2, char const *s3);
 char	*__strtrim(char const *s1, char const *set);
 char	**__split(char *s, char c);
 char	*__itoa(int n);

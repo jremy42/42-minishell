@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:25:57 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/29 15:45:33 by fred             ###   ########.fr       */
+/*   Updated: 2022/03/30 09:38:42 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,8 @@ char	*__get_prompt(t_msh *msh)
 		return(__exit_error(msh, 3, "get prompt"), NULL);
 	if (getcwd(path, PATH_MAX))
 	{
-		msh->prompt = __strjoin(msh->prompt, path + __get_pos_last_dir(path));
-		if (!msh->prompt)
-			return(__exit_error(msh, 3, "get prompt"), NULL);
-		msh->prompt = __strjoin(msh->prompt, RESET BOLDYELLOW "  ~  "RESET);
+		msh->prompt = __strjoin2(msh->prompt,
+			path + __get_pos_last_dir(path), RESET BOLDYELLOW "  ~  "RESET);
 		if (!msh->prompt)
 			return(__exit_error(msh, 3, "get prompt"), NULL);
 	}
