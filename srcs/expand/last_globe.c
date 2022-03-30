@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   globe.c                                            :+:      :+:    :+:   */
+/*   last_globe.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 09:52:39 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/15 16:59 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/30 13:04:01 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,20 +114,11 @@ void	__glob_list_clear(t_glob *start)
 	}
 }
 
-int   __init_dir_content(t_list **dir_content)
+int	__copy_dir_entries(t_list **dir_content, struct dirent *curr_dir, DIR *dp)
 {
-    char    path[PATH_MAX];
-    struct  dirent *curr_dir;
-    DIR     *dp;
-    t_list  *new_entry;
     char    *tmp;
+    t_list  *new_entry;
 
-    if (!getcwd(path, PATH_MAX))
-        return (__putendl_fd("Minishell : getcwd: cannot access directories:",2), 1);
-    dp = opendir(path);
-    if (!dp)
-        return (1);
-    curr_dir = readdir(dp);
     while (curr_dir)
     {
         if(curr_dir->d_name[0] != '.')
@@ -137,11 +128,30 @@ int   __init_dir_content(t_list **dir_content)
                 return (__lstclear(dir_content, free), closedir(dp), 0);
             new_entry = __lstnew(tmp);
             if (!new_entry)
-                return (free(tmp), __lstclear(dir_content, free), closedir(dp), 0);
+                return (free(tmp), __lstclear(dir_content, free),
+					closedir(dp), 0);
             __lstadd_back(dir_content, new_entry);
         }
         curr_dir = readdir(dp);
     }
+	return (1);
+}
+
+int   __init_dir_content(t_list **dir_content)
+{
+    char    path[PATH_MAX];
+    struct  dirent *curr_dir;
+    DIR     *dp;
+
+    if (!getcwd(path, PATH_MAX))
+        return (__putendl_fd("Minishell : getcwd: cannot access directories:",2)
+			, 1);
+    dp = opendir(path);
+    if (!dp)
+        return (1);
+    curr_dir = readdir(dp);
+	if (!__copy_dir_entries(dir_content, curr_dir, dp))
+		return (0);
     if (closedir(dp) < 0)
         return (__lstclear(dir_content, free), 0);
     return (1);
@@ -216,8 +226,21 @@ int __add_new_glob(char *to_glob_expand, t_globe_type *state, t_glob **glob, int
 	return (1);
 }
 
+void	__get_glob_size(int glob_len, int *i, int *j, char **tge)
+{
+	while (*i < glob_len && (*tge)[*i] == '*')
+		(*i)++;
+	while (*i < glob_len)
+	{
+		if ((*tge)[*i] == '*' && !__get_char_quote_status(*tge, &(*tge)[*i]))
+			break ;
+		(*i)++;
+		(*j)++;
+	}
+}
 
-int __add_remaining_globs(char **to_glob_expand, t_glob **glob, t_globe_type state)
+
+int __add_remaining_globs(char **tge, t_glob **glob, t_globe_type state)
 {
 	int i;
 	int j;
@@ -225,25 +248,13 @@ int __add_remaining_globs(char **to_glob_expand, t_glob **glob, t_globe_type sta
 	
 	i = 0;
 	j = 0;
-	glob_len = __strlen(*to_glob_expand);
+	glob_len = __strlen(*tge);
 	while (i < glob_len)
     {
-		if((*to_glob_expand)[i] == '*' && !__get_char_quote_status(*to_glob_expand, &(*to_glob_expand)[i]))
+		if ((*tge)[i] == '*' && !__get_char_quote_status(*tge, &(*tge)[i]))
 		{
-			//avance jusqu'a prochaine not quote
-			while(i < glob_len && (*to_glob_expand)[i] == '*')
-				i++;
-			//avance jusqu'a la prochaine unquoted star en comptant le nb de char pour le nv glob
-			while(i < glob_len)
-			{
-				if ((*to_glob_expand)[i] == '*' && !__get_char_quote_status(*to_glob_expand, &(*to_glob_expand)[i]))
-					break ;
-				i++;
-				j++;
-			}
-			//j = __move_to_next_unquoted_char((*to_glob_expand) + i, '*');
-			//i += j;
-			if(!__add_new_glob((*to_glob_expand) + i, &state, glob, j))
+			__get_glob_size(glob_len, &i, &j, tge);
+			if(!__add_new_glob((*tge) + i, &state, glob, j))
 				return (0);
 			j = 0;
 		}
@@ -278,6 +289,15 @@ t_glob *__create_glob_lst(char **to_glob_expand)
 	return (glob);
 }
 
+int	__find_end(char *file_name, t_glob *glob_lst)
+{
+	char *tmp;
+
+	tmp = __strrstr(file_name, glob_lst->to_find);
+	if (tmp && tmp[__strlen(glob_lst->to_find)] == 0)
+		return(1);	
+	return (0);
+}
 
 int __file_find(char *file_name, t_glob *glob_lst)
 {
@@ -289,23 +309,14 @@ int __file_find(char *file_name, t_glob *glob_lst)
 		return(__file_find(file_name,glob_lst->next));
 	if (glob_lst->type == 0)
 	{
-		DEBUG && fprintf(stderr,"first = file_name >%s< to_find = %s\n",file_name, glob_lst->to_find);
 		if(!__strncmp(file_name, glob_lst->to_find, __strlen(glob_lst->to_find)))
 			return(__file_find(file_name + __strlen(glob_lst->to_find), glob_lst->next));
 		return (0);
 	}
-	if(glob_lst->type == 2)
-	{
-		DEBUG && fprintf(stderr,"last = file_name >%s< to_find = %s\n",file_name, glob_lst->to_find);
-		tmp = __strrstr(file_name, glob_lst->to_find);
-		DEBUG && fprintf(stderr,"tmp >%s<\n",tmp);
-		if (tmp && tmp[__strlen(glob_lst->to_find)] == 0)
-			return(1);	
-		return (0);
-	}
+	if (glob_lst->type == 2)
+		return (__find_end(file_name, glob_lst));
 	else
 	{
-		DEBUG && fprintf(stderr,"middle = file_name >%s< to_find = %s\n",file_name, glob_lst->to_find);
 		tmp = __strstr(file_name, glob_lst->to_find);
     	if (!tmp)
 			return (0);
@@ -315,10 +326,21 @@ int __file_find(char *file_name, t_glob *glob_lst)
 	return (0);
 }
 
+int	__insert_first_token(t_lexing *lexing, char *new_glob_match)
+{
+	char *tmp;
+
+	tmp = __strdup(new_glob_match);
+	if (!tmp)
+		return (0);
+	free(lexing->token);
+	lexing->token = tmp;
+	return (1);
+}
+
 int __insert_token(t_lexing *lexing, char *new_glob_match, int reset, t_lexing *true_end)
 {
 	static int first = 1;
-	char *tmp;
 	t_lexing	*new_token;
 
 	if (reset)
@@ -328,14 +350,8 @@ int __insert_token(t_lexing *lexing, char *new_glob_match, int reset, t_lexing *
 	}
 	if (first)
 	{
-		tmp = __strdup(new_glob_match);
-		DEBUG && printf("tmp = [%s]\n", tmp);
-		if (!tmp)
-			return (0);
 		first = 0;
-		free(lexing->token);
-		lexing->token = tmp;
-		return (1);
+		return (__insert_first_token(lexing, new_glob_match));
 	}
 	new_token = __lexnew(new_glob_match);
 	if (!new_token)
@@ -372,10 +388,8 @@ int    __handle_wildcards(t_msh *msh, t_lexing *lexing)
 			{
 				if(__file_find((char *)dir_content->content, glob_lst))
 				{
-					DEBUG && printf("find = >%s<\n", (char *)dir_content->content);
 					if (!__insert_token(lexing, (char *)dir_content->content, 0, save_next))
 						return ( __glob_list_clear(glob_lst), __lstclear(&save, free), 0);
-					//lexing = lexing->next;
 				}
 				dir_content = dir_content->next;
 			}
