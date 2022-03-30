@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 09:50:45 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/30 15:36:48 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/30 16:13:51 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int __execute_pipe_seq(t_lexing *lexing, t_msh *msh)
 	if(!__field_spliting_token(lexing, msh))
 		__exit_error(msh,240, "Malloc error in field spliting\n");
 	DEBUG && printf("fieldsplit done\n");
-	if(!__handle_wildcards(msh, lexing))
+	if(!__handle_wildcards(lexing))
 		__exit_error(msh,240, "Malloc error in wildcard\n");
 	DEBUG && printf("wildcard done\n");
 	if (!__quote_removal_token(lexing))

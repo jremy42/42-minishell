@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 09:52:39 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/30 15:38:59 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/30 16:35:24 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,7 +174,7 @@ int	__get_char_quote_status(char *str, char *to_find)
 	q_status = UNQUOTE;
 	s_status = 0;
 	i = 0;
-	while(str[i] && &str[i] != to_find)
+	while (str[i] && &str[i] != to_find)
 	{
 		if (str[i] == '\\' && str[i + 1] && __need_to_escape(i, q_status, str)
 			&& !s_status)
@@ -187,7 +187,9 @@ int	__get_char_quote_status(char *str, char *to_find)
 		i++;
 		s_status = 0;
 	}
-	if(!s_status && q_status == UNQUOTE )
+	if (__strchr("\\'\"", str[i]) && q_status != UNQUOTE)
+		q_status = __return_state(str[i], q_status, s_status);
+	if (!s_status && q_status == UNQUOTE)
 			return(0);
 	return (1);
 }

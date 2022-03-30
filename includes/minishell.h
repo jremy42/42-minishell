@@ -14,7 +14,7 @@
 # include <sys/stat.h>
 # include <signal.h>
 
-# define PATH_MAX 4096
+//# define PATH_MAX 4096
 # define PROMPT_MAX 5000
 # define __SUCCESS 0
 # define __FAIL 1

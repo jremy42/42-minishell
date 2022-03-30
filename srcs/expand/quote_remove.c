@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:10:26 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/30 15:34:47 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/30 16:25:12 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int __quote_remove(char **token_word, t_msh  *msh)
 }
 */
 
-int __quote_removal_token(t_lexing *lexing, t_msh *msh)
+int __quote_removal_token(t_lexing *lexing)
 {
 	while(lexing)
 	{
@@ -102,7 +102,7 @@ int __quote_removal_token(t_lexing *lexing, t_msh *msh)
 	return (1);
 }
 
-int __quote_removal_glob(t_glob *glob, t_msh *msh)
+int __quote_removal_glob(t_glob *glob)
 {
 	while (glob)
 	{
