@@ -125,6 +125,7 @@ typedef struct s_user_input {
 	t_lexing	*first_error;
 	int			syntax_tree;
 	t_lexing	*parenthesis;
+	int			ret_hd;
 }	t_user_input;
 
 // A la construction de l'AST, le node obtient son kind, son node right et left.

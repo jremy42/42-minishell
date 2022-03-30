@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 15:19:06 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/30 15:21:17 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/30 17:56:26 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,6 @@ int	__retrieve_hd(t_lexing *lexing)
 		return (free(hd_content), 0);
 	free(lexing->next->token);
 	lexing->next->token = hd_content;
-	DEBUG && fprintf(stderr, "This is the heredoc : [%s]\n", hd_content);
 	return (1);
 }
 
