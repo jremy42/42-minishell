@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:41:54 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/21 09:54:58 by fle-blay         ###   ########.fr       */
+/*   Updated: 2022/03/30 09:50:39 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,5 @@ int	__echo(char **str, int fd)
 			__putstr_fd(" ", fd);
 		i++;
 	}
-	__put_newline(flags, fd);
-	return (__SUCCESS);
+	return (__put_newline(flags, fd), __SUCCESS);
 }

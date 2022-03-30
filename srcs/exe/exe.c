@@ -22,7 +22,6 @@ void	__cmd_node_list_clear(t_cmd *start)
 	{
 		next_to_free = start->next;
 		__redirect_list_clear(start->redirect);
-		//free_split(start->arg);
 		free(start->arg);
 		free(start);
 		start = next_to_free;
@@ -45,20 +44,20 @@ void	__cmd_full_list_clear(t_cmd *start)
 	}
 }
 
-int __is_builtin(char **arg)
+int	__is_builtin(char **arg)
 {
 	if (!arg || !arg[0])
 		return (0);
 	if (__strcmp(arg[0], "echo") == 0)
 		return (1);
 	if (__strcmp(arg[0], "cd") == 0)
-		 return (1);
+		return (1);
 	if (__strcmp(arg[0], "pwd") == 0)
-		 return (1);
+		return (1);
 	if (__strcmp(arg[0], "env") == 0)
 		return (1);
 	if (__strcmp(arg[0], "export") == 0)
-		 return (1);
+		return (1);
 	if (__strcmp(arg[0], "unset") == 0)
 		return (1);
 	if (__strcmp(arg[0], "exit") == 0)
@@ -66,11 +65,10 @@ int __is_builtin(char **arg)
 	return (0);
 }
 
-int	__exec_builtin(char **arg, t_msh *msh,  t_cmd *cmd)
+int	__exec_builtin(char **arg, t_msh *msh, t_cmd *cmd)
 {
-
 	if (__strcmp(arg[0], "echo") == 0)
-		msh->rv =__echo(arg, 1);
+		msh->rv = __echo(arg, 1);
 	if (__strcmp(arg[0], "cd") == 0)
 		msh->rv = __cd(arg[1], msh);
 	if (__strcmp(arg[0], "pwd") == 0)
@@ -83,23 +81,21 @@ int	__exec_builtin(char **arg, t_msh *msh,  t_cmd *cmd)
 		msh->rv = __unset(arg + 1, msh);
 	if (__strcmp(arg[0], "exit") == 0)
 		msh->rv = __bin_exit(arg, msh, cmd);
-	//fprintf(stderr,"msh->rv = %d\n", msh->rv);
-	return(msh->rv);
+	return (msh->rv);
 }
 
 int	__save_fd(int *std)
 {
 	std[out] = dup(STDOUT_FILENO);
 	std[in] = dup(STDIN_FILENO);
-	if (std[out] < 0|| std[in] < 0)
+	if (std[out] < 0 || std[in] < 0)
 		return (0);
 	return (1);
 }
 
-int __restore_fd(int *std)
+int	__restore_fd(int *std)
 {
 	DEBUG && fprintf(stderr, "restore fd\n");
-	//close(0);
 	if (dup2(std[out], STDOUT_FILENO) < 0)
 		return (0);
 	if (close(std[out]) < 0)

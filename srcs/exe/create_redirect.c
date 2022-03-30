@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 17:54:50 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/16 12:27:56 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/30 10:34:56 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,13 @@ void	__redirect_list_clear(t_redirect *start)
 	while (start)
 	{
 		next_to_free = start->next;
-		
 		DEBUG && fprintf(stderr, "freeing [%s]\n", start->file_name);
-		//free(start->file_name);
 		free(start);
 		start = next_to_free;
 	}
 }
 
-void __redirect_add_back(t_redirect **alst, t_redirect *new)
+void	__redirect_add_back(t_redirect **alst, t_redirect *new)
 {
 	t_redirect	*nextlst;
 
@@ -44,13 +42,13 @@ void __redirect_add_back(t_redirect **alst, t_redirect *new)
 	}
 }
 
-t_redirect   *__create_new_redirect(t_lexing *lexing)
+t_redirect	*__create_new_redirect(t_lexing *lexing)
 {
-	t_redirect *new;
+	t_redirect	*new;
 
 	new = malloc(sizeof(t_redirect));
 	if (!new)
-		return(NULL);
+		return (NULL);
 	new->next = NULL;
 	new->file_name = lexing->next->token;
 	if (__strcmp(lexing->token, "<") == 0)
@@ -61,13 +59,12 @@ t_redirect   *__create_new_redirect(t_lexing *lexing)
 		new->type = DGREAT;
 	if (__strcmp(lexing->token, "<<") == 0)
 		new->type = H_D;
-	//free(lexing->token);
 	return (new);
 }
 
-int __add_redirect(t_cmd *cmd, t_lexing *lexing)
+int	__add_redirect(t_cmd *cmd, t_lexing *lexing)
 {
-	t_redirect *new;
+	t_redirect	*new;
 
 	new = __create_new_redirect(lexing);
 	if (!new)

@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 16:21:22 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/29 19:36:14 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/30 10:55:34 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static int	__try_paths(char **path_cmd, char **path, char *cmd_name)
 	{
 		*path_cmd = __create_path_and_cmd(path[i], cmd_name);
 		if (!*path_cmd)
-			return(__putstr_fd("MALLOC ERROR\n", 2), 0);
+			return (__putstr_fd("MALLOC ERROR\n", 2), 0);
 		if (access(*path_cmd, F_OK) == 0)
 			return (1);
 		i++;
@@ -64,34 +64,34 @@ static int	__try_paths(char **path_cmd, char **path, char *cmd_name)
 	return (0);
 }
 
-static char *__get_path(char **path, char *cmd_name)
+static char	*__get_path(char **path, char *cmd_n)
 {
 	int		i;
 	char	*path_cmd;
 
 	i = 0;
-	if (__strchr(cmd_name, '/') != NULL)
+	if (__strchr(cmd_n, '/') != NULL)
 	{
-		if (__strncmp(cmd_name, "./", 2) == 0 && access(cmd_name + 2, F_OK) == 0)
-				return (cmd_name + 2);
-		if (access(cmd_name, F_OK) == 0)
-			return (cmd_name);
-		if (cmd_name[__strlen(cmd_name) - 1] == '/')
+		if (__strncmp(cmd_n, "./", 2) == 0 && access(cmd_n + 2, F_OK) == 0)
+			return (cmd_n + 2);
+		if (access(cmd_n, F_OK) == 0)
+			return (cmd_n);
+		if (cmd_n[__strlen(cmd_n) - 1] == '/')
 			return (NULL);
 	}
 	if (path == NULL)
 		return (NULL);
 	else
 	{
-		if (__try_paths(&path_cmd, path, cmd_name) == 1)
+		if (__try_paths(&path_cmd, path, cmd_n) == 1)
 			return (path_cmd);
 	}
-	return(NULL);
+	return (NULL);
 }
 
-void __exit_child(t_sequ *seq, t_cmd *cmd, int errno_copy, int error)
+void	__exit_child(t_sequ *seq, t_cmd *cmd, int errno_copy, int error)
 {
-	t_msh *tmp;
+	t_msh	*tmp;
 
 	if (errno_copy)
 		cmd->msh->rv = errno_copy;
@@ -104,7 +104,6 @@ void __exit_child(t_sequ *seq, t_cmd *cmd, int errno_copy, int error)
 	free_split(seq->path);
 	free(seq->envp);
 	tmp = cmd->msh;
-	DEBUG && fprintf(stderr, "msh : [%p] token [%s]\n", tmp->root, tmp->root->leaf_lexing->token);
 	if (tmp->root)
 		__cmd_node_list_clear(cmd);
 	else
@@ -112,13 +111,53 @@ void __exit_child(t_sequ *seq, t_cmd *cmd, int errno_copy, int error)
 	__exit(tmp);
 }
 
-void execute_child(t_sequ *seq, t_cmd *cmd, t_cmd *first_cmd)
+static void __check_access_and_exit(char *arg, t_sequ *seq, t_cmd *first_cmd)
 {
-	char *path_cmd;
-	struct stat buff;
-	
-	DEBUG && fprintf(stderr, "cmd->redirect =>%p\n", cmd->redirect);	
-	if(cmd->redirect)
+	struct stat	buff;
+
+	if (access(arg, F_OK) < 0)
+	{
+		print_error(arg, "command not found\n", NULL);
+		__exit_child(seq, first_cmd, 127, 0);
+	}
+	if (access(arg, X_OK) < 0)
+	{
+		print_error(arg, "Permission denied\n", NULL);
+		__exit_child(seq, first_cmd, 126, 0);
+	}
+	stat(arg, &buff);
+	if (S_ISDIR(buff.st_mode))
+	{
+		print_error(arg, "Is a directory\n", NULL);
+		__exit_child(seq, first_cmd, 126, 0);
+	}
+	print_error(arg, "command not found\n", NULL);
+	__exit_child(seq, first_cmd, 127, 0);
+}
+
+static void	__check_access_and_execve(char *path_cmd, char **arg, t_sequ *seq, t_cmd *first_cmd)
+{
+	struct stat	buff;
+
+	if (access(path_cmd, X_OK) < 0)
+	{
+		print_error(arg[0], "Permission denied\n", NULL);
+		__exit_child(seq, first_cmd, 126, 0);
+	}
+	stat(path_cmd, &buff);
+	if (S_ISDIR(buff.st_mode))
+	{
+		print_error(arg[0], "Is a directory\n", NULL);
+		__exit_child(seq, first_cmd, 126, 0);
+	}
+	execve(path_cmd, arg, seq->envp);
+}
+
+void	execute_child(t_sequ *seq, t_cmd *cmd, t_cmd *first_cmd)
+{
+	char		*path_cmd;
+
+	if (cmd->redirect)
 		__handle_redirect(seq, cmd);
 	if (!cmd->arg[0])
 		__exit_child(seq, first_cmd, 0, 0);
@@ -129,41 +168,8 @@ void execute_child(t_sequ *seq, t_cmd *cmd, t_cmd *first_cmd)
 	}
 	path_cmd = __get_path(seq->path, cmd->arg[0]);
 	if (!path_cmd)
-	{
-		if (access(cmd->arg[0], F_OK) < 0)
-		{
-			print_error(cmd->arg[0], "command not found\n", NULL);
-			__exit_child(seq, first_cmd, 127, 0);
-		}
-		if (access(cmd->arg[0], X_OK) < 0)
-		{
-			print_error(cmd->arg[0], "Permission denied\n", NULL);
-			__exit_child(seq, first_cmd, 126, 0);
-		}
-		stat(cmd->arg[0], &buff);
-		if(S_ISDIR(buff.st_mode))
-		{
-			print_error(cmd->arg[0], "Is a directory\n", NULL);
-			__exit_child(seq, first_cmd, 126, 0);
-		}
-
-	}
+		__check_access_and_exit(cmd->arg[0], seq, first_cmd);
 	if (path_cmd)
-	{
-		if (access(path_cmd, X_OK) < 0)
-		{
-			print_error(cmd->arg[0], "Permission denied\n", NULL);
-			__exit_child(seq, first_cmd, 126, 0);
-		}
-		stat(path_cmd, &buff);
-		if(S_ISDIR(buff.st_mode))
-		{
-			print_error(cmd->arg[0], "Is a directory\n", NULL);
-			__exit_child(seq, first_cmd, 126, 0);
-		}
-		execve(path_cmd, cmd->arg, seq->envp);
-	}
-	//fprintf(stderr, " Fail execve\n");
+		__check_access_and_execve(path_cmd, cmd->arg, seq, first_cmd);
 	__exit_child(seq, first_cmd, errno, 0);
-	
 }

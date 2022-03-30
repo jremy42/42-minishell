@@ -6,33 +6,33 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 10:06:28 by fle-blay          #+#    #+#             */
-/*   Updated: 2022/03/29 18:39:41 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/30 10:22:10 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	__check_valid_identifier(char *key_val)
+int	__check_valid_identifier(char *key_v)
 {
 	int	i;
-	int only_digit;
+	int	only_digit;
 
 	i = 0;
 	only_digit = 1;
-	if (key_val && (key_val[0] == '=' || key_val[0] == '+'))
-			return (print_error("export", key_val, "not a valid identifier"), 0);
-	while (key_val[i] && key_val[i] != '=')
+	if (key_v && (key_v[0] == '=' || key_v[0] == '+'))
+		return (print_error("export", key_v, "not a valid identifier"), 0);
+	while (key_v[i] && key_v[i] != '=')
 	{
-		if (key_val[i] == '+' && key_val[i + 1] == '=' && i > 0)
+		if (key_v[i] == '+' && key_v[i + 1] == '=' && i > 0)
 			return (1);
-		if (!__isdigit(key_val[i]))
+		if (!__isdigit(key_v[i]))
 			only_digit = 0;
-		if (!__isalnum(key_val[i]) && key_val[i] != '_')
-			return (print_error("export", key_val, "not a valid identifier"), 0);
+		if (!__isalnum(key_v[i]) && key_v[i] != '_')
+			return (print_error("export", key_v, "not a valid identifier"), 0);
 		i++;
 	}
 	if (only_digit)
-		return (print_error("export", key_val, "not a valid identifier"), 0);
+		return (print_error("export", key_v, "not a valid identifier"), 0);
 	return (1);
 }
 

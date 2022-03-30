@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 14:53:22 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/30 10:54:59 by fle-blay         ###   ########.fr       */
+/*   Updated: 2022/03/30 11:18:49 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,13 +81,62 @@ int __parameter_expand(char *start_word, t_msh *msh, char **expanded_token, int 
 	return (free(candidate), 1);
 }
 
-int	__treat_dollar(char c, char next_char, t_state quote_status)
+int	__get_dollar_status(char *str, char *to_find)
 {
-	if (c == '$' && next_char && (quote_status == UNQUOTE || quote_status == D_QUOTE))
-		return (1);
-	return (0);
+	t_state slash_status;
+	t_state quote_status;
+	int i;
+
+	quote_status = UNQUOTE;
+	slash_status = 0;
+	i = 0;
+	while(str[i] && &str[i] != to_find)
+	{
+		if (str[i] == '\\' && str[i + 1] && __need_to_escape(i, quote_status, str)
+			&& !slash_status)
+		{
+			slash_status = BACKSLASH;
+			i++;
+			continue ;
+		}
+		quote_status = __return_state(str[i], quote_status, slash_status);
+		i++;
+		slash_status = 0;
+	}
+	if(!slash_status && (quote_status == UNQUOTE || quote_status == D_QUOTE))
+			return(0);
+	return (1);
 }
 
+int __expand_word(char **token_word, t_msh  *msh)
+{
+	char	*tmp;
+	int     i;
+	char    *expanded_token_wd;
+
+	expanded_token_wd = __strdup("");
+	if (!expanded_token_wd)
+		return (0);
+	tmp = *token_word;
+	i = -1;
+	while (tmp[++i])
+	{
+		if (tmp[i] == '$' &&  !__get_dollar_status(tmp, &tmp[i]) && tmp[i + 1])
+		{
+			if (!__parameter_expand(tmp + i + 1, msh, &expanded_token_wd, &i))
+				return (free(expanded_token_wd), 0);
+		}
+		else
+		{
+			if (!__add_char_to_token(tmp[i], &expanded_token_wd))
+				return(free(expanded_token_wd), 0);
+		}
+	}
+	free(*token_word);
+	*token_word = expanded_token_wd;
+	return (1);
+}
+/*
 int __expand_word(char **token_word, t_msh  *msh)
 {
 	t_state slash_status;
@@ -132,7 +181,7 @@ int __expand_word(char **token_word, t_msh  *msh)
 	*token_word = expanded_token_word;
 	return (1);
 }
-
+*/
 int	__split_expanded_token(t_lexing *lexing)
 {
 	char	**split_token;

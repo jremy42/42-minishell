@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 14:13:52 by fle-blay          #+#    #+#             */
-/*   Updated: 2022/03/28 18:31:49 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/30 10:20:40 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int	join_key_val(t_msh *msh, char *key_val)
 		return (__MALLOC);
 	msh->envp[pos][1] = __strdup("1");
 	if (!msh->envp[pos][1])
-		return (free(msh->envp[pos][0]),__MALLOC);
+		return (free(msh->envp[pos][0]), __MALLOC);
 	return (__SUCCESS);
 }
 
@@ -103,10 +103,10 @@ int	add_key_val(t_msh *msh, char *key_val, int i)
 	}
 	new_env[i][0] = __strdup(key_val);
 	if (!new_env[i][0])
-		return (free(new_env[i]), free(new_env),__MALLOC);
+		return (free(new_env[i]), free(new_env), __MALLOC);
 	new_env[i][1] = __strdup("1");
 	if (!new_env[i][1])
-		return (free(new_env[i][0]), free(new_env[i]), free(new_env),__MALLOC);
+		return (free(new_env[i][0]), free(new_env[i]), free(new_env), __MALLOC);
 	new_env[i][2] = NULL;
 	while (--i >= 0)
 		new_env[i] = msh->envp[i];

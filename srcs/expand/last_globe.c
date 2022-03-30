@@ -285,7 +285,7 @@ int __file_find(char *file_name, t_glob *glob_lst)
 
 	if (!glob_lst)
 		return (1);
-	if(!glob_lst->to_find)
+	if(!glob_lst->to_find || !glob_lst->to_find[0])
 		return(__file_find(file_name,glob_lst->next));
 	if (glob_lst->type == 0)
 	{
