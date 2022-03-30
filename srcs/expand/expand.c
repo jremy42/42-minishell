@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 14:53:22 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/29 18:19:48 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/30 10:54:59 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int __expand_word(char **token_word, t_msh  *msh)
 {
 	t_state slash_status;
 	t_state quote_status;
-	char *tmp;
+	char	*tmp;
 	int     i;
 	char    *expanded_token_word;
 
@@ -103,10 +103,10 @@ int __expand_word(char **token_word, t_msh  *msh)
 	quote_status = UNQUOTE;
 	slash_status = 0;
 	i = 0;
-	while(tmp[i])
+	while (tmp[i])
 	{
-		if (tmp[i] == '\\' && tmp[i + 1] && __need_to_escape(i, quote_status, tmp)
-			&& !slash_status)
+		if (tmp[i] == '\\' && tmp[i + 1]
+			&& __need_to_escape(i, quote_status, tmp) && !slash_status)
 		{
 			slash_status = BACKSLASH;
 			if (!__add_char_to_token(tmp[i], &expanded_token_word))
@@ -115,9 +115,9 @@ int __expand_word(char **token_word, t_msh  *msh)
 			continue ;
 		}
 		quote_status = __return_state(tmp[i], quote_status, slash_status);		
-		if(!slash_status && __treat_dollar(tmp[i], tmp[i + 1], quote_status))
+		if (!slash_status && __treat_dollar(tmp[i], tmp[i + 1], quote_status))
 		{
-			if(!__parameter_expand(tmp + i + 1, msh, &expanded_token_word, &i))
+			if (!__parameter_expand(tmp + i + 1, msh, &expanded_token_word, &i))
 				return (free(expanded_token_word), 0);
 		}
 		else

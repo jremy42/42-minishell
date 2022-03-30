@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:25:57 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/30 09:38:42 by fle-blay         ###   ########.fr       */
+/*   Updated: 2022/03/30 10:38:08 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,13 +84,11 @@ void	partial_destroy_env(t_msh *msh, int limit)
 	free(msh->envp);
 }
 
-int	get_env(t_msh *msh, char *envp[])
+int	get_env(t_msh *msh, char *envp[], int size)
 {
 	int	i;
-	int size;
 
 	i = -1;
-	size = get_size_env(envp);
 	msh->envp = (char ***)malloc((size + 1) * sizeof(char **));
 	if (!msh->envp)
 		return (0);
@@ -105,13 +103,12 @@ int	get_env(t_msh *msh, char *envp[])
 			return (free(msh->envp[i]), partial_destroy_env(msh, i), 0);
 		msh->envp[i][1] = __strdup("1");
 		if(!msh->envp[i][1])
-			return (free(msh->envp[i][0]), free(msh->envp[i]), partial_destroy_env(msh, i), 0);
+			return (free(msh->envp[i][0]), free(msh->envp[i]),
+				partial_destroy_env(msh, i), 0);
 		msh->envp[i][2] = NULL;
 	}
-	if (update_pwd(msh) == __MALLOC)
-		__exit_error(msh, 240, "Malloc Error in update pwd");
-	if (update_shlvl(msh) == __MALLOC)
-		__exit_error(msh, 240, "Malloc Error in update shlvl");
+	if (update_pwd(msh) == __MALLOC || update_shlvl(msh) == __MALLOC)
+		__exit_error(msh, 240, "Malloc Error in update pwd or update shlvl");
 	return (1);
 }
 
@@ -128,42 +125,37 @@ int __check_input(char *arg, char **to_tokenize, t_msh *msh)
 	return (1);
 }
 
+static void __init_user_input_struct(t_user_input *ui)
+{
+	ui->token = NULL;
+	ui->lexing = NULL;
+	ui->parenthesis = NULL;
+}
+
 int	__treat_user_input(char *arg, t_msh *msh)
 {
-	t_list		*token;
-	t_lexing	*lexing;
-	char		*to_tokenize;
-	t_lexing	*first_error;
-	int			syntax_tree;
-	t_lexing	*parenthesis;
+	t_user_input ui;
 
-	token = NULL;
-	lexing = NULL;
-	parenthesis = NULL;
-	if(!__check_input(arg, &to_tokenize, msh))
+	__init_user_input_struct(&ui);
+	if(!__check_input(arg, &ui.to_tokenize, msh))
 		return (0);
-	if (!__tokenize(to_tokenize, &token, msh))
-		return (free(to_tokenize), __exit_error(msh, 3, "tokenize"));
-	free(to_tokenize);	
-	if (!__lexing(token, &lexing))
-		return (__lexing_full_list_clear(&lexing), __exit_error(msh, 3, "lexing"));
-	first_error = __synthax_checker(lexing, msh);
-	if(!__handle_here_doc(lexing, first_error, msh))
-		return (__lexing_full_list_clear(&lexing), __exit_error(msh, 3, "here_doc"));
+	if (!__tokenize(ui.to_tokenize, &ui.token, msh))
+		return (free(ui.to_tokenize), __exit_error(msh, 3, "tokenize"));
+	free(ui.to_tokenize);	
+	if (!__lexing(ui.token, &ui.lexing))
+		return (__lexing_full_list_clear(&ui.lexing), __exit_error(msh, 3, "lexing"));
+	ui.first_error = __synthax_checker(ui.lexing, msh);
+	if(!__handle_here_doc(ui.lexing, ui.first_error, msh))
+		return (__lexing_full_list_clear(&ui.lexing), __exit_error(msh, 3, "here_doc"));
 	if(msh->syntax_error == 2)
-		return (__lexing_full_list_clear(&lexing), -1);
-	if(!__give_node(__count_node(lexing), 1))
-		return (__lexing_full_list_clear(&lexing),__exit_error(msh, 3, "create tree"));
-	syntax_tree = __create_tree(lexing, &(msh->root), &parenthesis);
-	DEBUG && print2D(msh->root);
-	//printf("clear parenthesis\n");
-	__lexing_full_list_clear(&parenthesis);
-	parenthesis = NULL;
-	if (syntax_tree == 0)
+		return (__lexing_full_list_clear(&ui.lexing), -1);
+	if(!__give_node(__count_node(ui.lexing), 1))
+		return (__lexing_full_list_clear(&ui.lexing),__exit_error(msh, 3, "create tree"));
+	ui.syntax_tree = __create_tree(ui.lexing, &(msh->root), &ui.parenthesis);
+	__lexing_full_list_clear(&ui.parenthesis);
+	if (ui.syntax_tree == 0)
 		return (__destroy_tree(&msh->root), -1);
-	//__exit_error(msh, 1, "Malloc test");
 	msh->rv = __execute_tree(msh->root, msh);
-	//printf("destroy tree\n");
 	__destroy_tree(&msh->root);
 	return (msh->rv);
 }
@@ -204,6 +196,14 @@ static void __update_rv(t_msh *msh)
 	g_rv = 0;
 }
 
+void	__clean_inputs(char ** inputs, t_msh *msh, char *arg)
+{
+	free_split(inputs);
+	inputs = NULL;
+	msh->all_input = NULL;
+	free(arg);
+}
+
 int	__interactive_mode(t_msh *msh)
 {
 	char	*arg;
@@ -215,7 +215,6 @@ int	__interactive_mode(t_msh *msh)
 		signal(SIGINT, __signal);
 		signal(SIGQUIT, __signal);
 		arg = readline(__get_prompt(msh));
-		//arg = readline(NULL);
 		add_history(arg);
 		__update_rv(msh);
 		if (arg == NULL)
@@ -228,10 +227,7 @@ int	__interactive_mode(t_msh *msh)
 		i = -1;
 		while(inputs[++i])
 			__treat_user_input(inputs[i], msh);
-		free_split(inputs);
-		msh->all_input = NULL;
-		inputs = NULL;
-		free(arg);
+		__clean_inputs(inputs, msh, arg);
 	}
 	return (msh->rv);
 }
@@ -243,7 +239,7 @@ int	main (int ac, char *av[], char *envp[])
 	
 	msh = (t_msh){.rv = 0};
 	//printf("size = %lu\n", sizeof(t_glob));
-	if (!get_env(&msh, envp))
+	if (!get_env(&msh, envp, get_size_env(envp)))
 		return (1);
 	if (ac > 1)
 		__non_interative_mode(av, &msh);

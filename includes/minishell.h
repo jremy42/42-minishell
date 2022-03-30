@@ -117,6 +117,16 @@ typedef struct s_glob
 } t_glob;
 
 
+typedef struct s_user_input {
+
+	t_list		*token;
+	t_lexing	*lexing;
+	char		*to_tokenize;
+	t_lexing	*first_error;
+	int			syntax_tree;
+	t_lexing	*parenthesis;
+}	t_user_input;
+
 // A la construction de l'AST, le node obtient son kind, son node right et left.
 // La donnee est le pointeur sur un t_lexing (cad une liste chainee de token)
 // Dans les passage successifs suivants, on va:
