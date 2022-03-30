@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 09:52:39 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/30 13:04:01 by fle-blay         ###   ########.fr       */
+/*   Updated: 2022/03/30 14:19:05 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ t_glob	*__glob_new(char *content, t_globe_type type, int size)
 	if (!newlst)
 		return (NULL);
 	newlst->to_find = __strndup(content, size);
-	DEBUG && fprintf(stderr, " add glob >%s< type >%d<\n", newlst->to_find, type);
 	if (!newlst->to_find && size)
 		return (free(newlst), NULL);
 	newlst->type = type;
@@ -32,56 +31,56 @@ t_glob	*__glob_new(char *content, t_globe_type type, int size)
 
 int	__move_to_next_unquoted_charset(char *str, char *charset)
 {
-	t_state slash_status;
-	t_state quote_status;
+	t_state s_status;
+	t_state q_status;
 	int i;
 
-	quote_status = UNQUOTE;
-	slash_status = 0;
+	q_status = UNQUOTE;
+	s_status = 0;
 	i = 0;
 	while(str[i])
 	{
-		if (str[i] == '\\' && str[i + 1] && __need_to_escape(i, quote_status, str)
-			&& !slash_status)
+		if (str[i] == '\\' && str[i + 1] && __need_to_escape(i, q_status, str)
+			&& !s_status)
 		{
-			slash_status = BACKSLASH;
+			s_status = BACKSLASH;
 			i++;
 			continue ;
 		}
-		quote_status = __return_state(str[i], quote_status, slash_status);
-		if(!slash_status && quote_status == UNQUOTE && __is_in_charset(str[i], charset))
+		q_status = __return_state(str[i], q_status, s_status);
+		if(!s_status && q_status == UNQUOTE && __is_in_charset(str[i], charset))
 			return(i);
 		else
 			i++;
-		slash_status = 0;
+		s_status = 0;
 	}
 	return (-1);
 }
 
 int	__move_to_next_unquoted_char(char *str, char c)
 {
-	t_state slash_status;
-	t_state quote_status;
+	t_state s_status;
+	t_state q_status;
 	int i;
 
-	quote_status = UNQUOTE;
-	slash_status = 0;
+	q_status = UNQUOTE;
+	s_status = 0;
 	i = 0;
 	while(str[i])
 	{
-		if (str[i] == '\\' && str[i + 1] && __need_to_escape(i, quote_status, str)
-			&& !slash_status)
+		if (str[i] == '\\' && str[i + 1] && __need_to_escape(i, q_status, str)
+			&& !s_status)
 		{
-			slash_status = BACKSLASH;
+			s_status = BACKSLASH;
 			i++;
 			continue ;
 		}
-		quote_status = __return_state(str[i], quote_status, slash_status);
-		if(!slash_status && str[i] == c && quote_status == UNQUOTE )
+		q_status = __return_state(str[i], q_status, s_status);
+		if(!s_status && str[i] == c && q_status == UNQUOTE )
 			return(i);
 		else
 			i++;
-		slash_status = 0;
+		s_status = 0;
 	}
 	return (-1);
 }
@@ -107,7 +106,6 @@ void	__glob_list_clear(t_glob *start)
 	while (start)
 	{
 		next_to_free = start->next;
-		DEBUG && printf("start->to_find : [%s], type : %d\n", start->to_find, start->type);
 		free(start->to_find);
 		free(start);
 		start = next_to_free;
@@ -161,7 +159,6 @@ void    __print_dir(t_list *dir_content)
 {
     while (dir_content)
     {
-        DEBUG &&fprintf(stderr, "next_entry from list: [%s]\n", (char *)dir_content->content);
         dir_content = dir_content->next;
     }
 }
@@ -170,27 +167,27 @@ void    __print_dir(t_list *dir_content)
 
 int	__get_char_quote_status(char *str, char *to_find)
 {
-	t_state slash_status;
-	t_state quote_status;
+	t_state s_status;
+	t_state q_status;
 	int i;
 
-	quote_status = UNQUOTE;
-	slash_status = 0;
+	q_status = UNQUOTE;
+	s_status = 0;
 	i = 0;
 	while(str[i] && &str[i] != to_find)
 	{
-		if (str[i] == '\\' && str[i + 1] && __need_to_escape(i, quote_status, str)
-			&& !slash_status)
+		if (str[i] == '\\' && str[i + 1] && __need_to_escape(i, q_status, str)
+			&& !s_status)
 		{
-			slash_status = BACKSLASH;
+			s_status = BACKSLASH;
 			i++;
 			continue ;
 		}
-		quote_status = __return_state(str[i], quote_status, slash_status);
+		q_status = __return_state(str[i], q_status, s_status);
 		i++;
-		slash_status = 0;
+		s_status = 0;
 	}
-	if(!slash_status && quote_status == UNQUOTE )
+	if(!s_status && q_status == UNQUOTE )
 			return(0);
 	return (1);
 }
@@ -202,7 +199,8 @@ t_globe_type __get_next_state(t_globe_type current_state, char *token)
 
 	i = 0;
 	
-	while(token[i] && token[i] == '*' && !__get_char_quote_status(token, &token[i]))
+	while(token[i] && token[i] == '*'
+		&& !__get_char_quote_status(token, &token[i]))
 		i++;
 	if (__move_to_next_unquoted_char(token + i, '*') < 0)
 		return (LAST);
@@ -211,7 +209,8 @@ t_globe_type __get_next_state(t_globe_type current_state, char *token)
 	return (MIDDLE);
 }
 
-int __add_new_glob(char *to_glob_expand, t_globe_type *state, t_glob **glob, int j)
+int __add_new_glob(char *to_glob_expand,
+t_globe_type *state, t_glob **glob, int j)
 {
 	t_glob	*new;
 	
@@ -299,29 +298,29 @@ int	__find_end(char *file_name, t_glob *glob_lst)
 	return (0);
 }
 
-int __file_find(char *file_name, t_glob *glob_lst)
+int __file_find(char *f_name, t_glob *g_lst)
 {
 	char *tmp;
 
-	if (!glob_lst)
+	if (!g_lst)
 		return (1);
-	if(!glob_lst->to_find || !glob_lst->to_find[0])
-		return(__file_find(file_name,glob_lst->next));
-	if (glob_lst->type == 0)
+	if(!g_lst->to_find || !g_lst->to_find[0])
+		return(__file_find(f_name,g_lst->next));
+	if (g_lst->type == 0)
 	{
-		if(!__strncmp(file_name, glob_lst->to_find, __strlen(glob_lst->to_find)))
-			return(__file_find(file_name + __strlen(glob_lst->to_find), glob_lst->next));
+		if(!__strncmp(f_name, g_lst->to_find, __strlen(g_lst->to_find)))
+			return(__file_find(f_name + __strlen(g_lst->to_find), g_lst->next));
 		return (0);
 	}
-	if (glob_lst->type == 2)
-		return (__find_end(file_name, glob_lst));
+	if (g_lst->type == 2)
+		return (__find_end(f_name, g_lst));
 	else
 	{
-		tmp = __strstr(file_name, glob_lst->to_find);
+		tmp = __strstr(f_name, g_lst->to_find);
     	if (!tmp)
 			return (0);
-   	 	tmp += __strlen(glob_lst->to_find);
-		return (__file_find(tmp, glob_lst->next));
+   	 	tmp += __strlen(g_lst->to_find);
+		return (__file_find(tmp, g_lst->next));
 	}
 	return (0);
 }
@@ -338,7 +337,8 @@ int	__insert_first_token(t_lexing *lexing, char *new_glob_match)
 	return (1);
 }
 
-int __insert_token(t_lexing *lexing, char *new_glob_match, int reset, t_lexing *true_end)
+int __insert_token(t_lexing *lexing,
+	char *new_glob_match, int reset, t_lexing *true_end)
 {
 	static int first = 1;
 	t_lexing	*new_token;
@@ -363,11 +363,32 @@ int __insert_token(t_lexing *lexing, char *new_glob_match, int reset, t_lexing *
 	return (1);
 }
 
+int	__glob_expand_token(t_msh *msh, t_lexing *lexing,
+	t_list *d_content, t_lexing *s_nxt)
+{
+	t_glob		*glob_lst;
+
+	glob_lst = __create_glob_lst(&lexing->token);
+	if (!glob_lst)
+		return (__lstclear(&d_content, free), 0);
+	if(!__quote_removal_glob(glob_lst, msh))
+		return ( __glob_list_clear(glob_lst),__lstclear(&d_content, free), 0);
+	while (d_content)
+	{
+		if (__file_find((char *)d_content->content, glob_lst)
+			&& !__insert_token(lexing, (char *)d_content->content, 0, s_nxt))
+				return ( __glob_list_clear(glob_lst), 0);
+		d_content = d_content->next;
+	}
+	__insert_token(NULL, NULL, 1, NULL);
+	__glob_list_clear(glob_lst);
+	return (1);
+}
+
 int    __handle_wildcards(t_msh *msh, t_lexing *lexing)
 {
 	t_list		*dir_content;
 	t_list		*save;
-	t_glob		*glob_lst;
 	t_lexing	*save_next;
 
 	dir_content = NULL;
@@ -377,25 +398,9 @@ int    __handle_wildcards(t_msh *msh, t_lexing *lexing)
 	while(lexing)
 	{
 		save_next = lexing->next;
-		if(__move_to_next_unquoted_char(lexing->token, '*') >= 0)
-		{
-			glob_lst = __create_glob_lst(&lexing->token);
-			if (!glob_lst)
-				return (__lstclear(&dir_content, free), 0);
-			if(!__quote_removal_glob(glob_lst, msh))
-				return ( __glob_list_clear(glob_lst),__lstclear(&dir_content, free), 0);
-			while(dir_content)
-			{
-				if(__file_find((char *)dir_content->content, glob_lst))
-				{
-					if (!__insert_token(lexing, (char *)dir_content->content, 0, save_next))
-						return ( __glob_list_clear(glob_lst), __lstclear(&save, free), 0);
-				}
-				dir_content = dir_content->next;
-			}
-			__insert_token(NULL, NULL, 1, NULL);
-			__glob_list_clear(glob_lst);
-		}
+		if (__move_to_next_unquoted_char(lexing->token, '*') >= 0
+			&& !__glob_expand_token(msh, lexing, dir_content, save_next))
+			return (__lstclear(&save, free), 0);
 		dir_content = save;
 		lexing = save_next;
 	}

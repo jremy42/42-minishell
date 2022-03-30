@@ -231,263 +231,206 @@ Error: LINE_TOO_LONG        (line: 217, col:  87):	line too long
 Error: LINE_TOO_LONG        (line: 225, col:   1):	line too long
 Error: LINE_TOO_LONG        (line: 225, col: 103):	line too long
 srcs/expand/last_globe.c: Error!
-Error: LINE_TOO_LONG        (line:  25, col:  82):	line too long
+Error: SPACE_REPLACE_TAB    (line:  34, col:  12):	Found space when expecting tab
 Error: SPACE_REPLACE_TAB    (line:  35, col:  12):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line:  36, col:  12):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line:  37, col:   8):	Found space when expecting tab
-Error: MISALIGNED_VAR_DECL  (line:  37, col:   9):	Misaligned variable declaration
-Error: SPACE_AFTER_KW       (line:  42, col:   5):	Missing space after keyword
-Error: SPC_BFR_PAR          (line:  42, col:  10):	Missing space before parenthesis (brace/bracket)
-Error: LINE_TOO_LONG        (line:  44, col:  83):	line too long
-Error: SPACE_AFTER_KW       (line:  52, col:   9):	Missing space after keyword
-Error: SPC_BFR_PAR          (line:  52, col:  11):	Missing space before parenthesis (brace/bracket)
-Error: LINE_TOO_LONG        (line:  52, col:  87):	line too long
-Error: SPACE_AFTER_KW       (line:  53, col:  13):	Missing space after keyword
-Error: SPC_BFR_PAR          (line:  53, col:  19):	Missing space before parenthesis (brace/bracket)
+Error: SPACE_REPLACE_TAB    (line:  36, col:   8):	Found space when expecting tab
+Error: MISALIGNED_VAR_DECL  (line:  36, col:   9):	Misaligned variable declaration
+Error: SPACE_AFTER_KW       (line:  41, col:   5):	Missing space after keyword
+Error: SPC_BFR_PAR          (line:  41, col:  10):	Missing space before parenthesis (brace/bracket)
+Error: SPACE_AFTER_KW       (line:  51, col:   9):	Missing space after keyword
+Error: SPC_BFR_PAR          (line:  51, col:  11):	Missing space before parenthesis (brace/bracket)
+Error: SPACE_AFTER_KW       (line:  52, col:  13):	Missing space after keyword
+Error: SPC_BFR_PAR          (line:  52, col:  19):	Missing space before parenthesis (brace/bracket)
+Error: SPACE_REPLACE_TAB    (line:  62, col:  12):	Found space when expecting tab
 Error: SPACE_REPLACE_TAB    (line:  63, col:  12):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line:  64, col:  12):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line:  65, col:   8):	Found space when expecting tab
-Error: MISALIGNED_VAR_DECL  (line:  65, col:   9):	Misaligned variable declaration
-Error: SPACE_AFTER_KW       (line:  70, col:   5):	Missing space after keyword
-Error: SPC_BFR_PAR          (line:  70, col:  10):	Missing space before parenthesis (brace/bracket)
-Error: LINE_TOO_LONG        (line:  72, col:  83):	line too long
-Error: SPACE_AFTER_KW       (line:  80, col:   9):	Missing space after keyword
-Error: SPC_BFR_PAR          (line:  80, col:  11):	Missing space before parenthesis (brace/bracket)
-Error: NO_SPC_BFR_PAR       (line:  80, col:  68):	Extra space before parenthesis (brace/bracket)
-Error: SPACE_AFTER_KW       (line:  81, col:  13):	Missing space after keyword
-Error: SPC_BFR_PAR          (line:  81, col:  19):	Missing space before parenthesis (brace/bracket)
-Error: NEWLINE_PRECEDES_FUNC (line: 103, col:   1):	Functions must be separated by a newline
-Error: LINE_TOO_LONG        (line: 110, col:  83):	line too long
-Error: TOO_MANY_FUNCS       (line: 117, col:   1):	Too many functions in file
-Error: CONSECUTIVE_SPC      (line: 117, col:   4):	Two or more consecutives spaces
-Error: SPACE_BEFORE_FUNC    (line: 117, col:   6):	space before function name
-Error: TOO_FEW_TAB          (line: 119, col:   1):	Missing tabs for indent level
-Error: SPACE_REPLACE_TAB    (line: 119, col:   5):	Found space when expecting tab
-Error: CONSECUTIVE_SPC      (line: 119, col:   9):	Two or more consecutives spaces
-Error: SPACE_REPLACE_TAB    (line: 119, col:   9):	Found space when expecting tab
+Error: SPACE_REPLACE_TAB    (line:  64, col:   8):	Found space when expecting tab
+Error: MISALIGNED_VAR_DECL  (line:  64, col:   9):	Misaligned variable declaration
+Error: SPACE_AFTER_KW       (line:  69, col:   5):	Missing space after keyword
+Error: SPC_BFR_PAR          (line:  69, col:  10):	Missing space before parenthesis (brace/bracket)
+Error: SPACE_AFTER_KW       (line:  79, col:   9):	Missing space after keyword
+Error: SPC_BFR_PAR          (line:  79, col:  11):	Missing space before parenthesis (brace/bracket)
+Error: NO_SPC_BFR_PAR       (line:  79, col:  60):	Extra space before parenthesis (brace/bracket)
+Error: SPACE_AFTER_KW       (line:  80, col:  13):	Missing space after keyword
+Error: SPC_BFR_PAR          (line:  80, col:  19):	Missing space before parenthesis (brace/bracket)
+Error: NEWLINE_PRECEDES_FUNC (line: 102, col:   1):	Functions must be separated by a newline
+Error: TOO_MANY_FUNCS       (line: 115, col:   1):	Too many functions in file
+Error: TOO_FEW_TAB          (line: 117, col:   1):	Missing tabs for indent level
+Error: SPACE_REPLACE_TAB    (line: 117, col:   5):	Found space when expecting tab
+Error: CONSECUTIVE_SPC      (line: 117, col:   9):	Two or more consecutives spaces
+Error: SPACE_REPLACE_TAB    (line: 117, col:   9):	Found space when expecting tab
+Error: TOO_FEW_TAB          (line: 118, col:   1):	Missing tabs for indent level
+Error: SPACE_REPLACE_TAB    (line: 118, col:   5):	Found space when expecting tab
+Error: CONSECUTIVE_SPC      (line: 118, col:  11):	Two or more consecutives spaces
+Error: SPACE_REPLACE_TAB    (line: 118, col:  11):	Found space when expecting tab
 Error: TOO_FEW_TAB          (line: 120, col:   1):	Missing tabs for indent level
 Error: SPACE_REPLACE_TAB    (line: 120, col:   5):	Found space when expecting tab
-Error: CONSECUTIVE_SPC      (line: 120, col:  11):	Two or more consecutives spaces
-Error: SPACE_REPLACE_TAB    (line: 120, col:  19):	Found space when expecting tab
-Error: MISALIGNED_VAR_DECL  (line: 120, col:  20):	Misaligned variable declaration
 Error: TOO_FEW_TAB          (line: 121, col:   1):	Missing tabs for indent level
-Error: SPACE_REPLACE_TAB    (line: 121, col:   5):	Found space when expecting tab
-Error: CONSECUTIVE_SPC      (line: 121, col:   8):	Two or more consecutives spaces
-Error: SPACE_REPLACE_TAB    (line: 121, col:   8):	Found space when expecting tab
+Error: SPACE_EMPTY_LINE     (line: 121, col:   5):	Space on empty line
 Error: TOO_FEW_TAB          (line: 122, col:   1):	Missing tabs for indent level
-Error: SPACE_REPLACE_TAB    (line: 122, col:   5):	Found space when expecting tab
-Error: CONSECUTIVE_SPC      (line: 122, col:  11):	Two or more consecutives spaces
-Error: SPACE_REPLACE_TAB    (line: 122, col:  11):	Found space when expecting tab
+Error: SPACE_AFTER_KW       (line: 122, col:   9):	Missing space after keyword
+Error: SPACE_REPLACE_TAB    (line: 122, col:   9):	Found space when expecting tab
+Error: SPC_BFR_PAR          (line: 122, col:  11):	Missing space before parenthesis (brace/bracket)
 Error: TOO_FEW_TAB          (line: 123, col:   1):	Missing tabs for indent level
-Error: SPACE_REPLACE_TAB    (line: 123, col:   5):	Found space when expecting tab
-Error: CONSECUTIVE_SPC      (line: 123, col:   9):	Two or more consecutives spaces
-Error: SPACE_REPLACE_TAB    (line: 123, col:   9):	Found space when expecting tab
+Error: SPACE_EMPTY_LINE     (line: 123, col:   9):	Space on empty line
+Error: SPACE_REPLACE_TAB    (line: 124, col:  13):	Found space when expecting tab
 Error: TOO_FEW_TAB          (line: 125, col:   1):	Missing tabs for indent level
-Error: SPACE_REPLACE_TAB    (line: 125, col:   5):	Found space when expecting tab
+Error: SPACE_REPLACE_TAB    (line: 125, col:  13):	Found space when expecting tab
 Error: TOO_FEW_TAB          (line: 126, col:   1):	Missing tabs for indent level
-Error: SPACE_REPLACE_TAB    (line: 126, col:   9):	Found space when expecting tab
-Error: SPC_AFTER_OPERATOR   (line: 126, col:  78):	missing space after operator
-Error: LINE_TOO_LONG        (line: 126, col:  82):	line too long
-Error: SPACE_REPLACE_TAB    (line: 127, col:   5):	Found space when expecting tab
+Error: SPACE_REPLACE_TAB    (line: 126, col:  17):	Found space when expecting tab
+Error: SPACE_REPLACE_TAB    (line: 127, col:  13):	Found space when expecting tab
 Error: TOO_FEW_TAB          (line: 128, col:   1):	Missing tabs for indent level
-Error: SPACE_REPLACE_TAB    (line: 128, col:   5):	Found space when expecting tab
+Error: SPACE_REPLACE_TAB    (line: 128, col:  13):	Found space when expecting tab
 Error: TOO_FEW_TAB          (line: 129, col:   1):	Missing tabs for indent level
-Error: SPACE_REPLACE_TAB    (line: 129, col:   9):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 130, col:   5):	Found space when expecting tab
+Error: SPACE_REPLACE_TAB    (line: 129, col:  17):	Found space when expecting tab
 Error: TOO_FEW_TAB          (line: 131, col:   1):	Missing tabs for indent level
-Error: SPACE_REPLACE_TAB    (line: 131, col:   5):	Found space when expecting tab
+Error: SPACE_REPLACE_TAB    (line: 131, col:  13):	Found space when expecting tab
 Error: TOO_FEW_TAB          (line: 132, col:   1):	Missing tabs for indent level
-Error: SPACE_EMPTY_LINE     (line: 132, col:   5):	Space on empty line
-Error: TOO_FEW_TAB          (line: 133, col:   1):	Missing tabs for indent level
-Error: SPACE_AFTER_KW       (line: 133, col:   9):	Missing space after keyword
+Error: SPACE_EMPTY_LINE     (line: 132, col:   9):	Space on empty line
 Error: SPACE_REPLACE_TAB    (line: 133, col:   9):	Found space when expecting tab
-Error: SPC_BFR_PAR          (line: 133, col:  11):	Missing space before parenthesis (brace/bracket)
 Error: TOO_FEW_TAB          (line: 134, col:   1):	Missing tabs for indent level
-Error: SPACE_EMPTY_LINE     (line: 134, col:   9):	Space on empty line
-Error: SPACE_REPLACE_TAB    (line: 135, col:  13):	Found space when expecting tab
-Error: TOO_FEW_TAB          (line: 136, col:   1):	Missing tabs for indent level
-Error: SPACE_REPLACE_TAB    (line: 136, col:  13):	Found space when expecting tab
-Error: TOO_FEW_TAB          (line: 137, col:   1):	Missing tabs for indent level
-Error: SPACE_REPLACE_TAB    (line: 137, col:  17):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 138, col:  13):	Found space when expecting tab
-Error: TOO_FEW_TAB          (line: 139, col:   1):	Missing tabs for indent level
-Error: SPACE_REPLACE_TAB    (line: 139, col:  13):	Found space when expecting tab
+Error: SPACE_EMPTY_LINE     (line: 134, col:   5):	Space on empty line
+Error: TOO_MANY_FUNCS       (line: 138, col:   1):	Too many functions in file
+Error: CONSECUTIVE_SPC      (line: 138, col:   4):	Two or more consecutives spaces
+Error: SPACE_BEFORE_FUNC    (line: 138, col:   6):	space before function name
 Error: TOO_FEW_TAB          (line: 140, col:   1):	Missing tabs for indent level
-Error: SPACE_REPLACE_TAB    (line: 140, col:  17):	Found space when expecting tab
-Error: LINE_TOO_LONG        (line: 140, col:  82):	line too long
+Error: SPACE_REPLACE_TAB    (line: 140, col:   5):	Found space when expecting tab
+Error: CONSECUTIVE_SPC      (line: 140, col:   9):	Two or more consecutives spaces
+Error: SPACE_REPLACE_TAB    (line: 140, col:   9):	Found space when expecting tab
 Error: TOO_FEW_TAB          (line: 141, col:   1):	Missing tabs for indent level
-Error: SPACE_REPLACE_TAB    (line: 141, col:  13):	Found space when expecting tab
+Error: SPACE_REPLACE_TAB    (line: 141, col:   5):	Found space when expecting tab
+Error: CONSECUTIVE_SPC      (line: 141, col:  11):	Two or more consecutives spaces
+Error: SPACE_REPLACE_TAB    (line: 141, col:  19):	Found space when expecting tab
+Error: MISALIGNED_VAR_DECL  (line: 141, col:  20):	Misaligned variable declaration
 Error: TOO_FEW_TAB          (line: 142, col:   1):	Missing tabs for indent level
-Error: SPACE_EMPTY_LINE     (line: 142, col:   9):	Space on empty line
-Error: SPACE_REPLACE_TAB    (line: 143, col:   9):	Found space when expecting tab
+Error: SPACE_REPLACE_TAB    (line: 142, col:   5):	Found space when expecting tab
+Error: CONSECUTIVE_SPC      (line: 142, col:   8):	Two or more consecutives spaces
+Error: SPACE_REPLACE_TAB    (line: 142, col:   8):	Found space when expecting tab
 Error: TOO_FEW_TAB          (line: 144, col:   1):	Missing tabs for indent level
-Error: SPACE_EMPTY_LINE     (line: 144, col:   5):	Space on empty line
+Error: SPACE_REPLACE_TAB    (line: 144, col:   5):	Found space when expecting tab
 Error: TOO_FEW_TAB          (line: 145, col:   1):	Missing tabs for indent level
-Error: SPACE_REPLACE_TAB    (line: 145, col:   5):	Found space when expecting tab
-Error: TOO_FEW_TAB          (line: 146, col:   1):	Missing tabs for indent level
-Error: SPACE_REPLACE_TAB    (line: 146, col:   9):	Found space when expecting tab
-Error: TOO_FEW_TAB          (line: 147, col:   1):	Missing tabs for indent level
+Error: SPACE_REPLACE_TAB    (line: 145, col:   9):	Found space when expecting tab
+Error: SPC_AFTER_OPERATOR   (line: 145, col:  78):	missing space after operator
 Error: SPACE_REPLACE_TAB    (line: 147, col:   5):	Found space when expecting tab
-Error: TOO_MANY_LINES       (line: 148, col:   1):	Function has more than 25 lines
-Error: TOO_MANY_FUNCS       (line: 150, col:   1):	Too many functions in file
-Error: CONSECUTIVE_SPC      (line: 150, col:   5):	Two or more consecutives spaces
-Error: SPACE_BEFORE_FUNC    (line: 150, col:   8):	space before function name
-Error: TOO_FEW_TAB          (line: 152, col:   1):	Missing tabs for indent level
-Error: SPACE_REPLACE_TAB    (line: 152, col:   5):	Found space when expecting tab
+Error: TOO_FEW_TAB          (line: 148, col:   1):	Missing tabs for indent level
+Error: SPACE_REPLACE_TAB    (line: 148, col:   5):	Found space when expecting tab
+Error: TOO_FEW_TAB          (line: 149, col:   1):	Missing tabs for indent level
+Error: SPACE_REPLACE_TAB    (line: 149, col:   9):	Found space when expecting tab
+Error: SPACE_REPLACE_TAB    (line: 150, col:   5):	Found space when expecting tab
 Error: TOO_FEW_TAB          (line: 153, col:   1):	Missing tabs for indent level
-Error: SPACE_EMPTY_LINE     (line: 153, col:   5):	Space on empty line
+Error: SPACE_REPLACE_TAB    (line: 153, col:   5):	Found space when expecting tab
 Error: TOO_FEW_TAB          (line: 154, col:   1):	Missing tabs for indent level
 Error: SPACE_REPLACE_TAB    (line: 154, col:   9):	Found space when expecting tab
-Error: SPC_AFTER_OPERATOR   (line: 154, col:  15):	missing space after operator
-Error: LINE_TOO_LONG        (line: 154, col:  83):	line too long
-Error: SPACE_REPLACE_TAB    (line: 155, col:   9):	Found space when expecting tab
-Error: TOO_FEW_TAB          (line: 156, col:   1):	Missing tabs for indent level
-Error: SPACE_EMPTY_LINE     (line: 156, col:   5):	Space on empty line
-Error: CONSECUTIVE_NEWLINES (line: 159, col:   1):	Consecutive newlines
-Error: CONSECUTIVE_NEWLINES (line: 160, col:   1):	Consecutive newlines
-Error: TOO_MANY_FUNCS       (line: 161, col:   1):	Too many functions in file
-Error: SPACE_REPLACE_TAB    (line: 163, col:  12):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 164, col:  12):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 165, col:   8):	Found space when expecting tab
-Error: MISALIGNED_VAR_DECL  (line: 165, col:   9):	Misaligned variable declaration
-Error: SPACE_AFTER_KW       (line: 170, col:   5):	Missing space after keyword
-Error: SPC_BFR_PAR          (line: 170, col:  10):	Missing space before parenthesis (brace/bracket)
-Error: LINE_TOO_LONG        (line: 172, col:  83):	line too long
-Error: SPACE_AFTER_KW       (line: 183, col:   5):	Missing space after keyword
-Error: SPC_BFR_PAR          (line: 183, col:   7):	Missing space before parenthesis (brace/bracket)
-Error: NO_SPC_BFR_PAR       (line: 183, col:  49):	Extra space before parenthesis (brace/bracket)
-Error: TOO_MANY_TAB         (line: 184, col:   1):	Extra tabs for indent level
-Error: SPACE_AFTER_KW       (line: 184, col:  13):	Missing space after keyword
-Error: SPC_BFR_PAR          (line: 184, col:  19):	Missing space before parenthesis (brace/bracket)
-Error: CONSECUTIVE_NEWLINES (line: 188, col:   1):	Consecutive newlines
-Error: TOO_MANY_FUNCS       (line: 189, col:   1):	Too many functions in file
-Error: SPACE_BEFORE_FUNC    (line: 189, col:  13):	space before function name
-Error: SPACE_REPLACE_TAB    (line: 191, col:   8):	Found space when expecting tab
-Error: EMPTY_LINE_FUNCTION  (line: 194, col:   1):	Empty line in function
-Error: SPACE_EMPTY_LINE     (line: 194, col:   1):	Space on empty line
-Error: SPACE_AFTER_KW       (line: 195, col:   5):	Missing space after keyword
-Error: SPC_BFR_PAR          (line: 195, col:  10):	Missing space before parenthesis (brace/bracket)
-Error: LINE_TOO_LONG        (line: 195, col:  82):	line too long
-Error: TAB_INSTEAD_SPC      (line: 200, col:  25):	Found tab when expecting space
-Error: TOO_MANY_FUNCS       (line: 204, col:   1):	Too many functions in file
-Error: SPACE_BEFORE_FUNC    (line: 204, col:   4):	space before function name
-Error: LINE_TOO_LONG        (line: 204, col:  82):	line too long
-Error: SPACE_EMPTY_LINE     (line: 207, col:   1):	Space on empty line
-Error: SPC_AFTER_OPERATOR   (line: 213, col:  41):	missing space after operator
-Error: CONSECUTIVE_NEWLINES (line: 219, col:   1):	Consecutive newlines
-Error: TOO_MANY_FUNCS       (line: 220, col:   1):	Too many functions in file
-Error: SPACE_BEFORE_FUNC    (line: 220, col:   4):	space before function name
-Error: LINE_TOO_LONG        (line: 220, col:  83):	line too long
-Error: SPACE_REPLACE_TAB    (line: 222, col:   8):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 223, col:   8):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 224, col:   8):	Found space when expecting tab
-Error: SPACE_EMPTY_LINE     (line: 225, col:   1):	Space on empty line
-Error: TOO_FEW_TAB          (line: 230, col:   1):	Missing tabs for indent level
-Error: SPACE_EMPTY_LINE     (line: 230, col:   5):	Space on empty line
-Error: SPACE_AFTER_KW       (line: 231, col:   9):	Missing space after keyword
-Error: SPC_BFR_PAR          (line: 231, col:  11):	Missing space before parenthesis (brace/bracket)
-Error: LINE_TOO_LONG        (line: 231, col:  83):	line too long
-Error: WRONG_SCOPE_COMMENT  (line: 233, col:  13):	Comment is invalid in this scope
-Error: SPACE_AFTER_KW       (line: 234, col:  13):	Missing space after keyword
-Error: SPC_BFR_PAR          (line: 234, col:  18):	Missing space before parenthesis (brace/bracket)
-Error: LINE_TOO_LONG        (line: 236, col:   1):	line too long
-Error: WRONG_SCOPE_COMMENT  (line: 236, col:  13):	Comment is invalid in this scope
-Error: LINE_TOO_LONG        (line: 236, col:  98):	line too long
-Error: SPACE_AFTER_KW       (line: 237, col:  13):	Missing space after keyword
-Error: SPC_BFR_PAR          (line: 237, col:  18):	Missing space before parenthesis (brace/bracket)
-Error: LINE_TOO_LONG        (line: 239, col:  92):	line too long
-Error: WRONG_SCOPE_COMMENT  (line: 244, col:  13):	Comment is invalid in this scope
-Error: WRONG_SCOPE_COMMENT  (line: 245, col:  13):	Comment is invalid in this scope
-Error: SPACE_AFTER_KW       (line: 246, col:  13):	Missing space after keyword
-Error: SPC_BFR_PAR          (line: 246, col:  15):	Missing space before parenthesis (brace/bracket)
+Error: TOO_FEW_TAB          (line: 155, col:   1):	Missing tabs for indent level
+Error: SPACE_REPLACE_TAB    (line: 155, col:   5):	Found space when expecting tab
+Error: TOO_MANY_FUNCS       (line: 158, col:   1):	Too many functions in file
+Error: CONSECUTIVE_SPC      (line: 158, col:   5):	Two or more consecutives spaces
+Error: SPACE_BEFORE_FUNC    (line: 158, col:   8):	space before function name
+Error: TOO_FEW_TAB          (line: 160, col:   1):	Missing tabs for indent level
+Error: SPACE_REPLACE_TAB    (line: 160, col:   5):	Found space when expecting tab
+Error: TOO_FEW_TAB          (line: 161, col:   1):	Missing tabs for indent level
+Error: SPACE_EMPTY_LINE     (line: 161, col:   5):	Space on empty line
+Error: SPACE_REPLACE_TAB    (line: 162, col:   9):	Found space when expecting tab
+Error: TOO_FEW_TAB          (line: 163, col:   1):	Missing tabs for indent level
+Error: SPACE_EMPTY_LINE     (line: 163, col:   5):	Space on empty line
+Error: CONSECUTIVE_NEWLINES (line: 166, col:   1):	Consecutive newlines
+Error: CONSECUTIVE_NEWLINES (line: 167, col:   1):	Consecutive newlines
+Error: TOO_MANY_FUNCS       (line: 168, col:   1):	Too many functions in file
+Error: SPACE_REPLACE_TAB    (line: 170, col:  12):	Found space when expecting tab
+Error: SPACE_REPLACE_TAB    (line: 171, col:  12):	Found space when expecting tab
+Error: SPACE_REPLACE_TAB    (line: 172, col:   8):	Found space when expecting tab
+Error: MISALIGNED_VAR_DECL  (line: 172, col:   9):	Misaligned variable declaration
+Error: SPACE_AFTER_KW       (line: 177, col:   5):	Missing space after keyword
+Error: SPC_BFR_PAR          (line: 177, col:  10):	Missing space before parenthesis (brace/bracket)
+Error: SPACE_AFTER_KW       (line: 190, col:   5):	Missing space after keyword
+Error: SPC_BFR_PAR          (line: 190, col:   7):	Missing space before parenthesis (brace/bracket)
+Error: NO_SPC_BFR_PAR       (line: 190, col:  41):	Extra space before parenthesis (brace/bracket)
+Error: TOO_MANY_TAB         (line: 191, col:   1):	Extra tabs for indent level
+Error: SPACE_AFTER_KW       (line: 191, col:  13):	Missing space after keyword
+Error: SPC_BFR_PAR          (line: 191, col:  19):	Missing space before parenthesis (brace/bracket)
+Error: CONSECUTIVE_NEWLINES (line: 195, col:   1):	Consecutive newlines
+Error: TOO_MANY_FUNCS       (line: 196, col:   1):	Too many functions in file
+Error: SPACE_BEFORE_FUNC    (line: 196, col:  13):	space before function name
+Error: SPACE_REPLACE_TAB    (line: 198, col:   8):	Found space when expecting tab
+Error: EMPTY_LINE_FUNCTION  (line: 201, col:   1):	Empty line in function
+Error: SPACE_EMPTY_LINE     (line: 201, col:   1):	Space on empty line
+Error: SPACE_AFTER_KW       (line: 202, col:   5):	Missing space after keyword
+Error: SPC_BFR_PAR          (line: 202, col:  10):	Missing space before parenthesis (brace/bracket)
+Error: TAB_INSTEAD_SPC      (line: 208, col:  25):	Found tab when expecting space
+Error: TOO_MANY_FUNCS       (line: 212, col:   1):	Too many functions in file
+Error: SPACE_BEFORE_FUNC    (line: 212, col:   4):	space before function name
+Error: SPACE_EMPTY_LINE     (line: 216, col:   1):	Space on empty line
+Error: SPC_AFTER_OPERATOR   (line: 222, col:  41):	missing space after operator
+Error: TOO_MANY_FUNCS       (line: 228, col:   1):	Too many functions in file
+Error: CONSECUTIVE_NEWLINES (line: 241, col:   1):	Consecutive newlines
+Error: TOO_MANY_FUNCS       (line: 242, col:   1):	Too many functions in file
+Error: SPACE_BEFORE_FUNC    (line: 242, col:   4):	space before function name
+Error: SPACE_REPLACE_TAB    (line: 244, col:   8):	Found space when expecting tab
+Error: SPACE_REPLACE_TAB    (line: 245, col:   8):	Found space when expecting tab
+Error: SPACE_REPLACE_TAB    (line: 246, col:   8):	Found space when expecting tab
+Error: SPACE_EMPTY_LINE     (line: 247, col:   1):	Space on empty line
 Error: TOO_FEW_TAB          (line: 252, col:   1):	Missing tabs for indent level
 Error: SPACE_EMPTY_LINE     (line: 252, col:   5):	Space on empty line
-Error: TOO_MANY_LINES       (line: 254, col:   1):	Function has more than 25 lines
-Error: TOO_MANY_FUNCS       (line: 256, col:   1):	Too many functions in file
-Error: SPACE_BEFORE_FUNC    (line: 256, col:   7):	space before function name
-Error: TOO_FEW_TAB          (line: 258, col:   1):	Missing tabs for indent level
-Error: SPACE_REPLACE_TAB    (line: 258, col:   5):	Found space when expecting tab
-Error: CONSECUTIVE_SPC      (line: 258, col:  11):	Two or more consecutives spaces
-Error: SPACE_REPLACE_TAB    (line: 258, col:  11):	Found space when expecting tab
-Error: MISALIGNED_VAR_DECL  (line: 259, col:  21):	Misaligned variable declaration
-Error: MISALIGNED_VAR_DECL  (line: 260, col:  21):	Misaligned variable declaration
-Error: SPACE_EMPTY_LINE     (line: 261, col:   1):	Space on empty line
-Error: SPACE_REPLACE_TAB    (line: 262, col:   5):	Found space when expecting tab
-Error: SPACE_AFTER_KW       (line: 267, col:   9):	Missing space after keyword
-Error: SPC_BFR_PAR          (line: 267, col:  11):	Missing space before parenthesis (brace/bracket)
-Error: SPACE_AFTER_KW       (line: 273, col:   9):	Missing space after keyword
-Error: SPC_BFR_PAR          (line: 273, col:  11):	Missing space before parenthesis (brace/bracket)
-Error: CONSECUTIVE_NEWLINES (line: 281, col:   1):	Consecutive newlines
-Error: TOO_MANY_FUNCS       (line: 282, col:   1):	Too many functions in file
-Error: SPACE_BEFORE_FUNC    (line: 282, col:   4):	space before function name
-Error: SPACE_REPLACE_TAB    (line: 284, col:   9):	Found space when expecting tab
-Error: SPACE_AFTER_KW       (line: 288, col:   5):	Missing space after keyword
-Error: SPC_BFR_PAR          (line: 288, col:   7):	Missing space before parenthesis (brace/bracket)
-Error: SPACE_AFTER_KW       (line: 289, col:   9):	Missing space after keyword
-Error: SPC_BFR_PAR          (line: 289, col:  15):	Missing space before parenthesis (brace/bracket)
-Error: SPC_AFTER_OPERATOR   (line: 289, col:  37):	missing space after operator
-Error: SPC_AFTER_OPERATOR   (line: 292, col:  32):	missing space after operator
-Error: SPC_AFTER_OPERATOR   (line: 292, col:  71):	missing space after operator
-Error: LINE_TOO_LONG        (line: 292, col:  82):	line too long
-Error: SPACE_AFTER_KW       (line: 293, col:   9):	Missing space after keyword
-Error: SPC_BFR_PAR          (line: 293, col:  11):	Missing space before parenthesis (brace/bracket)
-Error: LINE_TOO_LONG        (line: 293, col:  82):	line too long
-Error: SPACE_AFTER_KW       (line: 294, col:  13):	Missing space after keyword
-Error: SPC_BFR_PAR          (line: 294, col:  19):	Missing space before parenthesis (brace/bracket)
-Error: LINE_TOO_LONG        (line: 294, col:  83):	line too long
-Error: SPACE_AFTER_KW       (line: 297, col:   5):	Missing space after keyword
-Error: SPC_BFR_PAR          (line: 297, col:   7):	Missing space before parenthesis (brace/bracket)
-Error: SPC_AFTER_OPERATOR   (line: 299, col:  32):	missing space after operator
-Error: SPC_AFTER_OPERATOR   (line: 299, col:  70):	missing space after operator
-Error: LINE_TOO_LONG        (line: 299, col:  82):	line too long
-Error: SPC_AFTER_OPERATOR   (line: 301, col:  32):	missing space after operator
-Error: SPC_AFTER_OPERATOR   (line: 301, col:  44):	missing space after operator
-Error: SPACE_AFTER_KW       (line: 303, col:  13):	Missing space after keyword
-Error: SPC_BFR_PAR          (line: 303, col:  19):	Missing space before parenthesis (brace/bracket)
-Error: TAB_INSTEAD_SPC      (line: 303, col:  23):	Found tab when expecting space
-Error: SPC_AFTER_OPERATOR   (line: 308, col:  32):	missing space after operator
-Error: SPC_AFTER_OPERATOR   (line: 308, col:  72):	missing space after operator
-Error: LINE_TOO_LONG        (line: 308, col:  82):	line too long
-Error: TOO_FEW_TAB          (line: 310, col:   1):	Missing tabs for indent level
-Error: SPACE_REPLACE_TAB    (line: 310, col:   5):	Found space when expecting tab
-Error: MIXED_SPACE_TAB      (line: 312, col:   4):	Mixed spaces and tabs
-Error: SPACE_REPLACE_TAB    (line: 312, col:   4):	Found space when expecting tab
-Error: TOO_MANY_LINES       (line: 316, col:   1):	Function has more than 25 lines
-Error: TOO_MANY_FUNCS       (line: 318, col:   1):	Too many functions in file
-Error: SPACE_BEFORE_FUNC    (line: 318, col:   4):	space before function name
-Error: LINE_TOO_LONG        (line: 318, col:  89):	line too long
-Error: SPACE_REPLACE_TAB    (line: 320, col:  15):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 321, col:   9):	Found space when expecting tab
-Error: MISALIGNED_VAR_DECL  (line: 321, col:  10):	Misaligned variable declaration
-Error: MISALIGNED_VAR_DECL  (line: 322, col:  17):	Misaligned variable declaration
-Error: TOO_MANY_LINES       (line: 348, col:   1):	Function has more than 25 lines
-Error: TOO_MANY_FUNCS       (line: 350, col:   1):	Too many functions in file
-Error: CONSECUTIVE_SPC      (line: 350, col:   4):	Two or more consecutives spaces
-Error: SPACE_BEFORE_FUNC    (line: 350, col:   7):	space before function name
-Error: TOO_FEW_TAB          (line: 358, col:   1):	Missing tabs for indent level
-Error: SPACE_REPLACE_TAB    (line: 358, col:   5):	Found space when expecting tab
-Error: SPACE_AFTER_KW       (line: 359, col:   9):	Missing space after keyword
-Error: SPC_BFR_PAR          (line: 359, col:  15):	Missing space before parenthesis (brace/bracket)
-Error: SPACE_AFTER_KW       (line: 361, col:   5):	Missing space after keyword
-Error: SPC_BFR_PAR          (line: 361, col:  10):	Missing space before parenthesis (brace/bracket)
-Error: SPACE_AFTER_KW       (line: 364, col:   9):	Missing space after keyword
-Error: SPC_BFR_PAR          (line: 364, col:  11):	Missing space before parenthesis (brace/bracket)
-Error: SPACE_AFTER_KW       (line: 369, col:  13):	Missing space after keyword
-Error: SPC_BFR_PAR          (line: 369, col:  15):	Missing space before parenthesis (brace/bracket)
-Error: NO_SPC_AFR_PAR       (line: 370, col:  24):	Extra space after parenthesis (brace/bracket)
-Error: SPC_AFTER_OPERATOR   (line: 370, col:  53):	missing space after operator
-Error: LINE_TOO_LONG        (line: 370, col:  83):	line too long
-Error: SPACE_AFTER_KW       (line: 371, col:  13):	Missing space after keyword
-Error: SPC_BFR_PAR          (line: 371, col:  18):	Missing space before parenthesis (brace/bracket)
-Error: SPACE_AFTER_KW       (line: 373, col:  17):	Missing space after keyword
-Error: SPC_BFR_PAR          (line: 373, col:  19):	Missing space before parenthesis (brace/bracket)
-Error: LINE_TOO_LONG        (line: 375, col:  82):	line too long
-Error: LINE_TOO_LONG        (line: 376, col:  82):	line too long
-Error: NO_SPC_AFR_PAR       (line: 377, col:  32):	Extra space after parenthesis (brace/bracket)
-Error: LINE_TOO_LONG        (line: 377, col:  85):	line too long
-Error: WRONG_SCOPE_COMMENT  (line: 378, col:  21):	Comment is invalid in this scope
-Error: BRACE_SHOULD_EOL     (line: 390, col:   1):	Expected newline after brace
-Error: TOO_MANY_LINES       (line: 390, col:   1):	Function has more than 25 lines
+Error: SPACE_AFTER_KW       (line: 256, col:  13):	Missing space after keyword
+Error: SPC_BFR_PAR          (line: 256, col:  15):	Missing space before parenthesis (brace/bracket)
+Error: TOO_FEW_TAB          (line: 262, col:   1):	Missing tabs for indent level
+Error: SPACE_EMPTY_LINE     (line: 262, col:   5):	Space on empty line
+Error: TOO_MANY_FUNCS       (line: 266, col:   1):	Too many functions in file
+Error: SPACE_BEFORE_FUNC    (line: 266, col:   7):	space before function name
+Error: TOO_FEW_TAB          (line: 268, col:   1):	Missing tabs for indent level
+Error: SPACE_REPLACE_TAB    (line: 268, col:   5):	Found space when expecting tab
+Error: CONSECUTIVE_SPC      (line: 268, col:  11):	Two or more consecutives spaces
+Error: SPACE_REPLACE_TAB    (line: 268, col:  11):	Found space when expecting tab
+Error: MISALIGNED_VAR_DECL  (line: 269, col:  21):	Misaligned variable declaration
+Error: MISALIGNED_VAR_DECL  (line: 270, col:  21):	Misaligned variable declaration
+Error: SPACE_EMPTY_LINE     (line: 271, col:   1):	Space on empty line
+Error: SPACE_REPLACE_TAB    (line: 272, col:   5):	Found space when expecting tab
+Error: SPACE_AFTER_KW       (line: 277, col:   9):	Missing space after keyword
+Error: SPC_BFR_PAR          (line: 277, col:  11):	Missing space before parenthesis (brace/bracket)
+Error: SPACE_AFTER_KW       (line: 283, col:   9):	Missing space after keyword
+Error: SPC_BFR_PAR          (line: 283, col:  11):	Missing space before parenthesis (brace/bracket)
+Error: TOO_MANY_FUNCS       (line: 291, col:   1):	Too many functions in file
+Error: SPACE_REPLACE_TAB    (line: 293, col:   9):	Found space when expecting tab
+Error: SPACE_AFTER_KW       (line: 297, col:   9):	Missing space after keyword
+Error: SPC_BFR_PAR          (line: 297, col:  15):	Missing space before parenthesis (brace/bracket)
+Error: TAB_INSTEAD_SPC      (line: 297, col:  19):	Found tab when expecting space
+Error: TOO_MANY_FUNCS       (line: 301, col:   1):	Too many functions in file
+Error: SPACE_BEFORE_FUNC    (line: 301, col:   4):	space before function name
+Error: SPACE_REPLACE_TAB    (line: 303, col:   9):	Found space when expecting tab
+Error: SPACE_AFTER_KW       (line: 307, col:   5):	Missing space after keyword
+Error: SPC_BFR_PAR          (line: 307, col:   7):	Missing space before parenthesis (brace/bracket)
+Error: SPACE_AFTER_KW       (line: 308, col:   9):	Missing space after keyword
+Error: SPC_BFR_PAR          (line: 308, col:  15):	Missing space before parenthesis (brace/bracket)
+Error: SPC_AFTER_OPERATOR   (line: 308, col:  34):	missing space after operator
+Error: SPACE_AFTER_KW       (line: 311, col:   9):	Missing space after keyword
+Error: SPC_BFR_PAR          (line: 311, col:  11):	Missing space before parenthesis (brace/bracket)
+Error: SPACE_AFTER_KW       (line: 312, col:  13):	Missing space after keyword
+Error: SPC_BFR_PAR          (line: 312, col:  19):	Missing space before parenthesis (brace/bracket)
+Error: TOO_FEW_TAB          (line: 320, col:   1):	Missing tabs for indent level
+Error: SPACE_REPLACE_TAB    (line: 320, col:   5):	Found space when expecting tab
+Error: MIXED_SPACE_TAB      (line: 322, col:   4):	Mixed spaces and tabs
+Error: SPACE_REPLACE_TAB    (line: 322, col:   4):	Found space when expecting tab
+Error: TOO_MANY_FUNCS       (line: 328, col:   1):	Too many functions in file
+Error: SPACE_REPLACE_TAB    (line: 330, col:   9):	Found space when expecting tab
+Error: TOO_MANY_FUNCS       (line: 340, col:   1):	Too many functions in file
+Error: SPACE_BEFORE_FUNC    (line: 340, col:   4):	space before function name
+Error: SPACE_REPLACE_TAB    (line: 343, col:  15):	Found space when expecting tab
+Error: MISALIGNED_VAR_DECL  (line: 344, col:  17):	Misaligned variable declaration
+Error: TOO_MANY_FUNCS       (line: 366, col:   1):	Too many functions in file
+Error: SPACE_AFTER_KW       (line: 374, col:   5):	Missing space after keyword
+Error: SPC_BFR_PAR          (line: 374, col:   7):	Missing space before parenthesis (brace/bracket)
+Error: NO_SPC_AFR_PAR       (line: 375, col:  16):	Extra space after parenthesis (brace/bracket)
+Error: SPC_AFTER_OPERATOR   (line: 375, col:  45):	missing space after operator
+Error: TOO_MANY_TAB         (line: 380, col:   1):	Extra tabs for indent level
+Error: NO_SPC_AFR_PAR       (line: 380, col:  24):	Extra space after parenthesis (brace/bracket)
+Error: TOO_MANY_FUNCS       (line: 388, col:   1):	Too many functions in file
+Error: CONSECUTIVE_SPC      (line: 388, col:   4):	Two or more consecutives spaces
+Error: SPACE_BEFORE_FUNC    (line: 388, col:   7):	space before function name
+Error: TOO_FEW_TAB          (line: 395, col:   1):	Missing tabs for indent level
+Error: SPACE_REPLACE_TAB    (line: 395, col:   5):	Found space when expecting tab
+Error: SPACE_AFTER_KW       (line: 396, col:   9):	Missing space after keyword
+Error: SPC_BFR_PAR          (line: 396, col:  15):	Missing space before parenthesis (brace/bracket)
+Error: SPACE_AFTER_KW       (line: 398, col:   5):	Missing space after keyword
+Error: SPC_BFR_PAR          (line: 398, col:  10):	Missing space before parenthesis (brace/bracket)
 srcs/expand/field_spliting.c: Error!
 Error: CONSECUTIVE_NEWLINES (line:  15, col:   1):	Consecutive newlines
 Error: CONSECUTIVE_NEWLINES (line:  16, col:   1):	Consecutive newlines
@@ -562,164 +505,28 @@ srcs/bin/export/export_utils_2.c: OK!
 srcs/bin/export/export.c: OK!
 srcs/bin/export/export_printer.c: OK!
 srcs/exe/exe_childs.c: Error!
-Error: TOO_MANY_LINES       (line:  45, col:   1):	Function has more than 25 lines
-Error: SPACE_BEFORE_FUNC    (line: 114, col:  12):	space before function name
-Error: TOO_MANY_FUNCS       (line: 138, col:   1):	Too many functions in file
-Error: LINE_TOO_LONG        (line: 138, col:  85):	line too long
-Error: TOO_MANY_FUNCS       (line: 156, col:   1):	Too many functions in file
-srcs/exe/redirect.c: Error!
-Error: CONSECUTIVE_SPC      (line:  16, col:  12):	Two or more consecutives spaces
-Error: SPACE_BEFORE_FUNC    (line:  16, col:  15):	space before function name
-Error: CONSECUTIVE_SPC      (line:  28, col:  12):	Two or more consecutives spaces
-Error: SPACE_BEFORE_FUNC    (line:  28, col:  15):	space before function name
-Error: SPC_AFTER_OPERATOR   (line:  30, col:  28):	missing space after operator
-Error: LINE_TOO_LONG        (line:  31, col:  86):	line too long
-Error: CONSECUTIVE_SPC      (line:  40, col:  12):	Two or more consecutives spaces
-Error: SPACE_BEFORE_FUNC    (line:  40, col:  15):	space before function name
-Error: SPC_AFTER_OPERATOR   (line:  42, col:  28):	missing space after operator
-Error: LINE_TOO_LONG        (line:  43, col:  87):	line too long
-Error: CONSECUTIVE_SPC      (line:  52, col:  12):	Two or more consecutives spaces
-Error: SPACE_BEFORE_FUNC    (line:  52, col:  15):	space before function name
-Error: SPACE_REPLACE_TAB    (line:  54, col:   9):	Found space when expecting tab
-Error: CONSECUTIVE_SPC      (line:  55, col:   8):	Two or more consecutives spaces
-Error: SPACE_REPLACE_TAB    (line:  55, col:   8):	Found space when expecting tab
-Error: MISALIGNED_VAR_DECL  (line:  55, col:  13):	Misaligned variable declaration
-Error: WRONG_SCOPE_COMMENT  (line:  71, col:   5):	Comment is invalid in this scope
-Error: WRONG_SCOPE_COMMENT  (line:  72, col:   5):	Comment is invalid in this scope
-Error: WRONG_SCOPE_COMMENT  (line:  73, col:   5):	Comment is invalid in this scope
-Error: SPACE_BEFORE_FUNC    (line:  76, col:   4):	space before function name
-Error: CONSECUTIVE_SPC      (line:  78, col:  15):	Two or more consecutives spaces
-Error: SPACE_REPLACE_TAB    (line:  78, col:  15):	Found space when expecting tab
-Error: SPC_AFTER_OPERATOR   (line:  81, col:  28):	missing space after operator
-Error: SPACE_AFTER_KW       (line:  82, col:   5):	Missing space after keyword
-Error: SPC_BFR_PAR          (line:  82, col:  10):	Missing space before parenthesis (brace/bracket)
-Error: CONSECUTIVE_SPC      (line:  84, col:  35):	Two or more consecutives spaces
-Error: CONSECUTIVE_SPC      (line:  86, col:  35):	Two or more consecutives spaces
-Error: CONSECUTIVE_SPC      (line:  88, col:  35):	Two or more consecutives spaces
-Error: SPC_BEFORE_NL        (line:  94, col:  26):	Space before newline
-Error: BRACE_SHOULD_EOL     (line:  96, col:   1):	Expected newline after brace
-srcs/exe/redirect_builtin.c: Error!
-Error: CONSECUTIVE_SPC      (line:  16, col:  11):	Two or more consecutives spaces
-Error: SPACE_BEFORE_FUNC    (line:  16, col:  14):	space before function name
-Error: MIXED_SPACE_TAB      (line:  18, col:   1):	Mixed spaces and tabs
-Error: SPC_AFTER_OPERATOR   (line:  18, col:  12):	missing space after operator
-Error: CONSECUTIVE_SPC      (line:  29, col:  11):	Two or more consecutives spaces
-Error: SPACE_BEFORE_FUNC    (line:  29, col:  14):	space before function name
-Error: SPC_AFTER_OPERATOR   (line:  31, col:  28):	missing space after operator
-Error: LINE_TOO_LONG        (line:  32, col:  86):	line too long
-Error: CONSECUTIVE_SPC      (line:  42, col:  11):	Two or more consecutives spaces
-Error: SPACE_BEFORE_FUNC    (line:  42, col:  14):	space before function name
-Error: CONSECUTIVE_SPC      (line:  44, col:  13):	Two or more consecutives spaces
-Error: SPC_AFTER_OPERATOR   (line:  44, col:  29):	missing space after operator
-Error: LINE_TOO_LONG        (line:  45, col:  87):	line too long
-Error: CONSECUTIVE_SPC      (line:  55, col:  11):	Two or more consecutives spaces
-Error: SPACE_BEFORE_FUNC    (line:  55, col:  14):	space before function name
-Error: SPACE_REPLACE_TAB    (line:  57, col:   9):	Found space when expecting tab
-Error: CONSECUTIVE_SPC      (line:  58, col:   8):	Two or more consecutives spaces
-Error: SPACE_REPLACE_TAB    (line:  58, col:   8):	Found space when expecting tab
-Error: MISALIGNED_VAR_DECL  (line:  58, col:  13):	Misaligned variable declaration
-Error: SPACE_BEFORE_FUNC    (line:  76, col:   4):	space before function name
-Error: CONSECUTIVE_SPC      (line:  78, col:  15):	Two or more consecutives spaces
-Error: SPACE_REPLACE_TAB    (line:  78, col:  15):	Found space when expecting tab
-Error: CONSECUTIVE_NEWLINES (line:  80, col:   1):	Consecutive newlines
-Error: EMPTY_LINE_FUNCTION  (line:  80, col:   1):	Empty line in function
-Error: SPC_AFTER_OPERATOR   (line:  82, col:  28):	missing space after operator
-Error: SPACE_AFTER_KW       (line:  83, col:   5):	Missing space after keyword
-Error: SPC_BFR_PAR          (line:  83, col:  10):	Missing space before parenthesis (brace/bracket)
-Error: CONSECUTIVE_SPC      (line:  85, col:  35):	Two or more consecutives spaces
-Error: CONSECUTIVE_SPC      (line:  86, col:  42):	Two or more consecutives spaces
-Error: SPC_BEFORE_NL        (line:  86, col:  44):	Space before newline
-Error: CONSECUTIVE_SPC      (line:  88, col:  35):	Two or more consecutives spaces
-Error: SPACE_AFTER_KW       (line:  89, col:  13):	Missing space after keyword
-Error: SPC_BFR_PAR          (line:  89, col:  15):	Missing space before parenthesis (brace/bracket)
-Error: CONSECUTIVE_SPC      (line:  91, col:  35):	Two or more consecutives spaces
-Error: SPACE_AFTER_KW       (line:  92, col:  13):	Missing space after keyword
-Error: SPC_BFR_PAR          (line:  92, col:  15):	Missing space before parenthesis (brace/bracket)
-Error: SPC_BEFORE_NL        (line:  98, col:  26):	Space before newline
-Error: BRACE_SHOULD_EOL     (line: 100, col:   1):	Expected newline after brace
-srcs/exe/init_seq.c: Error!
-Error: SPACE_BEFORE_FUNC    (line:  30, col:   4):	space before function name
-Error: SPACE_REPLACE_TAB    (line:  32, col:   8):	Found space when expecting tab
-Error: SPACE_BEFORE_FUNC    (line:  43, col:   5):	space before function name
-Error: SPACE_REPLACE_TAB    (line:  45, col:   8):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line:  46, col:   8):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line:  47, col:   9):	Found space when expecting tab
-Error: MISALIGNED_VAR_DECL  (line:  47, col:  10):	Misaligned variable declaration
-Error: SPACE_AFTER_KW       (line:  52, col:   9):	Missing space after keyword
-Error: SPC_BFR_PAR          (line:  52, col:  15):	Missing space before parenthesis (brace/bracket)
-Error: SPACE_BEFORE_FUNC    (line:  87, col:   4):	space before function name
-Error: FORBIDDEN_CHAR_NAME  (line:  87, col:   5):	user defined identifiers should contain only lowercase characters, digits or '_'
-Error: SPACE_REPLACE_TAB    (line:  89, col:   8):	Found space when expecting tab
+Error: TOO_MANY_FUNCS       (line: 122, col:   1):	Too many functions in file
+Error: SPACE_BEFORE_FUNC    (line: 122, col:  12):	space before function name
+Error: TOO_MANY_FUNCS       (line: 146, col:   1):	Too many functions in file
+Error: LINE_TOO_LONG        (line: 146, col:  85):	line too long
+Error: TOO_MANY_FUNCS       (line: 164, col:   1):	Too many functions in file
+srcs/exe/redirect.c: OK!
+srcs/exe/redirect_builtin.c: OK!
+srcs/exe/init_seq.c: OK!
 srcs/exe/create_cmd.c: Error!
-Error: SPACE_AFTER_KW       (line:  60, col:   9):	Missing space after keyword
-Error: SPC_BFR_PAR          (line:  60, col:  15):	Missing space before parenthesis (brace/bracket)
-Error: LINE_TOO_LONG        (line:  89, col:  84):	line too long
-Error: SPACE_AFTER_KW       (line: 107, col:   5):	Missing space after keyword
-Error: SPC_BFR_PAR          (line: 107, col:   7):	Missing space before parenthesis (brace/bracket)
-Error: TOO_MANY_FUNCS       (line: 115, col:   1):	Too many functions in file
-Error: TOO_MANY_FUNCS       (line: 133, col:   1):	Too many functions in file
-Error: TOO_MANY_FUNCS       (line: 143, col:   1):	Too many functions in file
-Error: LINE_TOO_LONG        (line: 150, col:  84):	line too long
+Error: TOO_MANY_FUNCS       (line: 116, col:   1):	Too many functions in file
+Error: TOO_MANY_FUNCS       (line: 134, col:   1):	Too many functions in file
+Error: TOO_MANY_FUNCS       (line: 144, col:   1):	Too many functions in file
 srcs/exe/create_redirect.c: OK!
 srcs/exe/launcher_forks.c: Error!
-Error: SPACE_BEFORE_FUNC    (line:  16, col:  11):	space before function name
-Error: TAB_INSTEAD_SPC      (line:  18, col:  15):	Found tab when expecting space
-Error: SPACE_BEFORE_FUNC    (line:  25, col:  11):	space before function name
-Error: SPACE_BEFORE_FUNC    (line:  36, col:  11):	space before function name
-Error: SPACE_BEFORE_FUNC    (line:  47, col:  11):	space before function name
-Error: SPACE_REPLACE_TAB    (line:  49, col:   8):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line:  50, col:   8):	Found space when expecting tab
-Error: SPACE_AFTER_KW       (line:  61, col:   5):	Missing space after keyword
-Error: SPC_BFR_PAR          (line:  61, col:  11):	Missing space before parenthesis (brace/bracket)
-Error: SPACE_BEFORE_FUNC    (line:  64, col:   4):	space before function name
-Error: SPACE_REPLACE_TAB    (line:  66, col:  10):	Found space when expecting tab
-Error: SPACE_EMPTY_LINE     (line:  67, col:   1):	Space on empty line
-Error: VAR_DECL_START_FUNC  (line:  68, col:   1):	Variable declaration not at start of function
-Error: SPACE_REPLACE_TAB    (line:  68, col:   8):	Found space when expecting tab
-Error: MISALIGNED_VAR_DECL  (line:  68, col:   9):	Misaligned variable declaration
-Error: SPC_AFTER_OPERATOR   (line:  84, col:  38):	missing space after operator
-Error: SPC_AFTER_OPERATOR   (line:  86, col:  40):	missing space after operator
-Error: EMPTY_LINE_FUNCTION  (line:  97, col:   1):	Empty line in function
-Error: SPACE_EMPTY_LINE     (line:  97, col:   1):	Space on empty line
-Error: CONSECUTIVE_SPC      (line:  99, col:   6):	Two or more consecutives spaces
-Error: SPC_BEFORE_NL        (line:  99, col:   8):	Space before newline
-Error: TOO_MANY_LINES       (line: 101, col:   1):	Function has more than 25 lines
+Error: TOO_MANY_FUNCS       (line:  85, col:   1):	Too many functions in file
 srcs/exe/exe.c: Error!
 Error: INVALID_HEADER       (line:  12, col:   1):	Missing or invalid 42 header
 Error: TOO_MANY_FUNCS       (line:  96, col:   1):	Too many functions in file
 Error: TOO_MANY_FUNCS       (line: 110, col:   1):	Too many functions in file
-Error: SPACE_BEFORE_FUNC    (line: 110, col:   5):	space before function name
-Error: SPACE_REPLACE_TAB    (line: 112, col:   9):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 113, col:   9):	Found space when expecting tab
-Error: SPACE_EMPTY_LINE     (line: 114, col:   1):	Space on empty line
-Error: SPC_AFTER_OPERATOR   (line: 118, col:  40):	missing space after operator
-Error: SPACE_AFTER_KW       (line: 121, col:   5):	Missing space after keyword
-Error: SPC_BFR_PAR          (line: 121, col:  11):	Missing space before parenthesis (brace/bracket)
 Error: TOO_MANY_FUNCS       (line: 124, col:   1):	Too many functions in file
-Error: SPACE_BEFORE_FUNC    (line: 124, col:   4):	space before function name
-Error: SPACE_REPLACE_TAB    (line: 126, col:  15):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 127, col:   9):	Found space when expecting tab
-Error: MISALIGNED_VAR_DECL  (line: 127, col:  10):	Misaligned variable declaration
-Error: SPACE_EMPTY_LINE     (line: 128, col:   1):	Space on empty line
-Error: SPACE_AFTER_KW       (line: 129, col:   5):	Missing space after keyword
-Error: SPC_BFR_PAR          (line: 129, col:  10):	Missing space before parenthesis (brace/bracket)
-Error: SPACE_AFTER_KW       (line: 132, col:   9):	Missing space after keyword
-Error: SPC_BFR_PAR          (line: 132, col:  14):	Missing space before parenthesis (brace/bracket)
-Error: SPACE_AFTER_KW       (line: 134, col:  13):	Missing space after keyword
-Error: SPC_BFR_PAR          (line: 134, col:  15):	Missing space before parenthesis (brace/bracket)
-Error: TAB_INSTEAD_SPC      (line: 138, col:  32):	Found tab when expecting space
-Error: SPACE_AFTER_KW       (line: 141, col:  17):	Missing space after keyword
 Error: TOO_MANY_FUNCS       (line: 151, col:   1):	Too many functions in file
 Error: SPACE_BEFORE_FUNC    (line: 151, col:   4):	space before function name
-Error: SPACE_REPLACE_TAB    (line: 153, col:  11):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 154, col:   8):	Found space when expecting tab
-Error: MISALIGNED_VAR_DECL  (line: 154, col:   9):	Misaligned variable declaration
-Error: SPACE_EMPTY_LINE     (line: 155, col:   1):	Space on empty line
-Error: SPACE_AFTER_KW       (line: 159, col:   9):	Missing space after keyword
-Error: SPC_BFR_PAR          (line: 159, col:  11):	Missing space before parenthesis (brace/bracket)
-Error: SPACE_AFTER_KW       (line: 163, col:  13):	Missing space after keyword
-Error: SPC_BFR_PAR          (line: 163, col:  15):	Missing space before parenthesis (brace/bracket)
-Error: TOO_MANY_LINES       (line: 180, col:   1):	Function has more than 25 lines
 srcs/syntax/syntax_checker.c: Error!
 Error: INVALID_HEADER       (line:   1, col:   1):	Missing or invalid 42 header
 Error: PREPROC_BAD_INDENT   (line:   1, col:   1):	Bad preprocessor indentation
@@ -825,75 +632,44 @@ Error: INVALID_HEADER       (line:   1, col:   1):	Missing or invalid 42 header
 Error: CONSECUTIVE_NEWLINES (line:   3, col:   1):	Consecutive newlines
 Error: SPACE_BEFORE_FUNC    (line:   4, col:   7):	space before function name
 Error: SPACE_AFTER_KW       (line:   6, col:  17):	Missing space after keyword
-Error: NEWLINE_PRECEDES_FUNC (line:  10, col:   1):	Functions must be separated by a newline
-Error: SPACE_BEFORE_FUNC    (line:  10, col:   7):	space before function name
-Error: SPACE_REPLACE_TAB    (line:  12, col:   8):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line:  13, col:  15):	Found space when expecting tab
-Error: MISALIGNED_VAR_DECL  (line:  13, col:  16):	Misaligned variable declaration
-Error: MISALIGNED_VAR_DECL  (line:  14, col:  21):	Misaligned variable declaration
-Error: SPACE_BEFORE_FUNC    (line:  38, col:   9):	space before function name
-Error: SPACE_REPLACE_TAB    (line:  40, col:   8):	Found space when expecting tab
-Error: EMPTY_LINE_FUNCTION  (line:  43, col:   1):	Empty line in function
-Error: WRONG_SCOPE_COMMENT  (line:  53, col:   5):	Comment is invalid in this scope
-Error: SPACE_REPLACE_TAB    (line:  59, col:  13):	Found space when expecting tab
-Error: SPACE_AFTER_KW       (line:  67, col:  13):	Missing space after keyword
-Error: TAB_INSTEAD_SPC      (line:  91, col:  32):	Found tab when expecting space
-Error: TOO_MANY_LINES       (line: 103, col:   1):	Function has more than 25 lines
-Error: TOO_MANY_FUNCS       (line: 105, col:   1):	Too many functions in file
-Error: WRONG_SCOPE_COMMENT  (line: 109, col:   5):	Comment is invalid in this scope
-Error: WRONG_SCOPE_COMMENT  (line: 116, col:   5):	Comment is invalid in this scope
+Error: SPACE_BEFORE_FUNC    (line:  11, col:   7):	space before function name
+Error: SPACE_REPLACE_TAB    (line:  13, col:   8):	Found space when expecting tab
+Error: SPACE_REPLACE_TAB    (line:  14, col:  15):	Found space when expecting tab
+Error: MISALIGNED_VAR_DECL  (line:  14, col:  16):	Misaligned variable declaration
+Error: MISALIGNED_VAR_DECL  (line:  15, col:  21):	Misaligned variable declaration
+Error: SPACE_BEFORE_FUNC    (line:  39, col:   9):	space before function name
+Error: SPACE_REPLACE_TAB    (line:  41, col:   8):	Found space when expecting tab
+Error: EMPTY_LINE_FUNCTION  (line:  44, col:   1):	Empty line in function
+Error: WRONG_SCOPE_COMMENT  (line:  54, col:   5):	Comment is invalid in this scope
+Error: SPACE_REPLACE_TAB    (line:  60, col:  13):	Found space when expecting tab
+Error: SPACE_AFTER_KW       (line:  68, col:  13):	Missing space after keyword
+Error: TAB_INSTEAD_SPC      (line:  92, col:  32):	Found tab when expecting space
+Error: TOO_MANY_LINES       (line: 104, col:   1):	Function has more than 25 lines
+Error: TOO_MANY_FUNCS       (line: 106, col:   1):	Too many functions in file
+Error: WRONG_SCOPE_COMMENT  (line: 110, col:   5):	Comment is invalid in this scope
 Error: WRONG_SCOPE_COMMENT  (line: 117, col:   5):	Comment is invalid in this scope
-Error: CONSECUTIVE_NEWLINES (line: 122, col:   1):	Consecutive newlines
+Error: WRONG_SCOPE_COMMENT  (line: 118, col:   5):	Comment is invalid in this scope
 Error: CONSECUTIVE_NEWLINES (line: 123, col:   1):	Consecutive newlines
-Error: TOO_MANY_FUNCS       (line: 124, col:   1):	Too many functions in file
-Error: WRONG_SCOPE_COMMENT  (line: 138, col:   5):	Comment is invalid in this scope
+Error: CONSECUTIVE_NEWLINES (line: 124, col:   1):	Consecutive newlines
+Error: TOO_MANY_FUNCS       (line: 125, col:   1):	Too many functions in file
 Error: WRONG_SCOPE_COMMENT  (line: 139, col:   5):	Comment is invalid in this scope
-Error: TOO_MANY_FUNCS       (line: 143, col:   1):	Too many functions in file
-Error: SPACE_EMPTY_LINE     (line: 146, col:   1):	Space on empty line
-Error: TOO_MANY_FUNCS       (line: 154, col:   1):	Too many functions in file
-Error: TOO_MANY_FUNCS       (line: 162, col:   1):	Too many functions in file
-Error: SPACE_BEFORE_FUNC    (line: 162, col:   4):	space before function name
-Error: WRONG_SCOPE_COMMENT  (line: 167, col:   5):	Comment is invalid in this scope
-Error: EMPTY_LINE_FUNCTION  (line: 168, col:   1):	Empty line in function
-Error: SPACE_AFTER_KW       (line: 183, col:   5):	Missing space after keyword
-Error: SPC_BFR_PAR          (line: 183, col:   7):	Missing space before parenthesis (brace/bracket)
-Error: SPC_AFTER_OPERATOR   (line: 183, col:  64):	missing space after operator
-Error: LINE_TOO_LONG        (line: 183, col:  82):	line too long
-Error: SPACE_AFTER_KW       (line: 185, col:   5):	Missing space after keyword
-Error: SPC_BFR_PAR          (line: 185, col:   7):	Missing space before parenthesis (brace/bracket)
-Error: LINE_TOO_LONG        (line: 185, col:  82):	line too long
-Error: BRACE_SHOULD_EOL     (line: 188, col:   1):	Expected newline after brace
+Error: WRONG_SCOPE_COMMENT  (line: 140, col:   5):	Comment is invalid in this scope
+Error: TOO_MANY_FUNCS       (line: 144, col:   1):	Too many functions in file
+Error: SPACE_EMPTY_LINE     (line: 147, col:   1):	Space on empty line
+Error: TOO_MANY_FUNCS       (line: 155, col:   1):	Too many functions in file
+Error: TOO_MANY_FUNCS       (line: 163, col:   1):	Too many functions in file
+Error: SPACE_BEFORE_FUNC    (line: 163, col:   4):	space before function name
+Error: WRONG_SCOPE_COMMENT  (line: 168, col:   5):	Comment is invalid in this scope
+Error: EMPTY_LINE_FUNCTION  (line: 169, col:   1):	Empty line in function
+Error: SPACE_AFTER_KW       (line: 184, col:   5):	Missing space after keyword
+Error: SPC_BFR_PAR          (line: 184, col:   7):	Missing space before parenthesis (brace/bracket)
+Error: SPC_AFTER_OPERATOR   (line: 184, col:  64):	missing space after operator
+Error: LINE_TOO_LONG        (line: 184, col:  82):	line too long
+Error: SPACE_AFTER_KW       (line: 186, col:   5):	Missing space after keyword
+Error: SPC_BFR_PAR          (line: 186, col:   7):	Missing space before parenthesis (brace/bracket)
+Error: LINE_TOO_LONG        (line: 186, col:  82):	line too long
+Error: BRACE_SHOULD_EOL     (line: 189, col:   1):	Expected newline after brace
 srcs/here_doc/here_doc.c: Error!
-Error: SPC_AFTER_OPERATOR   (line:  36, col:  57):	missing space after operator
 Error: TOO_MANY_LINES       (line:  48, col:   1):	Function has more than 25 lines
-Error: SPACE_EMPTY_LINE     (line:  56, col:   1):	Space on empty line
-Error: SPACE_AFTER_KW       (line:  58, col:   5):	Missing space after keyword
-Error: SPC_BFR_PAR          (line:  58, col:   7):	Missing space before parenthesis (brace/bracket)
-Error: SPC_AFTER_OPERATOR   (line:  60, col:  29):	missing space after operator
-Error: SPACE_AFTER_KW       (line:  67, col:  10):	Missing space after keyword
-Error: SPC_BFR_PAR          (line:  67, col:  12):	Missing space before parenthesis (brace/bracket)
-Error: SPC_AFTER_OPERATOR   (line:  69, col:  29):	missing space after operator
-Error: SPACE_AFTER_KW       (line:  82, col:   5):	Missing space after keyword
-Error: SPC_BFR_PAR          (line:  82, col:   7):	Missing space before parenthesis (brace/bracket)
-Error: SPC_AFTER_OPERATOR   (line:  83, col:  24):	missing space after operator
-Error: SPACE_AFTER_KW       (line:  85, col:   5):	Missing space after keyword
-Error: SPC_BFR_PAR          (line:  85, col:   7):	Missing space before parenthesis (brace/bracket)
-Error: SPC_AFTER_OPERATOR   (line:  86, col:  24):	missing space after operator
 Error: TOO_MANY_LINES       (line:  90, col:   1):	Function has more than 25 lines
-Error: TOO_MANY_TABS_FUNC   (line:  92, col:   5):	extra tabs before function name
-Error: SPACE_EMPTY_LINE     (line:  98, col:   1):	Space on empty line
-Error: SPC_AFTER_PAR        (line: 111, col:  24):	Missing space after parenthesis (brace/bracket)
-Error: SPC_AFTER_OPERATOR   (line: 111, col:  25):	missing space after operator
-Error: SPC_BFR_OPERATOR     (line: 111, col:  25):	missing space before operator
 Error: TOO_MANY_LINES       (line: 124, col:   1):	Function has more than 25 lines
-Error: SPACE_BEFORE_FUNC    (line: 126, col:   4):	space before function name
-Error: CONSECUTIVE_SPC      (line: 128, col:  10):	Two or more consecutives spaces
-Error: SPACE_REPLACE_TAB    (line: 128, col:  10):	Found space when expecting tab
-Error: CONSECUTIVE_SPC      (line: 129, col:   9):	Two or more consecutives spaces
-Error: SPACE_REPLACE_TAB    (line: 129, col:   9):	Found space when expecting tab
-Error: CONSECUTIVE_SPC      (line: 130, col:  13):	Two or more consecutives spaces
-Error: SPACE_REPLACE_TAB    (line: 130, col:  13):	Found space when expecting tab
-Error: SPACE_EMPTY_LINE     (line: 131, col:   1):	Space on empty line
-Error: SPACE_AFTER_KW       (line: 152, col:  17):	Missing space after keyword
-Error: SPC_BFR_PAR          (line: 152, col:  19):	Missing space before parenthesis (brace/bracket)
-Error: TOO_MANY_LINES       (line: 160, col:   1):	Function has more than 25 lines
