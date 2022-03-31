@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 10:17:40 by fle-blay          #+#    #+#             */
-/*   Updated: 2022/03/31 12:11:12 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/31 15:57:20 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_node	*btree_create_node_sequence(t_lexing *lexing)
 {
 	t_node	*new;
 
-	new = __give_node(0, 0);
+	new = __give_node(0, 0, 0);
 	if (!new)
 		return (NULL);
 	new->left = NULL;
@@ -30,7 +30,7 @@ t_node	*btree_create_node_operator(t_lexing *lexing)
 {
 	t_node	*new;
 
-	new = __give_node(0, 0);
+	new = __give_node(0, 0, 0);
 	if (!new)
 		return (NULL);
 	new->left = NULL;

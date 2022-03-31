@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cree_tree_utils.c                                  :+:      :+:    :+:   */
+/*   create_tree_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 12:10:50 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/31 12:11:30 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/31 16:27:12 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,25 @@ t_node	*__reinit_node(t_node ***node_tab)
 	return (NULL);
 }
 
-t_node	*__give_node(int count, int reset)
+int	__destroy_node_tab(t_node **node_tab, int state, int count)
+{
+	while (state < count)
+	{
+		free(node_tab[state]);
+		state++;
+	}
+	return (1);
+}
+
+t_node	*__give_node(int count, int reset, int free_all)
 {
 	int				i;
 	static t_node	**node_tab = NULL;
 	static int		state = -1;
 
 	i = -1;
+	if (free_all)
+		return (__destroy_node_tab(node_tab, state, count), NULL);
 	if (reset)
 	{
 		state = 0;
@@ -43,8 +55,7 @@ t_node	*__give_node(int count, int reset)
 		}
 		return (node_tab[0]);
 	}
-	else
-		return (node_tab[state++]);
+	return (node_tab[state++]);
 }
 
 t_lexing	*__skip_parenthesis(t_lexing *lexing)

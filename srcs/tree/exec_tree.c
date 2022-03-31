@@ -6,16 +6,27 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 09:50:45 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/31 12:47:04 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/31 16:03:14 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+int	__find_operator_in_pipeseq(t_lexing *lexing)
+{
+	while (lexing)
+	{
+		if (lexing->type == OPERATOR)
+			return (1);
+		lexing = lexing->next;
+	}
+	return (0);
+}
+
 int	__check_parenthesis_in_pipe(t_lexing *lexing)
 {
-	int			p_left;
-	int			p_right;
+	int	p_left;
+	int	p_right;
 
 	p_left = 0;
 	p_right = 0;
@@ -65,6 +76,13 @@ int	__execute_pipe_seq(t_lexing *lexing, t_msh *msh)
 {
 	t_lexing	*next_pipe;
 
+	if (__find_operator_in_pipeseq(lexing))
+	{
+		__putstr_fd("minishell: syntax error : operator within pipeseq\n", 2);
+		msh->rv = 2;
+		__give_node(msh->node_max, 0, 1);
+		return (-1);
+	}
 	next_pipe = lexing;
 	while (next_pipe)
 	{
@@ -72,6 +90,7 @@ int	__execute_pipe_seq(t_lexing *lexing, t_msh *msh)
 		{
 			__putstr_fd("minishell: synthax error with parenthesis in:", 2);
 			__putendl_fd(next_pipe->token, 2);
+			msh->rv = 2;
 			return (-1);
 		}
 		while (next_pipe->next && next_pipe->type != PIPE)

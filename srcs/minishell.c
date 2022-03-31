@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:25:57 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/31 14:30:15 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/31 16:13:35 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,8 @@ int	__treat_user_input(char *arg, t_msh *msh, t_user_input *ui)
 		return (0);
 	if (msh->syntax_error == 2)
 		return (__lexing_full_list_clear(&ui->lexing), -1);
-	if (!__give_node(__count_node(ui->lexing), 1))
+	msh->node_max = __count_node(ui->lexing);
+	if (!__give_node(msh->node_max, 1, 0))
 		return (__lexing_full_list_clear(&ui->lexing),
 			__exit_error(msh, 3, "create tree\n"));
 	ui->syntax_tree = __create_tree(ui->lexing, &(msh->root), &ui->parenthesis);

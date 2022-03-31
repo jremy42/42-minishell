@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 12:29:58 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/31 15:01:18 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/31 16:02:55 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,6 +150,7 @@ typedef struct s_msh
 {
 	int		rv;
 	int		syntax_error;
+	int		node_max;
 	t_node	*root;
 	char	*prompt;
 	char	***envp;
@@ -245,11 +246,11 @@ int				__create_tree(t_lexing *lexing, t_node **root,
 					t_lexing **parenthesis);
 int				__execute_tree(t_node *current_node, t_msh *msh);
 void			__destroy_tree(t_node **current_node);
-t_node			*__give_node(int count, int reset);
+t_node			*__give_node(int count, int reset, int free_all);
 int				trim_parenthesis(t_lexing **lexing, t_lexing **parenthesis);
 t_lexing		*__find_next_operator(t_lexing *lexing);
 t_lexing		*__skip_parenthesis(t_lexing *lexing);
-t_node			*__give_node(int count, int reset);
+t_node			*__give_node(int count, int reset, int free_all);
 t_node			*__reinit_node(t_node ***node_tab);
 
 // parsing exe 
