@@ -27,9 +27,8 @@ srcs/exe/redirect.c\
 srcs/exe/redirect_builtin.c\
 srcs/here_doc/here_doc.c\
 srcs/expand/expand.c\
-srcs/expand/last_globe.c\
+srcs/expand/globe.c\
 srcs/exe/exe.c\
-srcs/debug.c\
 srcs/bin/exit/exit.c\
 srcs/expand/field_spliting.c\
 srcs/expand/quote_remove.c\
@@ -39,7 +38,14 @@ srcs/exe/exe_childs_utils.c\
 srcs/exe/exe_utils.c\
 srcs/exe/launcher_forks_utils.c\
 srcs/env.c\
-srcs/minishell_utils.c
+srcs/minishell_utils.c\
+srcs/expand/expand_utils.c\
+srcs/here_doc/here_doc_utils.c\
+srcs/lexer/lexer_utils.c\
+srcs/syntax/syntax_utils.c\
+srcs/exit_utils.c\
+srcs/create_tree_utils.c
+
 
 IFLAGS =  -I includes/ -I libft/includes
 #CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g3

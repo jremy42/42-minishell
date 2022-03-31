@@ -6,55 +6,11 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:25:57 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/31 10:27:19 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/31 12:15:17 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	print_error(char *cmd, char *arg, char *error_msg)
-{
-	__putstr_fd("minishell: ", 2);
-	__putstr_fd(cmd, 2);
-	__putstr_fd(": ", 2);
-	__putstr_fd(arg, 2);
-	if (error_msg)
-	{
-		__putstr_fd(": ", 2);
-		__putendl_fd(error_msg, 2);
-	}
-}
-
-void	__destroy_tree(t_node **current_node)
-{
-	if (!current_node || !*current_node)
-		return ;
-	__destroy_tree(&((*current_node)->left));
-	__destroy_tree(&((*current_node)->right));
-	if ((*current_node)->kind == SEQUENCE)
-		__lexing_full_list_clear(&((*current_node)->leaf_lexing));
-	else
-		free((*current_node)->leaf_lexing);
-	free(*current_node);
-	*current_node = NULL;
-}
-
-void	destroy_env(t_msh *msh)
-{
-	int	i;
-
-	i = 0;
-	if (!msh->envp)
-		return ;
-	while (msh->envp[i])
-	{
-		free(msh->envp[i][0]);
-		free(msh->envp[i][1]);
-		free(msh->envp[i]);
-		i++;
-	}
-	free(msh->envp);
-}
 
 int	__exit(t_msh *msh)
 {	

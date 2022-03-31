@@ -193,6 +193,7 @@ int	update_pwd(t_msh *msh);
 int	chdir_absolute_path(char *new_path, t_msh *msh);
 int	chdir_previous(t_msh *msh);
 int __access_dir(char *dir, char *true_dir);
+
 //Others
 void    __signal(int signal);
 void    __signal_treat(int signal);
@@ -209,6 +210,10 @@ void	__clean_inputs(char **inputs, t_msh *msh, char *arg);
 t_user_input	*__init_user_input_struct(t_user_input *ui);
 int	get_env(t_msh *msh, char *envp[], int size);
 int	get_size_env(char *envp[]);
+void	destroy_env(t_msh *msh);
+void	__destroy_tree(t_node **current_node);
+void	print_error(char *cmd, char *arg, char *error_msg);
+
 //tokenizer
 
 t_state	__return_state(char c, int state, int slash_state);
@@ -226,22 +231,32 @@ int		__create_new_token(char **str);
 int		__treat_newline(t_list **start, t_msh *msh);
 int		__init_token_if_none(char **str, int *token_status);
 
+//syntax
+void	__invalid_error(char *str);
+void	__synthax_error(char *str);
+int	__is_valide_operator(char *token);
+
 // lexing
-int	__lexing(t_list *token, t_lexing **lexing);
-t_lexing *__synthax_checker(t_lexing *lexing, t_msh *msh);
-int	__print_lexing(t_lexing *lexing);
-void	__lexing_full_list_clear(t_lexing **start);
-void	__lexing_node_list_clear(t_lexing *start);
-void	__lexing_not_in_tree_list_clear(t_lexing *start);
-void	__lexadd_back(t_lexing **alst, t_lexing *new);
-int		__count_node(t_lexing *lexing);
+int			__lexing(t_list *token, t_lexing **lexing);
+t_lexing*	__synthax_checker(t_lexing *lexing, t_msh *msh);
+int			__print_lexing(t_lexing *lexing);
+void		__lexing_full_list_clear(t_lexing **start);
+void		__lexing_node_list_clear(t_lexing *start);
+void		__lexing_not_in_tree_list_clear(t_lexing *start);
+void		__lexadd_back(t_lexing **alst, t_lexing *new);
+int			__count_node(t_lexing *lexing);
+int			__is_operator(char *content);
 // Gardening
 
 int __create_tree(t_lexing *lexing, t_node **root, t_lexing **parenthesis);
 int __execute_tree(t_node *current_node, t_msh *msh);
 void __destroy_tree(t_node **current_node);
 t_node *__give_node(int count, int reset);
-
+int	trim_parenthesis(t_lexing **lexing, t_lexing **parenthesis);
+t_lexing	*__find_next_operator(t_lexing *lexing);
+t_lexing	*__skip_parenthesis(t_lexing *lexing);
+t_node	*__give_node(int count, int reset);
+t_node	*__reinit_node(t_node ***node_tab);
 
 // parsing exe 
 t_cmd *miniparsing(t_lexing *lexing);
@@ -253,12 +268,16 @@ int print_cmd_lst(t_cmd *cmd);
 void	__cmd_node_list_clear(t_cmd *start);
 void	__cmd_full_list_clear(t_cmd *start);
 int __clean_tmp_hd(t_cmd *cmd);
-
+int	__trim_quote(char **eof, int *quote);
+char	*__get_stdin(char *eof, t_msh *msh);
+void	__treat_eof(char *line, char *eof, t_msh *msh);
 //heredoc
 
 int __handle_here_doc(t_lexing *lexing, t_lexing *end, t_msh *msh);
 void	__signal_hd(int signal);
 int	here_doc_handler(t_user_input *ui, t_msh *msh);
+void	__init_child_hd(char *eof, t_lexing *lex, t_msh *msh, t_lexing *sv);
+int	__get_user_input(char **eof, t_msh *msh);
 //expande
 int __parameter_expand_token(t_lexing *lexing, t_msh *msh);
 int __handle_wildcards(t_lexing *lexing);
@@ -272,7 +291,11 @@ int	__move_to_next_unquoted_char(char *str, char c);
 int	__move_to_next_unquoted_charset(char *str, char *charset);
 int	__get_char_quote_status(char *str, char *to_find);
 size_t __is_in_charset(char c, char *charset);
-
+int	__key_match_canditate(char *cndte, char *env_key, t_msh *msh, int j);
+int	__sub_cdnte(char *env_key, char *candidate, char **expanded_token, char *env_value);
+char	*__get_candidate(char *start_word, int *i);
+int	__treat_last_rv(char **expanded_token, int *i, t_msh *msh);
+char	*__get_key_from_key_val(char *str);
 //debug
 int __print_lexing(t_lexing *lexing);
 void print2DUtil(t_node *root, int space);

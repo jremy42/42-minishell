@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:25:57 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/31 09:41:05 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/31 11:55:55 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	__tokenize(char *str, t_list **start, t_msh *msh)
 {
 	char	*new_token;
 	int		status;
-	int	i;
+	int		i;
 
 	status = 0;
 	i = -1;
@@ -98,9 +98,9 @@ int	__tokenize(char *str, t_list **start, t_msh *msh)
 		else
 			i = __get_word(&new_token, str, i - 1, msh);
 		if (i < 0)
-			return (free(new_token), __lstclear(start,free), i);
+			return (free(new_token), __lstclear(start, free), i);
 		if (__add_token(new_token, start) < 0)
-			return (free(new_token), __lstclear(start,free), 0);
+			return (free(new_token), __lstclear(start, free), 0);
 		status = 0;
 	}
 	return (1);

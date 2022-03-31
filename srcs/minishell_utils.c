@@ -6,13 +6,13 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 10:21:42 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/31 10:53:48 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/31 11:41:18 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-extern int g_rv;
+extern int	g_rv;
 
 void	__update_rv(t_msh *msh)
 {

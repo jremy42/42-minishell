@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:25:57 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/29 19:15:56 by fred             ###   ########.fr       */
+/*   Updated: 2022/03/31 11:55:27 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,6 @@ int	__add_char_to_token(char c, char **token)
 	return (1);
 }
 
-/*
-34 = double quote
-39 = simgple quote
-*/
-
 t_state	__return_state(char c, int state, int slash_state)
 {
 	if (c == 34 && state == D_QUOTE && slash_state == 0)
@@ -85,3 +80,8 @@ int	__add_token(char *str, t_list **start)
 	__lstadd_back(start, t_token);
 	return (0);
 }
+
+/*
+34 = double quote
+39 = simgple quote
+*/
