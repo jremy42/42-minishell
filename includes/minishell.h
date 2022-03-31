@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 12:29:58 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/31 16:02:55 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/31 18:13:00 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -234,7 +234,7 @@ int				__is_valide_operator(char *token);
 int				__lexing(t_list *token, t_lexing **lexing);
 t_lexing		*__synthax_checker(t_lexing *lexing, t_msh *msh);
 int				__print_lexing(t_lexing *lexing);
-void			__lexing_full_list_clear(t_lexing **start);
+void			__lex_fclear(t_lexing **start);
 void			__lexing_node_list_clear(t_lexing *start);
 void			__lexing_not_in_tree_list_clear(t_lexing *start);
 void			__lexadd_back(t_lexing **alst, t_lexing *new);
@@ -294,6 +294,7 @@ char			*__get_candidate(char *start_word, int *i);
 int				__treat_last_rv(char **expanded_token, int *i, t_msh *msh);
 char			*__get_key_from_key_val(char *str);
 char			**__split_unquoted_charset(char *s, char *charset);
+int				__is_valid_name_char(char c);
 // globe
 t_glob			*__glob_new(char *content, t_globe_type type, int size);
 int				__move_to_next_unquoted_charset(char *str, char *charset);

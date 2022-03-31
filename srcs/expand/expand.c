@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 14:53:22 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/31 17:36:44 by fle-blay         ###   ########.fr       */
+/*   Updated: 2022/03/31 18:00:57 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,13 +71,6 @@ int	__get_dollar_status(char *str, char *to_find)
 	return (1);
 }
 
-int	__is_valid_name_char(char c)
-{
-	if (__isalnum(c) || c == '_')
-		return (1);
-	return (0);
-}
-
 int	__expand_word(char **token_word, t_msh *msh)
 {
 	char	*tmp;
@@ -98,7 +91,7 @@ int	__expand_word(char **token_word, t_msh *msh)
 				return (free(expanded_token_wd), 0);
 		}
 		else if (!__add_char_to_token(tmp[i], &expanded_token_wd))
-				return (free(expanded_token_wd), 0);
+			return (free(expanded_token_wd), 0);
 	}
 	free(*token_word);
 	*token_word = expanded_token_wd;

@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 11:58:20 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/31 15:03:56 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/31 18:11:47 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	__destroy_tree(t_node **current_node)
 	__destroy_tree(&((*current_node)->left));
 	__destroy_tree(&((*current_node)->right));
 	if ((*current_node)->kind == SEQUENCE)
-		__lexing_full_list_clear(&((*current_node)->leaf_lexing));
+		__lex_fclear(&((*current_node)->leaf_lexing));
 	else
 		free((*current_node)->leaf_lexing);
 	free(*current_node);

@@ -6,18 +6,11 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 12:10:50 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/31 16:27:12 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/31 17:59:43 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-t_node	*__reinit_node(t_node ***node_tab)
-{
-	free_split((char **)*node_tab);
-	*node_tab = NULL;
-	return (NULL);
-}
 
 int	__destroy_node_tab(t_node **node_tab, int state, int count)
 {

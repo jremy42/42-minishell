@@ -43,11 +43,13 @@ srcs/exe/launcher_forks_utils.c\
 srcs/env.c\
 srcs/minishell_utils.c\
 srcs/expand/expand_utils.c\
+srcs/expand/expand_utils_2.c\
 srcs/here_doc/here_doc_utils.c\
 srcs/lexer/lexer_utils.c\
 srcs/syntax/syntax_utils.c\
 srcs/exit_utils.c\
-srcs/tree/create_tree_utils.c
+srcs/tree/create_tree_utils.c\
+srcs/tree/create_tree_utils_2.c
 
 IFLAGS =  -I includes/ -I libft/includes
 #CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g3

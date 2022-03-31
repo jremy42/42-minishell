@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 11:46:33 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/31 11:53:03 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/31 18:11:54 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,6 @@ void	__init_child_hd(char *eof, t_lexing *lex, t_msh *msh, t_lexing *sv)
 	if (!__get_user_input(&eof, msh))
 		__putendl_fd("minishell: malloc error in here doc", 2);
 	lex->next->token = eof;
-	__lexing_full_list_clear(&sv);
+	__lex_fclear(&sv);
 	__exit(msh);
 }

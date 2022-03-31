@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 11:50:42 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/31 11:51:28 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/31 18:11:42 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	__count_node(t_lexing *lexing)
 	return (2 * i + 1);
 }
 
-void	__lexing_full_list_clear(t_lexing **start)
+void	__lex_fclear(t_lexing **start)
 {
 	t_lexing	*next_to_free;
 

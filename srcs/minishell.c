@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:25:57 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/31 16:13:35 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/31 18:13:58 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,19 +54,18 @@ int	__treat_user_input(char *arg, t_msh *msh, t_user_input *ui)
 		return (free(ui->to_tokenize), 0);
 	free(ui->to_tokenize);
 	if (!__lexing(ui->token, &ui->lexing))
-		return (__lexing_full_list_clear(&ui->lexing),
+		return (__lex_fclear(&ui->lexing),
 			__exit_error(msh, 3, "lexing\n"));
 	ui->first_error = __synthax_checker(ui->lexing, msh);
 	if (here_doc_handler(ui, msh) == 0)
 		return (0);
 	if (msh->syntax_error == 2)
-		return (__lexing_full_list_clear(&ui->lexing), -1);
+		return (__lex_fclear(&ui->lexing), -1);
 	msh->node_max = __count_node(ui->lexing);
 	if (!__give_node(msh->node_max, 1, 0))
-		return (__lexing_full_list_clear(&ui->lexing),
-			__exit_error(msh, 3, "create tree\n"));
+		return (__lex_fclear(&ui->lexing), __exit_error(msh, 3, "create tree\n"));
 	ui->syntax_tree = __create_tree(ui->lexing, &(msh->root), &ui->parenthesis);
-	__lexing_full_list_clear(&ui->parenthesis);
+	__lex_fclear(&ui->parenthesis);
 	if (ui->syntax_tree == 0)
 		return (__destroy_tree(&msh->root), -1);
 	msh->rv = __execute_tree(msh->root, msh);
