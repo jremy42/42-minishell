@@ -46,8 +46,7 @@ list/ft_lstclear.c \
 list/ft_lstiter.c \
 list/ft_lstmap.c\
 stdlib/ft_atol.c\
-garbage_collector/free.c\
-garbage_collector/malloc.c
+
 
 _GREY=	$'\033[30m
 _RED=	$'\033[31m

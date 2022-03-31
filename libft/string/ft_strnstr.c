@@ -44,7 +44,7 @@ char	*__strstr(const char *str, const char *find)
 {
 	size_t		i;
 	size_t		find_len;
-	
+
 	i = 0;
 	if (*find == '\0')
 		return ((char *)str);
@@ -66,12 +66,11 @@ char	*__strstr(const char *str, const char *find)
 	return (NULL);
 }
 
-
 char	*__strrstr(const char *str, const char *find)
 {
 	int		find_len;
 	int		str_len;
-	
+
 	if (*find == '\0')
 		return ((char *)str);
 	find_len = (int)__strlen(find);

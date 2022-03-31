@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:10:26 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/31 12:10:06 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/31 12:47:58 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int	__field_spliting_token(t_lexing *lexing, t_msh *msh)
 {
 	int	before_type;
 
+	before_type = 0;
 	while (lexing)
 	{
 		if (lexing->type == WORD && before_type != HERE_DOC)

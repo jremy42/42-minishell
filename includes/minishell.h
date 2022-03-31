@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 12:29:58 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/31 12:30:48 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/31 12:40:35 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -293,12 +293,7 @@ char			*__get_candidate(char *start_word, int *i);
 int				__treat_last_rv(char **expanded_token, int *i, t_msh *msh);
 char			*__get_key_from_key_val(char *str);
 char			**__split_unquoted_charset(char *s, char *charset);
-
-#endif
-
-
 // globe
-
 t_glob			*__glob_new(char *content, t_globe_type type, int size);
 int				__move_to_next_unquoted_charset(char *str, char *charset);
 int				__move_to_next_unquoted_char(char *str, char c);
@@ -309,8 +304,10 @@ int				__init_dir_content(t_list **dir_content);
 int				__get_char_quote_status(char *str, char *to_find);
 t_globe_type	__get_next_state(t_globe_type current_state, char *token);
 int				__add_new_glob(char *to_glob_expand,
-				t_globe_type *state, t_glob **glob, int j);
+					t_globe_type *state, t_glob **glob, int j);
 void			__get_glob_size(int glob_len, int *i, int *j, char **tge);
-int				__add_remaining_globs(char **tge, t_glob **glob, t_globe_type state);
+int				__add_remaining_globs(char **tge, t_glob **glob,
+					t_globe_type state);
 t_glob			*__create_glob_lst(char **to_glob_expand);
 int				__find_end(char *file_name, t_glob *glob_lst);
+#endif

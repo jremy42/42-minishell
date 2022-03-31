@@ -36,7 +36,7 @@ char	*__strdup(const char *src)
 char	*__strndup(const char *src, size_t n)
 {
 	size_t		i;
-	char	*result;
+	char		*result;
 	size_t		len;
 
 	i = 0;

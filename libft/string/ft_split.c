@@ -74,7 +74,6 @@ static char	*__getnextstr(char *s, char c, size_t *len_nextstr)
 	return ((char *)s + i);
 }
 
-
 char	**__split(char *s, char c)
 {
 	char	**result;
