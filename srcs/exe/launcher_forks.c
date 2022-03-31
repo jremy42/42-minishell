@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 16:23:45 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/30 18:23:12 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/31 09:54:37 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ static int	wait_ret(pid_t pid)
 		ret = (WTERMSIG(status) + 128);
 	while (waitpid(-1, NULL, 0) > 0)
 		;
+	if (ret == 131)
+		__putendl_fd("Quit (core dumped)", 2);
 	return (ret);
 }
 

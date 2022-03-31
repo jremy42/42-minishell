@@ -19,6 +19,7 @@
 # define __SUCCESS 0
 # define __FAIL 1
 # define __MALLOC 240
+# define __SYNTAX_ERROR -2
 # define RESET   "\033[0m"
 # define BLACK   "\033[30m"      /* Black */
 # define RED     "\033[31m"      /* Red */
@@ -126,6 +127,7 @@ typedef struct s_user_input {
 	int			syntax_tree;
 	t_lexing	*parenthesis;
 	int			ret_hd;
+	int			ret_tokenize;
 }	t_user_input;
 
 // A la construction de l'AST, le node obtient son kind, son node right et left.
@@ -214,8 +216,8 @@ int		__is_operator_char(char c);
 
 int		__tokenize(char *s, t_list **start, t_msh *msh);
 int		__get_operator(char **new_token, char *str, int i);
-int		__get_word(char **new_token, char *str, int i);
-int		__adjust_i(char *str, int i, int state);
+int		__get_word(char **new_token, char *str, int i, t_msh *msh);
+int		__adjust_i(char *str, int i, int state, t_msh *msh);
 int		__add_token(char *str, t_list **start);
 int		__skip_spaces(char *str, int *i);
 int		__create_new_token(char **str);

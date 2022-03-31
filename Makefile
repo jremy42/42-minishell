@@ -36,7 +36,7 @@ srcs/expand/quote_remove.c\
 srcs/split_quote.c\
 srcs/exe/create_cmd_utils.c\
 srcs/exe/exe_childs_utils.c\
-srcs/exe/exe_utils\
+srcs/exe/exe_utils.c\
 srcs/exe/launcher_forks_utils.c
 
 

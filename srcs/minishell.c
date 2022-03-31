@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:25:57 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/30 17:26:29 by fle-blay         ###   ########.fr       */
+/*   Updated: 2022/03/31 09:41:34 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,11 +125,12 @@ int __check_input(char *arg, char **to_tokenize, t_msh *msh)
 	return (1);
 }
 
-static void __init_user_input_struct(t_user_input *ui)
+static t_user_input *__init_user_input_struct(t_user_input *ui)
 {
 	ui->token = NULL;
 	ui->lexing = NULL;
 	ui->parenthesis = NULL;
+	return (ui);
 }
 
 int	here_doc_handler(t_user_input *ui, t_msh *msh)
@@ -143,34 +144,34 @@ int	here_doc_handler(t_user_input *ui, t_msh *msh)
 }
 
 
-int	__treat_user_input(char *arg, t_msh *msh)
+int	__treat_user_input(char *arg, t_msh *msh, t_user_input *ui)
 {
-	t_user_input ui;
-
-	__init_user_input_struct(&ui);
-	if(!__check_input(arg, &ui.to_tokenize, msh))
+	if(!__check_input(arg, &ui->to_tokenize, msh))
 		return (0);
-	if (!__tokenize(ui.to_tokenize, &ui.token, msh))
-		return (free(ui.to_tokenize), __exit_error(msh, 3, "tokenize"));
-	free(ui.to_tokenize);	
-	if (!__lexing(ui.token, &ui.lexing))
-		return (__lexing_full_list_clear(&ui.lexing), __exit_error(msh, 3, "lexing"));
-	ui.first_error = __synthax_checker(ui.lexing, msh);
-	if (here_doc_handler(&ui, msh) == 0)
+	ui->ret_tokenize = __tokenize(ui->to_tokenize, &ui->token, msh);
+	if (ui->ret_tokenize == -1)
+		return (free(ui->to_tokenize), __exit_error(msh, 3, "tokenize\n"));
+	if (ui->ret_tokenize == __SYNTAX_ERROR)
+		return (free(ui->to_tokenize), 0);
+	free(ui->to_tokenize);	
+	if (!__lexing(ui->token, &ui->lexing))
+		return (__lexing_full_list_clear(&ui->lexing), __exit_error(msh, 3, "lexing\n"));
+	ui->first_error = __synthax_checker(ui->lexing, msh);
+	if (here_doc_handler(ui, msh) == 0)
 		return (0);
 	if(msh->syntax_error == 2)
-		return (__lexing_full_list_clear(&ui.lexing), -1);
-	if(!__give_node(__count_node(ui.lexing), 1))
-		return (__lexing_full_list_clear(&ui.lexing), __exit_error(msh, 3, "create tree"));
-	ui.syntax_tree = __create_tree(ui.lexing, &(msh->root), &ui.parenthesis);
-	__lexing_full_list_clear(&ui.parenthesis);
-	if (ui.syntax_tree == 0)
+		return (__lexing_full_list_clear(&ui->lexing), -1);
+	if(!__give_node(__count_node(ui->lexing), 1))
+		return (__lexing_full_list_clear(&ui->lexing), __exit_error(msh, 3, "create tree\n"));
+	ui->syntax_tree = __create_tree(ui->lexing, &(msh->root), &ui->parenthesis);
+	__lexing_full_list_clear(&ui->parenthesis);
+	if (ui->syntax_tree == 0)
 		return (__destroy_tree(&msh->root), -1);
 	msh->rv = __execute_tree(msh->root, msh);
 	return(__destroy_tree(&msh->root), msh->rv);
 }
 
-int __non_interative_mode(char **av, t_msh *msh)
+int __non_interative_mode(char **av, t_msh *msh, t_user_input *ui)
 {
 	int i;
 	char **inputs;
@@ -182,11 +183,11 @@ int __non_interative_mode(char **av, t_msh *msh)
 		{
 			inputs = __split_unquoted_charset(av[2], "\n;");
 			if (!inputs)
-				return(__exit_error(msh, 3, "split input"));
+				return (__exit_error(msh, 3, "split input"));
 			msh->all_input = inputs;
-			while(inputs[i])
+			while (inputs[i])
 			{
-				__treat_user_input(inputs[i], msh);
+				__treat_user_input(inputs[i], msh, __init_user_input_struct(ui));
 				i++;
 			}	
 			return  (__exit(msh));
@@ -196,7 +197,6 @@ int __non_interative_mode(char **av, t_msh *msh)
 	}
 	else
 		return(__putendl_fd("Minishell : invalid option", 2), __exit_error(msh, 1, ""));
-
 }
 
 static void __update_rv(t_msh *msh)
@@ -214,7 +214,7 @@ void	__clean_inputs(char ** inputs, t_msh *msh, char *arg)
 	free(arg);
 }
 
-int	__interactive_mode(t_msh *msh)
+int	__interactive_mode(t_msh *msh, t_user_input *ui)
 {
 	char	*arg;
 	char 	**inputs;
@@ -236,37 +236,31 @@ int	__interactive_mode(t_msh *msh)
 		msh->all_input = inputs;
 		i = -1;
 		while(inputs[++i])
-			__treat_user_input(inputs[i], msh);
+			__treat_user_input(inputs[i], msh, __init_user_input_struct(ui));
 		__clean_inputs(inputs, msh, arg);
 	}
 	return (msh->rv);
 }
 
-
 int	main (int ac, char *av[], char *envp[])
 {
-	t_msh	msh;
-	
+	t_msh			msh;
+	t_user_input	ui;
+
 	msh = (t_msh){.rv = 0};
-	//printf("size = %lu\n", sizeof(t_glob));
 	if (!get_env(&msh, envp, get_size_env(envp)))
 		return (1);
 	if (ac > 1)
-		__non_interative_mode(av, &msh);
-	__interactive_mode(&msh);
+		__non_interative_mode(av, &msh, &ui);
+	__interactive_mode(&msh, &ui);
 	__exit(&msh);
 	return (0);
 }
 
-
-
 	//parcourir l'arbre et expand juste avant d'exe
 	// ceci afin de prendre en compte les modif de l'env	
-	
 //	debut de la fx d'exe de node
-	
 	/*
-	
 	__print_lexing(lexing);
 	__parameter_expand_token(lexing, msh);
 	__hande_wildcards(msh, lexing);
