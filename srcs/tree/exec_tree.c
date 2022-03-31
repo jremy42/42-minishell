@@ -6,29 +6,29 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 09:50:45 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/30 17:18:34 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/31 10:32:59 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int __check_parenthesis_in_pipe(t_lexing *lexing)
+int	__check_parenthesis_in_pipe(t_lexing *lexing)
 {
 	int			p_left;
 	int			p_right;
 
 	p_left = 0;
 	p_right = 0;
-	while(lexing && lexing->type == P_LEFT)
+	while (lexing && lexing->type == P_LEFT)
 	{
 		p_left++;
 		lexing = lexing->next;
 	}
 	if (lexing->type == P_RIGHT)
 		return (__putendl_fd("Empty parenthesis", 2), 0);
-	while(lexing && lexing->type != PIPE)
+	while (lexing && lexing->type != PIPE)
 	{
-		if(lexing->type == P_RIGHT)
+		if (lexing->type == P_RIGHT)
 			p_right++;
 		if (lexing->type == P_LEFT)
 			return (0);
@@ -39,51 +39,50 @@ int __check_parenthesis_in_pipe(t_lexing *lexing)
 	return (1);
 }
 
-int __create_cmd_and_exe(t_lexing *lexing, t_msh *msh)
+int	__create_cmd_and_exe(t_lexing *lexing, t_msh *msh)
 {
-	t_cmd *cmd;
-	
+	t_cmd	*cmd;
+
 	if (!__parameter_expand_token(lexing, msh))
-		__exit_error(msh,240, "Malloc error in parameter expand\n");
+		__exit_error(msh, 240, "Malloc error in parameter expand\n");
 	if (!__field_spliting_token(lexing, msh))
-		__exit_error(msh,240, "Malloc error in field spliting\n");
+		__exit_error(msh, 240, "Malloc error in field spliting\n");
 	if (!__handle_wildcards(lexing))
-		__exit_error(msh,240, "Malloc error in wildcard\n");
+		__exit_error(msh, 240, "Malloc error in wildcard\n");
 	if (!__quote_removal_token(lexing))
-		__exit_error(msh,240, "Malloc error in quote removale\n");
+		__exit_error(msh, 240, "Malloc error in quote removale\n");
 	cmd = create_cmd_list(lexing, msh);
 	if (!cmd)
-		__exit_error(msh,240, "Malloc error in create cmd list\n");
+		__exit_error(msh, 240, "Malloc error in create cmd list\n");
 	execute_seq(cmd, msh);
 	if (msh->rv == 240)
-		__exit_error(msh,240, "Malloc error in exe\n");
+		__exit_error(msh, 240, "Malloc error in exe\n");
 	return (msh->rv);
 }
 
-int __execute_pipe_seq(t_lexing *lexing, t_msh *msh)
+int	__execute_pipe_seq(t_lexing *lexing, t_msh *msh)
 {
-	t_lexing *next_pipe;
-	
+	t_lexing	*next_pipe;
+
 	next_pipe = lexing;
-	while(next_pipe)
-	{ 
-		if(!__check_parenthesis_in_pipe(next_pipe))
+	while (next_pipe)
+	{
+		if (!__check_parenthesis_in_pipe(next_pipe))
 		{
 			__putstr_fd("minishell: synthax error with parenthesis in:", 2);
 			__putendl_fd(next_pipe->token, 2);
 			return (-1);
 		}
-		while(next_pipe->next && next_pipe->type != PIPE)
+		while (next_pipe->next && next_pipe->type != PIPE)
 			next_pipe = next_pipe->next;
 		next_pipe = next_pipe->next;
 	}
 	return (__create_cmd_and_exe(lexing, msh));
-
 }
 
-int __execute_tree(t_node *current_node, t_msh *msh)
+int	__execute_tree(t_node *current_node, t_msh *msh)
 {
-	if(current_node->kind == SEQUENCE)
+	if (current_node->kind == SEQUENCE)
 	{
 		__execute_pipe_seq(current_node->leaf_lexing, msh);
 		return (msh->rv);

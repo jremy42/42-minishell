@@ -1,18 +1,29 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   create_tree.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fle-blay <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/03/31 10:17:40 by fle-blay          #+#    #+#             */
+/*   Updated: 2022/03/31 10:24:55 by fle-blay         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-
-t_node *__reinit_node(t_node ***node_tab)
+t_node	*__reinit_node(t_node ***node_tab)
 {
-	free_split((char**)*node_tab);
+	free_split((char **)*node_tab);
 	*node_tab = NULL;
 	return (NULL);
 }
 
-t_node *__give_node(int count, int reset)
+t_node	*__give_node(int count, int reset)
 {
-	int i;
-	static int state = -1;
+	int				i;
 	static t_node	**node_tab = NULL;
+	static int		state = -1;
 
 	i = -1;
 	if (reset)
@@ -36,12 +47,11 @@ t_node *__give_node(int count, int reset)
 		return (node_tab[state++]);
 }
 
-t_lexing *__skip_parenthesis(t_lexing *lexing)
+t_lexing	*__skip_parenthesis(t_lexing *lexing)
 {
-	int parenthesis;
+	int	parenthesis;
 
 	parenthesis = 1;
-
 	lexing = lexing->next;
 	while (lexing && parenthesis)
 	{
@@ -56,7 +66,7 @@ t_lexing *__skip_parenthesis(t_lexing *lexing)
 
 t_lexing	*__find_next_operator(t_lexing *lexing)
 {
-	t_lexing *find;
+	t_lexing	*find;
 
 	find = NULL;
 	while (lexing)
@@ -64,7 +74,7 @@ t_lexing	*__find_next_operator(t_lexing *lexing)
 		if (lexing->type == P_LEFT)
 			lexing = __skip_parenthesis(lexing);
 		if (!lexing)
-			break;
+			break ;
 		if (lexing->type == OPERATOR)
 			find = lexing;
 		lexing = lexing->next;
@@ -88,7 +98,7 @@ static int	trim_parenthesis(t_lexing **lexing, t_lexing **parenthesis)
 		{
 			*lexing = (*lexing)->next;
 			rebirth_2_burne2 = index->next;
-			index->next = NULL;	
+			index->next = NULL;
 			rebirth_2_burne->next = NULL;
 			rebirth_2_burne2->next = NULL;
 			__lexadd_back(parenthesis, rebirth_2_burne);
@@ -115,8 +125,6 @@ t_node	*btree_create_node_sequence(t_lexing *lexing)
 	return (new);
 }
 
-
-
 t_node	*btree_create_node_operator(t_lexing *lexing)
 {
 	t_node	*new;
@@ -130,14 +138,14 @@ t_node	*btree_create_node_operator(t_lexing *lexing)
 		+ !__strcmp(lexing->token, "&&") * AND;
 	new->leaf_lexing = lexing;
 	free(lexing->token);
-	lexing->token = NULL;	
+	lexing->token = NULL;
 	return (new);
 }
 
 t_lexing	*split_lexing_left(t_lexing *lexing, t_lexing *next_operator)
 {
 	t_lexing	*save;
-	
+
 	save = lexing;
 	while (lexing->next != next_operator)
 		lexing = lexing->next;
@@ -153,7 +161,7 @@ t_lexing	*split_lexing_right(t_lexing *lexing, t_lexing *next_operator)
 	return (lexing);
 }
 
-int __create_tree(t_lexing *lexing, t_node **root, t_lexing **parenthesis)
+int	__create_tree(t_lexing *lexing, t_node **root, t_lexing **parenthesis)
 {
 	t_lexing	*next_operator;
 
@@ -170,9 +178,11 @@ int __create_tree(t_lexing *lexing, t_node **root, t_lexing **parenthesis)
 		return (1);
 	}
 	*root = btree_create_node_operator(next_operator);
-	if(!__create_tree(split_lexing_right(lexing, next_operator),&((*root)->right), parenthesis))
+	if (!__create_tree(split_lexing_right(lexing, next_operator),
+			&((*root)->right), parenthesis))
 		return (0);
-	if(!__create_tree(split_lexing_left(lexing, next_operator), &((*root)->left), parenthesis))
+	if (!__create_tree(split_lexing_left(lexing, next_operator),
+			&((*root)->left), parenthesis))
 		return (0);
 	return (1);
 }
