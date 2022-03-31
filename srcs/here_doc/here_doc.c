@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 15:19:06 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/30 18:10:14 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/31 10:17:14 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,6 +180,7 @@ static int	wait_here_doc(pid_t pid, t_msh *msh)
 		msh->rv = 130;
 	return (ret);
 }
+
 int	__handle_here_doc(t_lexing *lexing, t_lexing *end, t_msh *msh)
 {
 	pid_t		pid;
