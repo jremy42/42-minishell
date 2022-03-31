@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:25:57 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/31 18:13:58 by fle-blay         ###   ########.fr       */
+/*   Updated: 2022/03/31 19:01:40 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	__treat_user_input(char *arg, t_msh *msh, t_user_input *ui)
 		return (__lex_fclear(&ui->lexing), -1);
 	msh->node_max = __count_node(ui->lexing);
 	if (!__give_node(msh->node_max, 1, 0))
-		return (__lex_fclear(&ui->lexing), __exit_error(msh, 3, "create tree\n"));
+		return (__lex_fclear(&ui->lexing), __exit_error(msh, 3, "in tree\n"));
 	ui->syntax_tree = __create_tree(ui->lexing, &(msh->root), &ui->parenthesis);
 	__lex_fclear(&ui->parenthesis);
 	if (ui->syntax_tree == 0)
@@ -99,6 +99,26 @@ int	__non_interative_mode(char **av, t_msh *msh, t_user_input *ui)
 			__exit_error(msh, 1, ""));
 }
 
+char	*__exe_readline(t_msh *msh)
+{
+	int		std_out;
+	int		std_err;
+	int		std_buffer;
+	char	*arg;
+
+	std_buffer = open("/dev/null", O_RDONLY);
+	std_out = dup(STDOUT_FILENO);
+	std_err = dup(STDERR_FILENO);
+	dup2(std_buffer, STDOUT_FILENO);
+	dup2(std_buffer, STDERR_FILENO);
+	arg = readline(__get_prompt(msh));
+	dup2(std_out, STDOUT_FILENO);
+	dup2(std_err, STDERR_FILENO);
+	close(std_out);
+	close(std_buffer);
+	return (arg);
+}
+
 int	__interactive_mode(t_msh *msh, t_user_input *ui)
 {
 	char	*arg;
@@ -109,7 +129,7 @@ int	__interactive_mode(t_msh *msh, t_user_input *ui)
 	{
 		signal(SIGINT, __signal);
 		signal(SIGQUIT, __signal);
-		arg = readline(__get_prompt(msh));
+		arg = __exe_readline(msh);
 		add_history(arg);
 		__update_rv(msh);
 		if (arg == NULL)
