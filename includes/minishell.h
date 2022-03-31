@@ -295,3 +295,22 @@ char			*__get_key_from_key_val(char *str);
 char			**__split_unquoted_charset(char *s, char *charset);
 
 #endif
+
+
+// globe
+
+t_glob			*__glob_new(char *content, t_globe_type type, int size);
+int				__move_to_next_unquoted_charset(char *str, char *charset);
+int				__move_to_next_unquoted_char(char *str, char c);
+void			__globadd_back(t_glob **alst, t_glob *new);
+void			__glob_list_clear(t_glob *start);
+t_glob			*__glob_new(char *content, t_globe_type type, int size);
+int				__init_dir_content(t_list **dir_content);
+int				__get_char_quote_status(char *str, char *to_find);
+t_globe_type	__get_next_state(t_globe_type current_state, char *token);
+int				__add_new_glob(char *to_glob_expand,
+				t_globe_type *state, t_glob **glob, int j);
+void			__get_glob_size(int glob_len, int *i, int *j, char **tge);
+int				__add_remaining_globs(char **tge, t_glob **glob, t_globe_type state);
+t_glob			*__create_glob_lst(char **to_glob_expand);
+int				__find_end(char *file_name, t_glob *glob_lst);
