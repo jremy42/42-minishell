@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 16:23:45 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/31 09:54:37 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/31 14:43:17 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	__launcher_fork(t_sequ *seq, t_cmd *cmd, t_cmd *first_cmd)
 	while (seq->index < seq->max_cmd)
 	{
 		if (seq->index < seq->max_cmd - 1 && pipe(seq->pipe) < 0)
-			return (__putstr_fd("Minishell: Error pipe\n", 2), 1);
+			return (__putstr_fd("Minishell: Error pipe\n", 2), 129);
 		pid = fork();
 		if (pid < 0)
 			return (__putstr_fd("Minishell: Error fork\n", 2), 1);

@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 14:13:35 by fle-blay          #+#    #+#             */
-/*   Updated: 2022/03/30 18:11:21 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/31 15:04:27 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static int	__check_home(t_msh *msh)
 {
 	if (!get_key(msh, "HOME") || !__access_dir(get_key(msh, "HOME"),
 			get_key(msh, "HOME")))
-		return (print_error("cd", "HOME not set\n", NULL), __FAIL);
+		return (print_error("cd", "HOME not set", NULL), __FAIL);
 	if (update_oldpwd(msh) == __MALLOC)
 		return (__MALLOC);
 	chdir(get_key(msh, "HOME"));

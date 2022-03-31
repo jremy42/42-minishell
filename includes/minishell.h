@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 12:29:58 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/31 12:40:35 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/31 15:01:18 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 # define __FAIL 1
 # define __MALLOC 240
 # define __SYNTAX_ERROR -2
+# define __MALLOC_TOKEN -1
 # define RESET   "\033[0m"
 # define BLACK   "\033[30m"      /* Black */
 # define RED     "\033[31m"      /* Red */
@@ -195,7 +196,6 @@ void			destroy_env(t_msh *msh);
 int				__exit(t_msh *msh);
 int				__exit_error(t_msh *msh, int error, char *str);
 int				update_shlvl(t_msh *msh);
-void			print_error(char *cmd, char *arg, char *error_msg);
 int				__get_pos_last_dir(char *cwd);
 int				__check_input(char *arg, char **to_tokenize, t_msh *msh);
 void			__update_rv(t_msh *msh);
@@ -205,7 +205,7 @@ int				get_env(t_msh *msh, char *envp[], int size);
 int				get_size_env(char *envp[]);
 void			destroy_env(t_msh *msh);
 void			__destroy_tree(t_node **current_node);
-void			print_error(char *cmd, char *arg, char *error_msg);
+int				print_error(char *cmd, char *arg, char *error_msg);
 
 //tokenizer
 

@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:25:57 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/31 10:55:05 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/31 14:30:15 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	__treat_user_input(char *arg, t_msh *msh, t_user_input *ui)
 	if (!__check_input(arg, &ui->to_tokenize, msh))
 		return (0);
 	ui->ret_tokenize = __tokenize(ui->to_tokenize, &ui->token, msh);
-	if (ui->ret_tokenize == -1)
+	if (ui->ret_tokenize == __MALLOC_TOKEN)
 		return (free(ui->to_tokenize), __exit_error(msh, 3, "tokenize\n"));
 	if (ui->ret_tokenize == __SYNTAX_ERROR)
 		return (free(ui->to_tokenize), 0);

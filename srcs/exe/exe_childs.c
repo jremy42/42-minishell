@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 16:21:22 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/30 18:18:02 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/31 15:05:02 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	__exit_child(t_sequ *seq, t_cmd *cmd, int errno_copy, int error)
 		cmd->msh->rv = errno_copy;
 	if (error)
 	{
-		cmd->msh->rv = errno_copy;
+		cmd->msh->rv = error;
 		__putendl_fd(strerror(errno_copy), 2);
 	}
 	__clean_tmp_hd(cmd);
@@ -41,21 +41,21 @@ static void	__check_access_and_exit(char *arg, t_sequ *seq, t_cmd *first_cmd)
 
 	if (access(arg, F_OK) < 0)
 	{
-		print_error(arg, "command not found\n", NULL);
+		print_error(arg, "command not found", NULL);
 		__exit_child(seq, first_cmd, 127, 0);
 	}
 	if (access(arg, X_OK) < 0)
 	{
-		print_error(arg, "Permission denied\n", NULL);
+		print_error(arg, "Permission denied", NULL);
 		__exit_child(seq, first_cmd, 126, 0);
 	}
 	stat(arg, &buff);
 	if (S_ISDIR(buff.st_mode))
 	{
-		print_error(arg, "Is a directory\n", NULL);
+		print_error(arg, "Is a directory", NULL);
 		__exit_child(seq, first_cmd, 126, 0);
 	}
-	print_error(arg, "command not found\n", NULL);
+	print_error(arg, "command not found", NULL);
 	__exit_child(seq, first_cmd, 127, 0);
 }
 
@@ -65,13 +65,13 @@ void	__check_access_exe(char *p_cmd, char **arg, t_sequ *s, t_cmd *f_cmd)
 
 	if (access(p_cmd, X_OK) < 0)
 	{
-		print_error(arg[0], "Permission denied\n", NULL);
+		print_error(arg[0], "Permission denied", NULL);
 		__exit_child(s, f_cmd, 126, 0);
 	}
 	stat(p_cmd, &buff);
 	if (S_ISDIR(buff.st_mode))
 	{
-		print_error(arg[0], "Is a directory\n", NULL);
+		print_error(arg[0], "Is a directory", NULL);
 		__exit_child(s, f_cmd, 126, 0);
 	}
 	execve(p_cmd, arg, s->envp);
@@ -82,7 +82,7 @@ void	execute_child(t_sequ *seq, t_cmd *cmd, t_cmd *first_cmd)
 	char		*path_cmd;
 
 	if (cmd->redirect)
-		__handle_redirect(seq, cmd);
+		__handle_redirect(seq, cmd, first_cmd);
 	if (!cmd->arg[0])
 		__exit_child(seq, first_cmd, 0, 0);
 	if (__is_builtin(cmd->arg))

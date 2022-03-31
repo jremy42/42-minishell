@@ -6,13 +6,13 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 11:58:20 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/31 11:58:52 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/31 15:03:56 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	print_error(char *cmd, char *arg, char *error_msg)
+int	print_error(char *cmd, char *arg, char *error_msg)
 {
 	__putstr_fd("minishell: ", 2);
 	__putstr_fd(cmd, 2);
@@ -23,6 +23,9 @@ void	print_error(char *cmd, char *arg, char *error_msg)
 		__putstr_fd(": ", 2);
 		__putendl_fd(error_msg, 2);
 	}
+	else
+		__putstr_fd("\n", 2);
+	return (1);
 }
 
 void	__destroy_tree(t_node **current_node)
