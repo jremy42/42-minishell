@@ -28,6 +28,9 @@ srcs/exe/redirect_builtin.c\
 srcs/here_doc/here_doc.c\
 srcs/expand/expand.c\
 srcs/expand/globe.c\
+srcs/expand/globe_utils_1.c\
+srcs/expand/globe_utils_2.c\
+srcs/expand/globe_utils_3.c\
 srcs/exe/exe.c\
 srcs/bin/exit/exit.c\
 srcs/expand/field_spliting.c\
@@ -44,8 +47,7 @@ srcs/here_doc/here_doc_utils.c\
 srcs/lexer/lexer_utils.c\
 srcs/syntax/syntax_utils.c\
 srcs/exit_utils.c\
-srcs/create_tree_utils.c
-
+srcs/tree/create_tree_utils.c
 
 IFLAGS =  -I includes/ -I libft/includes
 #CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g3
