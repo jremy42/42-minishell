@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:25:57 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/31 10:25:57 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/31 10:55:05 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int	__non_interative_mode(char **av, t_msh *msh, t_user_input *ui)
 		if (av[2])
 		{
 			inpts = __split_unquoted_charset(av[2], "\n;");
-			if (!inputs)
+			if (!inpts)
 				return (__exit_error(msh, 3, "split input"));
 			msh->all_input = inpts;
 			while (inpts[++i])

@@ -193,10 +193,6 @@ int	update_pwd(t_msh *msh);
 int	chdir_absolute_path(char *new_path, t_msh *msh);
 int	chdir_previous(t_msh *msh);
 int __access_dir(char *dir, char *true_dir);
-
-
-
-
 //Others
 void    __signal(int signal);
 void    __signal_treat(int signal);
@@ -206,7 +202,13 @@ int __exit(t_msh *msh);
 int	__exit_error(t_msh *msh, int error, char *str);
 int	update_shlvl(t_msh *msh);
 void print_error(char *cmd, char *arg, char *error_msg);
-
+int	__get_pos_last_dir(char *cwd);
+int	__check_input(char *arg, char **to_tokenize, t_msh *msh);
+void	__update_rv(t_msh *msh);
+void	__clean_inputs(char **inputs, t_msh *msh, char *arg);
+t_user_input	*__init_user_input_struct(t_user_input *ui);
+int	get_env(t_msh *msh, char *envp[], int size);
+int	get_size_env(char *envp[]);
 //tokenizer
 
 t_state	__return_state(char c, int state, int slash_state);
@@ -256,6 +258,7 @@ int __clean_tmp_hd(t_cmd *cmd);
 
 int __handle_here_doc(t_lexing *lexing, t_lexing *end, t_msh *msh);
 void	__signal_hd(int signal);
+int	here_doc_handler(t_user_input *ui, t_msh *msh);
 //expande
 int __parameter_expand_token(t_lexing *lexing, t_msh *msh);
 int __handle_wildcards(t_lexing *lexing);

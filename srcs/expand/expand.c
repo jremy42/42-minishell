@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 14:53:22 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/31 10:34:05 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/31 10:56:21 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ char	*__get_candidate(char *start_word, int *i)
 	return (candidate);
 }
 
-int	__substitute_candidate(char *env_key, char *candidate, char **expanded_token, char *env_value)
+int	__sub_cdnte(char *env_key, char *candidate,
+	char **expanded_token, char *env_value)
 {
 	free(env_key);
 	free(candidate);
@@ -52,32 +53,47 @@ int	__substitute_candidate(char *env_key, char *candidate, char **expanded_token
 	return (1);
 }
 
-int	__parameter_expand(char *start_word, t_msh *msh, char **expanded_token, int *i)
+char	*__get_key_from_key_val(char *str)
 {
-	char	*candidate;
+	return (__substr(str, 0, __strchr(str, '=') - str));
+}
+
+int	__key_match_canditate(char *cndte, char *env_key, t_msh *msh, int j)
+{
+	if (!__strcmp(cndte, env_key) && msh->envp[j][1] &&
+		__strchr(msh->envp[j][0], '='))
+		return (1);
+	return (0);
+}
+
+int	__parameter_expand(char *start_word, t_msh *msh,
+	char **expanded_token, int *i)
+{
+	char	*cndte;
 	char	*env_key;
 	int		j;
 
 	if (start_word[0] == '?')
 		return (__treat_last_rv(expanded_token, i, msh));
-	candidate = __get_candidate(start_word, i);
-	if (!candidate)
+	cndte = __get_candidate(start_word, i);
+	if (!cndte)
 		return (0);
 	j = 0;
 	while (msh->envp[j])
 	{
 		if (msh->envp[j][1][0] == '1')
 		{
-			env_key = __substr(msh->envp[j][0], 0, __strchr(msh->envp[j][0], '=') - msh->envp[j][0]);
+			env_key = __get_key_from_key_val(msh->envp[j][0]);
 			if (!env_key)
-				return (free(candidate), 0);
-			if (!__strcmp(candidate, env_key) && msh->envp[j][1] && __strchr(msh->envp[j][0], '='))
-				return (__substitute_candidate(env_key, candidate, expanded_token, __strchr(msh->envp[j][0], '=') + 1 ));
+				return (free(cndte), 0);
+			if (__key_match_canditate(cndte, env_key, msh, j))
+				return (__sub_cdnte(env_key, cndte, expanded_token,
+						__strchr(msh->envp[j][0], '=') + 1));
 			free(env_key);
 		}
 		j++;
 	}
-	return (free(candidate), 1);
+	return (free(cndte), 1);
 }
 
 int	__get_dollar_status(char *str, char *to_find)

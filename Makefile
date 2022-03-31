@@ -37,9 +37,9 @@ srcs/split_quote.c\
 srcs/exe/create_cmd_utils.c\
 srcs/exe/exe_childs_utils.c\
 srcs/exe/exe_utils.c\
-srcs/exe/launcher_forks_utils.c
-
-
+srcs/exe/launcher_forks_utils.c\
+srcs/env.c\
+srcs/minishell_utils.c
 
 IFLAGS =  -I includes/ -I libft/includes
 #CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g3
