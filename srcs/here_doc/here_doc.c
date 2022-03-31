@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 15:19:06 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/30 18:10:14 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/31 10:25:14 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,17 @@
 #include "exe.h"
 
 extern int	g_rv;
+
+int	here_doc_handler(t_user_input *ui, t_msh *msh)
+{
+	ui->ret_hd = __handle_here_doc(ui->lexing, ui->first_error, msh);
+	if (ui->ret_hd == 0)
+		return (__lexing_full_list_clear(&ui->lexing),
+			__exit_error(msh, 3, "here_doc"));
+	if (ui->ret_hd == 130)
+		return (__lexing_full_list_clear(&ui->lexing), 0);
+	return (1);
+}
 
 static void	__treat_eof(char *line, char *eof, t_msh *msh)
 {

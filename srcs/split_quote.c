@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 15:10:32 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/23 18:35:50 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/31 10:26:36 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,15 +30,14 @@ static char	**__freetab(char**tab, int index)
 	return (NULL);
 }
 
-size_t __is_in_charset(char c, char *charset)
+size_t	__is_in_charset(char c, char *charset)
 {
-	int i;
+	int	i;
 
 	i = 0;
-
-	while(charset[i])
+	while (charset[i])
 	{
-		if(charset[i] == c)
+		if (charset[i] == c)
 			return (1);
 		i++;
 	}
@@ -57,7 +56,8 @@ static size_t	__count_word(char *s, char *charset)
 		if (!__is_in_charset(s[i], charset))
 		{
 			count_word++;
-			while (s[i] && (!__is_in_charset(s[i], charset) || __get_char_quote_status(s, &s[i])))
+			while (s[i] && (!__is_in_charset(s[i], charset)
+					|| __get_char_quote_status(s, &s[i])))
 				i++;
 		}
 		else
@@ -77,7 +77,8 @@ static char	*__getnextstr(char *s, char *charset, size_t *len_nextstr)
 	{
 		if (!__is_in_charset(s[i], charset))
 		{
-			while (s[i] && (!__is_in_charset(s[i], charset) || __get_char_quote_status(s, &s[i])))		
+			while (s[i] && (!__is_in_charset(s[i], charset)
+					|| __get_char_quote_status(s, &s[i])))
 			{
 				i++;
 				len++;
@@ -89,7 +90,6 @@ static char	*__getnextstr(char *s, char *charset, size_t *len_nextstr)
 	}
 	return ((char *)s + i - len);
 }
-
 
 char	**__split_unquoted_charset(char *s, char *charset)
 {

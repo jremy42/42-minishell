@@ -6,19 +6,18 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:25:57 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/25 17:50:23 by jremy            ###   ########.fr       */
+/*   Updated: 2022/03/31 10:28:13 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-
-int __count_node(t_lexing *lexing)
+int	__count_node(t_lexing *lexing)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	while(lexing)
+	while (lexing)
 	{
 		if (lexing->type == OPERATOR)
 			i++;
@@ -72,7 +71,7 @@ int	__is_operator(char *content)
 	return (0);
 }
 
-static int __is_redirection(char *content)
+static int	__is_redirection(char *content)
 {
 	if (!__strcmp(content, "<"))
 		return (1);
