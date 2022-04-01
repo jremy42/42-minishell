@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:10:26 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/31 12:47:58 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/01 17:38:00 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,14 @@ int	__split_token(t_lexing *lexing, t_msh *msh)
 {
 	t_list		*start;
 	t_list		*save;
+	char		*to_tokenize;
 
 	start = NULL;
+	to_tokenize = __strtrim(lexing->token, " \f\t\r\v");
+	if (!to_tokenize)
+		return (0);
+	free(lexing->token);
+	lexing->token = to_tokenize;
 	if (!__tokenize(lexing->token, &start, msh))
 		return (0);
 	save = start;
@@ -41,6 +47,7 @@ int	__field_spliting_token(t_lexing *lexing, t_msh *msh)
 	{
 		if (lexing->type == WORD && before_type != HERE_DOC)
 		{
+			fprintf(stderr,"lexing envoyer = [%s]\n", lexing->token);
 			if (!__split_token(lexing, msh))
 				return (__putendl_fd("Malloc error", 2), 0);
 		}

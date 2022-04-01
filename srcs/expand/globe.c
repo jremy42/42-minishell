@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 09:52:39 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/31 12:36:53 by fle-blay         ###   ########.fr       */
+/*   Updated: 2022/04/01 15:32:05 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,10 @@ int	__insert_token(t_lexing *lexing,
 }
 
 int	__glob_expand_token(t_lexing *lexing,
-	t_list *d_content, t_lexing *s_nxt)
+	t_list *d_content, t_lexing *s_nxt, int take_hidden)
 {
 	t_glob		*glob_lst;
+	char		*to_test;
 
 	glob_lst = __create_glob_lst(&lexing->token);
 	if (!glob_lst)
@@ -92,7 +93,9 @@ int	__glob_expand_token(t_lexing *lexing,
 		return (__glob_list_clear(glob_lst), __lstclear(&d_content, free), 0);
 	while (d_content)
 	{
-		if (__file_find((char *)d_content->content, glob_lst)
+		to_test = (char *)d_content->content;
+		if ((__file_find(to_test, glob_lst)
+				&& (take_hidden || to_test[0] != '.'))
 			&& !__insert_token(lexing, (char *)d_content->content, 0, s_nxt))
 			return (__glob_list_clear(glob_lst), 0);
 		d_content = d_content->next;
@@ -107,6 +110,7 @@ int	__handle_wildcards(t_lexing *lexing)
 	t_list		*dir_content;
 	t_list		*save;
 	t_lexing	*save_next;
+	int			take_hide;
 
 	dir_content = NULL;
 	if (!__init_dir_content(&dir_content))
@@ -115,8 +119,9 @@ int	__handle_wildcards(t_lexing *lexing)
 	while (lexing)
 	{
 		save_next = lexing->next;
+		take_hide = (lexing->token[0] == '.');
 		if (__move_to_next_unquoted_char(lexing->token, '*') >= 0
-			&& !__glob_expand_token(lexing, dir_content, save_next))
+			&& !__glob_expand_token(lexing, dir_content, save_next, take_hide))
 			return (__lstclear(&save, free), 0);
 		dir_content = save;
 		lexing = save_next;

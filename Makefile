@@ -49,7 +49,9 @@ srcs/lexer/lexer_utils.c\
 srcs/syntax/syntax_utils.c\
 srcs/exit_utils.c\
 srcs/tree/create_tree_utils.c\
-srcs/tree/create_tree_utils_2.c
+srcs/tree/create_tree_utils_2.c\
+srcs/print_prompt.c
+
 
 IFLAGS =  -I includes/ -I libft/includes
 #CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g3
@@ -122,7 +124,7 @@ fclean: clean
 re: fclean all
 
 run : $(NAME) ./.ignore_readline
-	valgrind --leak-check=full --track-fds=yes --show-leak-kinds=all --suppressions=.ignore_readline -q ./minishell
+	valgrind --trace-children=yes --leak-check=full --track-fds=yes --show-leak-kinds=all --suppressions=.ignore_readline -q ./minishell
 
 fshellclean:
 	rm -f $(NAME)

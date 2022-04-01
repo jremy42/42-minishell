@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 14:13:35 by fle-blay          #+#    #+#             */
-/*   Updated: 2022/03/31 15:04:27 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/01 15:02:36 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,34 +70,42 @@ int	__access_dir(char *dir, char *true_dir)
 
 static int	__check_home(t_msh *msh)
 {
-	if (!get_key(msh, "HOME") || !__access_dir(get_key(msh, "HOME"),
-			get_key(msh, "HOME")))
+	char	*home_dir;
+
+	home_dir = get_key(msh, "HOME");
+	if (!home_dir)
 		return (print_error("cd", "HOME not set", NULL), __FAIL);
+	if (!home_dir[0])
+		return (__SUCCESS);
+	if (!__access_dir(home_dir, home_dir))
+		return (__FAIL);
 	if (update_oldpwd(msh) == __MALLOC)
 		return (__MALLOC);
-	chdir(get_key(msh, "HOME"));
+	chdir(home_dir);
 	return (update_pwd(msh));
 }
 
-int	__cd(char *new_path, t_msh *msh)
+int	__cd(char **new_path, t_msh *msh)
 {
-	if (!new_path)
+	if (new_path[0] && new_path[1])
+		return (print_error("cd", "too many arguments", NULL), __FAIL);
+	if (!new_path[0])
 		return (__check_home(msh));
-	else if (!__strcmp(new_path, "-"))
+	else if (!__strcmp(new_path[0], "-"))
 		return (chdir_previous(msh));
 	else
 	{
-		if (new_path[0] == '/')
+		if (new_path[0][0] == '/')
 		{
-			if (!__access_dir(new_path, new_path))
+			if (!__access_dir(new_path[0], new_path[0]))
 				return (__FAIL);
 			if (update_oldpwd(msh) == __MALLOC)
 				return (__MALLOC);
-			chdir(new_path);
+			chdir(new_path[0]);
 			return (update_pwd(msh));
 		}
 		else
-			return (chdir_absolute_path(new_path, msh));
+			return (chdir_absolute_path(new_path[0], msh));
 	}
 	return (__FAIL);
 }

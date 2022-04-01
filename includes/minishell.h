@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 12:29:58 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/31 18:13:00 by fle-blay         ###   ########.fr       */
+/*   Updated: 2022/04/01 11:03:44 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,7 +163,7 @@ typedef struct s_msh
 
 int				__pwd(int fd);
 int				__echo(char **str, int fd);
-int				__cd(char *new_path, t_msh *msh);
+int				__cd(char **new_path, t_msh *msh);
 int				__env(t_msh *msh);
 int				__unset(char **arg, t_msh *msh);
 int				__export(char **key_val, t_msh *msh);
@@ -207,7 +207,9 @@ int				get_size_env(char *envp[]);
 void			destroy_env(t_msh *msh);
 void			__destroy_tree(t_node **current_node);
 int				print_error(char *cmd, char *arg, char *error_msg);
-
+char			*__exe_readline(int rv);
+char			*__get_prompt(int rv);
+void			__new_prompt(int rv);
 //tokenizer
 
 t_state			__return_state(char c, int state, int slash_state);

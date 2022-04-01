@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:25:57 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/31 19:01:40 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/01 10:46:05 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,33 +15,6 @@
 
 int	g_rv;
 
-char	*__get_prompt(t_msh *msh)
-{
-	char	path[PATH_MAX];
-
-	__bzero(path, PATH_MAX);
-	free(msh->prompt);
-	if (msh->rv == 0)
-		msh->prompt = __strdup(BOLDGREEN"➜  "RESET BOLDCYAN);
-	else
-		msh->prompt = __strdup(BOLDRED"➜  "RESET BOLDCYAN);
-	if (!msh->prompt)
-		return (__exit_error(msh, 3, "get prompt"), NULL);
-	if (getcwd(path, PATH_MAX))
-	{
-		msh->prompt = __strjoin2(msh->prompt,
-				path + __get_pos_last_dir(path), RESET BOLDYELLOW "  ~  "RESET);
-		if (!msh->prompt)
-			return (__exit_error(msh, 3, "get prompt"), NULL);
-	}
-	else
-	{
-		msh->prompt = __strjoin(msh->prompt, RESET);
-		if (!msh->prompt)
-			return (__exit_error(msh, 3, "get prompt"), NULL);
-	}
-	return (msh->prompt);
-}
 
 int	__treat_user_input(char *arg, t_msh *msh, t_user_input *ui)
 {
@@ -99,6 +72,7 @@ int	__non_interative_mode(char **av, t_msh *msh, t_user_input *ui)
 			__exit_error(msh, 1, ""));
 }
 
+/*
 char	*__exe_readline(t_msh *msh)
 {
 	int		std_out;
@@ -106,16 +80,49 @@ char	*__exe_readline(t_msh *msh)
 	int		std_buffer;
 	char	*arg;
 
-	std_buffer = open("/dev/null", O_RDONLY);
-	std_out = dup(STDOUT_FILENO);
-	std_err = dup(STDERR_FILENO);
-	dup2(std_buffer, STDOUT_FILENO);
-	dup2(std_buffer, STDERR_FILENO);
-	arg = readline(__get_prompt(msh));
-	dup2(std_out, STDOUT_FILENO);
-	dup2(std_err, STDERR_FILENO);
-	close(std_out);
-	close(std_buffer);
+	if (isatty(2))
+	{
+		std_out = dup(STDOUT_FILENO);
+		std_err = dup(STDERR_FILENO);
+		dup2(std_buffer, STDERR_FILENO);
+		arg = readline(__get_prompt(msh));
+		dup2(std_out, STDOUT_FILENO);
+		dup2(std_err, STDERR_FILENO);
+		close(std_out);
+		close(std_buffer);
+	}
+	return (arg);
+}
+*/
+
+char	*__exe_readline(int rv)
+{
+	char	*arg;
+	char	*prompt;
+	int fd; int save_stdout;
+
+	prompt = NULL;
+	if (isatty(2))
+	{
+		prompt = __get_prompt(rv);
+		if (!prompt)
+			return (print_error("prompt", "Malloc error", NULL), NULL);
+		//__putstr_fd(prompt, 2);
+	}
+	if (!isatty(0))
+	{
+		fd = open("/dev/null", O_WRONLY);
+		save_stdout = dup(1);
+		dup2(fd, 1);
+		close(fd);
+	}
+	arg = readline(prompt);
+	free(prompt);
+	if (!isatty(0))
+	{
+		dup2(save_stdout, 1);
+		close (save_stdout);
+	}
 	return (arg);
 }
 
@@ -129,7 +136,7 @@ int	__interactive_mode(t_msh *msh, t_user_input *ui)
 	{
 		signal(SIGINT, __signal);
 		signal(SIGQUIT, __signal);
-		arg = __exe_readline(msh);
+		arg = __exe_readline(msh->rv);
 		add_history(arg);
 		__update_rv(msh);
 		if (arg == NULL)

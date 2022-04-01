@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 18:15:22 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/30 18:27:19 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/01 11:22:21 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@ static char	*__create_path_and_cmd(char *path, char *cmd)
 
 static int	__try_paths(char **path_cmd, char **path, char *cmd_name)
 {
-	int	i;
+	int			i;
+	struct stat	buff;
 
 	i = 0;
 	if (!path)
@@ -64,7 +65,8 @@ static int	__try_paths(char **path_cmd, char **path, char *cmd_name)
 		*path_cmd = __create_path_and_cmd(path[i], cmd_name);
 		if (!*path_cmd)
 			return (__putstr_fd("MALLOC ERROR\n", 2), 0);
-		if (access(*path_cmd, F_OK) == 0)
+		stat(*path_cmd, &buff);
+		if (access(*path_cmd, F_OK) == 0 && !S_ISDIR(buff.st_mode))
 			return (1);
 		i++;
 		free(*path_cmd);
@@ -87,7 +89,7 @@ char	*__get_path(char **path, char *cmd_n)
 		if (cmd_n[__strlen(cmd_n) - 1] == '/')
 			return (NULL);
 	}
-	if (path == NULL)
+	if (path == NULL || !path[0])
 		return (NULL);
 	else
 	{

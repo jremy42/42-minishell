@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:25:57 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/30 14:58:08 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/01 10:18:06 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	__signal(int signal)
 		rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();
+		//__new_prompt(130);
 	}
 	if (signal == 3)
 	{

@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 14:53:22 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/31 18:00:57 by fle-blay         ###   ########.fr       */
+/*   Updated: 2022/04/01 10:29:15 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int	__expand_word(char **token_word, t_msh *msh)
 	while (tmp[++i])
 	{
 		if (tmp[i] == '$' && !__get_dollar_status(tmp, &tmp[i])
-			&& __is_valid_name_char(tmp[i + 1]))
+			&& (__is_valid_name_char(tmp[i + 1]) || tmp[i + 1] == '?'))
 		{
 			if (!__parameter_expand(tmp + i + 1, msh, &expanded_token_wd, &i))
 				return (free(expanded_token_wd), 0);

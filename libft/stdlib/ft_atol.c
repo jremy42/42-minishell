@@ -6,18 +6,18 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 14:53:33 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/31 12:42:20 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/01 11:37:33 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static	int	__check_overflow(unsigned long long result, int sign)
+static	int	__check_overflow(unsigned long result, int sign)
 {
-	unsigned long long	min;
+	unsigned long	min;
 
 	min = 9223372036854775807;
-	if (result > min && sign == -1)
+	if (result > 0 && result - 1 > min && sign == -1)
 		return (1);
 	if (result > 9223372036854775807 && sign == 1)
 		return (1);
@@ -33,9 +33,9 @@ static int	__isisspace(char c)
 
 int	__atol(const char *nb, int *res)
 {
-	unsigned long long	result;
-	int					sign;
-	int					i;
+	unsigned long	result;
+	int				sign;
+	int				i;
 
 	i = 0;
 	sign = 1;

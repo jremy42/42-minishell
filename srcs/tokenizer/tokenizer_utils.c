@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:25:57 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/31 11:55:27 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/01 17:27:41 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ int	__add_token(char *str, t_list **start)
 	if (!str)
 		return (-1);
 	t_token = __lstnew(str);
+	fprintf(stderr, "token to be added [%s]\n", str);
 	if (!t_token)
 		return (-1);
 	__lstadd_back(start, t_token);

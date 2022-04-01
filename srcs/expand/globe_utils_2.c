@@ -6,13 +6,15 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 09:52:39 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/31 12:24:11 by fle-blay         ###   ########.fr       */
+/*   Updated: 2022/04/01 15:08:40by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <dirent.h>
 #include <string.h>
+
+//if (take_hidden || curr_dir->d_name[0] != '.')
 
 int	__copy_dir_entries(t_list **dir_content, struct dirent *curr_dir, DIR *dp)
 {
@@ -21,17 +23,14 @@ int	__copy_dir_entries(t_list **dir_content, struct dirent *curr_dir, DIR *dp)
 
 	while (curr_dir)
 	{
-		if (curr_dir->d_name[0] != '.')
-		{
-			tmp = __strdup(curr_dir->d_name);
-			if (!tmp)
-				return (__lstclear(dir_content, free), closedir(dp), 0);
-			new_entry = __lstnew(tmp);
-			if (!new_entry)
-				return (free(tmp), __lstclear(dir_content, free),
-					closedir(dp), 0);
-			__lstadd_back(dir_content, new_entry);
-		}
+		tmp = __strdup(curr_dir->d_name);
+		if (!tmp)
+			return (__lstclear(dir_content, free), closedir(dp), 0);
+		new_entry = __lstnew(tmp);
+		if (!new_entry)
+			return (free(tmp), __lstclear(dir_content, free),
+				closedir(dp), 0);
+		__lstadd_back(dir_content, new_entry);
 		curr_dir = readdir(dp);
 	}
 	return (1);

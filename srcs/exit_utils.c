@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 11:58:20 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/31 18:11:47 by fle-blay         ###   ########.fr       */
+/*   Updated: 2022/04/01 14:40:54 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,11 @@
 int	print_error(char *cmd, char *arg, char *error_msg)
 {
 	__putstr_fd("minishell: ", 2);
-	__putstr_fd(cmd, 2);
+	if (cmd)
+		__putstr_fd(cmd, 2);
 	__putstr_fd(": ", 2);
-	__putstr_fd(arg, 2);
+	if (arg)
+		__putstr_fd(arg, 2);
 	if (error_msg)
 	{
 		__putstr_fd(": ", 2);

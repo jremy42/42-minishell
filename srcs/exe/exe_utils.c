@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 18:19:33 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/30 18:27:28 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/01 10:55:46 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	__exec_builtin(char **arg, t_msh *msh, t_cmd *cmd)
 	if (__strcmp(arg[0], "echo") == 0)
 		msh->rv = __echo(arg, 1);
 	if (__strcmp(arg[0], "cd") == 0)
-		msh->rv = __cd(arg[1], msh);
+		msh->rv = __cd(arg + 1, msh);
 	if (__strcmp(arg[0], "pwd") == 0)
 		msh->rv = __pwd(1);
 	if (__strcmp(arg[0], "env") == 0)

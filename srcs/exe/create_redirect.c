@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 17:54:50 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/30 10:34:56 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/01 16:02:18 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,9 @@ void	__redirect_list_clear(t_redirect *start)
 {
 	t_redirect	*next_to_free;
 
-	DEBUG && fprintf(stderr, "redirect list clear\n");
 	while (start)
 	{
 		next_to_free = start->next;
-		DEBUG && fprintf(stderr, "freeing [%s]\n", start->file_name);
 		free(start);
 		start = next_to_free;
 	}
