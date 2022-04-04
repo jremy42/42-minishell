@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 12:29:58 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/04 16:21:52 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/04 17:48:50 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,7 @@ typedef struct s_lexing
 {
 	char			*token;
 	t_token_type	type;
+	int				hd_type;
 	struct s_lexing	*next;
 }	t_lexing;
 

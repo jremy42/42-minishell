@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 11:46:33 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/31 18:11:54 by fle-blay         ###   ########.fr       */
+/*   Updated: 2022/04/04 17:50:25 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	__trim_quote(char **eof, int *quote)
 	}
 	else if (((*eof)[0] == '\'' && (*eof)[__strlen(*eof) - 1] == '\''))
 	{
-		tmp = __strtrim(*eof, "\'");
+		tmp = __strtrim(*eof, "'");
 		if (!tmp)
 			return (0);
 		free(*eof);
@@ -96,17 +96,13 @@ int	__get_user_input(char **eof, t_msh *msh)
 	quote = 0;
 	if (!__trim_quote(eof, &quote))
 		return (0);
-	file = open(".hd.tmp", O_CREAT | O_WRONLY | O_TRUNC, 00644);
-	if (file < 0)
-		return (-1);
 	stdin = __get_stdin(*eof, msh);
 	if (!stdin)
-		return (close(file), -1);
-	if (quote)
-		__putstr_fd("\'", file);
+		return (-1);
+	file = open(".hd.tmp", O_CREAT | O_WRONLY | O_TRUNC, 00644);
+	if (file < 0)
+		return (free(stdin), -1);
 	__putstr_fd(stdin, file);
-	if (quote)
-		__putstr_fd("\'", file);
 	free(stdin);
 	close(file);
 	return (1);

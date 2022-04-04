@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 14:53:22 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/01 10:29:15 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/04 18:00:25 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,33 @@ int	__expand_word(char **token_word, t_msh *msh)
 	return (1);
 }
 
+int	__expand_word_hd(char **token_word, t_msh *msh)
+{
+	char	*tmp;
+	int		i;
+	char	*expanded_token_wd;
+
+	expanded_token_wd = __strdup("");
+	if (!expanded_token_wd)
+		return (0);
+	tmp = *token_word;
+	i = -1;
+	while (tmp[++i])
+	{
+		if (tmp[i] == '$'
+			&& (__is_valid_name_char(tmp[i + 1]) || tmp[i + 1] == '?'))
+		{
+			if (!__parameter_expand(tmp + i + 1, msh, &expanded_token_wd, &i))
+				return (free(expanded_token_wd), 0);
+		}
+		else if (!__add_char_to_token(tmp[i], &expanded_token_wd))
+			return (free(expanded_token_wd), 0);
+	}
+	free(*token_word);
+	*token_word = expanded_token_wd;
+	return (1);
+}
+
 int	__split_expanded_token(t_lexing *lexing)
 {
 	char	**split_token;
@@ -122,6 +149,14 @@ int	__parameter_expand_token(t_lexing *lexing, t_msh *msh)
 {
 	while (lexing)
 	{
+		if (lexing->type == HERE_DOC)
+		{	
+			if (lexing->next->hd_type == 1
+				&& !__expand_word_hd(&lexing->next->token, msh))
+				return (__putendl_fd("Malloc error", 2), 0);
+			lexing = lexing->next->next;
+			continue ;
+		}
 		if (lexing->type == WORD)
 		{
 			if (!__expand_word(&lexing->token, msh))

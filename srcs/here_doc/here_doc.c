@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 15:19:06 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/31 18:12:28 by fle-blay         ###   ########.fr       */
+/*   Updated: 2022/04/04 17:49:35 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,20 @@
 
 extern int	g_rv;
 
-static int	__end_of_retrieve_hd(int fd, char *hd_content, t_lexing *lexing)
+int	__eof_type(char *eof)
+{
+	char	*tmp;
+
+	tmp = NULL;
+	if (eof[0] == '"' && eof[__strlen(eof) - 1] == '"')
+		return (2);
+	else if (eof[0] == '\'' && eof[__strlen(eof) - 1] == '\'')
+		return (2);
+	return (1);
+}
+
+static int	__end_of_retrieve_hd(int fd, char *hd_content, t_lexing *lexing,
+		int eof_type)
 {
 	if (close(fd) < 0)
 		return (free(hd_content), 0);
@@ -23,10 +36,11 @@ static int	__end_of_retrieve_hd(int fd, char *hd_content, t_lexing *lexing)
 		return (free(hd_content), 0);
 	free(lexing->next->token);
 	lexing->next->token = hd_content;
+	lexing->next->hd_type = eof_type;
 	return (1);
 }
 
-int	__retrieve_hd(t_lexing *lexing)
+int	__retrieve_hd(t_lexing *lexing, int eof_type)
 {
 	char	*hd_content;
 	int		fd;
@@ -50,7 +64,7 @@ int	__retrieve_hd(t_lexing *lexing)
 		if (!hd_content)
 			return (close (fd), unlink("hd.tmp"), 0);
 	}
-	return (__end_of_retrieve_hd(fd, hd_content, lexing));
+	return (__end_of_retrieve_hd(fd, hd_content, lexing, eof_type));
 }
 
 static int	wait_here_doc(pid_t pid, t_msh *msh)
@@ -89,7 +103,7 @@ int	__handle_here_doc(t_lexing *lexing, t_lexing *end, t_msh *msh)
 			{
 				if (wait_here_doc(pid, msh) == 130)
 					return (130);
-				if (!__retrieve_hd(lexing))
+				if (!__retrieve_hd(lexing, __eof_type(eof)))
 					return (0);
 				lexing = lexing->next;
 			}

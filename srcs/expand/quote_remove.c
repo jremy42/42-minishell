@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:10:26 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/31 12:15:37 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/04 18:31:42 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,12 @@ int	__quote_removal_token(t_lexing *lexing)
 {
 	while (lexing)
 	{
-		if (lexing->type == WORD)
+		if (lexing->type == WORD && lexing->hd_type == 0)
 		{
+			fprintf(stderr, "before quote remove : %s\n",lexing->token);
 			if (!__quote_remove(&lexing->token))
 				return (__putendl_fd("Malloc error", 2), 0);
+			fprintf(stderr, "after quote remove : %s\n",lexing->token);
 		}
 		lexing = lexing->next;
 	}
