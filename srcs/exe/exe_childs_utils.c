@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 18:15:22 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/01 11:22:21 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/04 11:33:00 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static int	__get_path_size(char *path, char *cmd)
 	return (size);
 }
 
-static char	*__create_path_and_cmd(char *path, char *cmd)
+char	*__create_path_and_cmd(char *path, char *cmd)
 {
 	char	*ret;
 	int		size;

@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 18:18:33 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/01 15:59:11 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/04 10:47:34 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	__cmd_node_list_clear(t_cmd *start)
 {
 	t_cmd	*next_to_free;
 
-	DEBUG && fprintf(stderr, "cmd list clear\n");
 	while (start)
 	{
 		next_to_free = start->next;
@@ -32,7 +31,6 @@ void	__cmd_full_list_clear(t_cmd *start)
 {
 	t_cmd	*next_to_free;
 
-	DEBUG && fprintf(stderr, "cmd list clear\n");
 	while (start)
 	{
 		next_to_free = start->next;
@@ -96,7 +94,7 @@ int	execute_seq(t_cmd *cmd, t_msh *msh)
 		{
 			if (!__save_fd(std))
 				return (__cmd_node_list_clear(cmd), 0);
-			if (!__handle_redirect_builtin(cmd))
+			if (!__handle_redirect(cmd))
 				return (__restore_fd(std), __cmd_node_list_clear(cmd), 0);
 		}
 		__exec_builtin(cmd->arg, msh, cmd);

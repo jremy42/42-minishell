@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 14:13:35 by fle-blay          #+#    #+#             */
-/*   Updated: 2022/04/01 15:02:36 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/04 12:58:30 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,21 @@
 
 int	chdir_absolute_path(char *new_path, t_msh *msh)
 {
-	char	*new_pwd;
-	char	path[PATH_MAX];
+	char	*final_path;
+	char	pwd[PATH_MAX];
 
-	if (!getcwd(path, PATH_MAX))
-		return (print_error("cd", "getcwcd", strerror(errno)), __FAIL);
-	new_pwd = create_absolut_pwd(path, new_path);
-	if (!new_pwd)
+	final_path = NULL;
+	if (get_key(msh, "CDPATH")
+		&& __try_path_cdpath(new_path, msh, &final_path) == 2)
 		return (__MALLOC);
-	if (!__access_dir(new_pwd, new_path))
-		return (free(new_pwd), __FAIL);
-	else
-	{
-		if (update_oldpwd(msh) == __MALLOC)
-			return (free(new_pwd), __MALLOC);
-		chdir(new_pwd);
-		free(new_pwd);
-	}
-	return (update_pwd(msh));
+	if (final_path)
+		return (__try_change_dir(final_path, new_path, msh));
+	if (!getcwd(pwd, PATH_MAX))
+		return (print_error("cd", "getcwcd", strerror(errno)), __FAIL);
+	final_path = create_absolut_pwd(pwd, new_path);
+	if (!final_path)
+		return (__MALLOC);
+	return (__try_change_dir(final_path, new_path, msh));
 }
 
 int	chdir_previous(t_msh *msh)
@@ -68,7 +65,7 @@ int	__access_dir(char *dir, char *true_dir)
 	return (1);
 }
 
-static int	__check_home(t_msh *msh)
+int	__check_home(t_msh *msh)
 {
 	char	*home_dir;
 
@@ -82,7 +79,9 @@ static int	__check_home(t_msh *msh)
 	if (update_oldpwd(msh) == __MALLOC)
 		return (__MALLOC);
 	chdir(home_dir);
-	return (update_pwd(msh));
+	if (update_pwd(msh) == __MALLOC)
+		return (__MALLOC);
+	return (__SUCCESS);
 }
 
 int	__cd(char **new_path, t_msh *msh)

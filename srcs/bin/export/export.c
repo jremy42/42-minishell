@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 10:06:28 by fle-blay          #+#    #+#             */
-/*   Updated: 2022/03/30 10:22:10 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/04 11:03:41 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	__check_valid_identifier(char *key_v)
 
 	i = 0;
 	only_digit = 1;
-	if (key_v && (key_v[0] == '=' || key_v[0] == '+'))
+	if (key_v && (key_v[0] == '=' || key_v[0] == '+' || __isdigit(key_v[0])))
 		return (print_error("export", key_v, "not a valid identifier"), 0);
 	while (key_v[i] && key_v[i] != '=')
 	{

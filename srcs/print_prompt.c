@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 10:04:44 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/01 10:41:48 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/04 10:45:10 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,19 +36,47 @@ char	*__get_prompt(int rv)
 	return (prompt);
 }
 
-void	__new_prompt(int rv)
+int	__prevent_rl_write_stdout(int *fd, int *save_stdout)
 {
-	char	*prompt;
+	*fd = open("/dev/null", O_WRONLY);
+	if (*fd < 0)
+		return (0);
+	*save_stdout = dup(1);
+	if (*save_stdout < 0)
+		return (0);
+	if (dup2(*fd, 1) < 0)
+		return (close (*fd), 0);
+	close(*fd);
+	return (1);
+}
 
+int	__restore_rl_write_stdout(int save_stdout)
+{
+	if (dup2(save_stdout, 1) < 0)
+		return (close (save_stdout), 0);
+	close (save_stdout);
+	return (1);
+}
+
+char	*__exe_readline(int rv)
+{
+	char	*arg;
+	char	*prompt;
+	int		fd;
+	int		save_stdout;
+
+	prompt = NULL;
+	if (!isatty(0) && !__prevent_rl_write_stdout(&fd, &save_stdout))
+		return (NULL);
 	if (isatty(2))
 	{
 		prompt = __get_prompt(rv);
 		if (!prompt)
-		{
-			print_error("prompt", "Malloc error", NULL);
-			return ;
-		}
-		__putstr_fd(prompt, 2);
-		free(prompt);
+			return (print_error("prompt", "Malloc error", NULL), NULL);
 	}
+	arg = readline(prompt);
+	free(prompt);
+	if (!isatty(0) && !__restore_rl_write_stdout(save_stdout))
+		return (NULL);
+	return (arg);
 }

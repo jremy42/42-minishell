@@ -52,6 +52,22 @@ char	*__strjoin(char const *s1, char const *s2)
 	return (result);
 }
 
+char	*__old_strjoin(char const *s1, char const *s2)
+{
+	size_t	size;
+	char	*result;
+
+	if (!s1 || !s2)
+		return (NULL);
+	size = __strlen(s1) + __strlen(s2);
+	result = __calloc(size + 1, sizeof(char));
+	if (!result)
+		return (NULL);
+	result = __strcpy(result, s1);
+	result = __strcat(result, s2);
+	return (result);
+}
+
 char	*__strjoin2(char const *s1, char const *s2, char const *s3)
 {
 	size_t	size;

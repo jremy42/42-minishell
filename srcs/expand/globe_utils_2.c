@@ -6,15 +6,13 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 09:52:39 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/01 15:08:40by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/04 12:55:43 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <dirent.h>
 #include <string.h>
-
-//if (take_hidden || curr_dir->d_name[0] != '.')
 
 int	__copy_dir_entries(t_list **dir_content, struct dirent *curr_dir, DIR *dp)
 {

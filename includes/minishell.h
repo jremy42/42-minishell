@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 12:29:58 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/01 11:03:44 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/04 12:58:01 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,7 +188,11 @@ int				update_pwd(t_msh *msh);
 int				chdir_absolute_path(char *new_path, t_msh *msh);
 int				chdir_previous(t_msh *msh);
 int				__access_dir(char *dir, char *true_dir);
-
+char			*__create_path_and_cmd(char *path, char *cmd);
+int				__try_change_dir(char *final_path, char *new_path, t_msh *msh);
+int				__try_path_cdpath(char *new_path, t_msh *msh,
+					char **final_path);
+int				__try_change_dir(char *final_path, char *new_path, t_msh *msh);
 //Others
 void			__signal(int signal);
 void			__signal_treat(int signal);
@@ -209,7 +213,7 @@ void			__destroy_tree(t_node **current_node);
 int				print_error(char *cmd, char *arg, char *error_msg);
 char			*__exe_readline(int rv);
 char			*__get_prompt(int rv);
-void			__new_prompt(int rv);
+char			*__exe_readline(int rv);
 //tokenizer
 
 t_state			__return_state(char c, int state, int slash_state);

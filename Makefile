@@ -2,6 +2,7 @@ SRC = srcs/minishell.c \
 srcs/bin/pwd/pwd.c\
 srcs/bin/echo/echo.c\
 srcs/bin/cd/cd_utils.c\
+srcs/bin/cd/cd_utils2.c\
 srcs/bin/cd/cd.c\
 srcs/bin/env/env.c\
 srcs/bin/export/export.c\
@@ -24,7 +25,7 @@ srcs/exe/create_cmd.c\
 srcs/exe/create_redirect.c\
 srcs/exe/launcher_forks.c\
 srcs/exe/redirect.c\
-srcs/exe/redirect_builtin.c\
+srcs/exe/redirect_utils.c\
 srcs/here_doc/here_doc.c\
 srcs/expand/expand.c\
 srcs/expand/globe.c\

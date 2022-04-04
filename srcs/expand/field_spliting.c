@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:10:26 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/01 17:38:00 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/04 10:17:22 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ int	__field_spliting_token(t_lexing *lexing, t_msh *msh)
 	{
 		if (lexing->type == WORD && before_type != HERE_DOC)
 		{
-			fprintf(stderr,"lexing envoyer = [%s]\n", lexing->token);
 			if (!__split_token(lexing, msh))
 				return (__putendl_fd("Malloc error", 2), 0);
 		}

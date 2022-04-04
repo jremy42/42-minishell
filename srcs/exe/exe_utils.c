@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 18:19:33 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/01 10:55:46 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/04 12:07:00 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ int	__save_fd(int *std)
 
 int	__restore_fd(int *std)
 {
-	DEBUG && fprintf(stderr, "restore fd\n");
 	if (dup2(std[out], STDOUT_FILENO) < 0)
 		return (0);
 	if (close(std[out]) < 0)
