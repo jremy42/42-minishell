@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 18:18:33 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/04 10:47:34 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/04 16:24:56 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int	execute_seq(t_cmd *cmd, t_msh *msh)
 			if (!__handle_redirect(cmd))
 				return (__restore_fd(std), __cmd_node_list_clear(cmd), 0);
 		}
-		__exec_builtin(cmd->arg, msh, cmd);
+		__exec_builtin(cmd->arg, msh, cmd, 0);
 		if (cmd->redirect && !__restore_fd(std))
 			__putendl_fd(strerror(errno), 2);
 		return (__cmd_node_list_clear(cmd), msh->rv);

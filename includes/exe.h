@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 17:32:24 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/04 10:17:05 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/04 16:24:39 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ t_cmd		*create_cmd_list(t_lexing *lexing, t_msh *msh);
 void		execute_child(t_sequ *seq, t_cmd *cmd, t_cmd *first_cmd);
 int			__init_seq(t_sequ *seq, char ***envp, t_cmd *cmd);
 int			__launcher_fork(t_sequ *seq, t_cmd *cmd, t_cmd *first_cmd);
-int			__exec_builtin(char **arg, t_msh *msh, t_cmd *cmd);
+int			__exec_builtin(char **arg, t_msh *msh, t_cmd *cmd, int fork);
 int			__is_builtin(char **arg);
 t_redirect	*__create_new_redirect(t_lexing *lexing);
 void		__redirect_add_back(t_redirect **alst, t_redirect *new);
@@ -41,8 +41,6 @@ int			__find_max_cmd(t_cmd *cmd);
 char		*__get_name(int index);
 void		__cmd_add_back(t_cmd **alst, t_cmd *new);
 char		*__get_path(char **path, char *cmd_n);
-int			__is_builtin(char **arg);
-int			__exec_builtin(char **arg, t_msh *msh, t_cmd *cmd);
 int			__save_fd(int *std);
 int			__restore_fd(int *std);
 void		__init_child(t_sequ *seq, t_cmd *cmd, t_cmd *first_cmd,

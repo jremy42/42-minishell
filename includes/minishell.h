@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 12:29:58 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/04 12:58:01 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/04 16:21:52 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,7 +167,7 @@ int				__cd(char **new_path, t_msh *msh);
 int				__env(t_msh *msh);
 int				__unset(char **arg, t_msh *msh);
 int				__export(char **key_val, t_msh *msh);
-int				__bin_exit(char **key_val, t_msh *msh, t_cmd *cmd);
+int				__bin_exit(char **key_val, t_msh *msh, t_cmd *cmd, int fork);
 //Export utils
 char			*get_key(t_msh *msh, char *key);
 int				modify_status_key_val(t_msh *msh, char *key_val);
@@ -232,7 +232,7 @@ int				__treat_newline(t_list **start, t_msh *msh);
 int				__init_token_if_none(char **str, int *token_status);
 
 //syntax
-void			__invalid_error(char *str);
+void			__invalid_error(char *str, t_msh *msh);
 void			__synthax_error(char *str);
 int				__is_valide_operator(char *token);
 

@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 18:19:33 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/04 12:07:00 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/04 16:20:47 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	__is_builtin(char **arg)
 	return (0);
 }
 
-int	__exec_builtin(char **arg, t_msh *msh, t_cmd *cmd)
+int	__exec_builtin(char **arg, t_msh *msh, t_cmd *cmd, int fork)
 {
 	if (__strcmp(arg[0], "echo") == 0)
 		msh->rv = __echo(arg, 1);
@@ -49,7 +49,7 @@ int	__exec_builtin(char **arg, t_msh *msh, t_cmd *cmd)
 	if (__strcmp(arg[0], "unset") == 0)
 		msh->rv = __unset(arg + 1, msh);
 	if (__strcmp(arg[0], "exit") == 0)
-		msh->rv = __bin_exit(arg, msh, cmd);
+		msh->rv = __bin_exit(arg, msh, cmd, fork);
 	return (msh->rv);
 }
 

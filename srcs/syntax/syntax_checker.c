@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 17:58:11 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/31 11:55:10 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/04 16:10:27 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,17 @@
 static int	__check_lexing(t_lexing *lexing, t_msh *msh)
 {
 	if (lexing->type == OPERATOR || lexing->type == PIPE
-		|| lexing->type == REDIRECTION)
+		|| lexing->type == REDIRECTION || lexing->type == HERE_DOC)
 	{
 		if (!lexing->next || lexing->next->type == OPERATOR
 			|| lexing->next->type == PIPE
 			|| lexing->next->type == REDIRECTION
 			|| lexing->next->type == NEW_LINE)
 		{
+			if (lexing->type == PIPE && lexing->next
+				&& (lexing->next->type == REDIRECTION
+					|| lexing->next->type == HERE_DOC))
+				return (1);
 			msh->rv = 2;
 			msh->syntax_error = 2;
 			return (0);
@@ -53,7 +57,7 @@ t_lexing	*__synthax_checker(t_lexing *lexing, t_msh *msh)
 		if (lexing->type == P_RIGHT)
 			parenthesis--;
 		if (lexing->type == INVALID)
-			return (__invalid_error(lexing->token), lexing);
+			return (__invalid_error(lexing->token, msh), lexing);
 		if (!__check_lexing(lexing, msh))
 			return (__synthax_error(lexing->token), lexing);
 		if (parenthesis < 0)

@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 11:53:34 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/31 11:53:56 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/04 16:11:14 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,16 @@ int	__is_valide_operator(char *token)
 
 void	__synthax_error(char *str)
 {
-	write(2, "minishell: syntax error near :", 19);
+	write(2, "minishell: syntax error near :", 30);
 	write(2, str, __strlen(str));
 	write(2, "\n", 1);
 }
 
-void	__invalid_error(char *str)
+void	__invalid_error(char *str, t_msh *msh)
 {
-	write(2, "minishell: Valid token but not handled in minishell:", 42);
+	write(2, "minishell: Valid token but not handled in minishell:", 52);
 	write(2, str, __strlen(str));
 	write(2, "\n", 1);
+	msh->rv = 2;
+	msh->syntax_error = 2;
 }
