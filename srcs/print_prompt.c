@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 10:04:44 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/04 18:27:27 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/04 19:01:12 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*__get_prompt(int rv)
 	if (rv == 0)
 		prompt = __strdup("➜  ");
 	else
-		prompt = __strdup("➜  ");
+		prompt = __strdup("x  ");
 	if (!prompt)
 		return (NULL);
 	if (getcwd(path, PATH_MAX))

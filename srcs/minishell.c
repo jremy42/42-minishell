@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:25:57 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/04 13:00:24 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/04 19:05:47 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ int	__interactive_mode(t_msh *msh, t_user_input *ui)
 			__treat_user_input(inputs[i], msh, __init_user_input_struct(ui));
 		__clean_inputs(inputs, msh, arg);
 	}
+	__putendl_fd("", 2);
 	return (msh->rv);
 }
 

@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:25:57 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/04 16:08:29 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/04 19:19:19 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,36 @@ int	__tokenize(char *str, t_list **start, t_msh *msh)
 		if (__is_operator_char(str[i]))
 			i = __get_operator(&new_token, str, i);
 		else
+			i = __get_word(&new_token, str, i - 1, msh);
+		if (i < 0)
+			return (free(new_token), __lstclear(start, free), i);
+		if (__add_token(new_token, start) < 0)
+			return (free(new_token), __lstclear(start, free), __MALLOC_TOKEN);
+		status = 0;
+	}
+	return (1);
+}
+
+int	__tokenize_only_word(char *str, t_list **start, t_msh *msh)
+{
+	char	*new_token;
+	int		status;
+	int		i;
+
+	status = 0;
+	i = -1;
+	while (str[++i])
+	{
+		__skip_spaces(str, &i);
+		if (str[i] == '\n' && __treat_newline(start, msh))
+			continue ;
+		if (i == -1 || !__init_token_if_none(&new_token, &status))
+			return (__lstclear(start, free), __MALLOC_TOKEN);
+		/*
+		if (__is_operator_char(str[i]))
+			i = __get_operator(&new_token, str, i);
+		else
+		*/
 			i = __get_word(&new_token, str, i - 1, msh);
 		if (i < 0)
 			return (free(new_token), __lstclear(start, free), i);
