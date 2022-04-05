@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 12:29:58 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/04 17:48:50 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/05 12:58:09 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -279,6 +279,7 @@ int				here_doc_handler(t_user_input *ui, t_msh *msh);
 void			__init_child_hd(char *eof, t_lexing *lex,
 					t_msh *msh, t_lexing *sv);
 int				__get_user_input(char **eof, t_msh *msh);
+int				__eof_type(char *eof);
 //expande
 int				__parameter_expand_token(t_lexing *lexing, t_msh *msh);
 int				__handle_wildcards(t_lexing *lexing);
@@ -302,6 +303,8 @@ int				__treat_last_rv(char **expanded_token, int *i, t_msh *msh);
 char			*__get_key_from_key_val(char *str);
 char			**__split_unquoted_charset(char *s, char *charset);
 int				__is_valid_name_char(char c);
+char			*__get_key_from_key_val(char *str);
+int				__split_expanded_token(t_lexing *lexing);
 // globe
 t_glob			*__glob_new(char *content, t_globe_type type, int size);
 int				__move_to_next_unquoted_charset(char *str, char *charset);

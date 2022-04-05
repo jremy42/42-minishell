@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 15:19:06 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/05 12:12:08 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/05 12:57:44 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,6 @@
 #include "exe.h"
 
 extern int	g_rv;
-
-int	__eof_type(char *eof)
-{
-	char	*tmp;
-
-	tmp = NULL;
-	if (eof[0] == '"' && eof[__strlen(eof) - 1] == '"')
-		return (2);
-	else if (eof[0] == '\'' && eof[__strlen(eof) - 1] == '\'')
-		return (2);
-	return (1);
-}
 
 static int	__end_of_retrieve_hd(int fd, char *hd_content, t_lexing *lexing,
 		int eof_type)

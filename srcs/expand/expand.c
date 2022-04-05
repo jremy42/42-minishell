@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 14:53:22 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/04 18:00:25 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/05 12:54:05 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,26 +125,6 @@ int	__expand_word_hd(char **token_word, t_msh *msh)
 	return (1);
 }
 
-int	__split_expanded_token(t_lexing *lexing)
-{
-	char	**split_token;
-	int		i;
-
-	i = 0;
-	split_token = __split(lexing->token, ' ');
-	if (!split_token)
-		return (0);
-	while (split_token[i])
-	{
-		if (!__insert_token(lexing, split_token[i], 0, NULL))
-			return (free_split(split_token), 0);
-		i++;
-	}
-	free_split(split_token);
-	__insert_token(NULL, NULL, 1, NULL);
-	return (1);
-}
-
 int	__parameter_expand_token(t_lexing *lexing, t_msh *msh)
 {
 	while (lexing)
@@ -166,50 +146,3 @@ int	__parameter_expand_token(t_lexing *lexing, t_msh *msh)
 	}
 	return (1);
 }
-
-/*
-int __expand_word(char **token_word, t_msh  *msh)
-{
-	t_state slash_status;
-	t_state quote_status;
-	char	*tmp;
-	int     i;
-	char    *expanded_token_word;
-
-	expanded_token_word = __strdup("");
-	if (!expanded_token_word)
-		return (0);
-	tmp = *token_word;
-	quote_status = UNQUOTE;
-	slash_status = 0;
-	i = 0;
-	while (tmp[i])
-	{
-		if (tmp[i] == '\\' && tmp[i + 1]
-			&& __need_to_escape(i, quote_status, tmp) && !slash_status)
-		{
-			slash_status = BACKSLASH;
-			if (!__add_char_to_token(tmp[i], &expanded_token_word))
-				return(free(expanded_token_word), 0);
-			i++;
-			continue ;
-		}
-		quote_status = __return_state(tmp[i], quote_status, slash_status);		
-		if (!slash_status && __treat_dollar(tmp[i], tmp[i + 1], quote_status))
-		{
-			if (!__parameter_expand(tmp + i + 1, msh, &expanded_token_word, &i))
-				return (free(expanded_token_word), 0);
-		}
-		else
-		{
-			if (!__add_char_to_token(tmp[i], &expanded_token_word))
-				return(free(expanded_token_word), 0);
-		}
-		i++;
-		slash_status = 0;
-	}
-	free(*token_word);
-	*token_word = expanded_token_word;
-	return (1);
-}
-*/

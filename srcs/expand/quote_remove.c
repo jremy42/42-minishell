@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:10:26 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/05 11:14:52y jremy            ###   ########.fr       */
+/*   Updated: 2022/04/05 12:56:05 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ int	__quote_remove(char **token_word)
 	i = 0;
 	while (tmp[i])
 	{
-		if (((tmp[i] == '\\' && tmp[i + 1]) || tmp[i] == '\''
-					|| tmp[i] == '"' ) && !__get_char_quote_status(tmp, &tmp[i]))
+		if (((tmp[i] == '\\' && tmp[i + 1]) || tmp[i] == '\'' || tmp[i]
+				== '"' ) && !__get_char_quote_status(tmp, &tmp[i]))
 		{
 			i++;
 			continue ;
@@ -47,10 +47,8 @@ int	__quote_removal_token(t_lexing *lexing)
 	{
 		if (lexing->type == WORD && lexing->hd_type == 0)
 		{
-			fprintf(stderr, "before quote remove : %s\n",lexing->token);
 			if (!__quote_remove(&lexing->token))
 				return (__putendl_fd("Malloc error", 2), 0);
-			fprintf(stderr, "after quote remove : %s\n",lexing->token);
 		}
 		lexing = lexing->next;
 	}
@@ -70,47 +68,3 @@ int	__quote_removal_glob(t_glob *glob)
 	}
 	return (1);
 }
-
-/*
-int __quote_remove(char **token_word, t_msh  *msh)
-{
-	t_state slash_status;
-	t_state quote_status;
-	char *tmp;
-	int     i;
-	char    *quote_removed_token_word;
-	(void)msh;
-	
-	quote_removed_token_word = __strdup("");
-	if (!quote_removed_token_word)
-		return (0);
-	tmp = *token_word;
-	quote_status = UNQUOTE;
-	slash_status = 0;
-	i = 0;
-	while(tmp[i])
-	{
-		if (tmp[i] == '\\' && tmp[i + 1] && __need_to_escape(i, quote_status, tmp)
-			&& !slash_status)
-		{
-			slash_status = BACKSLASH;
-			i++;
-			continue ;
-		}
-		if (quote_status != __return_state(tmp[i], quote_status, slash_status))
-		{
-			quote_status = __return_state(tmp[i], quote_status, slash_status);
-			i++;
-			continue ;
-		}
-		else
-			if(!__add_char_to_token(tmp[i], &quote_removed_token_word))
-				return(free(quote_removed_token_word), 0);
-		i++;
-		slash_status = 0;
-	}
-	free(*token_word);
-	*token_word = quote_removed_token_word;
-	return (1);
-}
-*/
