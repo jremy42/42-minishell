@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 09:52:39 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/05 12:51:42 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/05 14:39:54 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ int	__init_dir_content(t_list **dir_content)
 	DIR				*dp;
 
 	if (!getcwd(path, PATH_MAX))
-		return (__putendl_fd("Minishell : getcwd:\
-		cannot access directories:", 2)
+		return (__putendl_fd("minishell : getcwd: cannot access directories:",
+				2)
 			, 1);
 	dp = opendir(path);
 	if (!dp)
