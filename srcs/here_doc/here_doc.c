@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 15:19:06 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/04 17:49:35 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/05 12:12:08 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int	__handle_here_doc(t_lexing *lexing, t_lexing *end, t_msh *msh)
 	t_lexing	*save;
 
 	save = lexing;
-	while (lexing != end)
+	while (lexing != end && lexing && lexing->next != end)
 	{
 		if (lexing->type == HERE_DOC)
 		{

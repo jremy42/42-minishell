@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 09:52:39 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/04 12:55:43 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/05 11:27:09 jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,11 +77,11 @@ int	__get_char_quote_status(char *str, char *to_find)
 		i++;
 		s_status = 0;
 	}
+	if (str[i] == '\\' && str[i + 1] && !s_status)
+		return (0);
 	if (__strchr("\\'\"", str[i]) && q_status != UNQUOTE)
 		q_status = __return_state(str[i], q_status, s_status);
-	if (!s_status && q_status == UNQUOTE)
-		return (0);
-	return (1);
+	return ((s_status || q_status != UNQUOTE) * 1);
 }
 
 t_globe_type	__get_next_state(t_globe_type current_state, char *token)

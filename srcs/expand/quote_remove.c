@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:10:26 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/04 18:31:42 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/05 11:14:52y jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	__quote_remove(char **token_word)
 	while (tmp[i])
 	{
 		if (((tmp[i] == '\\' && tmp[i + 1]) || tmp[i] == '\''
-				|| tmp[i] == '"' ) && !__get_char_quote_status(tmp, &tmp[i]))
+					|| tmp[i] == '"' ) && !__get_char_quote_status(tmp, &tmp[i]))
 		{
 			i++;
 			continue ;
