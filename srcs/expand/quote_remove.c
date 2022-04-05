@@ -6,11 +6,52 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:10:26 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/05 12:56:05 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/05 19:09:30 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	__is_inside_quotes(char *str, char *to_find)
+{
+	t_state	s_status;
+	t_state	q_status;
+	int		i;
+
+	q_status = UNQUOTE;
+	s_status = 0;
+	i = 0;
+	while (str[i] && &str[i] != to_find)
+	{
+		if (str[i] == '\\' && str[i + 1] && __need_to_escape(i, q_status, str)
+			&& !s_status)
+		{
+			s_status = BACKSLASH;
+			i++;
+			continue ;
+		}
+		q_status = __return_state(str[i], q_status, s_status);
+		i++;
+		s_status = 0;
+	}
+	/*
+	if (str[i] == '\\' && str[i + 1] && __need_to_escape(i, q_status, str) && !s_status)
+		return (0);
+	*/
+	if (__strchr("\\'\"", str[i]) && q_status != UNQUOTE)
+		q_status = __return_state(str[i], q_status, s_status);
+	return (q_status);
+}
+// je suis un backslash qui sert a quelque chose
+int	__check_slash_status(int i, char *tmp)
+{
+	int	status;
+
+	status = __is_inside_quotes(tmp, &tmp[i]);
+	if (tmp[i] == '\\' && __need_to_escape(i, status, tmp))
+		return (1);
+	return (0);
+}
 
 int	__quote_remove(char **token_word)
 {
@@ -25,8 +66,10 @@ int	__quote_remove(char **token_word)
 	i = 0;
 	while (tmp[i])
 	{
-		if (((tmp[i] == '\\' && tmp[i + 1]) || tmp[i] == '\'' || tmp[i]
-				== '"' ) && !__get_char_quote_status(tmp, &tmp[i]))
+		if ((tmp[i] == '\\' && __check_slash_status(i, tmp))
+			|| ((tmp[i] == '\'' || tmp[i] == '"' ) && !__get_char_quote_status(tmp, &tmp[i])))
+	//	if (tmp[i] == '\\' && tmp[i + 1]
+	//		&& __need_to_escape(i, __get_char_quote_status(tmp, &tmp[i + 1]), tmp))
 		{
 			i++;
 			continue ;

@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 14:13:35 by fle-blay          #+#    #+#             */
-/*   Updated: 2022/04/04 12:58:30 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/05 17:23:52 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,13 @@ int	chdir_absolute_path(char *new_path, t_msh *msh)
 		&& __try_path_cdpath(new_path, msh, &final_path) == 2)
 		return (__MALLOC);
 	if (final_path)
-		return (__try_change_dir(final_path, new_path, msh));
+		return (__try_change_dir(final_path, new_path, msh, 1));
 	if (!getcwd(pwd, PATH_MAX))
-		return (print_error("cd", "getcwcd", strerror(errno)), __FAIL);
+		return (print_error("cd", new_path, strerror(errno)), __FAIL);
 	final_path = create_absolut_pwd(pwd, new_path);
 	if (!final_path)
 		return (__MALLOC);
-	return (__try_change_dir(final_path, new_path, msh));
+	return (__try_change_dir(final_path, new_path, msh, 0));
 }
 
 int	chdir_previous(t_msh *msh)
@@ -45,6 +45,7 @@ int	chdir_previous(t_msh *msh)
 		return (__MALLOC);
 	chdir(save);
 	free(save);
+	__pwd(1);
 	return (update_pwd(msh));
 }
 

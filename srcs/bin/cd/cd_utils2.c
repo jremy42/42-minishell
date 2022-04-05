@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 12:56:27 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/04 12:56:47 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/05 16:43:45 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	__try_path_cdpath(char *new_path, t_msh *msh, char **final_path)
 	return (free_split(split_cd), 0);
 }
 
-int	__try_change_dir(char *final_path, char *new_path, t_msh *msh)
+int	__try_change_dir(char *final_path, char *new_path, t_msh *msh, int verbose)
 {
 	int	ret;
 
@@ -60,5 +60,7 @@ int	__try_change_dir(char *final_path, char *new_path, t_msh *msh)
 		free(final_path);
 	}
 	ret = update_pwd(msh);
+	if (verbose)
+		__pwd(1);
 	return (ret);
 }

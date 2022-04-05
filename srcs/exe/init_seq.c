@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 16:20:32 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/30 12:23:03 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/05 15:51:41 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,19 +83,3 @@ int	__init_seq(t_sequ *seq, char ***envp, t_cmd *cmd)
 		return (free_split(seq->path), 0);
 	return (1);
 }
-
-/*
-int	D_print_seq(t_sequ *seq)
-{
-	int	i;
-
-	i = 0;
-	DEBUG && printf("max cmd = %d\n", seq->max_cmd);
-	while (seq->path[i])
-	{
-		DEBUG && printf("path = %s\n", seq->path[i]);
-		i++;
-	}
-	return (1);
-}
-*/

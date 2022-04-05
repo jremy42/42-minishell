@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:10:26 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/05 10:54:37 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/05 15:47:30 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ int	__split_token(t_lexing *lexing, t_msh *msh)
 	char		*to_field_split;
 	char		**field_split;
 	int			i;
+	t_lexing	*true_end;
 
 	(void)msh;
 	to_field_split = __strtrim(lexing->token, " \f\t\r\v");
@@ -54,10 +55,11 @@ int	__split_token(t_lexing *lexing, t_msh *msh)
 	free(to_field_split);
 	if (!field_split)
 		return (0);
+	true_end = lexing->next;
 	i = 0;
 	while (field_split[i])
 	{
-		if (!__insert_token(lexing, field_split[i], 0, NULL))
+		if (!__insert_token(lexing, field_split[i], 0, true_end))
 			return (free_split(field_split), 0);
 		i++;
 	}

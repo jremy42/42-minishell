@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 12:29:58 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/05 12:58:09 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/05 16:44:51 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,10 +190,10 @@ int				chdir_absolute_path(char *new_path, t_msh *msh);
 int				chdir_previous(t_msh *msh);
 int				__access_dir(char *dir, char *true_dir);
 char			*__create_path_and_cmd(char *path, char *cmd);
-int				__try_change_dir(char *final_path, char *new_path, t_msh *msh);
+int				__try_change_dir(char *final_path, char *new_path,
+					t_msh *msh, int v);
 int				__try_path_cdpath(char *new_path, t_msh *msh,
 					char **final_path);
-int				__try_change_dir(char *final_path, char *new_path, t_msh *msh);
 //Others
 void			__signal(int signal);
 void			__signal_treat(int signal);

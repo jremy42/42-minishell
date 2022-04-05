@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:25:57 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/05 12:51:11 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/05 16:14:23 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,6 @@ int	__interactive_mode(t_msh *msh, t_user_input *ui)
 			__treat_user_input(inputs[i], msh, __init_user_input_struct(ui));
 		__clean_inputs(inputs, msh, arg);
 	}
-	__putendl_fd("", 2);
 	return (msh->rv);
 }
 
@@ -110,7 +109,12 @@ int	main(int ac, char *av[], char *envp[])
 		return (1);
 	if (ac > 1)
 		__non_interative_mode(av, &msh, &ui);
-	__interactive_mode(&msh, &ui);
+	else
+	{
+		__interactive_mode(&msh, &ui);
+		if (isatty(2))
+			__putendl_fd("", 2);
+	}
 	__exit(&msh);
 	return (0);
 }

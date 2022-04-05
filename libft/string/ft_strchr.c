@@ -23,7 +23,7 @@ char	*__strchr(const char *src, int find)
 	if (!src)
 		return (NULL);
 	s1 = (unsigned char *)src;
-	while (i <= size)
+	while (i < size)
 	{
 		if (s1[i] == (unsigned char)find)
 			return ((char *)(s1 + i));

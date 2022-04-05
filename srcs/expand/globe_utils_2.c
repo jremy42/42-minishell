@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 09:52:39 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/05 14:39:54 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/05 17:21:40by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,7 @@ int	__init_dir_content(t_list **dir_content)
 	DIR				*dp;
 
 	if (!getcwd(path, PATH_MAX))
-		return (__putendl_fd("minishell : getcwd: cannot access directories:",
-				2)
-			, 1);
+		return (1);
 	dp = opendir(path);
 	if (!dp)
 		return (1);
@@ -54,6 +52,7 @@ int	__init_dir_content(t_list **dir_content)
 		return (__lstclear(dir_content, free), 0);
 	return (1);
 }
+
 
 int	__get_char_quote_status(char *str, char *to_find)
 {
@@ -77,7 +76,7 @@ int	__get_char_quote_status(char *str, char *to_find)
 		i++;
 		s_status = 0;
 	}
-	if (str[i] == '\\' && str[i + 1] && !s_status)
+	if (str[i] == '\\' && str[i + 1] && __need_to_escape(i, q_status, str) && !s_status)
 		return (0);
 	if (__strchr("\\'\"", str[i]) && q_status != UNQUOTE)
 		q_status = __return_state(str[i], q_status, s_status);
