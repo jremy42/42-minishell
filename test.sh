@@ -21,67 +21,71 @@ function test_str ()
 	echo -en "\n"
 }
 
-##### TEST echo ####
-#
-#test_str 'echo toto'
-#test_str 'echo -n toto'
-#test_str 'echo -nnnnnn toto'
-#test_str 'echo -n -ntoto'
-#test_str 'echo -n -f toto'
-#test_str 'echo -n toto -n'
-#test_str 'echo toto -n'
-#
-##### TEST export ####
-#
-#test_str 'export a="1 2 3"; echo $a 4 5 6'
-#test_str 'export 8="12"'
-#test_str 'export fred=toto 8=12 jon=tutu'
-#
-#### TEST CD TOKI ####
+#### TEST echo ####
 
-#test_str "cd"
-#test_str "cd a a"
-#test_str "cd ../../../../../../../..\npwd"
-#test_str "cd /mnt/nfs/homes/\$USER\npwd"
-#test_str "cd \$HOME/Desktop"
-#test_str "unset HOME\ncd"
-#test_str "export HOME=\ncd"
-#test_str "cd too many arguments"
-#test_str "cd ./path_not_found"
-#test_str "cd ..\ncd -\npwd"
-#test_str "cd ..\nunset OLDPWD\ncd -"
-#test_str "cd ..\nunset OLDPWD\ncd -\npwd"
-#test_str "mkdir t1\nmkdir t1/t2\ncd t1/t2\nrm -rf ../../t1\ncd .."
-#test_str "mkdir t1\nmkdir t1/t2\ncd t1/t2\nrm -rf ../../t1\ncd ..\npwd"
-#test_str "mkdir t1\nmkdir t1/t2\ncd t1/t2\nrm -rf ../../t1\ncd ..\nunset PWD\npwd"
-#test_str "export CDPATH=/mnt/nfs\ncd homes/..\npwd"
-#test_str "export CDPATH=/mnt/nfs/\ncd homes/..\npwd"
-#test_str "pwd\nexport CDPATH=\ncd .\npwd"
-#test_str "pwd\nexport CDPATH=\ncd ..\npwd"
-#test_str "unset PATH\ncd"
-#
-#CMD="env -i"
-#test_str "cd"
-#test_str "cd a a"
-#test_str "cd ../../../../../../../..\npwd"
-#test_str "cd /mnt/nfs/homes/\$USER\npwd"
-#test_str "cd \$HOME/Desktop"
-#test_str "unset HOME\ncd"
-#test_str "export HOME=\ncd"
-#test_str "cd too many arguments"
-#test_str "cd ./path_not_found"
-#test_str "cd ..\ncd -\npwd"
-#test_str "cd ..\nunset OLDPWD\ncd -"
-#test_str "cd ..\nunset OLDPWD\ncd -\npwd"
-#test_str "/bin/mkdir t1\n/bin/mkdir t1/t2\ncd t1/t2\n/bin/rm -rf ../../t1\ncd .."
-#test_str "/bin/mkdir t1\n/bin/mkdir t1/t2\ncd t1/t2\n/bin/rm -rf ../../t1\ncd ..\npwd"
-#test_str "/bin/mkdir t1\n/bin/mkdir t1/t2\ncd t1/t2\n/bin/rm -rf ../../t1\ncd ..\nunset PWD\npwd"
-#test_str "export CDPATH=/mnt/nfs\ncd homes/..\npwd"
-#test_str "export CDPATH=/mnt/nfs/\ncd homes/..\npwd"
-#test_str "pwd\nexport CDPATH=\ncd .\npwd"
-#test_str "pwd\nexport CDPATH=\ncd ..\npwd"
-#test_str "unset PATH\ncd"
-#unset CMD
+test_str 'echo toto'
+test_str 'echo -n toto'
+test_str 'echo -nnnnnn toto'
+test_str 'echo -n -ntoto'
+test_str 'echo -n -f toto'
+test_str 'echo -n toto -n'
+test_str 'echo toto -n'
+
+#### TEST export ####
+
+test_str 'export a="1 2 3"; echo $a 4 5 6'
+test_str 'export 8="12"'
+test_str 'export fred=toto 8=12 jon=tutu'
+
+#### TEST quotes ####
+
+test_str 'echo "a\\a"'
+
+### TEST CD TOKI ####
+
+test_str "cd"
+test_str "cd a a"
+test_str "cd ../../../../../../../..\npwd"
+test_str "cd /mnt/nfs/homes/\$USER\npwd"
+test_str "cd \$HOME/Desktop"
+test_str "unset HOME\ncd"
+test_str "export HOME=\ncd"
+test_str "cd too many arguments"
+test_str "cd ./path_not_found"
+test_str "cd ..\ncd -\npwd"
+test_str "cd ..\nunset OLDPWD\ncd -"
+test_str "cd ..\nunset OLDPWD\ncd -\npwd"
+test_str "mkdir t1\nmkdir t1/t2\ncd t1/t2\nrm -rf ../../t1\ncd .."
+test_str "mkdir t1\nmkdir t1/t2\ncd t1/t2\nrm -rf ../../t1\ncd ..\npwd"
+test_str "mkdir t1\nmkdir t1/t2\ncd t1/t2\nrm -rf ../../t1\ncd ..\nunset PWD\npwd"
+test_str "export CDPATH=/mnt/nfs\ncd homes/..\npwd"
+test_str "export CDPATH=/mnt/nfs/\ncd homes/..\npwd"
+test_str "pwd\nexport CDPATH=\ncd .\npwd"
+test_str "pwd\nexport CDPATH=\ncd ..\npwd"
+test_str "unset PATH\ncd"
+
+CMD="env -i"
+test_str "cd"
+test_str "cd a a"
+test_str "cd ../../../../../../../..\npwd"
+test_str "cd /mnt/nfs/homes/\$USER\npwd"
+test_str "cd \$HOME/Desktop"
+test_str "unset HOME\ncd"
+test_str "export HOME=\ncd"
+test_str "cd too many arguments"
+test_str "cd ./path_not_found"
+test_str "cd ..\ncd -\npwd"
+test_str "cd ..\nunset OLDPWD\ncd -"
+test_str "cd ..\nunset OLDPWD\ncd -\npwd"
+test_str "/bin/mkdir t1\n/bin/mkdir t1/t2\ncd t1/t2\n/bin/rm -rf ../../t1\ncd .."
+test_str "/bin/mkdir t1\n/bin/mkdir t1/t2\ncd t1/t2\n/bin/rm -rf ../../t1\ncd ..\npwd"
+test_str "/bin/mkdir t1\n/bin/mkdir t1/t2\ncd t1/t2\n/bin/rm -rf ../../t1\ncd ..\nunset PWD\npwd"
+test_str "export CDPATH=/mnt/nfs\ncd homes/..\npwd"
+test_str "export CDPATH=/mnt/nfs/\ncd homes/..\npwd"
+test_str "pwd\nexport CDPATH=\ncd .\npwd"
+test_str "pwd\nexport CDPATH=\ncd ..\npwd"
+test_str "unset PATH\ncd"
+unset CMD
 
 test_str "echo"
 test_str "echo a b"
