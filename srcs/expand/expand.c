@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 14:53:22 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/05 15:51:47 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/06 11:00:44by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,20 @@ int	__get_dollar_status(char *str, char *to_find)
 	return (1);
 }
 
+int	__is_an_exception(char *tmp, int i)
+{
+	if (tmp[i + 1] && __strchr("?'", tmp[i + 1]))
+		return (fprintf(stderr, "[1]\n"), 1);
+	if (tmp[i + 1] && tmp[i + 1] == '"')
+	{
+		if (__get_char_quote_status(&tmp[i], tmp) && tmp[i + 1] == '"')
+			return (fprintf(stderr, "[3]\n"), 0);
+		else
+			return (fprintf(stderr, "[4]\n"), 1);
+	}
+	return (fprintf(stderr, "[5]\n"), 0);
+}
+
 int	__expand_word(char **token_word, t_msh *msh)
 {
 	char	*tmp;
@@ -84,9 +98,7 @@ int	__expand_word(char **token_word, t_msh *msh)
 	i = -1;
 	while (tmp[++i])
 	{
-		if (tmp[i] == '$' && !__get_dollar_status(tmp, &tmp[i])
-			&& (__is_valid_name_char(tmp[i + 1])
-				|| __strchr("?'\"", tmp[i + 1])))
+		if ((tmp[i] == '$' && !__get_dollar_status(tmp, &tmp[i])) && (__is_valid_name_char(tmp[i + 1]) || __is_an_exception(tmp, i) ) )
 		{
 			if (!__parameter_expand(tmp + i + 1, msh, &expanded_token_wd, &i))
 				return (free(expanded_token_wd), 0);

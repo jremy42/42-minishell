@@ -53,34 +53,34 @@ int	__init_dir_content(t_list **dir_content)
 	return (1);
 }
 
-
-int	__get_char_quote_status(char *str, char *to_find)
+// "dsdsd"dsdd
+int	__get_char_quote_status(char *s, char *to_find)
 {
-	t_state	s_status;
-	t_state	q_status;
+	t_state	s_stat;
+	t_state	q_stat;
 	int		i;
 
-	q_status = UNQUOTE;
-	s_status = 0;
+	q_stat = UNQUOTE;
+	s_stat = 0;
 	i = 0;
-	while (str[i] && &str[i] != to_find)
+	while (s[i] && &s[i] != to_find)
 	{
-		if (str[i] == '\\' && str[i + 1] && __need_to_escape(i, q_status, str)
-			&& !s_status)
+		if (s[i] == '\\' && s[i + 1] && __need_to_escape(i, q_stat, s)
+			&& !s_stat)
 		{
-			s_status = BACKSLASH;
+			s_stat = BACKSLASH;
 			i++;
 			continue ;
 		}
-		q_status = __return_state(str[i], q_status, s_status);
+		q_stat = __return_state(s[i], q_stat, s_stat);
 		i++;
-		s_status = 0;
+		s_stat = 0;
 	}
-	if (str[i] == '\\' && str[i + 1] && __need_to_escape(i, q_status, str) && !s_status)
+	if (s[i] == '\\' && s[i + 1] && __need_to_escape(i, q_stat, s) && !s_stat)
 		return (0);
-	if (__strchr("\\'\"", str[i]) && q_status != UNQUOTE)
-		q_status = __return_state(str[i], q_status, s_status);
-	return ((s_status || q_status != UNQUOTE) * 1);
+	if (__strchr("\\'\"", s[i]) && q_stat != UNQUOTE)
+		q_stat = __return_state(s[i], q_stat, s_stat);
+	return ((s_stat || q_stat != UNQUOTE) * 1);
 }
 
 t_globe_type	__get_next_state(t_globe_type current_state, char *token)
