@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 16:10:37 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/04 16:22:17 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/06 16:25:18 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	__bin_exit(char **key_val, t_msh *msh, t_cmd *cmd, int fork)
 		if (!__atol(key_val[1], &msh->rv))
 		{
 			print_error("exit", key_val[1], "numeric argument required");
-			msh->rv = -1;
+			msh->rv = 2;
 		}
 	}
 	if (fork)

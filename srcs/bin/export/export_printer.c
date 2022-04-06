@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 09:36:33 by fle-blay          #+#    #+#             */
-/*   Updated: 2022/03/30 10:20:23 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/06 16:31:38 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,8 @@ static char	*get_smallest_sup_value(char *old_small, char ***envp)
 
 static void	__get_printed_export(char *curr_printed)
 {
+	if (__strncmp("_=", curr_printed, 2) == 0)
+		return ;
 	write(1, "export ", 7);
 	if (__strchr(curr_printed, '='))
 	{

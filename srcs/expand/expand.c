@@ -74,15 +74,15 @@ int	__get_dollar_status(char *str, char *to_find)
 int	__is_an_exception(char *tmp, int i)
 {
 	if (tmp[i + 1] && __strchr("?'", tmp[i + 1]))
-		return (fprintf(stderr, "[1]\n"), 1);
+		return (1);
 	if (tmp[i + 1] && tmp[i + 1] == '"')
 	{
 		if (__get_char_quote_status(&tmp[i], tmp) && tmp[i + 1] == '"')
-			return (fprintf(stderr, "[3]\n"), 0);
+			return (0);
 		else
-			return (fprintf(stderr, "[4]\n"), 1);
+			return (1);
 	}
-	return (fprintf(stderr, "[5]\n"), 0);
+	return (0);
 }
 
 int	__expand_word(char **token_word, t_msh *msh)
@@ -98,7 +98,8 @@ int	__expand_word(char **token_word, t_msh *msh)
 	i = -1;
 	while (tmp[++i])
 	{
-		if ((tmp[i] == '$' && !__get_dollar_status(tmp, &tmp[i])) && (__is_valid_name_char(tmp[i + 1]) || __is_an_exception(tmp, i) ) )
+		if ((tmp[i] == '$' && !__get_dollar_status(tmp, &tmp[i])) &&
+			(__is_valid_name_char(tmp[i + 1]) || __is_an_exception(tmp, i)))
 		{
 			if (!__parameter_expand(tmp + i + 1, msh, &expanded_token_wd, &i))
 				return (free(expanded_token_wd), 0);
@@ -152,8 +153,10 @@ int	__parameter_expand_token(t_lexing *lexing, t_msh *msh)
 		}
 		if (lexing->type == WORD)
 		{
+			fprintf(stderr, "before expand [%s]\n", lexing->token);
 			if (!__expand_word(&lexing->token, msh))
 				return (__putendl_fd("Malloc error", 2), 0);
+			fprintf(stderr, "after expand [%s]\n", lexing->token);
 		}
 		lexing = lexing->next;
 	}

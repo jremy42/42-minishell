@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:10:26 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/05 15:47:30 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/06 18:26:31 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	__split_token(t_lexing *lexing, t_msh *msh)
 	__insert_token(NULL, NULL, 1, NULL);
 	return (1);
 }
-
+//"ab"$var
 int	__field_spliting_token(t_lexing *lexing, t_msh *msh)
 {
 	int	before_type;
@@ -75,11 +75,16 @@ int	__field_spliting_token(t_lexing *lexing, t_msh *msh)
 	before_type = 0;
 	while (lexing)
 	{
+		//fprintf(stderr, "lexing->token = [%s]\n", lexing->token);
+		/*
 		if (lexing->type == WORD && before_type != HERE_DOC
 			&& lexing->token[0] != '"'
 			&& lexing->token[__strlen(lexing->token) - 1] != '"'
 			&& __strlen(lexing->token) > 1)
+		*/
+		if ((lexing->type == WORD && before_type != HERE_DOC) && (lexing->token[0] != '"' || lexing->token[__strlen(lexing->token) - 1] != '"' || __strlen(lexing->token) > 1))
 		{
+			//fprintf(stderr, "go to split this token\n");
 			if (!__split_token(lexing, msh))
 				return (__putendl_fd("Malloc error", 2), 0);
 		}

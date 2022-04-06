@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 09:50:45 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/31 16:03:14 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/06 15:15:18 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,20 +50,27 @@ int	__check_parenthesis_in_pipe(t_lexing *lexing)
 	return (1);
 }
 
-int	__create_cmd_and_exe(t_lexing *lexing, t_msh *msh)
+int	__create_cmd_and_exe(t_lexing **lexing, t_msh *msh)
 {
 	t_cmd	*cmd;
 
 	cmd = NULL;
-	if (!__parameter_expand_token(lexing, msh))
+	if (!__parameter_expand_token(*lexing, msh))
 		__exit_error(msh, 240, "Malloc error in parameter expand\n");
-	if (!__field_spliting_token(lexing, msh))
+	__clean_token(lexing);
+	if (!*lexing)
+	{
+		//fprintf(stderr, "empty lexing\n");
+		msh->rv = 0;
+		return (msh->rv);
+	}
+	if (!__field_spliting_token(*lexing, msh))
 		__exit_error(msh, 240, "Malloc error in field spliting\n");
-	if (!__handle_wildcards(lexing))
+	if (!__handle_wildcards(*lexing))
 		__exit_error(msh, 240, "Malloc error in wildcard\n");
-	if (!__quote_removal_token(lexing))
+	if (!__quote_removal_token(*lexing))
 		__exit_error(msh, 240, "Malloc error in quote removale\n");
-	cmd = create_cmd_list(lexing, msh);
+	cmd = create_cmd_list(*lexing, msh);
 	if (!cmd)
 		__exit_error(msh, 240, "Malloc error in create cmd list\n");
 	execute_seq(cmd, msh);
@@ -72,18 +79,18 @@ int	__create_cmd_and_exe(t_lexing *lexing, t_msh *msh)
 	return (msh->rv);
 }
 
-int	__execute_pipe_seq(t_lexing *lexing, t_msh *msh)
+int	__execute_pipe_seq(t_lexing **lexing, t_msh *msh)
 {
 	t_lexing	*next_pipe;
 
-	if (__find_operator_in_pipeseq(lexing))
+	if (__find_operator_in_pipeseq(*lexing))
 	{
 		__putstr_fd("minishell: syntax error : operator within pipeseq\n", 2);
 		msh->rv = 2;
 		__give_node(msh->node_max, 0, 1);
 		return (-1);
 	}
-	next_pipe = lexing;
+	next_pipe = *lexing;
 	while (next_pipe)
 	{
 		if (!__check_parenthesis_in_pipe(next_pipe))
@@ -104,7 +111,7 @@ int	__execute_tree(t_node *current_node, t_msh *msh)
 {
 	if (current_node->kind == SEQUENCE)
 	{
-		__execute_pipe_seq(current_node->leaf_lexing, msh);
+		__execute_pipe_seq(&current_node->leaf_lexing, msh);
 		return (msh->rv);
 	}
 	else if (current_node->kind == AND)

@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 12:29:58 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/05 16:44:51 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/06 13:16:59 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -322,4 +322,7 @@ int				__add_remaining_globs(char **tge, t_glob **glob,
 					t_globe_type state);
 t_glob			*__create_glob_lst(char **to_glob_expand);
 int				__find_end(char *file_name, t_glob *glob_lst);
+
+// clean token 
+void	__clean_token(t_lexing **lexing);
 #endif

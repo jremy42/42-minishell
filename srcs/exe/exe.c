@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 18:18:33 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/04 16:24:56 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/06 18:05:29 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,11 +83,39 @@ int	__clean_tmp_hd(t_cmd *cmd)
 	return (1);
 }
 
+int	__update_underscore(char **arg, t_msh *msh)
+{
+	int		i;
+	char	*to_export;
+	char	*tab[2];
+
+	i = 0;
+	if (!arg)
+		return (1);
+	while (arg[i])
+		i++;
+	if (i > 0)
+		i--;
+	if (!arg[i])
+		return (1);
+	to_export = __old_strjoin("_=", arg[i]);
+	if (!to_export)
+		return (0);
+	tab[0] = to_export;
+	tab[1] = NULL;
+	msh->rv = __export(tab, msh);
+	if (msh->rv == 240)
+		return (free(to_export), 0);
+	return (free(to_export), 1);
+}
+
 int	execute_seq(t_cmd *cmd, t_msh *msh)
 {
 	t_sequ		seq;
 	int			std[2];
 
+	if (__find_max_cmd(cmd) ==  1 && !__update_underscore(cmd->arg, msh))
+		return (__cmd_node_list_clear(cmd), msh->rv);
 	if (__find_max_cmd(cmd) == 1 && __is_builtin(cmd->arg))
 	{
 		if (cmd->redirect)
