@@ -45,6 +45,7 @@ list/ft_lstdelone.c \
 list/ft_lstclear.c \
 list/ft_lstiter.c \
 list/ft_lstmap.c\
+list/ft_lstaddsort.c\
 stdlib/ft_atol.c\
 
 
@@ -58,8 +59,8 @@ _CYAN=	$'\033[36m
 _WHITE=	$'\033[37m
 _END= $'\033[37m
 
-CFLAGS = -Wall -Wextra -Werror
-#CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g3
+#CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g3
 IFLAGS = -I includes/
 HEADER = includes/libft.h
 NAME = libft.a

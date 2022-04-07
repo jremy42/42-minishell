@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 17:55:52 by fle-blay          #+#    #+#             */
-/*   Updated: 2022/04/05 12:54:10 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/07 14:21:43 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,4 +42,26 @@ int	__split_expanded_token(t_lexing *lexing)
 	free_split(split_token);
 	__insert_token(NULL, NULL, 1, NULL);
 	return (1);
+}
+
+int	__key_match_canditate(char *cndte, char *env_key, t_msh *msh, int j)
+{
+	if (!__strcmp(cndte, env_key) && msh->envp[j][1] &&
+		__strchr(msh->envp[j][0], '='))
+		return (1);
+	return (0);
+}
+
+int	__treat_last_rv(char **expanded_token, int *i, t_msh *msh)
+{
+	char	*candidate;
+
+	candidate = __itoa(msh->rv);
+	if (!candidate)
+		return (0);
+	*i += 1;
+	*expanded_token = __strjoin(*expanded_token, candidate);
+	if (!*expanded_token)
+		return (free(candidate), 0);
+	return (free(candidate), 1);
 }

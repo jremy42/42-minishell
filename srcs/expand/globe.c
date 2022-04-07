@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 09:52:39 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/07 12:52:57 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/07 15:53:18 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ int	__insert_first_token(t_lexing *lexing, char *new_glob_match)
 	return (1);
 }
 
+//WARNIN FORCE WORD
+
 int	__insert_token(t_lexing *lexing,
 	char *new_glob_match, int reset, t_lexing *true_end)
 {
@@ -70,7 +72,7 @@ int	__insert_token(t_lexing *lexing,
 		first = 0;
 		return (__insert_first_token(lexing, new_glob_match));
 	}
-	new_token = __lexnew(new_glob_match);
+	new_token = __lexnew_force_word(new_glob_match);
 	if (!new_token)
 		return (0);
 	while (lexing->next != true_end)

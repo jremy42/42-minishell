@@ -6,25 +6,11 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 11:44:30 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/07 10:21:48 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/07 14:21:34 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	__treat_last_rv(char **expanded_token, int *i, t_msh *msh)
-{
-	char	*candidate;
-
-	candidate = __itoa(msh->rv);
-	if (!candidate)
-		return (0);
-	*i += 1;
-	*expanded_token = __strjoin(*expanded_token, candidate);
-	if (!*expanded_token)
-		return (free(candidate), 0);
-	return (free(candidate), 1);
-}
 
 char	*__get_candidate(char *start_word, int *i)
 {
@@ -120,12 +106,4 @@ int	__sub_cdnte_dquotes(char *env_key, char *candidate,
 	if (!*expanded_token)
 		return (0);
 	return (1);
-}
-
-int	__key_match_canditate(char *cndte, char *env_key, t_msh *msh, int j)
-{
-	if (!__strcmp(cndte, env_key) && msh->envp[j][1] &&
-		__strchr(msh->envp[j][0], '='))
-		return (1);
-	return (0);
 }

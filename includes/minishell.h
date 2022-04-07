@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 12:29:58 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/07 13:06:56 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/07 15:52:10 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -247,6 +247,8 @@ void			__lexing_not_in_tree_list_clear(t_lexing *start);
 void			__lexadd_back(t_lexing **alst, t_lexing *new);
 int				__count_node(t_lexing *lexing);
 int				__is_operator(char *content);
+t_lexing		*__lexnew(char *content);
+t_lexing		*__lexnew_force_word(char *content);
 // Gardening
 
 int				__create_tree(t_lexing *lexing, t_node **root,
@@ -284,7 +286,6 @@ int				__eof_type(char *eof);
 //expande
 int				__parameter_expand_token(t_lexing *lexing, t_msh *msh);
 int				__handle_wildcards(t_lexing *lexing);
-t_lexing		*__lexnew(char *content);
 int				__insert_token(t_lexing *lexing, char *new_glob_match,
 					int reset, t_lexing *true_end);
 int				__field_spliting_token(t_lexing *lexing, t_msh *msh);
@@ -309,6 +310,11 @@ int				__split_expanded_token(t_lexing *lexing);
 int				__sub_cdnte_dquotes(char *env_key, char *candidate,
 					char **expanded_token, char *env_value);
 int				__is_inside_quotes(char *str, char *to_find);
+int				__key_match_canditate(char *cndte, char *env_key,
+					t_msh *msh, int j);
+int				__get_dollar_status(char *str, char *to_find);
+void			__update_token_word(char **token_word, char **expd_tken_wd);
+int				__is_an_exception(char *tmp, int i);
 
 // globe
 t_glob			*__glob_new(char *content, t_globe_type type, int size);

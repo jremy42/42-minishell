@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 17:32:24 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/04 16:24:39 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/07 14:18:43 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,5 @@ void		__init_child(t_sequ *seq, t_cmd *cmd, t_cmd *first_cmd,
 int			__reset_cmd_start(t_cmd *cmd, t_redirect *save);
 int			__test_access_read(t_cmd *cmd);
 int			__test_access_write(t_cmd *cmd);
+int			__update_underscore(char **arg, t_msh *msh);
 #endif

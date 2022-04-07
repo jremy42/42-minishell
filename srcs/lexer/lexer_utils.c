@@ -6,11 +6,27 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 11:50:42 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/06 14:58:23 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/07 15:51:12 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+t_lexing	*__lexnew_force_word(char *content)
+{
+	t_lexing	*newlst;
+
+	newlst = malloc(sizeof(t_lexing));
+	if (!newlst)
+		return (NULL);
+	newlst->token = __strdup(content);
+	if (!newlst->token)
+		return (free(newlst), NULL);
+	newlst->type = WORD;
+	newlst->next = NULL;
+	newlst->hd_type = 0;
+	return (newlst);
+}
 
 int	__count_node(t_lexing *lexing)
 {

@@ -4,8 +4,23 @@ DIF=""
 DIF_STDOUT=""
 RET_MINI=""
 RET_BASH=""
-
+TEST_NUMBER="0"
+TEST_KO_OUTPUT="0"
+TEST_KO_RET="0"
 ALL_PARAM="$@"
+TEST_DIR="test_dir_to_delete/"
+DIR_TEST=dir_test
+
+
+mkdir "$TEST_DIR"
+mkdir "$DIR_TEST"
+mkdir "${DIR_TEST}/${TEST_DIR}"
+
+for i in abc  abcd  abcde  def  efg
+do
+	touch "${DIR_TEST}/$i"
+done
+cp ./minishell $DIR_TEST
 
 function is_active ()
 {
@@ -21,17 +36,20 @@ function is_active ()
 
 function test_str ()
 {
-	echo -e "Testing"  "'$1'"
-	echo -e "$1" | $CMD ./minishell > output_file_minishell 2>output_file_minishell_error
+	(( TEST_NUMBER++ ))
+	echo -e "Testing"  "'$1'" "ref : $TEST_NUMBER"
+	echo -e "$1" | $CMD ./minishell > ${TEST_DIR}.output_file_minishell 2> ${TEST_DIR}.output_file_minishell_error
 	RET_MINI=$?
-	echo -e "$1" | $CMD bash --posix > output_file_bash 2>output_file_bash_error
+	echo -e "$1" | $CMD bash --posix > ${TEST_DIR}.output_file_bash 2> ${TEST_DIR}.output_file_bash_error
 	RET_BASH=$?
-	DIF=$(diff output_file_minishell output_file_bash)
+	DIF=$(diff ${TEST_DIR}.output_file_minishell ${TEST_DIR}.output_file_bash)
 	test -z "$DIF" && echo -e "\x1b[1;32mOK output\x1b[0m" || echo -e "\x1b[1;31mKO output stdout\x1b[0m" "\n" "$DIF"
+	test -z "$DIF" || (( TEST_KO_OUTPUT++ ))
 	test "$RET_MINI" -eq "$RET_BASH" && echo -e "\x1b[1;32mOK return value\x1b[0m" || echo -e "\x1b[1;31mKO return value\x1b[0m" "\n" "Minishell $RET_MINI | Bash $RET_BASH"
-	DIF_STDOUT=$(diff output_file_minishell_error output_file_bash_error)
+	test "$RET_MINI" -eq "$RET_BASH" || (( TEST_KO_RET++ ))
+	DIF_STDOUT=$(diff ${TEST_DIR}.output_file_minishell_error ${TEST_DIR}.output_file_bash_error)
 	test -z "$DIF_STDOUT" && echo -e "\x1b[1;32mNO diff output error \x1b[0m"\
-	|| (echo -e "\x1b[1;33moutput stdout Minishell : $(cat output_file_minishell_error)\x1b[0m" && echo -e "output stdout Bash : $(cat output_file_bash_error)")
+	|| (echo -e "\x1b[1;33moutput stdout Minishell : $(cat ${TEST_DIR}.output_file_minishell_error)\x1b[0m" && echo -e "output stdout Bash : $(cat ${TEST_DIR}.output_file_bash_error)")
 	echo -en "\n"
 }
 
@@ -194,24 +212,6 @@ test_str "echo te\"st$<test\""
 test_str "echo te\'st$<test\'"
 fi
 
-if is_active "export-toki"
-then
-
-test_str "env"
-test_str "env\nexport ABC\nenv"
-test_str "env\nexport ABC=\nenv"
-test_str "env\nexport ABC=4\nenv"
-test_str "env\nexport\nenv"
-CMD="env -i"
-test_str "env"
-test_str "env\nexport ABC\nenv"
-test_str "env\nexport ABC=\nenv"
-test_str "env\nexport ABC=4\nenv"
-test_str "unset PWD SHLVL _\nenv"
-test_str "env\nexport\nenv"
-unset CMD
-fi
-
 if is_active "exit-toki"
 then
 
@@ -239,7 +239,6 @@ test_str "export ABC\nexport ABC=DEF\necho \$ABC"
 test_str "export A=\$HOME\n echo \$A"
 test_str "export var\nexport var=q\nexport"
 test_str "export \"'\" test=a"
-test_str "export \"'\" test=a\nenv"
 test_str "unset PATH\nexport"
 test_str "export 0A 1A"
 test_str "export 0B=4 1C=7"
@@ -251,8 +250,6 @@ test_str "export 0B=4 1C=7\nexport"
 test_str "export _ABC=17 _DEF=18\nexport"
 test_str "export _A0=17 _B1=97\nexport"
 test_str "export _0A _1B\nexport"
-test_str "export var=\"abc \"\nenv | grep var"
-test_str "export var=\" abc\"\nenv | grep var"
 
 CMD="env -i"
 test_str "export"
@@ -264,7 +261,6 @@ test_str "export ABC\nexport ABC=DEF\necho \$ABC"
 test_str "export A=\$HOME\n echo \$A"
 test_str "export var\nexport var=q\nexport"
 test_str "export \"'\" test=a"
-test_str "export \"'\" test=a\nenv"
 test_str "unset PATH\nexport"
 test_str "export 0A 1A"
 test_str "export 0B=4 1C=7"
@@ -283,7 +279,6 @@ test_str "unset PATH\nls"
 test_str "unset \"'\" test"
 test_str "unset ="
 test_str "unset PWD\necho \$PWD"
-test_str "export var=1\nexport var1=2\nunset var\nenv"
 CMD="env -i"
 test_str "unset"
 test_str "unset a b c d"
@@ -292,7 +287,6 @@ test_str "unset PATH\nls"
 test_str "unset \"'\" test"
 test_str "unset ="
 test_str "unset PWD\necho \$PWD"
-test_str "export var=1\nexport var1=2\nunset var\nenv"
 
 unset CMD
 fi
@@ -369,8 +363,6 @@ test_str "echo \$NULL"
 test_str "echo \$USER"
 test_str "echo \$USER_not_exist"
 
-test_str "echo \'test\$-r\'"
-test_str "echo \'test\$-?\'"
 test_str "echo \$USER\$USER"
 test_str "echo \$USER\"\"\$USER"
 test_str "echo \$USER\" \"\$USER"
@@ -429,4 +421,114 @@ test_str "export var=test\$var\necho \$var"
 unset CMD
 fi
 
-rm -rf output_file_bash	output_file_minishell output_file_minishell_error output_file_bash_error
+if is_active "delslash-toki"
+then
+test_str "echo \" a \"bc\" def ghij\"klmno\" \"pqrstuv\"wxyz0123 456789abc\"defghijklm\"nopqrstuvwxyz \""
+fi
+
+if is_active "parsing-toki"
+then
+	test_str "\"\""
+	test_str ".."
+	test_str "\"\"abc\"\""
+	test_str "\"\'abc\'\""
+	test_str "\'\"abc\"\'"
+	test_str "\'  \"abc\"  \'"
+	test_str "\"  \'abc\'  \""
+	test_str "\'\"abc\"\'"
+	test_str "ls  \"\""
+	test_str "\"ls \""
+	test_str "\"ls\""
+	test_str "\" ls\""
+	test_str "\" ls \""
+	test_str "l\"s\""
+	test_str "l\"s \""
+	test_str "\"l\"s"
+	test_str "\" l\"s"
+	test_str
+	test_str "ls -la"
+	test_str "ls -l"
+	test_str "ls \"\"-la"
+	test_str "ls ''-la"
+	test_str "ls \"\" -la"
+	test_str "ls '' -la"
+	test_str "ls\"\" -la"
+	test_str "ls'' -la"
+	test_str "ls \"\"\"\" -la"
+	test_str "ls '''' -la"
+	test_str "ls -\"la\""
+	test_str "ls \"-la\""  
+	test_str "ls \"-l\"a"  
+	test_str "ls -'la'"    
+	test_str "ls '-la'"    
+	test_str "ls '-l'a"    
+	test_str
+	test_str "ls \"   '   \""
+	test_str "ls \"   '\""
+	test_str "ls \"'   \""
+	test_str "ls \"'\""
+	test_str "ls '\"'"
+	test_str "ls '\"  '"
+	test_str "ls '  \"'"
+	test_str "ls '   \"  '"
+	test_str "echo \"\" bonjour"
+	test_str "   echo         bonjour    "
+	test_str "echo test | cat"
+	test_str "echo test ||| cat"
+	test_str "export \"\""
+	test_str "unset \"\""
+	test_str "export \"test=ici\"=coucou\necho \$test"
+	test_str "export var=\"cat Makefile | grep >\"\necho \$var"
+	test_str "echo \"\$test\"\"Makefile\""
+	test_str "echo \"\$test\"Makefile"
+	test_str "export test=\"   a    b    \"\necho \$test"
+
+fi
+
+if is_active "pipe-toki"
+then
+	test_str "ls | sort"
+	test_str "ls|ls |ls | ls| ls |                ls"
+	test_str "ls | sort | grep i | wc -l"
+	test_str "sleep 0.1 | ls"
+	test_str "cat Makefile | grep pr | head -n 5 | cd file_not_exist"
+	test_str "cat Makefile | grep pr | head -n 5 | hello"
+	test_str "ls | exit"
+	test_str "sleep 0.1 | exit"
+	test_str "echo bip | bip\necho coyotte ><"
+	test_str "ls | ls | ls | ls | ls /proc/self/fd"
+	cd $DIR_TEST
+	test_str "cat a | < abc cat | cat > c | cat\nrm c"
+	cd ..
+fi
+
+if is_active "star-toki"
+then
+	cd $DIR_TEST
+	test_str "echo *"
+	test_str "echo .*"
+	test_str "echo *a"
+	test_str "echo a*"
+	test_str "echo a*bc"
+	test_str	"export TMP=*\nls | grep \$TMP"
+	test_str	"export TMP=*\ncd ..\nls | grep \$TMP"
+	test_str	"echo ****a*****b****c****d****"
+	test_str "echo a"
+	test_str "*"
+	test_str "mkdir t1\ncd t1\nrm -rf ../t1\necho *"
+	test_str "mkdir t1\ncd t1\nrm -rf ../t1\necho .*"
+	test_str "echo \"ab\"*"
+	test_str "echo \"a \"*"
+	test_str "echo \'ab\'*"
+	test_str "echo \'a \'*"
+	test_str "echo a\"b\"*"
+	test_str "echo a\" b\"*"
+	test_str "echo *\"b\""
+	test_str "echo *\"b\"*"
+	cd ..
+fi
+
+echo "Test KO RET: ${TEST_KO_RET}/${TEST_NUMBER}"
+echo "Test KO OUTPUT: ${TEST_KO_OUTPUT}/${TEST_NUMBER}"
+
+rm -rf $TEST_DIR $DIR_TEST

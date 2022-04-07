@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 18:19:33 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/04 16:20:47 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/07 14:18:13 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,4 +73,30 @@ int	__restore_fd(int *std)
 	if (close(std[in]) < 0)
 		return (0);
 	return (1);
+}
+
+int	__update_underscore(char **arg, t_msh *msh)
+{
+	int		i;
+	char	*to_export;
+	char	*tab[2];
+
+	i = 0;
+	if (!arg)
+		return (1);
+	while (arg[i])
+		i++;
+	if (i > 0)
+		i--;
+	if (!arg[i])
+		return (1);
+	to_export = __old_strjoin("_=", arg[i]);
+	if (!to_export)
+		return (0);
+	tab[0] = to_export;
+	tab[1] = NULL;
+	msh->rv = __export(tab, msh);
+	if (msh->rv == 240)
+		return (free(to_export), 0);
+	return (free(to_export), 1);
 }

@@ -54,7 +54,8 @@ srcs/tree/create_tree_utils.c\
 srcs/tree/create_tree_utils_2.c\
 srcs/tree/exec_tree_utils.c\
 srcs/expand/clean_token.c\
-srcs/print_prompt.c
+srcs/print_prompt.c\
+srcs/expand/expand_utils_3.c
 
 IFLAGS =  -I includes/ -I libft/includes
 CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g3

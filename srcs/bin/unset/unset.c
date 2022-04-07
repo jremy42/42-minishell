@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 17:29:51 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/30 10:23:10 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/07 15:31:11 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ int	__unset(char **arg, t_msh *msh)
 			free(msh->envp[key_number][0]);
 			msh->envp[key_number][0] = NULL;
 			msh->envp[key_number][1][0] = '0';
-			status = __SUCCESS;
 		}
 		i++;
 	}
