@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 09:50:45 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/06 15:15:18 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/07 12:56:29 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,14 +60,13 @@ int	__create_cmd_and_exe(t_lexing **lexing, t_msh *msh)
 	__clean_token(lexing);
 	if (!*lexing)
 	{
-		//fprintf(stderr, "empty lexing\n");
 		msh->rv = 0;
 		return (msh->rv);
 	}
 	if (!__field_spliting_token(*lexing, msh))
 		__exit_error(msh, 240, "Malloc error in field spliting\n");
-	if (!__handle_wildcards(*lexing))
-		__exit_error(msh, 240, "Malloc error in wildcard\n");
+	if (__catch_error(__handle_wildcards, *lexing, msh) == 0)
+		return (msh->rv);
 	if (!__quote_removal_token(*lexing))
 		__exit_error(msh, 240, "Malloc error in quote removale\n");
 	cmd = create_cmd_list(*lexing, msh);

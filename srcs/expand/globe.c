@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 09:52:39 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/05 15:42:45 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/07 12:52:57 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,24 +85,26 @@ int	__glob_expand_token(t_lexing *lexing,
 {
 	t_glob		*glob_lst;
 	char		*to_test;
+	int			number_of_match;
 
+	number_of_match = 0;
 	glob_lst = __create_glob_lst(&lexing->token);
 	if (!glob_lst)
-		return (__lstclear(&d_content, free), 0);
+		return (__lstclear(&d_content, free), -1);
 	if (!__quote_removal_glob(glob_lst))
-		return (__glob_list_clear(glob_lst), __lstclear(&d_content, free), 0);
+		return (__glob_list_clear(glob_lst), __lstclear(&d_content, free), -1);
 	while (d_content)
 	{
 		to_test = (char *)d_content->content;
 		if ((__file_find(to_test, glob_lst)
-				&& (take_hidden || to_test[0] != '.'))
+				&& (take_hidden || to_test[0] != '.')) && ++number_of_match
 			&& !__insert_token(lexing, (char *)d_content->content, 0, s_nxt))
-			return (__glob_list_clear(glob_lst), 0);
+			return (__glob_list_clear(glob_lst), -1);
 		d_content = d_content->next;
 	}
 	__insert_token(NULL, NULL, 1, NULL);
 	__glob_list_clear(glob_lst);
-	return (1);
+	return (number_of_match);
 }
 
 int	__handle_wildcards(t_lexing *lexing)
@@ -110,22 +112,26 @@ int	__handle_wildcards(t_lexing *lexing)
 	t_list		*dir_content;
 	t_list		*save;
 	t_lexing	*save_next;
-	int			take_hide;
+	t_lexing	*previous;
+	int			glob_ret;
 
-	dir_content = NULL;
-	if (!__init_dir_content(&dir_content))
+	if (!init_wildcard_func(&dir_content, &previous, &save))
 		return (0);
-	save = dir_content;
 	while (lexing)
 	{
 		save_next = lexing->next;
-		take_hide = (lexing->token[0] == '.');
-		if (__move_to_next_unquoted_char(lexing->token, '*') >= 0
-			&& !__glob_expand_token(lexing, dir_content, save_next, take_hide))
-			return (__lstclear(&save, free), 0);
+		if (__move_to_next_unquoted_char(lexing->token, '*') >= 0)
+		{
+			glob_ret = __glob_expand_token(lexing, dir_content,
+					save_next, (lexing->token[0] == '.'));
+			if (glob_ret < 0)
+				return (__lstclear(&save, free), 0);
+			if (glob_ret > 1 && previous && previous->type == REDIRECTION)
+				return (__lstclear(&save, free), -1);
+		}
 		dir_content = save;
+		previous = lexing;
 		lexing = save_next;
 	}
-	__lstclear(&dir_content, free);
-	return (__insert_token(NULL, NULL, 1, NULL));
+	return (__lstclear(&dir_content, free), __insert_token(0, 0, 1, 0));
 }

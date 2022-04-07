@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 12:29:58 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/06 13:16:59 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/07 13:06:56 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -259,7 +259,8 @@ t_lexing		*__find_next_operator(t_lexing *lexing);
 t_lexing		*__skip_parenthesis(t_lexing *lexing);
 t_node			*__give_node(int count, int reset, int free_all);
 t_node			*__reinit_node(t_node ***node_tab);
-
+int				__catch_error(int (*p)(t_lexing *), t_lexing *lexing,
+					t_msh *msh);
 // parsing exe 
 t_cmd			*miniparsing(t_lexing *lexing);
 int				execute_seq(t_cmd *cmd, t_msh *msh);
@@ -305,6 +306,10 @@ char			**__split_unquoted_charset(char *s, char *charset);
 int				__is_valid_name_char(char c);
 char			*__get_key_from_key_val(char *str);
 int				__split_expanded_token(t_lexing *lexing);
+int				__sub_cdnte_dquotes(char *env_key, char *candidate,
+					char **expanded_token, char *env_value);
+int				__is_inside_quotes(char *str, char *to_find);
+
 // globe
 t_glob			*__glob_new(char *content, t_globe_type type, int size);
 int				__move_to_next_unquoted_charset(char *str, char *charset);
@@ -322,7 +327,8 @@ int				__add_remaining_globs(char **tge, t_glob **glob,
 					t_globe_type state);
 t_glob			*__create_glob_lst(char **to_glob_expand);
 int				__find_end(char *file_name, t_glob *glob_lst);
-
+int				init_wildcard_func(t_list **dir_content,
+					t_lexing **previous, t_list **save);
 // clean token 
-void	__clean_token(t_lexing **lexing);
+void			__clean_token(t_lexing **lexing);
 #endif

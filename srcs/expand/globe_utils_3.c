@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 09:52:39 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/31 12:26:31 by fle-blay         ###   ########.fr       */
+/*   Updated: 2022/04/07 12:54:37 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,4 +84,15 @@ int	__find_end(char *file_name, t_glob *glob_lst)
 	if (tmp && tmp[__strlen(glob_lst->to_find)] == 0)
 		return (1);
 	return (0);
+}
+
+int	init_wildcard_func(t_list **dir_content,
+t_lexing **previous, t_list **save)
+{
+	*dir_content = NULL;
+	if (!__init_dir_content(dir_content))
+		return (0);
+	*save = *dir_content;
+	*previous = NULL;
+	return (1);
 }
