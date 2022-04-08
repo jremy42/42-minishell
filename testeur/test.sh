@@ -98,7 +98,7 @@ then
 	test_str '<< toto\ntoto\n'
 fi
 
-#### TEST EMPTY_VAR ####
+### TEST EMPTY_VAR ####
 
 if is_active "empty"
 then
@@ -108,6 +108,11 @@ then
 	test_str 'echo toto | $var'
 	test_str 'echo toto | $var | echo ici'
 	test_str 'echo toto | $var | cat'
+	test_str 'echo toto | $var $var | echo ici'
+	test_str 'echo toto | "$var" | cat'
+	test_str '$var $var'
+	test_str '$var echo toto'
+	test_str "'\$var'"
 fi
 
 ### TEST CD TOKI ####
@@ -668,4 +673,4 @@ fi
 echo "Test KO RET: ${TEST_KO_RET}/${TEST_NUMBER}"
 echo "Test KO OUTPUT: ${TEST_KO_OUTPUT}/${TEST_NUMBER}"
 
-rm -rf $TEST_DIR $DIR_TEST
+rm -rf $TEST_DIR $DIR_TEST 'a b' var

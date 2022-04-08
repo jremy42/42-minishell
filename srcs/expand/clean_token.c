@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 12:51:57 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/08 14:45:52 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/08 15:07:29 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,14 +69,13 @@ int	__clean_token(t_lexing **lexing)
 		if (iter->type == REDIRECTION && iter->next
 			&& (iter->next->token)[0] == '\0')
 			return (-1);
-		if (iter->type == WORD && (iter->token)[0] == '\0'
+		else if (iter->type == WORD && (iter->token)[0] == '\0'
 			&& last && last->type != HERE_DOC)
 			iter->empty = 1;
-		else
-		{
-			last = iter;
-			iter = iter->next;
-		}
+		else if (iter->type == WORD && (iter->token)[0] == '\0' && !last)
+			iter->empty = 1;
+		last = iter;
+		iter = iter->next;
 	}
 	return (1);
 }
