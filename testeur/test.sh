@@ -98,6 +98,18 @@ then
 	test_str '<< toto\ntoto\n'
 fi
 
+#### TEST EMPTY_VAR ####
+
+if is_active "empty"
+then
+
+	test_str 'echo a > $a'
+	test_str '$var'
+	test_str 'echo toto | $var'
+	test_str 'echo toto | $var | echo ici'
+	test_str 'echo toto | $var | cat'
+fi
+
 ### TEST CD TOKI ####
 
 if is_active "cd-toki"

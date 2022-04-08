@@ -6,12 +6,11 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 16:19:12 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/30 18:24:30 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/08 14:52:59 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "exe.h"
 
 static int	__get_nb_param_cmd(t_lexing *start)
 {
@@ -30,7 +29,8 @@ static int	__get_nb_param_cmd(t_lexing *start)
 			start = start->next;
 			continue ;
 		}
-		size++;
+		if (!start->empty)
+			size++;
 		start = start->next;
 	}
 	return (size);
@@ -49,6 +49,7 @@ static t_cmd	*create_new_cmd(int nb_param, int index, t_msh *msh)
 	new->redirect = NULL;
 	new->index = index;
 	new->msh = msh;
+	fprintf(stderr, " je cree %d\n",nb_param);
 	new->arg = malloc(sizeof(char *) * (nb_param + 1));
 	if (!new->arg)
 		return (free(new), NULL);
@@ -76,7 +77,8 @@ int	create_cmd_arg_and_redirection(t_lexing **lexing, t_cmd *new)
 			*lexing = (*lexing)->next->next;
 			continue ;
 		}
-		new->arg[i] = (*lexing)->token;
+		if ((*lexing)->empty == 0)
+			new->arg[i] = (*lexing)->token;
 		*lexing = (*lexing)->next;
 		i++;
 	}

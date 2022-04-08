@@ -6,12 +6,11 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 17:54:50 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/01 16:02:18 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/08 12:24:05 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "exe.h"
 
 void	__redirect_list_clear(t_redirect *start)
 {

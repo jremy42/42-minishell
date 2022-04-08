@@ -6,12 +6,11 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 18:19:33 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/07 14:18:13 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/08 14:55:24 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "exe.h"
 
 int	__is_builtin(char **arg)
 {

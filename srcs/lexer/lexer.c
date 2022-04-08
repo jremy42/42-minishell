@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:25:57 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/07 15:50:56 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/08 14:42:49 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ t_lexing	*__lexnew(char *content)
 	newlst->type = __get_type(content);
 	newlst->next = NULL;
 	newlst->hd_type = 0;
+	newlst->empty = 0;
 	return (newlst);
 }
 

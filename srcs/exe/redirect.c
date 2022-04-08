@@ -6,12 +6,11 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 09:51:56 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/04 10:17:13 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/08 12:24:30 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "exe.h"
 
 static int	__less_redirection(t_cmd *cmd)
 {

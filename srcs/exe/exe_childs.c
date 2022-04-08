@@ -6,12 +6,11 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 16:21:22 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/08 10:51:36 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/08 14:57:21 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "exe.h"
 
 void	__exit_child(t_sequ *seq, t_cmd *cmd, int errno_copy, int error)
 {
@@ -39,16 +38,21 @@ static void	__check_access_and_exit(char *arg, t_sequ *seq, t_cmd *first_cmd)
 {
 	struct stat	buff;
 
+	stat(arg, &buff);
+	if (__strchr(arg, '/') && S_ISDIR(buff.st_mode))
+	{
+		print_error(arg, "Is a directory", NULL);
+		__exit_child(seq, first_cmd, 126, 0);
+	}
+	if (__strchr(arg, '/') && !S_ISDIR(buff.st_mode))
+	{
+		print_error(arg, "Not a directory", NULL);
+		__exit_child(seq, first_cmd, 126, 0);
+	}
 	if (access(arg, F_OK) < 0 || access(arg, X_OK) < 0)
 	{
 		print_error(arg, "command not found", NULL);
 		__exit_child(seq, first_cmd, 127, 0);
-	}
-	stat(arg, &buff);
-	if (S_ISDIR(buff.st_mode) && __strchr(arg, '/'))
-	{
-		print_error(arg, "Is a directory", NULL);
-		__exit_child(seq, first_cmd, 126, 0);
 	}
 	print_error(arg, "command not found", NULL);
 	__exit_child(seq, first_cmd, 127, 0);
@@ -79,6 +83,8 @@ void	execute_child(t_sequ *seq, t_cmd *cmd, t_cmd *first_cmd)
 	if (cmd->redirect)
 		if (!__handle_redirect(cmd))
 			__exit_child(seq, first_cmd, 0, 0);
+	if (!cmd->arg)
+		__exit_child(seq, first_cmd, 0, 0);
 	if (!cmd->arg[0])
 		__exit_child(seq, first_cmd, 0, 0);
 	if (__is_builtin(cmd->arg))

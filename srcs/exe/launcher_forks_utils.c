@@ -6,12 +6,11 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 18:22:21 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/31 14:53:46 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/08 12:24:23 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "exe.h"
 
 static int	__first_pipe(int pipe[2])
 {

@@ -6,12 +6,11 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 18:15:22 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/04 11:33:00 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/08 12:24:08 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "exe.h"
 
 static int	__get_path_size(char *path, char *cmd)
 {

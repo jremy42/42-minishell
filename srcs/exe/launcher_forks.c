@@ -6,12 +6,11 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 16:23:45 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/04 18:39:12 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/08 12:24:25 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "exe.h"
 
 static int	wait_ret(pid_t pid)
 {

@@ -6,12 +6,11 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 14:53:22 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/07 14:37:05 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/08 12:24:35 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "exe.h"
 
 int	__parameter_expand(char *start_word, t_msh *msh,
 	char **expanded_token, int *i)

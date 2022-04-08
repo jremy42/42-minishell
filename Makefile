@@ -58,8 +58,8 @@ srcs/print_prompt.c\
 srcs/expand/expand_utils_3.c
 
 IFLAGS =  -I includes/ -I libft/includes
-CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g3
-#CFLAGS = -Wall -Wextra -Werror -g3
+#CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g3
+CFLAGS = -Wall -Wextra -Werror -g3
 CC = cc
 OBJ = $(addprefix $(OBJS_PATH), $(SRC:.c=.o))
 HEADER = includes/minishell.h
@@ -78,10 +78,6 @@ _CYAN=	$'\033[36m
 _WHITE=	$'\033[37m
 _END= $'\033[0m
 
-ifeq ($(MAKECMDGOALS), d)
-CFLAGS += -D DEBUG=1
-endif
-
 all: $(NAME)
 
 ifeq ($(shell uname -s), Darwin)
@@ -99,7 +95,6 @@ $(NAME): $(OBJ) ${HEADER} ${LIBFT}
 		@printf "%-15s ${_PURPLE}${_BOLD}${NAME}${_END}...\n" "Compiling"
 		@$(CC) $(CFLAGS) ${OBJ} -Llibft -lft -L $(MAC_DIR_READLINE)/lib -lreadline -o $(NAME)
 		@printf "\n${_GREEN}${_BOLD}[Compilation done !]${_END}\n"
-
 else
 
 $(OBJS_PATH)%.o: %.c $(HEADER)
@@ -128,18 +123,10 @@ fclean: clean
 re: fclean all
 
 run : $(NAME) ./.ignore_readline
-	valgrind --trace-children=yes --leak-check=full --track-fds=yes --show-leak-kinds=all --suppressions=.ignore_readline -q ./minishell
-
-fshellclean:
-	rm -f $(NAME)
-	@printf "%-15s ${_RED}${_BOLD}${NAME}${_END}...\n" "Deleting"
-	@rm -rf ${OBJS_PATH} 2> /dev/null
-
-d : fshellclean $(NAME)
+	valgrind --leak-check=full --track-fds=yes --show-leak-kinds=all --suppressions=.ignore_readline -q ./minishell
 
 malloc_test: $(OBJ) ${HEADER} ${LIBFT}
 	make -C ${LIBFT} > /dev/null
 	$(CC) $(CFLAGS) -fsanitize=undefined -rdynamic -o $@ ${OBJ} -L./libft -lft -L/usr/local/lib -lreadline -L./ft_mallocator -lmallocator
 
-
-.PHONY: all clean fclean bonus re run debug
+.PHONY: all clean fclean bonus re run d
