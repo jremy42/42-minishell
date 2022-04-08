@@ -90,6 +90,14 @@ then
 	test_str 'echo "\\\"'
 fi
 
+#### TEST HD ####
+
+if is_active "hd"
+then
+
+	test_str '<< toto\ntoto\n'
+fi
+
 ### TEST CD TOKI ####
 
 if is_active "cd-toki"

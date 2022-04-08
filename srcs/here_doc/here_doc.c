@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 15:19:06 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/05 12:57:44 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/08 11:11:33 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	__retrieve_hd(t_lexing *lexing, int eof_type)
 	read_status = 1;
 	while (read_status)
 	{
-		read_status = read(fd, buf, 32);
+		read_status = read(fd, buf, 31);
 		if (read_status < 0)
 			return (free(hd_content), close (fd), unlink("hd.tmp"), 0);
 		buf[read_status] = '\0';
