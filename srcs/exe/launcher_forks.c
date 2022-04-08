@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 16:23:45 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/08 12:24:25 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/08 16:03:33 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ static int	wait_ret(pid_t pid)
 		;
 	if (ret == 131 && WIFSIGNALED(status) > 0)
 		__putendl_fd("Quit (core dumped)", 2);
+	if (ret == 130 && WIFSIGNALED(status) > 0)
+		__putendl_fd("", 2);
 	if (ret == 139 && WIFSIGNALED(status) > 0)
 	{
 		__putnbr_fd((int)pid, 2);

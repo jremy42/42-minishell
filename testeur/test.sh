@@ -10,6 +10,7 @@ TEST_KO_RET="0"
 ALL_PARAM="$@"
 TEST_DIR="test_dir_to_delete/"
 DIR_TEST=dir_test
+#VALGRIND="valgrind --leak-check=full --track-fds=yes --show-leak-kinds=all --suppressions=.ignore_readline -q ./minishell"
 
 
 mkdir "$TEST_DIR"
@@ -88,6 +89,9 @@ then
 	test_str 'echo $""'
 	test_str 'echo "$"'
 	test_str 'echo "\\\"'
+	test_str 'export a="\\"'
+	test_str 'export a="\\\\"; echo "$a"'
+	test_str 'export a="\\\\"; echo $a'
 fi
 
 #### TEST HD ####

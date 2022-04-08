@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 11:44:30 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/07 14:21:34 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/08 16:26:17 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ char	*__handle_quote_in_expand_dquotes(char *env_value)
 		return (NULL);
 	while (env_value[i])
 	{
-		if (env_value[i] == '"')
+		if (env_value[i] == '"' || env_value[i] == '\\')
 		{
 			if (!__add_char_to_token('\\', &tmp))
 				return (free(tmp), NULL);
