@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 16:21:22 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/07 19:06:08 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/08 10:51:36 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,6 @@ static void	__check_access_and_exit(char *arg, t_sequ *seq, t_cmd *first_cmd)
 {
 	struct stat	buff;
 
-	/*
-	if (access(arg, F_OK) < 0)
-	{
-		print_error(arg, "command not found 1", NULL);
-		__exit_child(seq, first_cmd, 127, 0);
-	}
-	*/
 	if (access(arg, F_OK) < 0 || access(arg, X_OK) < 0)
 	{
 		print_error(arg, "command not found", NULL);

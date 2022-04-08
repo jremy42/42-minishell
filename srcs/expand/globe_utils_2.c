@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 09:52:39 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/07 19:26:37 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/08 09:46:52 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,7 @@ int	__copy_dir_entries(t_list **dir_content, struct dirent *curr_dir, DIR *dp)
 		if (!new_entry)
 			return (free(tmp), __lstclear(dir_content, free),
 				closedir(dp), 0);
-		//__lstaddsort(dir_content, new_entry, &__strcmp_ignore_case);
-		__lstadd_back(dir_content, new_entry);
+		__lstaddsort(dir_content, new_entry, &__strcmp_ignore_case);
 		curr_dir = readdir(dp);
 	}
 	return (1);
@@ -40,19 +39,18 @@ int	__init_dir_content(t_list **dir_content)
 	char			path[PATH_MAX];
 	struct dirent	*curr_dir;
 	DIR				*dp;
-	
-	fprintf(stderr, "[init_dir_content]\n");
+
 	if (!getcwd(path, PATH_MAX))
-		return (fprintf(stderr, "path\n"), 1);
+		return (1);
 	dp = opendir(path);
 	if (!dp)
-		return (fprintf(stderr, "opendir\n"), 1);
+		return (1);
 	curr_dir = readdir(dp);
 	if (!__copy_dir_entries(dir_content, curr_dir, dp))
-		return (fprintf(stderr, "copy_dir\n"), 0);
+		return (0);
 	if (closedir(dp) < 0)
-		return (fprintf(stderr," closedir\n"), __lstclear(dir_content, free), 0);
-	return (fprintf(stderr, "end init dir content\n"), 1);
+		return (__lstclear(dir_content, free), 0);
+	return (1);
 }
 
 // "dsdsd"dsdd

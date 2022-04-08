@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 09:50:45 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/07 12:56:29 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/08 10:32:29 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ int	__create_cmd_and_exe(t_lexing **lexing, t_msh *msh)
 	cmd = NULL;
 	if (!__parameter_expand_token(*lexing, msh))
 		__exit_error(msh, 240, "Malloc error in parameter expand\n");
-	__clean_token(lexing);
+	if (__catch_error_lex_modifier(__clean_token, lexing, msh) == 0)
+		return (msh->rv);
 	if (!*lexing)
 	{
 		msh->rv = 0;
