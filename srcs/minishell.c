@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:25:57 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/05 16:14:23 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/11 15:52:43by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,12 @@ int	__non_interative_mode(char **av, t_msh *msh, t_user_input *ui)
 			__exit_error(msh, 1, ""));
 }
 
+void	init_signals(void)
+{
+	signal(SIGINT, __signal);
+	signal(SIGQUIT, __signal);
+}
+
 int	__interactive_mode(t_msh *msh, t_user_input *ui)
 {
 	char	*arg;
@@ -79,8 +85,7 @@ int	__interactive_mode(t_msh *msh, t_user_input *ui)
 
 	while (42)
 	{
-		signal(SIGINT, __signal);
-		signal(SIGQUIT, __signal);
+		init_signals();
 		arg = __exe_readline(msh->rv);
 		add_history(arg);
 		__update_rv(msh);
@@ -96,6 +101,8 @@ int	__interactive_mode(t_msh *msh, t_user_input *ui)
 			__treat_user_input(inputs[i], msh, __init_user_input_struct(ui));
 		__clean_inputs(inputs, msh, arg);
 	}
+	if (isatty(0))
+		__putstr_fd("exit", 2);
 	return (msh->rv);
 }
 

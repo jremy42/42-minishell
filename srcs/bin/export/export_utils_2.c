@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 10:04:49 by fle-blay          #+#    #+#             */
-/*   Updated: 2022/04/01 15:00:51 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/11 17:51:01y jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,9 @@ int	modify_status_key_val(t_msh *msh, char *key_val)
 	i = 0;
 	while (msh->envp[i])
 	{
-		if (!__strncmp(msh->envp[i][0], key_val, __strlen(key_val)))
+		if (msh->envp[i][1][0] != '0'
+		&& !__strncmp(msh->envp[i][0], key_val,
+			strchr(msh->envp[i][0], '=') - msh->envp[i][0]))
 			break ;
 		i++;
 	}

@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 17:29:51 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/07 15:31:11 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/11 15:42:33 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int	__check_valid_identifier_unset(char *key_val)
 
 	i = 0;
 	only_digit = 1;
-	if (key_val && (key_val[0] == '=' || key_val[0] == '+'))
+	if (key_val && (__strchr(key_val,'=')|| __strchr(key_val, '+')))
 		return (print_error("unset", key_val, "not a valid identifier"), 0);
 	while (key_val[i] && key_val[i] != '=')
 	{

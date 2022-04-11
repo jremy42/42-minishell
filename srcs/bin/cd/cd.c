@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 14:13:35 by fle-blay          #+#    #+#             */
-/*   Updated: 2022/04/05 17:23:52 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/11 17:55:08 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	chdir_absolute_path(char *new_path, t_msh *msh)
 
 	final_path = NULL;
 	if (get_key(msh, "CDPATH")
+		&& (__strcmp(new_path, ".") && __strcmp(new_path, ".."))
 		&& __try_path_cdpath(new_path, msh, &final_path) == 2)
 		return (__MALLOC);
 	if (final_path)

@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 16:10:37 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/06 16:25:18 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/11 15:58:02 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,15 +57,12 @@ static int	__check_valid_number(char *value)
 
 int	__bin_exit(char **key_val, t_msh *msh, t_cmd *cmd, int fork)
 {
-	int	i;
-
-	i = 0;
 	if (key_val[1])
 	{
-		if (key_val[1] && key_val[2])
-			return (__putstr_fd("exit: too many arguments\n", 2), 1);
 		if (!__check_valid_number(key_val[1]))
 		{
+			if(isatty(0))
+				__putstr_fd("exit\n", 2);
 			print_error("exit", key_val[1], "numeric argument required");
 			msh->rv = 2;
 			__cmd_node_list_clear(cmd);
@@ -76,10 +73,13 @@ int	__bin_exit(char **key_val, t_msh *msh, t_cmd *cmd, int fork)
 			print_error("exit", key_val[1], "numeric argument required");
 			msh->rv = 2;
 		}
+		if (key_val[1] && key_val[2])
+			return (__putstr_fd("exit: too many arguments\n", 2), 1);
 	}
 	if (fork)
 		return (msh->rv);
 	__cmd_node_list_clear(cmd);
+	__putstr_fd("exit\n", 2);
 	__exit(msh);
 	return (0);
 }

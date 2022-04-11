@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 14:13:52 by fle-blay          #+#    #+#             */
-/*   Updated: 2022/03/30 10:20:40 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/11 16:03:12by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,14 @@ int	key_exist(t_msh *msh, char *key)
 		to_find = '+';
 	while (msh->envp[i])
 	{
-		if (!__strncmp(msh->envp[i][0], key, __strchr(key, to_find) - key))
+		//if (msh->envp[i][1][0] != '0')
+			//fprintf(stderr, "[%s] len : [%ld]\n", msh->envp[i][0], strchr(msh->envp[i][0], '=') - msh->envp[i][0]);
+		if (msh->envp[i][1][0] != '0' && (!__strncmp(msh->envp[i][0], key, strchr(msh->envp[i][0], '=') - msh->envp[i][0])
+		&& !__strncmp(msh->envp[i][0], key, __strchr(key, to_find) - key)))
+		{
+			fprintf(stderr, "found key [%s]\n", msh->envp[i][0]);
 			return (i);
+		}
 		i++;
 	}
 	return (-1);

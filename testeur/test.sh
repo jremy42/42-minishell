@@ -677,14 +677,16 @@ fi
 
 if is_active "fix"
 then
-	test_str "export toto=12 ; export to=32 ; env | grep -v _="
-	test_str "export he hehe ha haha ; env | grep -v _="
+	test_str "export toto=12 ; export to=32 ; export | grep -v _="
+	test_str "export toto; export toto=tata ; export | grep -v _="
+	test_str "export he hehe ha haha ; export | grep -v _="
 	test_str "exit yeye 456"
 	test_str "unset ye="
 	test_str "export CDPATH=/tmp ; cd . ; pwd"
 	test_str "export CDPATH=/tmp ; cd .. ; pwd"
 	test_str "export CDPATH=/tmp ; cd .. ; pwd"
 	test_str "unset PATH ; ls"
+	test_str "export CDPATHT=/ ; cd tmp ; pwd"
 
 fi
 

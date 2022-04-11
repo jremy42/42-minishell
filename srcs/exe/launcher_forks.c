@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 16:23:45 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/08 16:03:33 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/11 15:14:29 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ static int	wait_ret(pid_t pid)
 	ret = 0;
 	status = 0;
 	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status) > 0)
 		ret = (WEXITSTATUS(status));
@@ -36,8 +37,7 @@ static int	wait_ret(pid_t pid)
 		__putnbr_fd((int)pid, 2);
 		__putendl_fd(" segmentation fault (core dumped)", 2);
 	}
-	signal(SIGINT, __signal);
-	return (ret);
+	return (signal(SIGINT, __signal), signal(SIGQUIT, __signal), ret);
 }
 
 int	__launcher_fork(t_sequ *seq, t_cmd *cmd, t_cmd *first_cmd)
@@ -57,7 +57,8 @@ int	__launcher_fork(t_sequ *seq, t_cmd *cmd, t_cmd *first_cmd)
 			__init_child(seq, cmd, first_cmd, prev_pipe_out);
 		else
 		{
-			close(seq->pipe[1]);
+			if (seq->pipe[1] >= 0)
+				close(seq->pipe[1]);
 			if (seq->index > 0)
 				close(prev_pipe_out);
 			prev_pipe_out = seq->pipe[0];
