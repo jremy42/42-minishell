@@ -9,19 +9,20 @@ TEST_KO_OUTPUT="0"
 TEST_KO_RET="0"
 ALL_PARAM="$@"
 TEST_DIR="test_dir_to_delete/"
-DIR_TEST=dir_test
+SUB_DIR_TEST="subdir"
 #VALGRIND="valgrind --leak-check=full --track-fds=yes --show-leak-kinds=all --suppressions=.ignore_readline -q ./minishell"
 
 
 mkdir "$TEST_DIR"
-mkdir "$DIR_TEST"
-mkdir "${DIR_TEST}/${TEST_DIR}"
+mkdir "tmp"
+mkdir "$SUB_DIR_TEST"
+mkdir "${SUB_DIR_TEST}/${TEST_DIR}"
 
 for i in abc  abcd  abcde  def  efg
 do
-	touch "${DIR_TEST}/$i"
+	touch "${SUB_DIR_TEST}/$i"
 done
-cp ./minishell $DIR_TEST
+cp ./minishell $SUB_DIR_TEST
 
 function is_active ()
 {
@@ -526,14 +527,14 @@ then
 	test_str "sleep 0.1 | exit"
 	test_str "echo bip | bip\necho coyotte ><"
 	test_str "ls | ls | ls | ls | ls /proc/self/fd"
-	cd $DIR_TEST
+	cd $SUB_DIR_TEST
 	test_str "cat a | < abc cat | cat > c | cat\nrm c"
 	cd ..
 fi
 
 if is_active "star-toki"
 then
-	cd $DIR_TEST
+	cd $SUB_DIR_TEST
 	test_str "echo *"
 	test_str "echo .*"
 	test_str "echo *a"
@@ -559,7 +560,7 @@ fi
 
 if is_active "hd-toki"
 then
-	cd $DIR_TEST
+	cd $SUB_DIR_TEST
 	test_str "cat << end\nabc\nend"
 	test_str "cat << end <<start\nabc\nstart\nend\nend\ndef\nstart"
 	test_str "cat << end\nEnd\neNd\nenD\nENd\nEnD\neND\nEND\nend"
@@ -575,7 +576,7 @@ fi
 
 if is_active "redir-toki"
 then
-	cd $DIR_TEST
+	cd $SUB_DIR_TEST
 
 	test_str "<abc cat <abcd <def"
 	test_str "<abc cat <doesntexist < dev"
@@ -674,7 +675,20 @@ then
 	test_str "ls || (uname | cat) && pwd"
 fi
 
+if is_active "fix"
+then
+	test_str "export toto=12 ; export to=32 ; env | grep -v _="
+	test_str "export he hehe ha haha ; env | grep -v _="
+	test_str "exit yeye 456"
+	test_str "unset ye="
+	test_str "export CDPATH=/tmp ; cd . ; pwd"
+	test_str "export CDPATH=/tmp ; cd .. ; pwd"
+	test_str "export CDPATH=/tmp ; cd .. ; pwd"
+	test_str "unset PATH ; ls"
+
+fi
+
 echo "Test KO RET: ${TEST_KO_RET}/${TEST_NUMBER}"
 echo "Test KO OUTPUT: ${TEST_KO_OUTPUT}/${TEST_NUMBER}"
 
-rm -rf $TEST_DIR $DIR_TEST 'a b' var
+rm -rf $TEST_DIR $SUB_DIR_TEST tmp 'a b' var
