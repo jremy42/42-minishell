@@ -687,6 +687,7 @@ then
 	test_str "export CDPATH=/tmp ; cd .. ; pwd"
 	test_str "unset PATH ; ls"
 	test_str "export CDPATHT=/ ; cd tmp ; pwd"
+	test_str "export PATHT=\$PATH ; unset PATH ; ls"
 
 fi
 

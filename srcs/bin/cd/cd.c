@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 14:13:35 by fle-blay          #+#    #+#             */
-/*   Updated: 2022/04/11 17:55:08 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/12 10:08:54 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	chdir_absolute_path(char *new_path, t_msh *msh)
 	char	pwd[PATH_MAX];
 
 	final_path = NULL;
-	if (get_key(msh, "CDPATH")
+	if (get_value(msh, "CDPATH")
 		&& (__strcmp(new_path, ".") && __strcmp(new_path, ".."))
 		&& __try_path_cdpath(new_path, msh, &final_path) == 2)
 		return (__MALLOC);
@@ -36,10 +36,10 @@ int	chdir_previous(t_msh *msh)
 {
 	char	*save;
 
-	if (!get_key(msh, "OLDPWD") || !__access_dir(get_key(msh, "OLDPWD"),
-			get_key(msh, "OLDPWD")))
+	if (!get_value(msh, "OLDPWD") || !__access_dir(get_value(msh, "OLDPWD"),
+			get_value(msh, "OLDPWD")))
 		return (__FAIL);
-	save = __strdup(get_key(msh, "OLDPWD"));
+	save = __strdup(get_value(msh, "OLDPWD"));
 	if (!save)
 		return (__MALLOC);
 	if (update_oldpwd(msh) == __MALLOC)
@@ -71,7 +71,7 @@ int	__check_home(t_msh *msh)
 {
 	char	*home_dir;
 
-	home_dir = get_key(msh, "HOME");
+	home_dir = get_value(msh, "HOME");
 	if (!home_dir)
 		return (print_error("cd", "HOME not set", NULL), __FAIL);
 	if (!home_dir[0])

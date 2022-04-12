@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 17:29:51 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/11 15:42:33 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/12 11:02:34 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	__key_number(t_msh *msh, char *arg)
 	i = 0;
 	while (msh->envp[i])
 	{
-		if (!__strncmp(msh->envp[i][0], arg, __strlen(arg)))
+		if (__is_same_key(msh->envp[i][0], arg))
 			return (i);
 		i++;
 	}
@@ -33,7 +33,7 @@ static int	__check_valid_identifier_unset(char *key_val)
 
 	i = 0;
 	only_digit = 1;
-	if (key_val && (__strchr(key_val,'=')|| __strchr(key_val, '+')))
+	if (key_val && (__strchr(key_val, '=') || __strchr(key_val, '+')))
 		return (print_error("unset", key_val, "not a valid identifier"), 0);
 	while (key_val[i] && key_val[i] != '=')
 	{

@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 16:21:22 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/08 14:57:21 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/12 11:03:31 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,10 @@ static void	__check_access_and_exit(char *arg, t_sequ *seq, t_cmd *first_cmd)
 	}
 	if (access(arg, F_OK) < 0 || access(arg, X_OK) < 0)
 	{
-		print_error(arg, "command not found", NULL);
+		if (seq->path)
+			print_error(arg, "command not found", NULL);
+		else
+			print_error(arg, "No such file or directory", NULL);
 		__exit_child(seq, first_cmd, 127, 0);
 	}
 	print_error(arg, "command not found", NULL);

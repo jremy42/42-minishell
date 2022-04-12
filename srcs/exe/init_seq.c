@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 16:20:32 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/08 12:24:21 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/12 10:30:07 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static char	*__find_path(char ***envp)
 	i = 0;
 	while (envp[i] != NULL)
 	{
-		if (envp[i][1][0] != '0' && __strncmp(envp[i][0], "PATH", 4) == 0)
+		if (envp[i][1][0] != '0' && __is_same_key(envp[i][0], "PATH" ))
 			return (envp[i][0] + 5);
 		i++;
 	}

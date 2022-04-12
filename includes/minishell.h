@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 12:29:58 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/08 14:40:58 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/12 10:12:13 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,7 +183,7 @@ int				__unset(char **arg, t_msh *msh);
 int				__export(char **key_val, t_msh *msh);
 int				__bin_exit(char **key_val, t_msh *msh, t_cmd *cmd, int fork);
 //Export utils
-char			*get_key(t_msh *msh, char *key);
+char			*get_value(t_msh *msh, char *key);
 int				modify_status_key_val(t_msh *msh, char *key_val);
 int				add_key_val(t_msh *msh, char *key_val, int i);
 int				update_key_val(t_msh *msh, char *key_val);
@@ -193,6 +193,8 @@ int				join_key_val(t_msh *msh, char *key_val);
 int				get_number_exported_values(char ***envp);
 int				print_exported_values(char ***envp);
 int				__check_valid_identifier(char *key_val);
+int				__strlen_equal(char *str);
+int				__is_same_key(char *s1, char *s2);
 
 //cd utils
 
@@ -319,7 +321,6 @@ int				__treat_last_rv(char **expanded_token, int *i, t_msh *msh);
 char			*__get_key_from_key_val(char *str);
 char			**__split_unquoted_charset(char *s, char *charset);
 int				__is_valid_name_char(char c);
-char			*__get_key_from_key_val(char *str);
 int				__split_expanded_token(t_lexing *lexing);
 int				__sub_cdnte_dquotes(char *env_key, char *candidate,
 					char **expanded_token, char *env_value);

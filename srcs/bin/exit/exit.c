@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 16:10:37 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/11 15:58:02 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/12 11:03:08 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	__bin_exit(char **key_val, t_msh *msh, t_cmd *cmd, int fork)
 	{
 		if (!__check_valid_number(key_val[1]))
 		{
-			if(isatty(0))
+			if (isatty(0))
 				__putstr_fd("exit\n", 2);
 			print_error("exit", key_val[1], "numeric argument required");
 			msh->rv = 2;

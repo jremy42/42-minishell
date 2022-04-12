@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 18:15:22 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/08 12:24:08 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/12 10:44:39 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,11 +88,11 @@ char	*__get_path(char **path, char *cmd_n)
 		if (cmd_n[__strlen(cmd_n) - 1] == '/')
 			return (NULL);
 	}
-	if (path == NULL || !path[0])
-		return (NULL);
+	if ((path == NULL || !path[0]) && access(cmd_n, F_OK) == 0)
+		return (cmd_n);
 	else
 	{
-		if (__try_paths(&path_cmd, path, cmd_n) == 1)
+		if (path && path[0] && __try_paths(&path_cmd, path, cmd_n) == 1)
 			return (path_cmd);
 	}
 	return (NULL);

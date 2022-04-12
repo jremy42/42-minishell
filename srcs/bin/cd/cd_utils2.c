@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 12:56:27 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/05 16:43:45 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/12 10:08:45 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	__try_path_cdpath(char *new_path, t_msh *msh, char **final_path)
 	struct stat	buff;
 	char		**split_cd;
 
-	split_cd = __split(get_key(msh, "CDPATH"), ':');
+	split_cd = __split(get_value(msh, "CDPATH"), ':');
 	i = 0;
 	if (!split_cd)
 		return (__putstr_fd("MALLOC ERROR\n", 2), 2);

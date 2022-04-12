@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 09:36:28 by fle-blay          #+#    #+#             */
-/*   Updated: 2022/04/05 17:18:29 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/12 10:08:43 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*increment_shlvl(t_msh *msh)
 		return (__strdup("1"));
 	else
 	{
-		tmp = __itoa(__atoi(get_key(msh, "SHLVL")) + 1);
+		tmp = __itoa(__atoi(get_value(msh, "SHLVL")) + 1);
 		if (!tmp)
 			return (NULL);
 		return (tmp);
