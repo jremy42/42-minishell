@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 12:29:58 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/12 10:12:13 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/12 14:50:02 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@
 # define __MALLOC 240
 # define __SYNTAX_ERROR -2
 # define __MALLOC_TOKEN -1
+# define MINIPATH "PATH=/usr/local/sbin:/usr/local/bin:\
+/usr/sbin:/usr/bin:/sbin:/bin"
 # define RESET   "\033[0m"
 # define BLACK   "\033[30m"      /* Black */
 # define RED     "\033[31m"      /* Red */
@@ -185,7 +187,7 @@ int				__bin_exit(char **key_val, t_msh *msh, t_cmd *cmd, int fork);
 //Export utils
 char			*get_value(t_msh *msh, char *key);
 int				modify_status_key_val(t_msh *msh, char *key_val);
-int				add_key_val(t_msh *msh, char *key_val, int i);
+int				add_key_val(t_msh *msh, char *key_val, int i, char *export_val);
 int				update_key_val(t_msh *msh, char *key_val);
 int				key_exist(t_msh *msh, char *key);
 int				get_envp_size(t_msh *msh);

@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 10:23:48 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/07 15:09:11 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/12 15:35:09 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,18 @@ int	__set_oldpwd(t_msh *msh)
 	return (__export(cmd, msh));
 }
 
+int	__set_mini_path(t_msh *msh)
+{
+	int	ret;
+	int	size;
+
+	ret = 1;
+	size = get_envp_size(msh);
+	if (key_exist(msh, "PATH") < 0)
+		ret = add_key_val(msh, MINIPATH, size, "0");
+	return (ret);
+}
+
 int	get_env(t_msh *msh, char *envp[], int size)
 {
 	int	i;
@@ -73,8 +85,8 @@ int	get_env(t_msh *msh, char *envp[], int size)
 				partial_destroy_env(msh, i), 0);
 		msh->envp[i][2] = NULL;
 	}
-	if (update_pwd(msh) == __MALLOC
-		|| update_shlvl(msh) == __MALLOC || __set_oldpwd(msh) == __MALLOC)
+	if (update_pwd(msh) == __MALLOC || update_shlvl(msh) == __MALLOC
+		|| __set_oldpwd(msh) == __MALLOC || __set_mini_path(msh) == __MALLOC)
 		__exit_error(msh, 240, "Malloc Error : setting minimal env");
 	return (1);
 }

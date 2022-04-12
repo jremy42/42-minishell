@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 14:53:22 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/08 12:24:35 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/12 14:56:36 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	__parameter_expand(char *start_word, t_msh *msh,
 	j = 0;
 	while (msh->envp[j])
 	{
-		if (msh->envp[j][1][0] == '1')
+		if (msh->envp[j][1][0] == '1' || msh->envp[j][1][0] == '0')
 		{
 			env_key = __get_key_from_key_val(msh->envp[j][0]);
 			if (!env_key)

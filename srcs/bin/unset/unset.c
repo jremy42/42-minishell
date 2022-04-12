@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 17:29:51 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/12 11:02:34 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/12 15:37:14 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ static int	__check_valid_identifier_unset(char *key_val)
 
 	i = 0;
 	only_digit = 1;
-	if (key_val && (__strchr(key_val, '=') || __strchr(key_val, '+')))
+	if (key_val && (__strchr(key_val, '=') || __strchr(key_val, '+')
+			|| __isdigit(key_val[0])))
 		return (print_error("unset", key_val, "not a valid identifier"), 0);
 	while (key_val[i] && key_val[i] != '=')
 	{
@@ -50,11 +51,36 @@ static int	__check_valid_identifier_unset(char *key_val)
 	return (1);
 }
 
+int	__del_key_val(t_msh *msh, char *key_val, int size)
+{
+	char	***new_env;
+	int		j;
+	int		i;
+
+	i = 0;
+	j = 0;
+	new_env = (char ***)malloc((size) * sizeof(char **));
+	if (!new_env)
+		return (__MALLOC);
+	new_env[size - 1] = NULL;
+	while (i < size)
+	{
+		if (!__is_same_key(msh->envp[i][0], key_val))
+		{
+			new_env[j] = msh->envp[i];
+			j++;
+		}	
+		i++;
+	}
+	free(msh->envp);
+	msh->envp = new_env;
+	return (__SUCCESS);
+}
+
 int	__unset(char **arg, t_msh *msh)
 {
 	int	i;
 	int	status;
-	int	key_number;
 
 	status = __SUCCESS;
 	i = 0;
@@ -64,13 +90,9 @@ int	__unset(char **arg, t_msh *msh)
 	{
 		if (!__check_valid_identifier_unset(arg[i]))
 			status = __FAIL;
-		if (__key_number(msh, arg[i]) >= 0)
-		{
-			key_number = __key_number(msh, arg[i]);
-			free(msh->envp[key_number][0]);
-			msh->envp[key_number][0] = NULL;
-			msh->envp[key_number][1][0] = '0';
-		}
+		if (__key_number(msh, arg[i]) >= 0
+			&& __del_key_val(msh, arg[i], get_envp_size(msh)) == __MALLOC)
+			return (__MALLOC);
 		i++;
 	}
 	return (status);

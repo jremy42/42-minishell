@@ -59,7 +59,7 @@ srcs/expand/expand_utils_3.c
 
 IFLAGS =  -I includes/ -I libft/includes
 CFLAGS = -Wall -Wextra -Werror -g3
-#CFLAGS += -fsanitize=address
+CFLAGS += -fsanitize=address
 CC = cc
 OBJ = $(addprefix $(OBJS_PATH), $(SRC:.c=.o))
 HEADER = includes/minishell.h

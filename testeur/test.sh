@@ -137,9 +137,11 @@ test_str "cd ./path_not_found"
 test_str "cd ..\ncd -\npwd"
 test_str "cd ..\nunset OLDPWD\ncd -"
 test_str "cd ..\nunset OLDPWD\ncd -\npwd"
+
 test_str "mkdir t1\nmkdir t1/t2\ncd t1/t2\nrm -rf ../../t1\ncd .."
 test_str "mkdir t1\nmkdir t1/t2\ncd t1/t2\nrm -rf ../../t1\ncd ..\npwd"
 test_str "mkdir t1\nmkdir t1/t2\ncd t1/t2\nrm -rf ../../t1\ncd ..\nunset PWD\npwd"
+
 test_str "export CDPATH=/mnt/nfs\ncd homes/..\npwd"
 test_str "export CDPATH=/mnt/nfs/\ncd homes/..\npwd"
 test_str "pwd\nexport CDPATH=\ncd .\npwd"
@@ -688,7 +690,21 @@ then
 	test_str "unset PATH ; ls"
 	test_str "export CDPATHT=/ ; cd tmp ; pwd"
 	test_str "export PATHT=\$PATH ; unset PATH ; ls"
+	test_str "unset 1a"
+	test_str "unset a+"
+	test_str "unset a="
+	test_str "unset _"
+	test_str "unset a1a"
+	test_str "not_command ; \$a"
+	CMD="env -i"
+	test_str "ls"
+	unset CMD
+	
+	#CMD='export SHLVL=1000'
+	#test_str "echo \$SHLVL"
+	#unset CMD
 
+	## unset PATH ; PATH =/bin ; ./minishell puis ls
 fi
 
 echo "Test KO RET: ${TEST_KO_RET}/${TEST_NUMBER}"

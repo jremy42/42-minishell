@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 16:20:32 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/12 10:30:07 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/12 16:11:08 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static char	*__find_path(char ***envp)
 	i = 0;
 	while (envp[i] != NULL)
 	{
-		if (envp[i][1][0] != '0' && __is_same_key(envp[i][0], "PATH" ))
+		if (__is_same_key(envp[i][0], "PATH" ))
 			return (envp[i][0] + 5);
 		i++;
 	}
@@ -45,21 +45,28 @@ char	**__create_envp(char ***envp)
 	int		i;
 	char	**ret;
 
-	i = 0;
 	size = 0;
 	if (!envp)
 		return (NULL);
-	while (envp[size])
-		size++;
+	i = -1;
+	while (envp[++i])
+	{
+		fprintf(stderr, "value : [%s], state [%d]\n", envp[i][0], envp[i][1][0]);
+		if (envp[i][1][0] == '1')
+			size++;
+	}
+	i = 0;
+	fprintf(stderr, "size : [%d]\n", size);
 	ret = malloc(sizeof(char *) * (size + 1));
+	ret[size] = NULL;
 	if (!ret)
 		return (NULL);
 	while (i < size)
 	{
-		ret[i] = envp[i][0];
+		if (envp[i][1][0] == '1')
+			ret[i] = envp[i][0];
 		i++;
 	}
-	ret[size] = NULL;
 	return (ret);
 }
 

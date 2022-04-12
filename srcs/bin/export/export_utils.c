@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 14:13:52 by fle-blay          #+#    #+#             */
-/*   Updated: 2022/04/12 11:02:44 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/12 15:35:54 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int	get_envp_size(t_msh *msh)
 int	key_exist(t_msh *msh, char *key)
 {
 	int		i;
+ /*
 	char	*plus;
 	char	*equal;
 	char	to_find;
@@ -33,11 +34,12 @@ int	key_exist(t_msh *msh, char *key)
 	equal = __strchr(key, '=');
 	if (!equal && !plus)
 		return (0);
-	i = 0;
 	if (!plus || plus > equal)
 		to_find = '=';
 	else
 		to_find = '+';
+*/
+	i = 0;
 	while (msh->envp[i])
 	{
 		if (msh->envp[i][1][0] != '0' && __is_same_key(msh->envp[i][0], key))
@@ -87,7 +89,7 @@ int	join_key_val(t_msh *msh, char *key_val)
 	return (__SUCCESS);
 }
 
-int	add_key_val(t_msh *msh, char *key_val, int i)
+int	add_key_val(t_msh *msh, char *key_val, int i, char *export_status)
 {
 	char	***new_env;
 
@@ -97,14 +99,11 @@ int	add_key_val(t_msh *msh, char *key_val, int i)
 	new_env[i + 1] = NULL;
 	new_env[i] = (char **)malloc((3) * sizeof(char *));
 	if (!new_env[i])
-	{
-		free(new_env);
-		return (__MALLOC);
-	}
+		return (free(new_env), __MALLOC);
 	new_env[i][0] = __strdup(key_val);
 	if (!new_env[i][0])
 		return (free(new_env[i]), free(new_env), __MALLOC);
-	new_env[i][1] = __strdup("1");
+	new_env[i][1] = __strdup(export_status);
 	if (!new_env[i][1])
 		return (free(new_env[i][0]), free(new_env[i]), free(new_env), __MALLOC);
 	new_env[i][2] = NULL;

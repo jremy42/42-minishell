@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 16:21:22 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/12 11:03:31 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/12 16:21:04 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,11 @@ void	__check_access_exe(char *p_cmd, char **arg, t_sequ *s, t_cmd *f_cmd)
 		print_error(arg[0], "Is a directory", NULL);
 		__exit_child(s, f_cmd, 126, 0);
 	}
+	fprintf(stderr, "\np_cmd = [%s]\n", p_cmd);
+	for (int i = 0; arg[i]; i++)
+		fprintf(stderr, " arg[i] = [%s]", arg[i]);
+	for (int i = 0; s->envp[i]; i++)
+		fprintf(stderr, " envp[%d] = [%s]",i, s->envp[i]);
 	execve(p_cmd, arg, s->envp);
 }
 
@@ -83,13 +88,13 @@ void	execute_child(t_sequ *seq, t_cmd *cmd, t_cmd *first_cmd)
 {
 	char		*path_cmd;
 
-	if (cmd->redirect)
-		if (!__handle_redirect(cmd))
-			__exit_child(seq, first_cmd, 0, 0);
-	if (!cmd->arg)
+	if (cmd->redirect && !__handle_redirect(cmd))
 		__exit_child(seq, first_cmd, 0, 0);
-	if (!cmd->arg[0])
+	if (!cmd->arg || !cmd->arg[0])
+	{
+		cmd->msh->rv = 0;
 		__exit_child(seq, first_cmd, 0, 0);
+	}
 	if (__is_builtin(cmd->arg))
 	{
 		__exec_builtin(cmd->arg, cmd->msh, cmd, 1);
