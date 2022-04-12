@@ -8,6 +8,7 @@ srcs/bin/env/env.c\
 srcs/bin/export/export.c\
 srcs/bin/export/export_utils.c\
 srcs/bin/export/export_utils_2.c\
+srcs/bin/export/export_utils_3.c\
 srcs/bin/export/export_printer.c\
 srcs/bin/unset/unset.c\
 srcs/signal.c\

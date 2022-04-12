@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 12:29:58 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/12 14:50:02 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/12 18:54:53 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,7 +187,7 @@ int				__bin_exit(char **key_val, t_msh *msh, t_cmd *cmd, int fork);
 //Export utils
 char			*get_value(t_msh *msh, char *key);
 int				modify_status_key_val(t_msh *msh, char *key_val);
-int				add_key_val(t_msh *msh, char *key_val, int i, char *export_val);
+int				add_key_val(t_msh *msh, char *key_val, int i, char *export_sta);
 int				update_key_val(t_msh *msh, char *key_val);
 int				key_exist(t_msh *msh, char *key);
 int				get_envp_size(t_msh *msh);
@@ -197,6 +197,8 @@ int				print_exported_values(char ***envp);
 int				__check_valid_identifier(char *key_val);
 int				__strlen_equal(char *str);
 int				__is_same_key(char *s1, char *s2);
+int				add_key_val_skip_plus(t_msh *msh, char *key_val,
+					int i, char *export_status);
 
 //cd utils
 

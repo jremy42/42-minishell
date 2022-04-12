@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 16:21:22 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/12 16:43:34 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/12 18:51:20 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ static void	__check_access_and_exit(char *arg, t_sequ *seq, t_cmd *first_cmd)
 {
 	struct stat	buff;
 
+	__memset(&buff, 0, sizeof(buff));
 	stat(arg, &buff);
 	if (__strchr(arg, '/') && S_ISDIR(buff.st_mode))
 	{
