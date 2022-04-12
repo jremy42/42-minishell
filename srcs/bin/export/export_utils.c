@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 14:13:52 by fle-blay          #+#    #+#             */
-/*   Updated: 2022/04/12 15:35:54 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/12 17:26:34 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,20 +25,7 @@ int	get_envp_size(t_msh *msh)
 int	key_exist(t_msh *msh, char *key)
 {
 	int		i;
- /*
-	char	*plus;
-	char	*equal;
-	char	to_find;
 
-	plus = __strchr(key, '+');
-	equal = __strchr(key, '=');
-	if (!equal && !plus)
-		return (0);
-	if (!plus || plus > equal)
-		to_find = '=';
-	else
-		to_find = '+';
-*/
 	i = 0;
 	while (msh->envp[i])
 	{
