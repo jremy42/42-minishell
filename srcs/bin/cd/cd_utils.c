@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 09:36:28 by fle-blay          #+#    #+#             */
-/*   Updated: 2022/04/12 10:08:43 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/12 16:58:54 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,20 @@
 char	*increment_shlvl(t_msh *msh)
 {
 	char	*tmp;
+	int		shlvl;
 
 	if (key_exist(msh, "SHLVL=") < 0)
 		return (__strdup("1"));
 	else
 	{
+		shlvl = __atoi(get_value(msh, "SHLVL"));
+		if (shlvl + 1 >= 1000)
+		{
+			__putstr_fd("Minishell: warning: shell level too high (", 2);
+			__putnbr_fd(shlvl + 1, 2);
+			__putendl_fd(") resetting to 1", 2);
+			return (__strdup("1"));
+		}
 		tmp = __itoa(__atoi(get_value(msh, "SHLVL")) + 1);
 		if (!tmp)
 			return (NULL);

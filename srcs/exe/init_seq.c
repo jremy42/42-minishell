@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 16:20:32 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/12 16:11:08 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/12 16:38:31 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ char	**__create_envp(char ***envp)
 {
 	int		size;
 	int		i;
+	int		j;
 	char	**ret;
 
 	size = 0;
@@ -50,21 +51,17 @@ char	**__create_envp(char ***envp)
 		return (NULL);
 	i = -1;
 	while (envp[++i])
-	{
-		fprintf(stderr, "value : [%s], state [%d]\n", envp[i][0], envp[i][1][0]);
-		if (envp[i][1][0] == '1')
-			size++;
-	}
+		size += (envp[i][1][0] == '1');
 	i = 0;
-	fprintf(stderr, "size : [%d]\n", size);
 	ret = malloc(sizeof(char *) * (size + 1));
 	ret[size] = NULL;
 	if (!ret)
 		return (NULL);
-	while (i < size)
+	j = 0;
+	while (envp[i])
 	{
 		if (envp[i][1][0] == '1')
-			ret[i] = envp[i][0];
+			ret[j++] = envp[i][0];
 		i++;
 	}
 	return (ret);

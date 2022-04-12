@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 17:29:51 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/12 15:37:14 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/12 16:42:06 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,13 @@ int	__del_key_val(t_msh *msh, char *key_val, int size)
 	while (i < size)
 	{
 		if (!__is_same_key(msh->envp[i][0], key_val))
+			new_env[j++] = msh->envp[i];
+		else
 		{
-			new_env[j] = msh->envp[i];
-			j++;
-		}	
+			free(msh->envp[i][0]);
+			free(msh->envp[i][1]);
+			free(msh->envp[i]);
+		}
 		i++;
 	}
 	free(msh->envp);
