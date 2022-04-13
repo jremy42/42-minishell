@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 18:19:33 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/08 14:55:24 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/13 15:33:39 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int	__is_builtin(char **arg)
 
 int	__exec_builtin(char **arg, t_msh *msh, t_cmd *cmd, int fork)
 {
+	msh->rv = 0;
 	if (__strcmp(arg[0], "echo") == 0)
 		msh->rv = __echo(arg, 1);
 	if (__strcmp(arg[0], "cd") == 0)
