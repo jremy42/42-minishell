@@ -7,10 +7,11 @@ RET_BASH=""
 TEST_NUMBER="0"
 TEST_KO_OUTPUT="0"
 TEST_KO_RET="0"
+TEST_KO_LEAKS="0"
 ALL_PARAM="$@"
 TEST_DIR="test_dir_to_delete/"
 SUB_DIR_TEST="subdir"
-VALGRIND="valgrind --log-file=\".leak\" --leak-check=full --track-fds=yes --show-leak-kinds=all --undef-value-errors=no --error-exitcode=240 --errors-for-leak-kinds=all --suppressions=.ignore_readline" 
+VALGRIND="valgrind --log-file=.leak --leak-check=full --track-fds=yes --show-leak-kinds=all --undef-value-errors=no --error-exitcode=240 --errors-for-leak-kinds=all --suppressions=.ignore_readline" 
 
 mkdir "$TEST_DIR"
 mkdir "tmp"
@@ -52,12 +53,12 @@ function test_str ()
 	test -z "$DIF_STDOUT" && echo -e "\x1b[1;32mNO diff output error \x1b[0m"\
 	|| (echo -e "\x1b[1;33moutput stdout Minishell : $(cat ${TEST_DIR}.output_file_minishell_error)\x1b[0m" && echo -e "output stdout Bash : $(cat ${TEST_DIR}.output_file_bash_error)")
 	echo -en "\n"
-	valgrind --log-file="leak" --leak-check=full --show-leak-kinds=all --undef-value-errors=no --error-exitcode=240 --errors-for-leak-kinds=all --suppressions=.ignore_readline ./minishell < <(echo -e "$1") #> /dev/null 2> /dev/null
-	echo "$?"
+	$VALGRIND $CMD ./minishell < <(echo -e "$1") > /dev/null 2> /dev/null
 	if [  "$?" -ne "240" ]
 	then
 		echo -e "valgrind     : \033[32m[OK]\033[0m"
 	else
+		(( TEST_KO_LEAKS++ ))
 		echo -e "valgrind     : \033[31m[NOK]\033[0m"
 	cat .leak
 	fi
@@ -753,5 +754,6 @@ fi
 
 echo "Test KO RET: ${TEST_KO_RET}/${TEST_NUMBER}"
 echo "Test KO OUTPUT: ${TEST_KO_OUTPUT}/${TEST_NUMBER}"
+echo "Test KO LEAKS: ${TEST_KO_LEAKS}/${TEST_NUMBER}"
 
 rm -rf $TEST_DIR $SUB_DIR_TEST tmp 'a b' var

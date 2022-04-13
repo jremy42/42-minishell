@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:25:57 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/13 12:51:10 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/13 14:32:32 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	__exit(t_msh *msh)
 	__destroy_tree(&msh->root);
 	destroy_env(msh);
 	free(msh->prompt);
-	//free_split(msh->all_input);
+	free_split(msh->all_input);
 	msh->all_input = NULL;
 	__give_node(0, 1, 0);
 	exit (msh->rv);
@@ -37,7 +37,7 @@ int	__exit_error(t_msh *msh, int error, char *str)
 	__destroy_tree(&msh->root);
 	destroy_env(msh);
 	free(msh->prompt);
-	//free_split(msh->all_input);
+	free_split(msh->all_input);
 	msh->all_input = NULL;
 	__give_node(0, 1, 0);
 	exit (msh->rv);
