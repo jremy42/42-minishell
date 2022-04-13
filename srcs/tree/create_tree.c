@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 10:17:40 by fle-blay          #+#    #+#             */
-/*   Updated: 2022/03/31 15:57:20 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/13 11:16:57 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,17 +48,19 @@ t_lexing	*split_lexing_left(t_lexing *lexing, t_lexing *next_operator)
 	t_lexing	*save;
 
 	save = lexing;
-	while (lexing->next != next_operator)
+	while (lexing && lexing->next != next_operator)
 		lexing = lexing->next;
-	lexing->next = NULL;
+	if (lexing)
+		lexing->next = NULL;
 	return (save);
 }
 
 t_lexing	*split_lexing_right(t_lexing *lexing, t_lexing *next_operator)
 {
-	while (lexing != next_operator)
+	while (lexing && lexing != next_operator)
 		lexing = lexing->next;
-	lexing = lexing->next;
+	if (lexing)
+		lexing = lexing->next;
 	return (lexing);
 }
 

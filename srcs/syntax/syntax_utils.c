@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 11:53:34 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/04 16:11:14 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/13 12:17:51 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,15 @@ int	__is_valide_operator(char *token)
 	return (0);
 }
 
-void	__synthax_error(char *str)
+t_lexing	*__synthax_error(t_lexing *lexing, t_msh *msh)
 {
 	write(2, "minishell: syntax error near :", 30);
-	write(2, str, __strlen(str));
+	if (lexing && lexing->token)
+		write(2, lexing->token, __strlen(lexing->token));
 	write(2, "\n", 1);
+	msh->rv = 2;
+	msh->syntax_error = 2;
+	return (lexing);
 }
 
 void	__invalid_error(char *str, t_msh *msh)

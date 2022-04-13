@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 12:29:58 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/12 14:50:02 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/13 12:22:25 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -251,7 +251,7 @@ int				__init_token_if_none(char **str, int *token_status);
 
 //syntax
 void			__invalid_error(char *str, t_msh *msh);
-void			__synthax_error(char *str);
+t_lexing		*__synthax_error(t_lexing *lexing, t_msh *msh);
 int				__is_valide_operator(char *token);
 
 // lexing

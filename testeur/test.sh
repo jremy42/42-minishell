@@ -700,11 +700,37 @@ then
 	test_str "ls"
 	unset CMD
 	
-	#CMD='export SHLVL=1000'
-	#test_str "echo \$SHLVL"
-	#unset CMD
+	test_str "echo \$SHLVL"
+	export SHLVL=999
+	test_str "echo \$SHLVL"
+	export SHLVL=1000
+	test_str "echo \$SHLVL"
+	unset SHLVL
+	test_str "echo \$SHLVL"
 
-	## unset PATH ; PATH =/bin ; ./minishell puis ls
+	test_str "| a"
+	test_str "&& a"
+	test_str "|| a"
+	test_str "|| &&"
+	test_str "( )"
+	test_str "(( )"
+	test_str "(( ))"
+	test_str "()( ))"
+	test_str "()( )()"
+	test_str "()( &&  )()"
+	test_str "()( ||  )()"
+	test_str "(&&)"
+	test_str "&&||"
+	test_str "(&&)"
+	test_str "||&&||"
+	test_str "(|) && ls"
+	test_str "| && ls"
+	test_str "(|&&|) && ls"
+	test_str "(|)(|)(|)"
+	test_str "ls (|) ls"
+	test_str "(ls|) && ls"
+	test_str "(|ls) && ls"
+	test_str "(cat <<)"
 fi
 
 echo "Test KO RET: ${TEST_KO_RET}/${TEST_NUMBER}"
