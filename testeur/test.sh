@@ -11,7 +11,7 @@ TEST_KO_LEAKS="0"
 ALL_PARAM="$@"
 TEST_DIR="test_dir_to_delete/"
 SUB_DIR_TEST="subdir"
-VALGRIND="valgrind --log-file=.leak --leak-check=full --track-fds=yes --show-leak-kinds=all --undef-value-errors=no --error-exitcode=240 --errors-for-leak-kinds=all --suppressions=.ignore_readline" 
+#VALGRIND="valgrind --log-file=.leak --leak-check=full --track-fds=yes --show-leak-kinds=all --undef-value-errors=no --error-exitcode=240 --errors-for-leak-kinds=all --suppressions=.ignore_readline" 
 
 mkdir "$TEST_DIR"
 mkdir "tmp"
@@ -728,7 +728,6 @@ then
 	test_str "|| &&"
 	test_str "( )"
 	test_str "(( )"
-	test_str "(( ))"
 	test_str "()( ))"
 	test_str "()( )()"
 	test_str "()( &&  )()"
@@ -747,9 +746,16 @@ fi
 
 if is_active "fix2"
 then
+	test_str "&& lso"
 	test_str "(|ls) && ls"
 	test_str "(cat <<)"
 	test_str "echo toto && echo tata; echo titi ;"
+	test_str "export a==a+= ; export b\$a ; echo \$b"
+
+	CMD="env -i"
+	test_str "export abba ; export abba+=\$abba ; export | grep -v _="
+	test_str "unset a ; export a+==a+= ; echo \$a ; export b\$a ; echo \$b ; export | grep -v _="
+	unset CMD
 fi
 
 echo "Test KO RET: ${TEST_KO_RET}/${TEST_NUMBER}"

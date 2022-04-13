@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 14:13:52 by fle-blay          #+#    #+#             */
-/*   Updated: 2022/04/13 15:12:13 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/13 17:44:34 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,27 +63,26 @@ int	update_key_val(t_msh *msh, char *key_val)
 int	join_key_val(t_msh *msh, char *key_val)
 {
 	int		pos;
+	int		equal;
 
+	equal = 1;
 	pos = key_exist(msh, key_val);
 	if (pos == -1)
 		return (add_key_val_skip_plus(msh, key_val, get_envp_size(msh), "1"));
 	if (__strchr(msh->envp[pos][0], '='))
+		equal++;
+	free(msh->envp[pos][1]);
+	msh->envp[pos][1] = NULL;
+	msh->envp[pos][0] = __strjoin(msh->envp[pos][0],
+			__strstr(key_val, "+=") + equal);
+	if (!msh->envp[pos][0])
+		return (__MALLOC);
+	msh->envp[pos][1] = __strdup("1");
+	if (!msh->envp[pos][1])
 	{
-		free(msh->envp[pos][1]);
-		msh->envp[pos][1] = NULL;
-		msh->envp[pos][0] = __strjoin(msh->envp[pos][0],
-				__strstr(key_val, "+=") + 2);
-		if (!msh->envp[pos][0])
-			return (__MALLOC);
-		msh->envp[pos][1] = __strdup("1");
-		if (!msh->envp[pos][1])
-		{
-			free(msh->envp[pos][0]);
-			msh->envp[pos][0] = NULL;
-			return (__MALLOC);
-		}
-		return (__SUCCESS);
+		free(msh->envp[pos][0]);
+		msh->envp[pos][0] = NULL;
+		return (__MALLOC);
 	}
-	else
-		return (update_key_val(msh, key_val));
+	return (__SUCCESS);
 }

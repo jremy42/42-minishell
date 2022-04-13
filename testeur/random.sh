@@ -1,24 +1,26 @@
 #!/bin/bash
 
-AVAILABLE_INPUTS=("&&" "||" "|" "&" "(" ")" "ls" "lso")
+AVAILABLE_INPUTS=("&&" "||" "|" "&" "(" ")" "ls" "lso" "lso" "\"" "'" "\"" "'" ">" "<" ">>" "(" ")")
 SIZE=${#AVAILABLE_INPUTS[*]}
-MAX=$(( $RANDOM % 15 ))
-TEST_RANGE=50
+TEST_RANGE=100000
 
 function create_input ()
 {
 unset INPUTS
+unset MAX
+MAX=$(( $RANDOM % 20 ))
 for i in $(seq 1 $MAX)
 do
 	INPUTS+=( ${AVAILABLE_INPUTS[$(( RANDOM % $SIZE ))]} )
 done
-##echo ${INPUTS[*]}
+#echo ${INPUTS[*]}
 }
 
 while test "$TEST_RANGE" -ge 0
 do
 	create_input
-	echo ${INPUTS[*]} | ./minishell 1> /dev/null 2> /dev/null
-	test $? -gt 2 && (echo -e "\x1b[31mKO\x1b[0m" "input : ${INPUTS[*]}")
+	echo ${INPUTS[*]} | ./minishell 1> /dev/null 2>> err_file 
+	test $? -gt 128 && (echo -e "\x1b[31mKO\x1b[0m" "input : ${INPUTS[*]}")
 	(( TEST_RANGE-- ))
+	test $(( $TEST_RANGE % 1000 == 0 )) -eq 1 && echo "1000 tests done"
 done

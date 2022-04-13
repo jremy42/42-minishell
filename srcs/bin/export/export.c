@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 10:06:28 by fle-blay          #+#    #+#             */
-/*   Updated: 2022/04/13 15:31:33 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/13 17:38:28 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	__export(char **key_val, t_msh *msh)
 			msh->rv = 1;
 		else if (__strchr(key_val[i], '='))
 		{
-			if (__strstr(key_val[i], "+="))
+			if (__strchr(key_val[i], '=') == __strchr(key_val[i], '+') + 1)
 				status = join_key_val(msh, key_val[i]);
 			else if (key_exist(msh, key_val[i]) == -1)
 				status = add_key_val(msh, key_val[i], get_envp_size(msh), "1");
