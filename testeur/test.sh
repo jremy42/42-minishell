@@ -699,6 +699,10 @@ then
 	CMD="env -i"
 	test_str "ls"
 	unset CMD
+	test_str "export a+= ; export | grep -v _="
+	test_str "export a+=toto ; export | grep -v _="
+	test_str "unset a ; export a+=toto ; export | grep -v _="
+	test_str "unset a ; export a+= ;export a +=fred ; export | grep -v _="
 	
 	test_str "echo \$SHLVL"
 	export SHLVL=999
