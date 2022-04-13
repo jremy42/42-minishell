@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:25:57 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/13 14:39:12 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/13 18:30:26 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ int	main(int ac, char *av[], char *envp[])
 	else
 	{
 		__interactive_mode(&msh, &ui);
-		if (isatty(2))
+		if (isatty(0) && isatty(2))
 			__putendl_fd("", 2);
 	}
 	__exit(&msh);
