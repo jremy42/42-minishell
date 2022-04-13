@@ -10,8 +10,7 @@ TEST_KO_RET="0"
 ALL_PARAM="$@"
 TEST_DIR="test_dir_to_delete/"
 SUB_DIR_TEST="subdir"
-#VALGRIND="valgrind --leak-check=full --track-fds=yes --show-leak-kinds=all --suppressions=.ignore_readline -q ./minishell"
-
+VALGRIND="valgrind --log-file=\".leak\" --leak-check=full --track-fds=yes --show-leak-kinds=all --undef-value-errors=no --error-exitcode=240 --errors-for-leak-kinds=all --suppressions=.ignore_readline" 
 
 mkdir "$TEST_DIR"
 mkdir "tmp"
@@ -53,6 +52,16 @@ function test_str ()
 	test -z "$DIF_STDOUT" && echo -e "\x1b[1;32mNO diff output error \x1b[0m"\
 	|| (echo -e "\x1b[1;33moutput stdout Minishell : $(cat ${TEST_DIR}.output_file_minishell_error)\x1b[0m" && echo -e "output stdout Bash : $(cat ${TEST_DIR}.output_file_bash_error)")
 	echo -en "\n"
+	valgrind --log-file="leak" --leak-check=full --show-leak-kinds=all --undef-value-errors=no --error-exitcode=240 --errors-for-leak-kinds=all --suppressions=.ignore_readline ./minishell < <(echo -e "$1") #> /dev/null 2> /dev/null
+	echo "$?"
+	if [  "$?" -ne "240" ]
+	then
+		echo -e "valgrind     : \033[32m[OK]\033[0m"
+	else
+		echo -e "valgrind     : \033[31m[NOK]\033[0m"
+	cat .leak
+	fi
+	rm -rf .leak
 }
 
 
@@ -733,8 +742,13 @@ then
 	test_str "(|)(|)(|)"
 	test_str "ls (|) ls"
 	test_str "(ls|) && ls"
+fi
+
+if is_active "fix2"
+then
 	test_str "(|ls) && ls"
 	test_str "(cat <<)"
+	test_str "echo toto && echo tata; echo titi ;"
 fi
 
 echo "Test KO RET: ${TEST_KO_RET}/${TEST_NUMBER}"
