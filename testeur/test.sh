@@ -1,5 +1,20 @@
 #!/bin/bash
 
+AVAILABLE_INPUTS=("+" "=" "\$a" "\$b" "a" "b")
+SIZE=${#AVAILABLE_INPUTS[*]}
+TEST_RANGE=100
+
+function create_input ()
+{
+unset INPUTS
+unset MAX
+MAX=$(( 1 + $RANDOM % 20 ))
+for i in $(seq 1 $MAX)
+do
+	INPUTS="${INPUTS}${AVAILABLE_INPUTS[$(( RANDOM % $SIZE ))]}"
+done
+}
+
 DIF=""
 DIF_STDOUT=""
 RET_MINI=""
@@ -756,6 +771,20 @@ then
 	test_str "export abba ; export abba+=\$abba ; export | grep -v _="
 	test_str "unset a ; export a+==a+= ; echo \$a ; export b\$a ; echo \$b ; export | grep -v _="
 	unset CMD
+fi
+
+if is_active "hc-export"
+then
+
+	while test "$TEST_RANGE" -ge 0
+	do
+		create_input
+		test_str "export a=a; export b=b; export $INPUTS ; echo \$a ; echo \$b"
+		test_str "export a; export b; export $INPUTS ; echo \$a ; echo \$b"
+		test_str "export a; export b=b; export $INPUTS ; echo \$a ; echo \$b"
+		test_str "export a=a; export b; export $INPUTS ; echo \$a ; echo \$b"
+		(( TEST_RANGE-- ))
+	done
 fi
 
 echo "Test KO RET: ${TEST_KO_RET}/${TEST_NUMBER}"
