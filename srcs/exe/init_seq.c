@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 16:20:32 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/12 16:38:31 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/13 14:55:45 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,9 @@ char	**__create_envp(char ***envp)
 		size += (envp[i][1][0] == '1');
 	i = 0;
 	ret = malloc(sizeof(char *) * (size + 1));
-	ret[size] = NULL;
 	if (!ret)
 		return (NULL);
+	ret[size] = NULL;
 	j = 0;
 	while (envp[i])
 	{

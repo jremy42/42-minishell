@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 14:13:52 by fle-blay          #+#    #+#             */
-/*   Updated: 2022/04/12 18:56:45 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/13 15:12:13 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,13 +70,18 @@ int	join_key_val(t_msh *msh, char *key_val)
 	if (__strchr(msh->envp[pos][0], '='))
 	{
 		free(msh->envp[pos][1]);
+		msh->envp[pos][1] = NULL;
 		msh->envp[pos][0] = __strjoin(msh->envp[pos][0],
 				__strstr(key_val, "+=") + 2);
 		if (!msh->envp[pos][0])
 			return (__MALLOC);
 		msh->envp[pos][1] = __strdup("1");
 		if (!msh->envp[pos][1])
-			return (free(msh->envp[pos][0]), __MALLOC);
+		{
+			free(msh->envp[pos][0]);
+			msh->envp[pos][0] = NULL;
+			return (__MALLOC);
+		}
 		return (__SUCCESS);
 	}
 	else
