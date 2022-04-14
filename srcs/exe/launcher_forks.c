@@ -6,11 +6,13 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 16:23:45 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/12 12:38:47 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/14 11:02:03 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+extern int	g_rv;
 
 static int	wait_ret(pid_t pid)
 {
@@ -19,8 +21,9 @@ static int	wait_ret(pid_t pid)
 
 	ret = 0;
 	status = 0;
-	signal(SIGINT, SIG_IGN);
+	g_rv = 0;
 	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, __signal_waitpid);
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status) > 0)
 		ret = (WEXITSTATUS(status));
@@ -30,7 +33,7 @@ static int	wait_ret(pid_t pid)
 		;
 	if (ret == 131 && WIFSIGNALED(status) > 0)
 		__putendl_fd("Quit (core dumped)", 2);
-	if (ret == 130 && WIFSIGNALED(status) > 0)
+	if (((ret == 130 && WIFSIGNALED(status) > 0) || g_rv == 130) && isatty(0))
 		__putendl_fd("", 2);
 	if (ret == 139 && WIFSIGNALED(status) > 0)
 	{

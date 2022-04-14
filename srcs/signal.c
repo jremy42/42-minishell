@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:25:57 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/04 10:32:10 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/14 10:28:16 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,10 @@ void	__signal_hd(int signal)
 	(void)signal;
 	close(0);
 	g_rv = 1;
+}
+
+void	__signal_waitpid(int signal)
+{
+	(void)signal;
+	g_rv = 130;
 }

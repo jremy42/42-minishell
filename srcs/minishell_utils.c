@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 10:21:42 by jremy             #+#    #+#             */
-/*   Updated: 2022/03/31 11:41:18 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/14 10:45:16 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	__clean_inputs(char **inputs, t_msh *msh, char *arg)
 {
 	free_split(inputs);
 	inputs = NULL;
+	g_rv = 0;
 	msh->all_input = NULL;
 	free(arg);
 }
