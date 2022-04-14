@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 16:21:22 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/12 18:51:20 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/14 14:45:25 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,14 @@ static void	__check_access_and_exit(char *arg, t_sequ *seq, t_cmd *first_cmd)
 		print_error(arg, "Is a directory", NULL);
 		__exit_child(seq, first_cmd, 126, 0);
 	}
-	if (__strchr(arg, '/') && !S_ISDIR(buff.st_mode))
+	if (arg && arg[0] == '/' && !S_ISDIR(buff.st_mode))
 	{
 		print_error(arg, "Not a directory", NULL);
 		__exit_child(seq, first_cmd, 126, 0);
 	}
 	if (access(arg, F_OK) < 0 || access(arg, X_OK) < 0)
 	{
-		if (seq->path)
+		if (seq->path && !__strchr(arg, '/'))
 			print_error(arg, "command not found", NULL);
 		else
 			print_error(arg, "No such file or directory", NULL);

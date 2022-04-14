@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 16:10:37 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/14 12:32:46 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/14 14:40:46 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	__bin_exit(char **key_val, t_msh *msh, t_cmd *cmd, int fork)
 			msh->rv = 2;
 		}
 		if (key_val[1] && key_val[2])
-			return (__putstr_fd("exit: too many arguments\n", 2), 1);
+			return (__putstr_fd("exit\nexit: too many arguments\n", 2), 1);
 	}
 	if (fork)
 		return (msh->rv);

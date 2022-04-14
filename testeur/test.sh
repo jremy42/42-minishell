@@ -807,6 +807,16 @@ if is_active "fix3"
 then
 	test_str "exit 123 123"
 	test_str "exit 123 123" "non-interactive"
+	test_str "bin/"
+	test_str "/bin/"
+	test_str "//bin//"
+	CMD="env -i"
+	test_str "exit 123 123"
+	test_str "exit 123 123" "non-interactive"
+	test_str "bin/"
+	test_str "/bin/"
+	test_str "//bin//"
+	unset CMD
 fi
 
 echo "Test KO RET: ${TEST_KO_RET}/${TEST_NUMBER}"
