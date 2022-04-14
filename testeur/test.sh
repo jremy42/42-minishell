@@ -55,9 +55,19 @@ function test_str ()
 {
 	(( TEST_NUMBER++ ))
 	echo -e "Testing"  "'$1'" "ref : $TEST_NUMBER"
-	echo -e "$1" | $CMD ./minishell > ${TEST_DIR}.output_file_minishell 2> ${TEST_DIR}.output_file_minishell_error
+	if test -z "$2"
+	then
+		echo -e "$1" | $CMD ./minishell > ${TEST_DIR}.output_file_minishell 2> ${TEST_DIR}.output_file_minishell_error
+	else
+		$CMD ./minishell -c "$1" > ${TEST_DIR}.output_file_minishell 2> ${TEST_DIR}.output_file_minishell_error
+	fi
 	RET_MINI=$?
-	echo -e "$1" | $CMD bash --posix > ${TEST_DIR}.output_file_bash 2> ${TEST_DIR}.output_file_bash_error
+	if test -z "$2"
+	then
+		echo -e "$1" | $CMD bash --posix > ${TEST_DIR}.output_file_bash 2> ${TEST_DIR}.output_file_bash_error
+	else
+		$CMD bash --posix -c "$1" > ${TEST_DIR}.output_file_bash 2> ${TEST_DIR}.output_file_bash_error
+	fi
 	RET_BASH=$?
 	DIF=$(diff ${TEST_DIR}.output_file_minishell ${TEST_DIR}.output_file_bash)
 	test -z "$DIF" && echo -e "\x1b[1;32mOK output\x1b[0m" || echo -e "\x1b[1;31mKO output stdout\x1b[0m" "\n" "$DIF"
@@ -785,6 +795,12 @@ then
 		test_str "export a=a; export b; export $INPUTS ; echo \$a ; echo \$b"
 		(( TEST_RANGE-- ))
 	done
+fi
+
+if is_active "ni"
+then
+	test_str "echo toto" "non-interactive"
+	test_str "ls | lso" "non-interactive"
 fi
 
 echo "Test KO RET: ${TEST_KO_RET}/${TEST_NUMBER}"
