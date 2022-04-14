@@ -2,7 +2,7 @@
 
 AVAILABLE_INPUTS=("+" "=" "\$a" "\$b" "a" "b")
 SIZE=${#AVAILABLE_INPUTS[*]}
-TEST_RANGE=100
+TEST_RANGE=30
 
 function create_input ()
 {
@@ -801,6 +801,12 @@ if is_active "ni"
 then
 	test_str "echo toto" "non-interactive"
 	test_str "ls | lso" "non-interactive"
+fi
+
+if is_active "fix3"
+then
+	test_str "exit 123 123"
+	test_str "exit 123 123" "non-interactive"
 fi
 
 echo "Test KO RET: ${TEST_KO_RET}/${TEST_NUMBER}"
