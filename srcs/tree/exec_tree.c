@@ -6,11 +6,13 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 09:50:45 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/08 10:32:29 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/14 10:51:10 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+extern int	g_rv;
 
 int	__find_operator_in_pipeseq(t_lexing *lexing)
 {
@@ -116,15 +118,20 @@ int	__execute_tree(t_node *current_node, t_msh *msh)
 	}
 	else if (current_node->kind == AND)
 	{
-		if (__execute_tree(current_node->left, msh) == 0)
+		if (__execute_tree(current_node->left, msh) == 0 && g_rv != 130)
 			__execute_tree(current_node->right, msh);
+		if (g_rv == 130)
+			msh->rv = g_rv;
 		return (msh->rv);
 	}
 	else if (current_node->kind == OR)
 	{
-		if (__execute_tree(current_node->left, msh) == 0)
+		if (__execute_tree(current_node->left, msh) == 0 && g_rv != 130)
 			return (msh->rv);
-		__execute_tree(current_node->right, msh);
+		if (g_rv != 130)
+			__execute_tree(current_node->right, msh);
+		else
+			msh->rv = g_rv;
 		return (msh->rv);
 	}
 	return (0);

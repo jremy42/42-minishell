@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 12:29:58 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/13 12:33:07 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/14 10:04:48 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -216,6 +216,7 @@ int				__try_path_cdpath(char *new_path, t_msh *msh,
 //Others
 void			__signal(int signal);
 void			__signal_treat(int signal);
+void			__signal_waitpid(int signal);
 void			__destroy_tree(t_node **current_node);
 void			destroy_env(t_msh *msh);
 int				__exit(t_msh *msh);
