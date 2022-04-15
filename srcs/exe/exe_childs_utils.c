@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 18:15:22 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/12 10:44:39 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/15 09:58:15 by fred             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,10 +75,8 @@ static int	__try_paths(char **path_cmd, char **path, char *cmd_name)
 
 char	*__get_path(char **path, char *cmd_n)
 {
-	int		i;
 	char	*path_cmd;
 
-	i = 0;
 	if (__strchr(cmd_n, '/') != NULL)
 	{
 		if (__strncmp(cmd_n, "./", 2) == 0 && access(cmd_n + 2, F_OK) == 0)
