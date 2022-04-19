@@ -6,13 +6,14 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 12:29:58 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/14 10:04:48 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/19 18:30:01 by fred             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 # include <stdio.h>
+# include <string.h>
 # include <errno.h>
 # include <unistd.h>
 # include <stdlib.h>
