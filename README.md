@@ -1,4 +1,4 @@
-[![jremy's 42 minishell Score](https://badge42.vercel.app/api/v2/cl27cprhd001109mercwbbu5l/project/2483584)](https://github.com/JaeSeoKim/badge42)
+# MINISHELL [![jremy's 42 minishell Score](https://badge42.vercel.app/api/v2/cl27cprhd001109mercwbbu5l/project/2483584)](https://github.com/JaeSeoKim/badge42)
 
 VIM PRO TIPS for Minishell-125
 ctrl m = newline
