@@ -2,7 +2,11 @@
 <p align="center">
   <img src="./img/minishell.png" width="538">
 </p>
-VIM PRO TIPS for Minishell-125
+
+### Team:  
+[Fred](https://profile.intra.42.fr/users/fle-blay), [Jonathan](https://profile.intra.42.fr/users/fle-blay) 
+
+#### VIM PRO TIPS for Minishell-125
 ctrl m = newline
 ctrl a - x = incrementer decrementer une valeur
 dd = couper la ligne
