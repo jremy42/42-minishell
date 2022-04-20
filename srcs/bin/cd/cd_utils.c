@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 09:36:28 by fle-blay          #+#    #+#             */
-/*   Updated: 2022/04/12 16:58:54 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/20 10:59:41 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int	update_oldpwd(t_msh *msh)
 	char	cwd[PATH_MAX];
 
 	if (!getcwd(cwd, PATH_MAX))
-		return (print_error("cd", NULL, strerror(errno)), __FAIL);
+		return (print_error("cd update_oldpwd", NULL, strerror(errno)), __FAIL);
 	old_pwd = __strdup("OLDPWD=");
 	if (!old_pwd)
 		return (__MALLOC);

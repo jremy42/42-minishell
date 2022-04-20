@@ -819,6 +819,11 @@ then
 	unset CMD
 fi
 
+if is_active "fix4"
+then
+	test_str "/bin/lss"
+fi
+
 echo "Test KO RET: ${TEST_KO_RET}/${TEST_NUMBER}"
 echo "Test KO OUTPUT: ${TEST_KO_OUTPUT}/${TEST_NUMBER}"
 echo "Test KO LEAKS: ${TEST_KO_LEAKS}/${TEST_NUMBER}"
