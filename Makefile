@@ -130,4 +130,4 @@ malloc_test: $(OBJ) ${HEADER} ${LIBFT}
 	make -C ${LIBFT} > /dev/null
 	$(CC) $(CFLAGS) -fsanitize=undefined -rdynamic -o $@ ${OBJ} -L./libft -lft -L/usr/local/lib -lreadline -L./ft_mallocator -lmallocator
 
-.PHONY: all clean fclean bonus re run d
+.PHONY: all clean fclean bonus re run malloc_test

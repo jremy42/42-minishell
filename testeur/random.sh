@@ -13,7 +13,7 @@ for i in $(seq 1 $MAX)
 do
 	INPUTS+=( ${AVAILABLE_INPUTS[$(( RANDOM % $SIZE ))]} )
 done
-#echo ${INPUTS[*]}
+echo ${INPUTS[*]}
 }
 
 while test "$TEST_RANGE" -ge 0

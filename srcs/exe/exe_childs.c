@@ -23,12 +23,12 @@ void	__exit_child(t_sequ *seq, t_cmd *cmd, int errno_copy, int error)
 		cmd->msh->rv = error;
 		__putendl_fd(strerror(errno_copy), 2);
 	}
-	__clean_tmp_hd(cmd);
+	del_hd(cmd);
 	free_split(seq->path);
 	free(seq->envp);
 	tmp = cmd->msh;
 	if (tmp->root)
-		__cmd_node_list_clear(cmd);
+		cmd_node_clear(cmd);
 	else
 		__cmd_full_list_clear(cmd);
 	__exit(tmp);

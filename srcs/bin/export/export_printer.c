@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 09:36:33 by fle-blay          #+#    #+#             */
-/*   Updated: 2022/04/15 09:56:37 by fred             ###   ########.fr       */
+/*   Updated: 2022/04/06 16:31:38 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,12 +107,14 @@ static void	__get_printed_export(char *curr_printed)
 
 int	print_exported_values(char ***envp)
 {
+	int		i;
 	int		max;
 	char	*old_printed;
 	char	*curr_printed;
 
 	if (!envp || !envp[0])
 		return (0);
+	i = 0;
 	max = get_number_exported_values(envp);
 	if (max == 0)
 		return (0);
@@ -124,6 +126,7 @@ int	print_exported_values(char ***envp)
 		__get_printed_export(curr_printed);
 		old_printed = curr_printed;
 		max--;
+		i = 0;
 	}
 	return (0);
 }

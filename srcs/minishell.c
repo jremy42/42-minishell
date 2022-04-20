@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:25:57 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/14 10:45:25 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/14 16:30:05 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ int	__non_interative_mode(char **av, t_msh *msh, t_user_input *ui)
 	char	**inpts;
 
 	i = -1;
+	signal(SIGINT, __signal_waitpid);
 	if (!__strcmp(av[1], "-c"))
 	{
 		if (av[2])
@@ -60,6 +61,7 @@ int	__non_interative_mode(char **av, t_msh *msh, t_user_input *ui)
 			msh->all_input = inpts;
 			while (inpts[++i])
 				__treat_user_input(inpts[i], msh, __init_user_input_struct(ui));
+			__update_rv(msh);
 			return (__exit(msh));
 		}
 		else

@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 12:57:17 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/15 09:58:30 by fred             ###   ########.fr       */
+/*   Updated: 2022/04/05 12:57:52 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 
 int	__eof_type(char *eof)
 {
+	char	*tmp;
 
+	tmp = NULL;
 	if (eof[0] == '"' && eof[__strlen(eof) - 1] == '"')
 		return (2);
 	else if (eof[0] == '\'' && eof[__strlen(eof) - 1] == '\'')

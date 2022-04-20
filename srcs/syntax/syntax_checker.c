@@ -6,7 +6,7 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 17:58:11 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/15 09:57:25 by fred             ###   ########.fr       */
+/*   Updated: 2022/04/13 12:24:45 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,9 @@ static t_lexing	*__check_parenthesis(t_msh *msh, t_lexing *lexing, int p)
 
 t_lexing	*__check_lexing_if_no_word(t_lexing *lexing, t_msh *msh)
 {
+	int	word;
 
+	word = 0;
 	if (lexing && (lexing->type == OPERATOR || lexing->type == PIPE))
 	{
 		msh->rv = 2;
@@ -68,7 +70,9 @@ t_lexing	*__check_lexing_if_no_word(t_lexing *lexing, t_msh *msh)
 
 t_lexing	*__check_lexing_if_func(t_lexing *lexing, t_msh *msh)
 {
+	int	word;
 
+	word = 0;
 	while (lexing)
 	{
 		if (lexing->type == P_LEFT && lexing->next

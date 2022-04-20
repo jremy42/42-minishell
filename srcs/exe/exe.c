@@ -6,13 +6,13 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 18:18:33 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/08 12:24:14 by jremy            ###   ########.fr       */
+/*   Updated: 2022/04/14 15:59:35 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	__cmd_node_list_clear(t_cmd *start)
+void	cmd_node_clear(t_cmd *start)
 {
 	t_cmd	*next_to_free;
 
@@ -55,7 +55,7 @@ char	*__get_name(int index)
 	return (free(cmd_nbr), tmp);
 }
 
-int	__clean_tmp_hd(t_cmd *cmd)
+int	del_hd(t_cmd *cmd)
 {
 	t_redirect	*save;
 	char		*tmp;
@@ -88,25 +88,25 @@ int	execute_seq(t_cmd *cmd, t_msh *msh)
 	int			std[2];
 
 	if (__find_max_cmd(cmd) == 1 && !__update_underscore(cmd->arg, msh))
-		return (__cmd_node_list_clear(cmd), msh->rv);
+		return (cmd_node_clear(cmd), msh->rv);
 	if (__find_max_cmd(cmd) == 1 && __is_builtin(cmd->arg))
 	{
 		if (cmd->redirect)
 		{
 			if (!__save_fd(std))
-				return (__cmd_node_list_clear(cmd), 0);
+				return (cmd_node_clear(cmd), 0);
 			if (!__handle_redirect(cmd))
-				return (__restore_fd(std), __cmd_node_list_clear(cmd), 0);
+				return (del_hd(cmd), __restore_fd(std), cmd_node_clear(cmd), 0);
 		}
 		__exec_builtin(cmd->arg, msh, cmd, 0);
 		if (cmd->redirect && !__restore_fd(std))
 			__putendl_fd(strerror(errno), 2);
-		return (__cmd_node_list_clear(cmd), msh->rv);
+		return (del_hd(cmd), cmd_node_clear(cmd), msh->rv);
 	}
 	if (!__init_seq(&seq, msh->envp, cmd))
-		return (__cmd_node_list_clear(cmd), __putstr_fd("Malloc error\n", 2), 0);
+		return (cmd_node_clear(cmd), __putstr_fd("Malloc err\n", 2), 0);
 	msh->rv = __launcher_fork(&seq, cmd, cmd);
-	__clean_tmp_hd(cmd);
+	del_hd(cmd);
 	return (free_split(seq.path), free(seq.envp),
-		__cmd_node_list_clear(cmd), 1);
+		cmd_node_clear(cmd), 1);
 }

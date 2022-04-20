@@ -65,7 +65,7 @@ int	__bin_exit(char **key_val, t_msh *msh, t_cmd *cmd, int fork)
 				__putstr_fd("exit\n", 2);
 			print_error("exit", key_val[1], "numeric argument required");
 			msh->rv = 2;
-			__cmd_node_list_clear(cmd);
+			cmd_node_clear(cmd);
 			__exit(msh);
 		}
 		if (!__atol(key_val[1], &msh->rv))
@@ -78,7 +78,7 @@ int	__bin_exit(char **key_val, t_msh *msh, t_cmd *cmd, int fork)
 	}
 	if (fork)
 		return (msh->rv);
-	__cmd_node_list_clear(cmd);
+	cmd_node_clear(cmd);
 	__putstr_fd("exit\n", 2);
 	__exit(msh);
 	return (0);

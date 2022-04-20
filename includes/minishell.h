@@ -6,14 +6,13 @@
 /*   By: jremy <jremy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 12:29:58 by jremy             #+#    #+#             */
-/*   Updated: 2022/04/19 18:30:01 by fred             ###   ########.fr       */
+/*   Updated: 2022/04/14 10:04:48 by jremy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 # include <stdio.h>
-# include <string.h>
 # include <errno.h>
 # include <unistd.h>
 # include <stdlib.h>
@@ -286,14 +285,13 @@ int				__catch_error(int (*fx)(), t_lexing *lexing, t_msh *msh);
 int				__catch_error_lex_modifier(int (*fx)(), t_lexing **lexing,
 					t_msh *msh);
 // parsing exe 
-t_cmd			*miniparsing(t_lexing *lexing);
 int				execute_seq(t_cmd *cmd, t_msh *msh);
 int				add_next_cmd(t_cmd **start, t_lexing **lexing,
 					t_msh *msh, int index);
 t_cmd			*create_cmd_list(t_lexing *lexing, t_msh *msh);
-void			__cmd_node_list_clear(t_cmd *start);
+void			cmd_node_clear(t_cmd *start);
 void			__cmd_full_list_clear(t_cmd *start);
-int				__clean_tmp_hd(t_cmd *cmd);
+int				del_hd(t_cmd *cmd);
 int				__trim_quote(char **eof, int *quote);
 char			*__get_stdin(char *eof, t_msh *msh);
 void			__treat_eof(char *line, char *eof, t_msh *msh);
