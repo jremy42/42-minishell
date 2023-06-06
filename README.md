@@ -34,9 +34,9 @@ The Minishell project at school 42 provides a deep understanding of processes, f
 - External Command Execution: Minishell is capable of executing external commands using the execve() function. It searches for specified paths in the PATH environment variable and supports both relative and absolute paths.
 
 - Redirection: The shell supports the following redirections:
-    \<: Redirects input from a file.
-    \>: Redirects output to a file.
-    \>>: Redirects output to a file in append mode.
+    - \<: Redirects input from a file.
+    - \>: Redirects output to a file.
+    - \>>: Redirects output to a file in append mode.
     |: Pipes the output of one command to the input of another command.
 
 - Signal Handling: Minishell handles signals such as Ctrl-C, Ctrl-D, and Ctrl-\ in a similar manner to bash.
