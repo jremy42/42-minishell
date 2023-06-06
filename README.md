@@ -187,7 +187,7 @@ git clone https://github.com/jremy42/42-minishell
 cd 42-minishell
 ```
 
-3. 3. Compiling the project:
+3. Compiling the project:
 
 mandatory :
 ```sh
