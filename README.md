@@ -21,7 +21,7 @@
 </p>
 
 
-The Minishell project at École 42 provides a deep understanding of processes, file descriptors, command management, redirections, signals, and interaction with the environment. It also emphasizes code structure, readability, and adherence to programming standards. In order to enhance command parsing, structure, and execution, we chose to implement an Abstract Syntax Tree (AST). The AST allows for better organization and management of complex command sequences, grouping commands, and maintaining their relationships in a structured manner. By incorporating an AST, we were able to achieve more advanced features and improve the overall command processing in the Minishell project, while ensuring code quality and adherence to programming principles.
+The Minishell project at school 42 provides a deep understanding of processes, file descriptors, command management, redirections, signals, and interaction with the environment. It also emphasizes code structure, readability, and adherence to programming standards. In order to enhance command parsing, structure, and execution, we chose to implement an Abstract Syntax Tree (AST). The AST allows for better organization and management of complex command sequences, grouping commands, and maintaining their relationships in a structured manner. By incorporating an AST, we were able to achieve more advanced features and improve the overall command processing in the Minishell project, while ensuring code quality and adherence to programming principles.
 
 ---
 
