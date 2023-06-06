@@ -37,7 +37,7 @@ The Minishell project at school 42 provides a deep understanding of processes, f
     - \<: Redirects input from a file.
     - \>: Redirects output to a file.
     - \>>: Redirects output to a file in append mode.
-    |: Pipes the output of one command to the input of another command.
+    - |: Pipes the output of one command to the input of another command.
 
 - Signal Handling: Minishell handles signals such as Ctrl-C, Ctrl-D, and Ctrl-\ in a similar manner to bash.
 
