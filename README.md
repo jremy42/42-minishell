@@ -34,22 +34,22 @@ The Minishell project at school 42 provides a deep understanding of processes, f
 - External Command Execution: Minishell is capable of executing external commands using the execve() function. It searches for specified paths in the PATH environment variable and supports both relative and absolute paths.
 
 - Redirection: The shell supports the following redirections:
-    <: Redirects input from a file.
-    >: Redirects output to a file.
-    >>: Redirects output to a file in append mode.
+    \<: Redirects input from a file.
+    \>: Redirects output to a file.
+    \>>: Redirects output to a file in append mode.
     |: Pipes the output of one command to the input of another command.
 
 - Signal Handling: Minishell handles signals such as Ctrl-C, Ctrl-D, and Ctrl-\ in a similar manner to bash.
 
 - Built-in Commands: The shell implements the following built-in commands:
 
-    echo: Displays text on the screen, including the -n option to remove the trailing newline.
-    cd: Changes the current directory using a relative or absolute path.
-    pwd: Displays the current working directory.
-    export: Manages environment variables.
-    unset: Removes environment variables.
-    env: Displays environment variables.
-    exit: Exits the shell.
+    - echo: Displays text on the screen, including the -n option to remove the trailing newline.
+    - cd: Changes the current directory using a relative or absolute path.
+    - pwd: Displays the current working directory.
+    - export: Manages environment variables.
+    - unset: Removes environment variables.
+    - env: Displays environment variables.
+    - exit: Exits the shell.
 
 - Conditional Execution: Minishell supports conditional execution using the && and || operators. Commands can be executed based on the success or failure of previous commands.
 
