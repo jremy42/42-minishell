@@ -4,7 +4,7 @@
 <br>
 42-minishell <a href="https://github.com/JaeSeoKim/badge42"><img src="https://badge42.vercel.app/api/v2/cl27cprhd001109mercwbbu5l/project/2483584" alt="jremy's 42 minishell Score" /></a>
 </h1>
-<h3 align="center">📍 Shell-ebrate your coding with 42-minishell!</h3>
+<h3 align="center">📍 Shell-ebrate Parsing !</h3>
 <h3 align="center">⚙️ Developed with the software and tools below:</h3>
 
 <p align="center">
